@@ -1,4 +1,5 @@
-import { ArtIcon, ReadingIcon, RevelationIcon } from "@/components/icons";
+import { ArtIcon, ReadingIcon } from "@/components/icons";
+import { CircleDollarSign } from "lucide-react";
 import { Check } from "lucide-react";
 import CtaButton from "../common/cta-button";
 
@@ -14,9 +15,20 @@ const deliverables = [
         description: "Discover your soulmate’s personality traits, potential relationship dynamics, and when you may meet."
     },
     {
-        icon: <RevelationIcon className="h-10 w-10 text-primary" />,
-        title: "Optional Full Revelation Upgrade",
-        description: "Receive a breakdown of physical traits, personality, and a love timeline for a more complete vision."
+        icon: <CircleDollarSign className="h-10 w-10 text-primary" />,
+        title: "💰 Unlock Your Personalized Wealth Report 💫",
+        description: (
+            <div className="space-y-3">
+                <p>Discover the hidden secrets of your financial destiny 🌟 — including money blocks 🚫, wealth opportunities 💼, and cosmic guidance to abundance 🌈.</p>
+                <p className="font-semibold">✨ This powerful add-on is your roadmap to:</p>
+                <ul className="list-none space-y-1 pl-2">
+                    <li>🔓 Clearing financial blocks</li>
+                    <li>🧲 Attracting lasting prosperity</li>
+                    <li>🌠 Aligning with your money-making potential</li>
+                </ul>
+                <p className="font-bold">🔥 Limited-time bump offer — supercharge your journey to wealth today! 🚀</p>
+            </div>
+        )
     }
 ];
 
@@ -33,7 +45,7 @@ export default function WhatYouReceiveSection() {
                             <div className="flex-shrink-0">{item.icon}</div>
                             <div>
                                 <h3 className="text-xl font-headline text-primary mb-2">{item.title}</h3>
-                                <p className="text-foreground/80">{item.description}</p>
+                                <div className="text-foreground/80">{item.description}</div>
                             </div>
                         </div>
                     ))}
