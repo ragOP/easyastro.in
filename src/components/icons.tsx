@@ -3,10 +3,8 @@ import type { SVGProps } from "react";
 export function DetailsIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M12 2a10 10 0 1 0 10 10" />
-      <path d="m16 2-4 4-4-4" />
-      <path d="M12 12V6" />
-      <path d="m12 12 4 2" />
+        <path d="M21.05 13.01c-1.23.88-2.69.83-3.95-.15-1.42-1.11-3.41-.94-4.66.42-1.45 1.58-4.3 1.58-5.75 0-1.25-1.36-3.24-1.53-4.66-.42-1.26.97-2.71 1.03-3.95.15C-1.2 11.23.22 8.29 2.5 6.01 4.78 3.73 7.73 2.2 9.53 2.05c1.23-.1 2.69.1 3.95 1.07 1.42 1.11 3.41.94 4.66-.42 1.45-1.58 4.3-1.58 5.75 0 1.25 1.36 3.24 1.53 4.66.42 1.26-.97 2.71-1.03 3.95-.15 2.18 1.83 3.7 4.77 1.42 7.05-2.28 2.28-5.23 3.8-7.02 3.95Z" />
+        <path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
     </svg>
   );
 }
@@ -14,12 +12,11 @@ export function DetailsIcon(props: SVGProps<SVGSVGElement>) {
 export function PsychicIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M12 5a3.5 3.5 0 0 0-3.5 3.5C8.5 12.36 12 17 12 17s3.5-4.64 3.5-8.5A3.5 3.5 0 0 0 12 5Z" />
-      <path d="M4 12h16" />
-      <path d="M12 4V2" />
-      <path d="m4.93 4.93 1.41 1.41" />
-      <path d="M20.41 6.34 19.07 4.93" />
-      <path d="M12 22v-2" />
+        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+        <path d="M20 3v4" />
+        <path d="M22 5h-4" />
+        <path d="M4 17v2" />
+        <path d="M5 18H3" />
     </svg>
   );
 }
