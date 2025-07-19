@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import {
   Carousel,
@@ -39,9 +40,8 @@ const galleryItems = [
 ];
 
 const features = [
-    "Hand-drawn art",
-    "Unique to you",
-    "Rooted in astrology and psychic intuition"
+    "Hand-drawn art, unique to you.",
+    "Rooted in astrology and psychic intuition."
 ]
 
 export default function GallerySection() {
@@ -51,17 +51,14 @@ export default function GallerySection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
             <h2 className="text-3xl md:text-4xl font-headline mb-4">Past Work / Proof</h2>
-            <p className="text-lg text-foreground/80 mb-8">
+            <p className="text-lg text-foreground/80 mb-6">
               Imagine seeing the detailed features of the person you’re destined for. Our previous sketches have amazed thousands with their accuracy, beauty, and personal resonance.
             </p>
-            <ul className="space-y-4">
+            <div className="space-y-2 text-lg text-foreground/80 mb-8">
                 {features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3 justify-center lg:justify-start">
-                        <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                        <span className="text-lg">{feature}</span>
-                    </li>
+                    <p key={index}>{feature}</p>
                 ))}
-            </ul>
+            </div>
           </div>
           <div>
             <Carousel
