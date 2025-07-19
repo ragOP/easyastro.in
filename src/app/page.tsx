@@ -22,8 +22,8 @@ export default function Home() {
         <GallerySection />
         <TestimonialsSection />
         <WhyTrustUsSection />
-        <FaqSection />
         <PricingSection />
+        <FaqSection />
       </main>
       <Footer />
     </div>
