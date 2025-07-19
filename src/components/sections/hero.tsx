@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Users, Star, Clock, ShieldCheck } from "lucide-react";
 import Image from "next/image";
@@ -78,7 +79,7 @@ export default function HeroSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2 text-center">
-              {stat.icon}
+              {React.cloneElement(stat.icon, { className: 'h-10 w-10 sm:h-8 sm:w-8 text-primary' })}
               <p className="text-4xl sm:text-3xl font-bold text-primary">{stat.value}</p>
               <p className="text-lg sm:text-base text-foreground/70">{stat.label}</p>
             </div>
