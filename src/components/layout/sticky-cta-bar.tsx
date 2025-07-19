@@ -8,7 +8,7 @@ export default function StickyCtaBar() {
     const offerEndTime = new Date(Date.now() + 10 * 60 * 1000);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-card p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-primary/20">
+    <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-card p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-primary/20 sm:p-3">
         <div className="container mx-auto flex flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4">
                 <div className="text-center">
