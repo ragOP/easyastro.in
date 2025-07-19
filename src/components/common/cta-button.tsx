@@ -8,6 +8,9 @@ export default function CtaButton() {
                     Reveal My Soulmate Now
                 </Button>
             </a>
+            <p className="mt-4 text-sm text-primary/80 animate-pulse">
+                Only a few spots left! Hurry before the special offer ends.
+            </p>
         </div>
     );
 }
