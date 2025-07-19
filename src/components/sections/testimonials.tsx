@@ -50,14 +50,14 @@ export default function TestimonialsSection() {
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                <div className="p-4">
+                <div className="p-4 h-full">
                   <Card className="h-full bg-card shadow-lg border-accent/20 flex flex-col">
                     <CardContent className="p-6 flex-grow flex flex-col justify-between">
                         <div>
                             <div className="flex text-primary mb-4">
                                 {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}
                             </div>
-                            <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4">
+                            <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[100px]">
                                 "{testimonial.quote}"
                             </blockquote>
                         </div>
