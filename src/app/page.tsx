@@ -10,7 +10,6 @@ import WhyTrustUsSection from "@/components/sections/why-trust-us";
 import FaqSection from "@/components/sections/faq";
 import Footer from "@/components/layout/footer";
 import StickyCtaBar from "@/components/layout/sticky-cta-bar";
-import AnimateOnScroll from "@/components/common/animate-on-scroll";
 import SocialProofPopup from "@/components/common/social-proof-popup";
 
 export default function Home() {
@@ -18,30 +17,14 @@ export default function Home() {
     <div className="flex flex-col min-h-dvh bg-background text-foreground">
       <Header />
       <main className="flex-1">
-        <AnimateOnScroll>
-          <HeroSection />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <IntroductionSection />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <HowItWorksSection />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <WhatYouReceiveSection />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <GallerySection />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <TestimonialsSection />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <WhyTrustUsSection />
-        </AnimateOnScroll>
-        <AnimateOnScroll>
-          <FaqSection />
-        </AnimateOnScroll>
+        <HeroSection />
+        <IntroductionSection />
+        <HowItWorksSection />
+        <WhatYouReceiveSection />
+        <GallerySection />
+        <TestimonialsSection />
+        <WhyTrustUsSection />
+        <FaqSection />
       </main>
       <Footer />
       <StickyCtaBar />
