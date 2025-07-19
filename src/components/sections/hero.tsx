@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Users, Star, Clock, ShieldCheck } from "lucide-react";
 import Image from "next/image";
@@ -37,7 +38,7 @@ export default function HeroSection() {
             </h1>
             <div className="lg:hidden my-8">
               <Image
-                src="https://ik.imagekit.io/5r36kvobl/WhatsApp%20Image%202025-07-20%20at%2001.34.36.jpeg?updatedAt=1752955655700"
+                src="https://ik.imagekit.io/5r36kvobl/image.png"
                 alt="Soulmate Sketch Example"
                 width={500}
                 height={500}
@@ -61,7 +62,7 @@ export default function HeroSection() {
 
           <div className="hidden lg:block">
             <Image
-              src="https://ik.imagekit.io/5r36kvobl/WhatsApp%20Image%202025-07-20%20at%2001.34.36.jpeg?updatedAt=1752955655700"
+              src="https://ik.imagekit.io/5r36kvobl/image.png"
               alt="Soulmate Sketch Example"
               width={500}
               height={500}
