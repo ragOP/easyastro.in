@@ -6,17 +6,17 @@ const steps = [
   {
     icon: <DetailsIcon className="h-12 w-12 text-primary" />,
     title: "Share Your Details",
-    description: "Submit your name, birth date, and a few personal details.",
+    description: "Provide your name and birth date. This allows our gifted psychics to connect with your unique spiritual energy.",
   },
   {
     icon: <PsychicIcon className="h-12 w-12 text-primary" />,
-    title: "Psychic Artists & Astrologers Get to Work",
-    description: "Our intuitive professionals use your unique birth chart and energy to create your custom sketch.",
+    title: "Our Artists Begin",
+    description: "Our intuitive artists and astrologers use your energy to hand-draw a detailed sketch of your soulmate.",
   },
   {
     icon: <DeliveryIcon className="h-12 w-12 text-primary" />,
-    title: "Receive Your Soulmate Sketch",
-    description: "Your beautifully hand-drawn sketch and psychic love reading are delivered privately to your email or WhatsApp within 24–48 hours.",
+    title: "Receive Your Sketch",
+    description: "Your sketch and love reading are delivered privately to you via email or WhatsApp within 24-48 hours.",
   },
 ];
 
