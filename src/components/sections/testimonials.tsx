@@ -27,6 +27,22 @@ const testimonials = [
   {
     name: "Anjali K.",
     quote: "The drawing is beautiful and the reading was so insightful. I feel more hopeful about finding love than ever before.",
+  },
+  {
+    name: "Neha P.",
+    quote: "The sketch was breathtakingly beautiful and the personality traits described were so accurate it gave me chills. It felt like they already knew him.",
+  },
+  {
+    name: "Vikram R.",
+    quote: "A friend recommended this, and I'm so glad I tried it. The sketch is now my phone wallpaper, a daily reminder of who to look for.",
+  },
+  {
+    name: "Sunita M.",
+    quote: "I received my sketch within 24 hours as promised. The details were incredible, from his eyes to the small mole on his cheek.",
+  },
+  {
+    name: "Karan V.",
+    quote: "The likeness to someone I met a month later is uncanny. I'm a believer now. This service is worth every penny and more!",
   }
 ];
 
@@ -57,7 +73,7 @@ export default function TestimonialsSection() {
                             <div className="flex text-primary mb-4">
                                 {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}
                             </div>
-                            <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[100px]">
+                            <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[120px] line-clamp-5">
                                 "{testimonial.quote}"
                             </blockquote>
                         </div>
