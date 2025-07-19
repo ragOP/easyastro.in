@@ -57,11 +57,9 @@ export default function SocialProofPopup() {
         <div
             className={cn(
                 "fixed z-50 p-3 rounded-lg shadow-lg bg-primary text-primary-foreground transition-all duration-500 ease-in-out w-72",
-                // Mobile: top-center
-                "top-4 left-1/2 -translate-x-1/2",
-                // Desktop: bottom-left
-                "sm:bottom-24 sm:left-4 sm:top-auto sm:translate-x-0",
-                isVisible ? 'opacity-100 translate-y-0 sm:translate-y-0' : 'opacity-0 -translate-y-12 sm:translate-y-12'
+                // Positioned bottom-left on all screens
+                "bottom-24 left-4",
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             )}
         >
             <div className="flex items-center gap-3">
