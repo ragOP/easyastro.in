@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import CtaButton from "../common/cta-button";
 
 const faqs = [
   {
@@ -48,7 +47,6 @@ export default function FaqSection() {
             </AccordionItem>
           ))}
         </Accordion>
-        <CtaButton />
       </div>
     </section>
   );
