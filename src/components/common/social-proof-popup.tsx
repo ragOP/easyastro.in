@@ -56,7 +56,7 @@ export default function SocialProofPopup() {
     return (
         <div
             className={cn(
-                "fixed z-50 p-3 rounded-lg shadow-lg bg-card border border-primary/20 transition-all duration-500 ease-in-out w-72",
+                "fixed z-50 p-3 rounded-lg shadow-lg bg-primary text-primary-foreground transition-all duration-500 ease-in-out w-72",
                 // Mobile: top-center
                 "top-4 left-1/2 -translate-x-1/2",
                 // Desktop: bottom-left
@@ -65,12 +65,12 @@ export default function SocialProofPopup() {
             )}
         >
             <div className="flex items-center gap-3">
-                <div className="p-2 bg-primary/10 rounded-full">
-                    <Sparkles className="h-5 w-5 text-primary" />
+                <div className="p-2 bg-primary-foreground/20 rounded-full">
+                    <Sparkles className="h-5 w-5 text-primary-foreground" />
                 </div>
                 <div className="text-sm">
-                    <p className="font-semibold text-foreground">{popup.name} from {popup.city}</p>
-                    <p className="text-foreground/80">just got their soulmate sketch!</p>
+                    <p className="font-semibold">{popup.name} from {popup.city}</p>
+                    <p className="text-primary-foreground/80">just got their soulmate sketch!</p>
                 </div>
             </div>
         </div>
