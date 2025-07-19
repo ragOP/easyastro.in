@@ -1,3 +1,4 @@
+
 import Header from "@/components/layout/header";
 import HeroSection from "@/components/sections/hero";
 import IntroductionSection from "@/components/sections/introduction";
@@ -10,6 +11,7 @@ import FaqSection from "@/components/sections/faq";
 import Footer from "@/components/layout/footer";
 import StickyCtaBar from "@/components/layout/sticky-cta-bar";
 import AnimateOnScroll from "@/components/common/animate-on-scroll";
+import SocialProofPopup from "@/components/common/social-proof-popup";
 
 export default function Home() {
   return (
@@ -43,6 +45,7 @@ export default function Home() {
       </main>
       <Footer />
       <StickyCtaBar />
+      <SocialProofPopup />
     </div>
   );
 }
