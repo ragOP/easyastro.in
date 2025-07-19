@@ -16,19 +16,8 @@ const deliverables = [
     },
     {
         icon: <CircleDollarSign className="h-10 w-10 text-primary" />,
-        title: "💰 Unlock Your Personalized Wealth Report 💫",
-        description: (
-            <div className="space-y-3">
-                <p>Discover the hidden secrets of your financial destiny 🌟 — including money blocks 🚫, wealth opportunities 💼, and cosmic guidance to abundance 🌈.</p>
-                <p className="font-semibold">✨ This powerful add-on is your roadmap to:</p>
-                <ul className="list-none space-y-1 pl-2">
-                    <li>🔓 Clearing financial blocks</li>
-                    <li>🧲 Attracting lasting prosperity</li>
-                    <li>🌠 Aligning with your money-making potential</li>
-                </ul>
-                <p className="font-bold">🔥 Limited-time bump offer — supercharge your journey to wealth today! 🚀</p>
-            </div>
-        )
+        title: "Optional: Personalized Wealth Report",
+        description: "As an add-on, unlock secrets of your financial destiny, revealing money blocks and cosmic guidance to abundance."
     }
 ];
 
