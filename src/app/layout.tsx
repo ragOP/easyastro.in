@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Soulmate Vision',
+  title: 'Easy Astro',
   description: "Discover your soulmate's face today with a personalized sketch from our gifted psychics.",
 };
 

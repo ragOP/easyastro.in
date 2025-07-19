@@ -7,7 +7,7 @@ export default function Header() {
         <div className="flex items-center gap-2 text-primary">
           <HandHeart className="h-6 w-6" />
           <h1 className="text-2xl font-headline tracking-wider">
-            Soulmate Vision
+            Easy Astro
           </h1>
         </div>
       </div>
