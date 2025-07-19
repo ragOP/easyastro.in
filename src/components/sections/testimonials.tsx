@@ -123,7 +123,7 @@ function CarouselItems() {
             {testimonials.map((testimonial, index) => (
                 <CarouselItem 
                     key={index} 
-                    className="basis-2/3 md:basis-1/2 lg:basis-1/3 pl-8 transition-transform duration-300 ease-in-out"
+                    className="basis-1/2 md:basis-1/2 lg:basis-1/3 pl-8 transition-transform duration-300 ease-in-out"
                     style={{
                         transform: `scale(${index === selectedIndex ? 1 : 0.85})`,
                         opacity: index === selectedIndex ? 1 : 0.6,
