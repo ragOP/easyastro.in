@@ -28,6 +28,8 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
+  scrollSnaps: number[]
+  selectedIndex: number
 } & CarouselProps
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
@@ -67,15 +69,25 @@ const Carousel = React.forwardRef<
     )
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
     const [canScrollNext, setCanScrollNext] = React.useState(false)
+    const [selectedIndex, setSelectedIndex] = React.useState(0)
+    const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([])
 
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
         return
       }
-
+      setSelectedIndex(api.selectedScrollSnap())
       setCanScrollPrev(api.canScrollPrev())
       setCanScrollNext(api.canScrollNext())
     }, [])
+    
+    const onInit = React.useCallback((api: CarouselApi) => {
+        if (!api) {
+            return
+        }
+        setScrollSnaps(api.scrollSnapList())
+    }, [])
+
 
     const scrollPrev = React.useCallback(() => {
       api?.scrollPrev()
@@ -110,15 +122,17 @@ const Carousel = React.forwardRef<
       if (!api) {
         return
       }
-
+      
+      onInit(api)
       onSelect(api)
+      api.on("reInit", onInit)
       api.on("reInit", onSelect)
       api.on("select", onSelect)
 
       return () => {
         api?.off("select", onSelect)
       }
-    }, [api, onSelect])
+    }, [api, onSelect, onInit])
 
     return (
       <CarouselContext.Provider
@@ -132,6 +146,8 @@ const Carousel = React.forwardRef<
           scrollNext,
           canScrollPrev,
           canScrollNext,
+          scrollSnaps,
+          selectedIndex
         }}
       >
         <div
@@ -259,4 +275,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  useCarousel,
 }

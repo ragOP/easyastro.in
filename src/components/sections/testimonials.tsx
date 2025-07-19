@@ -6,11 +6,13 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  useCarousel,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import CtaButton from "../common/cta-button";
+import React from "react";
 
 const testimonials = [
   {
@@ -60,8 +62,65 @@ const testimonials = [
   {
     name: "Arjun P.",
     quote: "The customer service was excellent and the delivery was fast. The sketch itself is a work of art that I will cherish.",
+  },
+  {
+      name: "Isha V.",
+      quote: "This is more than a sketch; it's a piece of hope. The reading was so positive and aligned with my own feelings. Thank you!",
+  },
+  {
+      name: "Amit K.",
+      quote: "The quality of the artwork is phenomenal. It's a very professional service and the reading was surprisingly detailed and uplifting.",
+  },
+  {
+      name: "Deepika R.",
+      quote: "I showed the sketch to my mom and she got emotional. She said it looked like the person she always imagined for me. So beautiful.",
+  },
+  {
+      name: "Rajesh S.",
+      quote: "Got this for my sister as a gift and she absolutely loved it. The look on her face when she saw the sketch was priceless. 10/10 recommend.",
   }
 ];
+
+function TestimonialCard({ name, quote }: { name: string, quote: string }) {
+    return (
+        <Card className="h-full bg-card shadow-lg border-accent/20 flex flex-col">
+            <CardContent className="p-6 flex-grow flex flex-col justify-between">
+                <div>
+                    <div className="flex text-primary mb-4">
+                        {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}
+                    </div>
+                    <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[120px] line-clamp-5">
+                        "{quote}"
+                    </blockquote>
+                </div>
+              <p className="font-bold text-right text-primary">— {name}</p>
+            </CardContent>
+        </Card>
+    );
+}
+
+function CarouselItems() {
+    const { selectedIndex } = useCarousel()
+
+    return (
+        <CarouselContent className="-ml-4">
+            {testimonials.map((testimonial, index) => (
+                <CarouselItem 
+                    key={index} 
+                    className="basis-[80%] md:basis-1/2 lg:basis-1/3 transition-transform duration-300 ease-in-out"
+                    style={{
+                        transform: `scale(${index === selectedIndex ? 1 : 0.9})`,
+                        opacity: index === selectedIndex ? 1 : 0.7,
+                    }}
+                >
+                    <div className="p-4 h-full">
+                        <TestimonialCard name={testimonial.name} quote={testimonial.quote} />
+                    </div>
+                </CarouselItem>
+            ))}
+        </CarouselContent>
+    )
+}
 
 export default function TestimonialsSection() {
   return (
@@ -80,27 +139,7 @@ export default function TestimonialsSection() {
           ]}
           className="w-full max-w-4xl mx-auto"
         >
-          <CarouselContent className="-ml-4">
-            {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index} className="basis-4/5 md:basis-1/2 lg:basis-1/3">
-                <div className="p-4 h-full">
-                  <Card className="h-full bg-card shadow-lg border-accent/20 flex flex-col">
-                    <CardContent className="p-6 flex-grow flex flex-col justify-between">
-                        <div>
-                            <div className="flex text-primary mb-4">
-                                {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}
-                            </div>
-                            <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[120px] line-clamp-5">
-                                "{testimonial.quote}"
-                            </blockquote>
-                        </div>
-                      <p className="font-bold text-right text-primary">— {testimonial.name}</p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+          <CarouselItems />
           <CarouselPrevious className="hidden sm:flex"/>
           <CarouselNext className="hidden sm:flex"/>
         </Carousel>
