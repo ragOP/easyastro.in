@@ -78,18 +78,34 @@ const testimonials = [
   {
       name: "Rajesh S.",
       quote: "Got this for my sister as a gift and she absolutely loved it. The look on her face when she saw the sketch was priceless. 10/10 recommend.",
+  },
+  {
+    name: "Kavita C.",
+    quote: "The details in the sketch are insane! It's like the artist peered into my soul. I'm so excited for my future.",
+  },
+  {
+    name: "Manish T.",
+    quote: "This was a gift for my anniversary, and my wife and I were both amazed. The reading was so insightful and positive.",
+  },
+  {
+    name: "Pooja G.",
+    quote: "I can't stop looking at my sketch. It feels so real and has given me so much hope. Thank you for this beautiful gift!",
+  },
+  {
+    name: "Alok N.",
+    quote: "The turnaround was so fast, and the quality is top-notch. I highly recommend this to anyone curious about their soulmate.",
   }
 ];
 
 function TestimonialCard({ name, quote }: { name: string, quote: string }) {
     return (
-        <Card className="h-full bg-card shadow-lg border-accent/20 flex flex-col">
+        <Card className="h-[280px] bg-card shadow-lg border-accent/20 flex flex-col">
             <CardContent className="p-6 flex-grow flex flex-col justify-between">
                 <div>
                     <div className="flex text-primary mb-4">
                         {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}
                     </div>
-                    <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[120px] line-clamp-5">
+                    <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[120px] overflow-hidden text-ellipsis line-clamp-5">
                         "{quote}"
                     </blockquote>
                 </div>
@@ -107,13 +123,13 @@ function CarouselItems() {
             {testimonials.map((testimonial, index) => (
                 <CarouselItem 
                     key={index} 
-                    className="basis-[80%] md:basis-1/2 lg:basis-1/3 transition-transform duration-300 ease-in-out"
+                    className="basis-[80%] md:basis-1/2 lg:basis-1/3 pl-8 transition-transform duration-300 ease-in-out"
                     style={{
-                        transform: `scale(${index === selectedIndex ? 1 : 0.9})`,
-                        opacity: index === selectedIndex ? 1 : 0.7,
+                        transform: `scale(${index === selectedIndex ? 1 : 0.85})`,
+                        opacity: index === selectedIndex ? 1 : 0.6,
                     }}
                 >
-                    <div className="p-4 h-full">
+                    <div className="p-1 h-full">
                         <TestimonialCard name={testimonial.name} quote={testimonial.quote} />
                     </div>
                 </CarouselItem>
@@ -137,7 +153,7 @@ export default function TestimonialsSection() {
               delay: 5000,
             }),
           ]}
-          className="w-full max-w-4xl mx-auto"
+          className="w-full max-w-6xl mx-auto"
         >
           <CarouselItems />
           <CarouselPrevious className="hidden sm:flex"/>
