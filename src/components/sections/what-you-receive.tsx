@@ -13,7 +13,8 @@ const deliverables = [
     {
         icon: <ReadingIcon className="h-10 w-10 text-primary" />,
         title: "FREE In-Depth Love Reading",
-        description: "As a bonus, discover your soulmate’s personality traits, potential relationship dynamics, and when you may finally meet them."
+        description: "As a bonus, discover your soulmate’s personality traits, potential relationship dynamics, and when you may finally meet them.",
+        scarcity: "Only 9 spots left!",
     },
     {
         icon: <CircleDollarSign className="h-10 w-10 text-primary" />,
@@ -36,6 +37,11 @@ export default function WhatYouReceiveSection() {
                             <div>
                                 <h3 className="text-xl font-headline text-primary mb-2">{item.title}</h3>
                                 <div className="text-foreground/80">{item.description}</div>
+                                {item.scarcity && (
+                                    <p className="mt-3 font-bold text-accent animate-pulse text-sm uppercase tracking-wider">
+                                        {item.scarcity}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     ))}
