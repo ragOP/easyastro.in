@@ -7,8 +7,8 @@ import GallerySection from "@/components/sections/gallery";
 import TestimonialsSection from "@/components/sections/testimonials";
 import WhyTrustUsSection from "@/components/sections/why-trust-us";
 import FaqSection from "@/components/sections/faq";
-import PricingSection from "@/components/sections/pricing";
 import Footer from "@/components/layout/footer";
+import StickyCtaBar from "@/components/layout/sticky-cta-bar";
 
 export default function Home() {
   return (
@@ -22,10 +22,10 @@ export default function Home() {
         <GallerySection />
         <TestimonialsSection />
         <WhyTrustUsSection />
-        <PricingSection />
         <FaqSection />
       </main>
       <Footer />
+      <StickyCtaBar />
     </div>
   );
 }
