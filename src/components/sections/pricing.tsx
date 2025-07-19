@@ -8,7 +8,7 @@ export default function PricingSection() {
     const offerEndTime = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
 
   return (
-    <section className="py-16 sm:py-24 bg-card">
+    <section id="pricing" className="py-16 sm:py-24 bg-card">
       <div className="container mx-auto max-w-md">
         <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">
           Pricing & Offers
@@ -31,9 +31,9 @@ export default function PricingSection() {
             <p className="text-sm text-muted-foreground mt-4">Order now and secure your special rate.</p>
           </CardContent>
           <CardFooter>
-            <a href="#cta" className="w-full">
+            <a href="mailto:contact@soulmatevision.com" className="w-full">
                 <Button size="lg" className="w-full font-bold text-lg py-6 rounded-b-md rounded-t-none">
-                Get My Sketch Now
+                Contact Us To Order
                 </Button>
             </a>
           </CardFooter>

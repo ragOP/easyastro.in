@@ -8,7 +8,6 @@ import TestimonialsSection from "@/components/sections/testimonials";
 import WhyTrustUsSection from "@/components/sections/why-trust-us";
 import FaqSection from "@/components/sections/faq";
 import PricingSection from "@/components/sections/pricing";
-import FinalCtaSection from "@/components/sections/final-cta";
 import Footer from "@/components/layout/footer";
 
 export default function Home() {
@@ -25,7 +24,6 @@ export default function Home() {
         <WhyTrustUsSection />
         <FaqSection />
         <PricingSection />
-        <FinalCtaSection />
       </main>
       <Footer />
     </div>
