@@ -46,9 +46,10 @@ export default function WhatYouReceiveSection() {
                         </div>
                     ))}
                 </div>
-                <p className="text-center mt-8 text-lg font-semibold text-accent flex items-center justify-center gap-2">
-                    <Check className="h-5 w-5" /> Every order is 100% private and confidential.
-                </p>
+                <div className="mt-8 text-lg font-semibold text-accent flex items-center justify-center gap-2">
+                    <Check className="h-5 w-5 flex-shrink-0" />
+                    <p className="text-center">Every order is 100% private and confidential.</p>
+                </div>
                 <div className="mt-16">
                     <CtaButton />
                 </div>
