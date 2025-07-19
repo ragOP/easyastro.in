@@ -21,8 +21,8 @@ export default function StickyCtaBar() {
                 </div>
             </div>
             
-            <a href="mailto:contact@soulmatevision.com" className="w-auto shrink-0">
-                <Button size="lg" className="w-full font-bold text-base sm:text-lg py-4 sm:py-6 px-4 sm:px-6 animate-shine text-center">
+            <a href="https://superprofile.bio/vp/Soulmate-sketch?checkout=true" className="w-auto shrink-0">
+                <Button size="lg" className="w-full font-bold text-base sm:text-lg py-3 sm:py-6 px-4 sm:px-6 animate-shine text-center">
                     Reveal My Soulmate
                 </Button>
             </a>
