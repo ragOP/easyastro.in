@@ -159,7 +159,9 @@ export default function TestimonialsSection() {
           <CarouselPrevious className="hidden sm:flex"/>
           <CarouselNext className="hidden sm:flex"/>
         </Carousel>
-        <CtaButton />
+        <div className="mt-16">
+          <CtaButton />
+        </div>
       </div>
     </section>
   );

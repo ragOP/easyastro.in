@@ -96,7 +96,9 @@ export default function GallerySection() {
             </Carousel>
           </div>
         </div>
-        <CtaButton />
+        <div className="mt-16">
+          <CtaButton />
+        </div>
       </div>
     </section>
   );
