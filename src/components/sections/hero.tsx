@@ -4,22 +4,22 @@ import Image from "next/image";
 
 const stats = [
   {
-    icon: <Users className="h-8 w-8 text-primary" />,
+    icon: <Users className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
     value: "100,000+",
     label: "Happy Clients",
   },
   {
-    icon: <Star className="h-8 w-8 text-primary" />,
+    icon: <Star className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
     value: "4.8/5",
     label: "Average Rating",
   },
   {
-    icon: <Clock className="h-8 w-8 text-primary" />,
+    icon: <Clock className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
     value: "24 Hours",
     label: "Delivered Privately",
   },
   {
-    icon: <ShieldCheck className="h-8 w-8 text-primary" />,
+    icon: <ShieldCheck className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
     value: "100%",
     label: "Safe & Confidential",
   },
@@ -57,6 +57,9 @@ export default function HeroSection() {
             <p className="mt-4 text-sm text-primary/80 animate-pulse">
               Only a few spots left! Hurry before the special offer ends.
             </p>
+            <p className="mt-2 text-sm font-bold text-primary animate-pulse">
+              9 spots left for free in-depth love reading!
+            </p>
           </div>
 
           <div className="hidden lg:block">
@@ -76,8 +79,8 @@ export default function HeroSection() {
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2 text-center">
               {stat.icon}
-              <p className="text-3xl font-bold text-primary">{stat.value}</p>
-              <p className="text-base text-foreground/70">{stat.label}</p>
+              <p className="text-4xl sm:text-3xl font-bold text-primary">{stat.value}</p>
+              <p className="text-lg sm:text-base text-foreground/70">{stat.label}</p>
             </div>
           ))}
         </div>
