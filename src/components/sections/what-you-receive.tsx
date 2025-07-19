@@ -1,7 +1,6 @@
 
 import { ArtIcon, ReadingIcon } from "@/components/icons";
 import { CircleDollarSign } from "lucide-react";
-import { Check } from "lucide-react";
 import CtaButton from "../common/cta-button";
 
 const deliverables = [
@@ -46,9 +45,8 @@ export default function WhatYouReceiveSection() {
                         </div>
                     ))}
                 </div>
-                <div className="mt-8 text-lg font-semibold text-accent flex items-center justify-center gap-2">
-                    <Check className="h-5 w-5 flex-shrink-0" />
-                    <p className="text-center">Every order is 100% private and confidential.</p>
+                <div className="mt-8 text-center text-lg font-semibold text-accent">
+                    <p>Every order is 100% private and confidential.</p>
                 </div>
                 <div className="mt-16">
                     <CtaButton />
