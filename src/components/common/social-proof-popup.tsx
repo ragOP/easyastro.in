@@ -56,10 +56,10 @@ export default function SocialProofPopup() {
     return (
         <div
             className={cn(
-                "fixed z-50 p-3 rounded-lg shadow-lg bg-primary text-primary-foreground transition-all duration-500 ease-in-out w-72",
+                "fixed z-50 p-3 rounded-lg shadow-lg bg-primary text-primary-foreground transition-transform duration-500 ease-in-out w-72",
                 // Positioned bottom-left on all screens
                 "bottom-24 left-4",
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                isVisible ? 'translate-x-0' : '-translate-x-[150%]'
             )}
         >
             <div className="flex items-center gap-3">
