@@ -57,7 +57,7 @@ export default function GallerySection() {
             <ul className="space-y-4">
                 {features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-3 justify-center lg:justify-start">
-                        <Sparkles className="h-5 w-5 text-primary flex-shrink-0 mt-1" />
+                        <Sparkles className="h-5 w-5 text-primary flex-shrink-0" />
                         <span className="text-lg">{feature}</span>
                     </li>
                 ))}
