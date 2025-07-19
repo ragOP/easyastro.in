@@ -1,3 +1,4 @@
+
 import { ArtIcon, ReadingIcon } from "@/components/icons";
 import { CircleDollarSign } from "lucide-react";
 import { Check } from "lucide-react";
@@ -11,8 +12,8 @@ const deliverables = [
     },
     {
         icon: <ReadingIcon className="h-10 w-10 text-primary" />,
-        title: "In-Depth Love Reading",
-        description: "Discover your soulmate’s personality traits, potential relationship dynamics, and when you may meet."
+        title: "FREE In-Depth Love Reading",
+        description: "As a bonus, discover your soulmate’s personality traits, potential relationship dynamics, and when you may finally meet them."
     },
     {
         icon: <CircleDollarSign className="h-10 w-10 text-primary" />,
