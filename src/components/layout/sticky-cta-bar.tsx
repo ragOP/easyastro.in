@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import CountdownTimer from "@/components/ui/countdown-timer";
 
 export default function StickyCtaBar() {
-    // Set offer end time to 3 days from now
-    const offerEndTime = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000);
+    // Set offer end time to 10 minutes from now
+    const offerEndTime = new Date(Date.now() + 10 * 60 * 1000);
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-card p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-primary/20">
