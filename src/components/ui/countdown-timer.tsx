@@ -8,7 +8,7 @@ interface CountdownTimerProps {
 
 const calculateTimeLeft = (endTime: Date) => {
   const difference = +new Date(endTime) - +new Date();
-  let timeLeft = {};
+  let timeLeft: { [key: string]: number } = {};
 
   if (difference > 0) {
     timeLeft = {
@@ -36,13 +36,13 @@ export default function CountdownTimer({ endTime }: CountdownTimerProps) {
 
   if (!timeLeft) {
     return (
-        <div className="flex justify-center gap-4 p-4 bg-muted rounded-lg animate-pulse">
+        <div className="flex justify-center gap-2 sm:gap-4 p-2 sm:p-4 bg-muted rounded-lg animate-pulse">
             <div className="flex flex-col items-center">
-                <span className="text-2xl font-bold text-foreground">--</span>
+                <span className="text-lg sm:text-2xl font-bold text-foreground">--</span>
                 <span className="text-xs uppercase text-muted-foreground">minutes</span>
             </div>
             <div className="flex flex-col items-center">
-                <span className="text-2xl font-bold text-foreground">--</span>
+                <span className="text-lg sm:text-2xl font-bold text-foreground">--</span>
                 <span className="text-xs uppercase text-muted-foreground">seconds</span>
             </div>
         </div>
@@ -55,7 +55,7 @@ export default function CountdownTimer({ endTime }: CountdownTimerProps) {
   timeEntries.forEach(([interval, value]) => {
     timerComponents.push(
       <div key={interval} className="flex flex-col items-center">
-        <span className="text-2xl font-bold text-foreground">
+        <span className="text-lg sm:text-2xl font-bold text-foreground">
           {String(value).padStart(2, '0')}
         </span>
         <span className="text-xs uppercase text-muted-foreground">{interval}</span>
@@ -68,7 +68,7 @@ export default function CountdownTimer({ endTime }: CountdownTimerProps) {
   }
 
   return (
-    <div className="flex justify-center gap-4 py-0 px-4 bg-muted rounded-lg">
+    <div className="flex justify-center gap-2 sm:gap-4 py-0 px-2 sm:px-4 bg-muted rounded-lg">
       {timerComponents}
     </div>
   );
