@@ -3,8 +3,11 @@ import type { SVGProps } from "react";
 export function DetailsIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M21.05 13.01c-1.23.88-2.69.83-3.95-.15-1.42-1.11-3.41-.94-4.66.42-1.45 1.58-4.3 1.58-5.75 0-1.25-1.36-3.24-1.53-4.66-.42-1.26.97-2.71 1.03-3.95.15C-1.2 11.23.22 8.29 2.5 6.01 4.78 3.73 7.73 2.2 9.53 2.05c1.23-.1 2.69.1 3.95 1.07 1.42 1.11 3.41.94 4.66-.42 1.45-1.58 4.3-1.58 5.75 0 1.25 1.36 3.24 1.53 4.66.42 1.26-.97 2.71-1.03 3.95-.15 2.18 1.83 3.7 4.77 1.42 7.05-2.28 2.28-5.23 3.8-7.02 3.95Z" />
-        <path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
     </svg>
   );
 }
