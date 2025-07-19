@@ -7,7 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import CtaButton from "../common/cta-button";
 
 const galleryItems = [
@@ -57,7 +57,7 @@ export default function GallerySection() {
             <ul className="space-y-4">
                 {features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-3 justify-center lg:justify-start">
-                        <Sparkles className="h-5 w-5 text-primary flex-shrink-0" />
+                        <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                         <span className="text-lg">{feature}</span>
                     </li>
                 ))}
