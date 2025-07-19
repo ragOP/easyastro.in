@@ -1,3 +1,4 @@
+
 "use client";
 import {
   Carousel,
@@ -43,6 +44,22 @@ const testimonials = [
   {
     name: "Karan V.",
     quote: "The likeness to someone I met a month later is uncanny. I'm a believer now. This service is worth every penny and more!",
+  },
+  {
+    name: "Aisha B.",
+    quote: "The entire process was so simple and the result was beyond my expectations. The sketch has a very calming presence.",
+  },
+  {
+    name: "Rohan D.",
+    quote: "This was a fun and surprisingly moving experience. The description of my soulmate's character felt very real and familiar.",
+  },
+  {
+    name: "Meera J.",
+    quote: "Absolutely stunning artwork. The psychic reading provided clarity that I didn't even know I was looking for. Highly recommend!",
+  },
+  {
+    name: "Arjun P.",
+    quote: "The customer service was excellent and the delivery was fast. The sketch itself is a work of art that I will cherish.",
   }
 ];
 
@@ -53,7 +70,7 @@ export default function TestimonialsSection() {
         <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">What Our Clients Say</h2>
         <Carousel
           opts={{
-            align: "start",
+            align: "center",
             loop: true,
           }}
           plugins={[
@@ -63,9 +80,9 @@ export default function TestimonialsSection() {
           ]}
           className="w-full max-w-4xl mx-auto"
         >
-          <CarouselContent>
+          <CarouselContent className="-ml-4">
             {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem key={index} className="basis-4/5 md:basis-1/2 lg:basis-1/3">
                 <div className="p-4 h-full">
                   <Card className="h-full bg-card shadow-lg border-accent/20 flex flex-col">
                     <CardContent className="p-6 flex-grow flex flex-col justify-between">
