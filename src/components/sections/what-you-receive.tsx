@@ -38,7 +38,7 @@ export default function WhatYouReceiveSection() {
                                 <h3 className="text-xl font-headline text-primary mb-2">{item.title}</h3>
                                 <div className="text-foreground/80">{item.description}</div>
                                 {item.scarcity && (
-                                    <p className="mt-3 font-bold text-accent animate-pulse text-sm uppercase tracking-wider">
+                                    <p className="mt-3 font-bold text-primary animate-pulse text-sm uppercase tracking-wider">
                                         {item.scarcity}
                                     </p>
                                 )}
