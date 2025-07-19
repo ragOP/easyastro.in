@@ -17,44 +17,69 @@ const calculateTimeLeft = (endTime: Date) => {
       minutes: Math.floor((difference / 1000 / 60) % 60),
       seconds: Math.floor((difference / 1000) % 60),
     };
-  } else {
-    timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
   }
 
   return timeLeft;
 };
 
 export default function CountdownTimer({ endTime }: CountdownTimerProps) {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endTime));
+  const [timeLeft, setTimeLeft] = useState<any>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Set initial time on mount (client-side only)
+    setTimeLeft(calculateTimeLeft(endTime));
+
+    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft(endTime));
     }, 1000);
 
-    return () => clearTimeout(timer);
-  });
+    return () => clearInterval(timer);
+  }, [endTime]);
+
+  if (!timeLeft) {
+    return (
+        <div className="flex justify-center gap-4 p-4 bg-muted rounded-lg animate-pulse">
+            <div className="flex flex-col items-center">
+                <span className="text-2xl font-bold text-foreground">--</span>
+                <span className="text-xs uppercase text-muted-foreground">days</span>
+            </div>
+            <div className="flex flex-col items-center">
+                <span className="text-2xl font-bold text-foreground">--</span>
+                <span className="text-xs uppercase text-muted-foreground">hours</span>
+            </div>
+            <div className="flex flex-col items-center">
+                <span className="text-2xl font-bold text-foreground">--</span>
+                <span className="text-xs uppercase text-muted-foreground">minutes</span>
+            </div>
+            <div className="flex flex-col items-center">
+                <span className="text-2xl font-bold text-foreground">--</span>
+                <span className="text-xs uppercase text-muted-foreground">seconds</span>
+            </div>
+        </div>
+    );
+  }
 
   const timerComponents: any[] = [];
+  const timeEntries = Object.entries(timeLeft);
 
-  Object.keys(timeLeft).forEach((interval) => {
-    if (!(timeLeft as any)[interval] && interval !== 'seconds' && Object.keys(timerComponents).length === 0) {
-      return;
-    }
-
+  timeEntries.forEach(([interval, value]) => {
     timerComponents.push(
       <div key={interval} className="flex flex-col items-center">
         <span className="text-2xl font-bold text-foreground">
-          {String((timeLeft as any)[interval]).padStart(2, '0')}
+          {String(value).padStart(2, '0')}
         </span>
         <span className="text-xs uppercase text-muted-foreground">{interval}</span>
       </div>
     );
   });
+  
+  if (timerComponents.length === 0) {
+    return <div className="p-4 bg-muted rounded-lg text-center"><span>Time's up!</span></div>
+  }
 
   return (
     <div className="flex justify-center gap-4 p-4 bg-muted rounded-lg">
-      {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+      {timerComponents}
     </div>
   );
 }
