@@ -9,6 +9,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
+import CtaButton from "../common/cta-button";
 
 const testimonials = [
   {
@@ -70,6 +71,7 @@ export default function TestimonialsSection() {
           <CarouselPrevious className="hidden sm:flex"/>
           <CarouselNext className="hidden sm:flex"/>
         </Carousel>
+        <CtaButton />
       </div>
     </section>
   );

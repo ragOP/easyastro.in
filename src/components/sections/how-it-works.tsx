@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DetailsIcon, PsychicIcon, DeliveryIcon } from "@/components/icons";
+import CtaButton from "../common/cta-button";
 
 const steps = [
   {
@@ -37,6 +38,7 @@ export default function HowItWorksSection() {
             </Card>
           ))}
         </div>
+        <CtaButton />
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import { ArtIcon, ReadingIcon, RevelationIcon } from "@/components/icons";
 import { Check } from "lucide-react";
+import CtaButton from "../common/cta-button";
 
 const deliverables = [
     {
@@ -40,6 +41,7 @@ export default function WhatYouReceiveSection() {
                 <p className="text-center mt-8 text-lg font-semibold text-accent flex items-center justify-center gap-2">
                     <Check className="h-5 w-5" /> Every order is 100% private and confidential.
                 </p>
+                <CtaButton />
             </div>
         </section>
     );

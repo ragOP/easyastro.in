@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
+import CtaButton from "../common/cta-button";
 
 const galleryItems = [
   {
@@ -95,6 +96,7 @@ export default function GallerySection() {
             </Carousel>
           </div>
         </div>
+        <CtaButton />
       </div>
     </section>
   );

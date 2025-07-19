@@ -1,3 +1,4 @@
+import CtaButton from "@/components/common/cta-button";
 import { Sparkles } from "lucide-react";
 
 export default function IntroductionSection() {
@@ -16,6 +17,7 @@ export default function IntroductionSection() {
         <p className="text-xl font-semibold text-primary italic">
           Your romantic destiny is waiting – all you need to do is say yes.
         </p>
+        <CtaButton />
       </div>
     </section>
   );

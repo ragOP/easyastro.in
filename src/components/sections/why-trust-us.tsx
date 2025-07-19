@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { CheckCircle } from "lucide-react";
+import CtaButton from "../common/cta-button";
 
 const trustFactors = [
   "Over 100,000 sketches delivered",
@@ -38,6 +39,7 @@ export default function WhyTrustUsSection() {
             />
           </div>
         </div>
+        <CtaButton />
       </div>
     </section>
   );
