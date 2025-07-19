@@ -11,7 +11,7 @@ export default function StickyCtaBar() {
     <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-card p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-primary/20">
         <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-                <div className="text-center hidden sm:block">
+                <div className="text-center">
                     <p className="font-bold text-primary animate-pulse text-sm mb-1">Offer Ends In:</p>
                     <CountdownTimer endTime={offerEndTime} />
                 </div>

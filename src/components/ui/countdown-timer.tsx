@@ -12,9 +12,7 @@ const calculateTimeLeft = (endTime: Date) => {
 
   if (difference > 0) {
     timeLeft = {
-      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((difference / 1000 / 60) % 60),
+      minutes: Math.floor(difference / 1000 / 60),
       seconds: Math.floor((difference / 1000) % 60),
     };
   }
@@ -39,14 +37,6 @@ export default function CountdownTimer({ endTime }: CountdownTimerProps) {
   if (!timeLeft) {
     return (
         <div className="flex justify-center gap-4 p-4 bg-muted rounded-lg animate-pulse">
-            <div className="flex flex-col items-center">
-                <span className="text-2xl font-bold text-foreground">--</span>
-                <span className="text-xs uppercase text-muted-foreground">days</span>
-            </div>
-            <div className="flex flex-col items-center">
-                <span className="text-2xl font-bold text-foreground">--</span>
-                <span className="text-xs uppercase text-muted-foreground">hours</span>
-            </div>
             <div className="flex flex-col items-center">
                 <span className="text-2xl font-bold text-foreground">--</span>
                 <span className="text-xs uppercase text-muted-foreground">minutes</span>
@@ -78,7 +68,7 @@ export default function CountdownTimer({ endTime }: CountdownTimerProps) {
   }
 
   return (
-    <div className="flex justify-center gap-4 p-4 bg-muted rounded-lg">
+    <div className="flex justify-center gap-4 py-0 px-4 bg-muted rounded-lg">
       {timerComponents}
     </div>
   );
