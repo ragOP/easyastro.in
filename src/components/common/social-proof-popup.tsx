@@ -35,8 +35,8 @@ export default function SocialProofPopup() {
         };
 
         const scheduleNextPopup = () => {
-            // Wait for a random time between 7 and 20 seconds before showing the next popup
-            const randomDelay = Math.floor(Math.random() * (20000 - 7000 + 1)) + 7000;
+            // Wait for a random time between 5 and 10 seconds before showing the next popup
+            const randomDelay = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
             setTimeout(() => {
                 showRandomPopup();
                 scheduleNextPopup();
