@@ -51,7 +51,7 @@ export default function GallerySection() {
             <p className="text-lg text-foreground/80 mb-6">
               Imagine seeing the detailed features of the person you’re destined for. Our previous sketches have amazed thousands with their accuracy, beauty, and personal resonance.
             </p>
-            <div className="space-y-2 text-lg text-foreground/80 mb-8">
+            <div className="space-y-2 text-lg text-foreground/80 mb-5">
                 {features.map((feature, index) => (
                     <p key={index}>{feature}</p>
                 ))}
