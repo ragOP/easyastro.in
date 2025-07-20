@@ -1,3 +1,4 @@
+
 "use client";
 import {
   Carousel,
@@ -15,24 +16,24 @@ import React from "react";
 
 const testimonials = [
   {
-    name: "Priya S.",
-    quote: "I was actually shocked... the sketch looked like someone I already had feelings for. And the reading? Scary accurate!",
+    name: "Riya Malhotra",
+    quote: "Bhai sach me rula diya yaar 😭😭 Ye sketch bilkul mere crush jaisa dikhta hai... I don’t know how you guys do this! Full filmy vibes 😍 100% recommending this to my girls group 🩷",
   },
   {
-    name: "Suresh",
-    quote: "I never thought an astrology-based sketch could be this accurate! The reading gave me deep insights into my future partner. Loved it!",
+    name: "Aisha Khan",
+    quote: "I was literally speechless when I opened it. The sketch looked SO much like the guy I’ve had a crush on for years. Like seriously, same eyes, same smile. You’re insane!!",
   },
   {
-    name: "Raghav",
-    quote: "Skeptical at first, but I was blown away. The personality details were so on point. This is truly magical!",
+    name: "Simran Kaur",
+    quote: "Omg mujhe laga ye koi scam hoga but guys… itna accurate?! Sketch dekh ke shock lag gaya 😂 He looks just like someone I secretly like. Ab toh usko propose karne ka plan hai 😭💘",
   },
   {
-    name: "Anjali K.",
-    quote: "The drawing is beautiful and the reading was so insightful. I feel more hopeful about finding love than ever before.",
+    name: "Tanvi Desai",
+    quote: "It felt so magical. The drawing looked just like my ex I’m still not over 🙈 And the love report? Spooky accurate! I’m sending this to my bestie next 💌",
   },
   {
-    name: "Neha P.",
-    quote: "The sketch was breathtakingly beautiful and the personality traits described were so accurate it gave me chills. It felt like they already knew him.",
+    name: "Anjali Bansal",
+    quote: "Sachi bataun? Maine bas mazaak me mangwaya tha… par jab sketch dekha na, dil hil gaya 🥹💔 It was literally him. The details were next level. Pls keep doing this amazing work ❤️",
   },
   {
     name: "Vikram R.",
