@@ -24,7 +24,7 @@ const deliverables = [
 
 export default function WhatYouReceiveSection() {
     return (
-        <section className="py-16 sm:py-24 bg-background">
+        <section className="py-14 sm:py-20 bg-background">
             <div className="container mx-auto">
                 <div className="max-w-xl mx-auto text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-headline mb-4">What You Receive</h2>

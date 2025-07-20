@@ -46,7 +46,7 @@ const features = [
 
 export default function GallerySection() {
   return (
-    <section className="py-16 sm:py-24 bg-card">
+    <section className="py-14 sm:py-20 bg-card">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
