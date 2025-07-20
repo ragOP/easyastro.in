@@ -3,7 +3,7 @@ import CtaButton from "@/components/common/cta-button";
 
 export default function IntroductionSection() {
   return (
-    <section className="py-14 sm:py-20 bg-background">
+    <section className="py-12 sm:py-16 bg-background">
       <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <div className="text-center lg:text-left">
           <h2 className="font-headline text-3xl md:text-4xl text-foreground mb-6">
