@@ -28,7 +28,7 @@ const stats = [
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-7 pb-7 sm:py-16 bg-card">
+    <section className="relative overflow-hidden pt-2 pb-7 sm:py-16 bg-card">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background opacity-50"></div>
       <div className="container relative z-10 mx-auto">
         <div className="grid lg:grid-cols-2 lg:gap-12 lg:items-center">
