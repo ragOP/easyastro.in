@@ -28,7 +28,7 @@ const stats = [
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-4 pb-7 sm:py-16 bg-card">
+    <section className="relative overflow-hidden pt-7 pb-7 sm:py-16 bg-card">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background opacity-50"></div>
       <div className="container relative z-10 mx-auto">
         <div className="grid lg:grid-cols-2 lg:gap-12 lg:items-center">
@@ -38,7 +38,7 @@ export default function HeroSection() {
             </h1>
             <div className="lg:hidden my-8">
               <Image
-                src="https://ik.imagekit.io/5r36kvobl/image.png"
+                src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png"
                 alt="Soulmate Sketch Example"
                 width={500}
                 height={500}
@@ -65,7 +65,7 @@ export default function HeroSection() {
 
           <div className="hidden lg:block">
             <Image
-              src="https://ik.imagekit.io/5r36kvobl/image.png"
+              src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png"
               alt="Soulmate Sketch Example"
               width={500}
               height={500}
