@@ -99,17 +99,17 @@ const testimonials = [
 
 function TestimonialCard({ name, quote }: { name: string, quote: string }) {
     return (
-        <Card className="h-[280px] bg-card shadow-lg border-accent/20 flex flex-col">
+        <Card className="h-full bg-card shadow-lg border-accent/20 flex flex-col">
             <CardContent className="p-6 flex-grow flex flex-col justify-between">
                 <div>
                     <div className="flex text-primary mb-4">
                         {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}
                     </div>
-                    <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4 min-h-[120px] overflow-hidden text-ellipsis line-clamp-5">
+                    <blockquote className="italic text-foreground/80 border-l-2 border-primary pl-4 mb-4">
                         "{quote}"
                     </blockquote>
                 </div>
-              <p className="font-bold text-right text-primary">— {name}</p>
+              <p className="font-bold text-right text-primary mt-auto pt-4">— {name}</p>
             </CardContent>
         </Card>
     );
