@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { CheckCircle } from "lucide-react";
 import CtaButton from "../common/cta-button";
@@ -30,7 +31,7 @@ export default function WhyTrustUsSection() {
           </div>
           <div className="order-1 lg:order-2 flex justify-center">
             <Image
-              src="https://ik.imagekit.io/5r36kvobl/image.png"
+              src="https://ik.imagekit.io/5r36kvobl/image.png?updatedAt=1753005885471"
               alt="Beautiful soulmate sketch"
               width={500}
               height={500}
