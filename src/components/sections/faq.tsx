@@ -32,7 +32,7 @@ export default function FaqSection() {
   return (
     <section className="py-7 sm:py-16 bg-background">
       <div className="container mx-auto max-w-3xl">
-        <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-headline text-center mb-7 sm:mb-16">
           Frequently Asked Questions
         </h2>
         <Accordion type="single" collapsible className="w-full">

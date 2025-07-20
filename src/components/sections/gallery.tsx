@@ -47,7 +47,7 @@ export default function GallerySection() {
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
-            <h2 className="text-3xl md:text-4xl font-headline mb-4">Past Work / Proof</h2>
+            <h2 className="text-3xl md:text-4xl font-headline mb-7">Past Work / Proof</h2>
             <p className="text-lg text-foreground/80 mb-6">
               Imagine seeing the detailed features of the person you’re destined for. Our previous sketches have amazed thousands with their accuracy, beauty, and personal resonance.
             </p>

@@ -6,7 +6,7 @@ export default function IntroductionSection() {
     <section className="py-7 sm:py-16 bg-background">
       <div className="container mx-auto grid lg:grid-cols-2 gap-12 items-center">
         <div className="text-center lg:text-left">
-          <h2 className="font-headline text-3xl md:text-4xl text-foreground mb-6">
+          <h2 className="font-headline text-3xl md:text-4xl text-foreground mb-7">
             Is your heart longing for that special connection?
           </h2>
           <div className="lg:hidden my-8">

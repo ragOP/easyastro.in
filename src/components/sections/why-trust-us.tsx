@@ -16,7 +16,7 @@ export default function WhyTrustUsSection() {
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
-            <h2 className="text-3xl md:text-4xl font-headline mb-6">Why Trust Us?</h2>
+            <h2 className="text-3xl md:text-4xl font-headline mb-7">Why Trust Us?</h2>
             <ul className="space-y-4 mb-8">
               {trustFactors.map((factor, index) => (
                 <li key={index} className="flex items-center gap-3">
