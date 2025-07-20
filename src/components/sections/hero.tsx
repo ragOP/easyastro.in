@@ -33,7 +33,7 @@ export default function HeroSection() {
       <div className="container relative z-10 mx-auto">
         <div className="grid lg:grid-cols-2 lg:gap-12 lg:items-center">
           <div className="text-center lg:text-left">
-            <h1 className="font-headline font-bold text-4xl md:text-5xl text-primary leading-tight tracking-wide mb-4">
+            <h1 className="font-headline font-bold text-3xl md:text-5xl text-primary leading-tight tracking-wide mb-4">
               Discover Your Soulmate’s Face Today!
             </h1>
             <div className="lg:hidden my-8">
