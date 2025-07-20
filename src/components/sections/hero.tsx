@@ -50,7 +50,7 @@ export default function HeroSection() {
             <p className="max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-foreground/80 mb-8">
               Ever wondered who your true soulmate is? Experience the magic of seeing your soulmate’s face – drawn just for you by gifted psychics and astrology experts.
             </p>
-            <a href="https://superprofile.bio/vp/Soulmate-sketch?checkout=true">
+            <a href={process.env.NEXT_PUBLIC_CTA_URL}>
               <Button size="lg" className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine">
                 Reveal My Soulmate Now
               </Button>

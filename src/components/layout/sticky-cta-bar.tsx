@@ -21,7 +21,7 @@ export default function StickyCtaBar() {
                 </div>
             </div>
             
-            <a href="https://superprofile.bio/vp/Soulmate-sketch?checkout=true" className="w-auto shrink-0">
+            <a href={process.env.NEXT_PUBLIC_CTA_URL} className="w-auto shrink-0">
                 <Button size="lg" className="w-full font-bold text-base sm:text-lg py-3 sm:py-6 px-4 sm:px-6 animate-shine text-center">
                     Reveal My Soulmate
                 </Button>
