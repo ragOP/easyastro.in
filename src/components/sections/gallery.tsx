@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import {
   Carousel,
@@ -7,34 +9,25 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
 import CtaButton from "../common/cta-button";
+import Autoplay from "embla-carousel-autoplay";
+import React from "react";
 
 const galleryItems = [
   {
-    src: "https://placehold.co/500x600.png",
+    src: "https://ik.imagekit.io/5r36kvobl/Reviews%20-%20Soulmate/2.png",
     hint: "portrait sketch",
     alt: "Example of a soulmate sketch",
   },
   {
-    src: "https://placehold.co/500x601.png",
+    src: "https://ik.imagekit.io/5r36kvobl/Reviews%20-%2-Soulmate/3.png",
     hint: "pencil drawing",
     alt: "Another example of a soulmate sketch",
   },
   {
-    src: "https://placehold.co/500x602.png",
+    src: "https://ik.imagekit.io/5r36kvobl/Reviews%20-%20Soulmate/1.png",
     hint: "artistic portrait",
     alt: "A beautiful soulmate sketch",
-  },
-  {
-    src: "https://placehold.co/500x603.png",
-    hint: "charcoal sketch",
-    alt: "A detailed soulmate sketch",
-  },
-    {
-    src: "https://placehold.co/500x604.png",
-    hint: "psychic art",
-    alt: "An intuitive soulmate sketch",
   },
 ];
 
@@ -44,6 +37,10 @@ const features = [
 ]
 
 export default function GallerySection() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  );
+
   return (
     <section className="py-7 sm:py-16 bg-card">
       <div className="container mx-auto">
@@ -65,11 +62,14 @@ export default function GallerySection() {
                 align: "start",
                 loop: true,
               }}
+              plugins={[plugin.current]}
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
               className="w-full max-w-sm mx-auto"
             >
               <CarouselContent>
                 {galleryItems.map((item, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2">
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                     <div className="p-1">
                       <Card className="overflow-hidden shadow-lg border-primary/20">
                         <CardContent className="flex aspect-[5/6] items-center justify-center p-0">
