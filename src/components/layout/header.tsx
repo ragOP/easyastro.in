@@ -9,6 +9,7 @@ export default function Header() {
           alt="Easy Astro Logo"
           width={200}
           height={50}
+          className="w-40 h-auto sm:w-52"
           priority
         />
       </div>
