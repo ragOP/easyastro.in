@@ -25,7 +25,7 @@ export default function IntroductionSection() {
           <p className="text-xl font-semibold text-primary italic">
             Your romantic destiny is waiting – all you need to do is say yes.
           </p>
-          <div className="mt-12">
+          <div className="mt-11">
             <CtaButton />
           </div>
         </div>
