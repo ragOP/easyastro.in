@@ -22,7 +22,7 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="pt-7 pb-12 sm:py-16 bg-card">
+    <section className="py-7 sm:py-16 bg-card">
       <div className="container mx-auto">
         <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">How It Works</h2>
         <div className="grid md:grid-cols-3 gap-8">

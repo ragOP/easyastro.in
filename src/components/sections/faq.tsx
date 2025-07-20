@@ -30,7 +30,7 @@ const faqs = [
 
 export default function FaqSection() {
   return (
-    <section className="py-12 sm:py-16 bg-background">
+    <section className="py-7 sm:py-16 bg-background">
       <div className="container mx-auto max-w-3xl">
         <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">
           Frequently Asked Questions

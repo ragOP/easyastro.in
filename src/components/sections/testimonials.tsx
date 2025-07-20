@@ -139,7 +139,7 @@ function CarouselItems() {
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-12 sm:py-16 bg-background">
+    <section className="py-7 sm:py-16 bg-background">
       <div className="container mx-auto">
         <h2 className="text-3xl md:text-4xl font-headline text-center mb-12">What Our Clients Say</h2>
         <Carousel
