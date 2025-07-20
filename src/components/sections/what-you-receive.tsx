@@ -47,7 +47,7 @@ export default function WhatYouReceiveSection() {
                 <div className="mt-8 text-center text-lg font-semibold text-accent">
                     <p>Every order is 100% private and confidential.</p>
                 </div>
-                <div className="mt-16">
+                <div className="mt-11">
                     <CtaButton />
                 </div>
             </div>

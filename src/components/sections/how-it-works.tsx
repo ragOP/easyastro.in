@@ -38,7 +38,7 @@ export default function HowItWorksSection() {
             </Card>
           ))}
         </div>
-        <div className="mt-16">
+        <div className="mt-11">
           <CtaButton />
         </div>
       </div>

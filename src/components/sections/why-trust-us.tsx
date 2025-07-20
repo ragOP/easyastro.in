@@ -39,7 +39,7 @@ export default function WhyTrustUsSection() {
             />
           </div>
         </div>
-        <div className="mt-16">
+        <div className="mt-11">
           <CtaButton />
         </div>
       </div>
