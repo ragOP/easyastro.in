@@ -35,7 +35,7 @@ export default function WhyTrustUsSection() {
               alt="Beautiful soulmate sketch"
               width={500}
               height={500}
-              className="rounded-lg shadow-2xl shadow-primary/20 aspect-square object-cover"
+              className="aspect-square object-contain"
             />
           </div>
         </div>
