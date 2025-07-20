@@ -30,12 +30,11 @@ export default function WhyTrustUsSection() {
           </div>
           <div className="order-1 lg:order-2 flex justify-center">
             <Image
-              src="https://placehold.co/500x500.png"
-              alt="A trustworthy psychic holding a crystal ball"
+              src="https://ik.imagekit.io/5r36kvobl/image.png"
+              alt="Beautiful soulmate sketch"
               width={500}
               height={500}
-              data-ai-hint="trustworthy psychic"
-              className="rounded-full shadow-2xl shadow-primary/20 aspect-square object-cover"
+              className="rounded-lg shadow-2xl shadow-primary/20 aspect-square object-cover"
             />
           </div>
         </div>
