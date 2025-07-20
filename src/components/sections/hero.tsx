@@ -5,22 +5,22 @@ import Image from "next/image";
 
 const stats = [
   {
-    icon: <Users className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
+    icon: <Users className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
     value: "100,000+",
     label: "Happy Clients",
   },
   {
-    icon: <Star className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
+    icon: <Star className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
     value: "4.8/5",
     label: "Average Rating",
   },
   {
-    icon: <Clock className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
+    icon: <Clock className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
     value: "24 Hours",
     label: "Delivered Privately",
   },
   {
-    icon: <ShieldCheck className="h-10 w-10 sm:h-8 sm:w-8 text-primary" />,
+    icon: <ShieldCheck className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
     value: "100%",
     label: "Safe & Confidential",
   },
@@ -79,9 +79,9 @@ export default function HeroSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2 text-center">
-              {React.cloneElement(stat.icon, { className: 'h-10 w-10 sm:h-8 sm:w-8 text-primary' })}
-              <p className="text-4xl sm:text-3xl font-bold text-primary">{stat.value}</p>
-              <p className="text-lg sm:text-base text-foreground/70">{stat.label}</p>
+              {React.cloneElement(stat.icon, { className: 'h-9 w-9 sm:h-8 sm:w-8 text-primary' })}
+              <p className="text-3xl sm:text-2xl font-bold text-primary">{stat.value}</p>
+              <p className="text-base sm:text-sm text-foreground/70">{stat.label}</p>
             </div>
           ))}
         </div>
