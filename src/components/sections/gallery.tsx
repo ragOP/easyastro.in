@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -20,7 +21,7 @@ const galleryItems = [
     alt: "Example of a soulmate sketch",
   },
   {
-    src: "https://ik.imagekit.io/5r36kvobl/Reviews%20-%2-Soulmate/3.png",
+    src: "https://ik.imagekit.io/5r36kvobl/Reviews%20-%20Soulmate/3.png",
     hint: "pencil drawing",
     alt: "Another example of a soulmate sketch",
   },
@@ -58,19 +59,17 @@ export default function GallerySection() {
           </div>
           <div>
             <Carousel
-              opts={{
-                align: "start",
-                loop: true,
-              }}
               plugins={[plugin.current]}
+              className="w-full max-w-xs mx-auto"
               onMouseEnter={plugin.current.stop}
               onMouseLeave={plugin.current.reset}
-              className="w-full max-w-sm mx-auto"
+              opts={{
+                loop: true,
+              }}
             >
               <CarouselContent>
                 {galleryItems.map((item, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <div className="p-1">
+                  <CarouselItem key={index}>
                       <Card className="overflow-hidden shadow-lg border-primary/20">
                         <CardContent className="flex aspect-[5/6] items-center justify-center p-0">
                           <Image
@@ -83,12 +82,11 @@ export default function GallerySection() {
                           />
                         </CardContent>
                       </Card>
-                    </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex"/>
-              <CarouselNext className="hidden sm:flex"/>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
             </Carousel>
           </div>
         </div>
