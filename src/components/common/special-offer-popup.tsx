@@ -35,7 +35,7 @@ export default function SpecialOfferPopup({ isOpen, onClose }: SpecialOfferPopup
         </CardHeader>
         <CardContent className="text-center">
             <p className="text-foreground/80 mb-4">
-                You're just moments away from seeing your soulmate. As a special gift, we're giving you an extra <span className="font-bold text-primary">10% DISCOUNT</span> on your order!
+                You're just moments away from seeing your soulmate. As a special gift, we're giving you an extra <span className="font-bold text-primary">25% DISCOUNT</span> on your order!
             </p>
             <div className="p-4 bg-primary/10 rounded-lg mb-6 text-left">
                 <p className="font-semibold text-primary">Your order includes:</p>
@@ -44,9 +44,9 @@ export default function SpecialOfferPopup({ isOpen, onClose }: SpecialOfferPopup
                     <li className="font-bold">A FREE In-Depth Love Reading</li>
                 </ul>
             </div>
-          <a href={process.env.NEXT_PUBLIC_CTA_URL} onClick={onClose}>
+          <a href={process.env.NEXT_PUBLIC_DISCOUNT_CTA_URL} onClick={onClose}>
             <Button size="lg" className="w-full font-bold text-lg py-6 animate-shine">
-              Claim My 10% Discount Now
+              Claim My 25% Discount Now
             </Button>
           </a>
           <p className="mt-2 text-sm text-muted-foreground">Offer applied at checkout.</p>
