@@ -43,7 +43,7 @@ export default function GallerySection() {
   );
 
   return (
-    <section className="py-7 sm:py-16 bg-card">
+    <section className="py-7 sm:py-16 bg-background">
       <div className="container mx-auto">
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
           <div className="text-center lg:text-left">

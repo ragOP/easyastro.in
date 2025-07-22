@@ -1,3 +1,4 @@
+
 import { ArtIcon, ReadingIcon } from "@/components/icons";
 import { CircleDollarSign } from "lucide-react";
 import CtaButton from "../common/cta-button";
@@ -23,14 +24,14 @@ const deliverables = [
 
 export default function WhatYouReceiveSection() {
     return (
-        <section className="py-7 sm:py-16 bg-background">
+        <section className="py-7 sm:py-16 bg-card">
             <div className="container mx-auto">
                 <div className="max-w-xl mx-auto text-center mb-7 sm:mb-16">
                     <h2 className="text-3xl md:text-4xl font-headline mb-4">What You Receive</h2>
                 </div>
                 <div className="grid md:grid-cols-1 gap-8 max-w-3xl mx-auto">
                     {deliverables.map((item, index) => (
-                        <div key={index} className="flex items-start gap-6 p-6 rounded-lg bg-card shadow-md border border-primary/10">
+                        <div key={index} className="flex items-start gap-6 p-6 rounded-lg bg-background shadow-md border border-primary/10">
                             <div className="flex-shrink-0">{item.icon}</div>
                             <div>
                                 <h3 className="text-xl font-headline text-primary mb-2">{item.title}</h3>
