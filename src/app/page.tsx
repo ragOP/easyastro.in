@@ -20,8 +20,8 @@ export default function Home() {
         <HeroSection />
         <IntroductionSection />
         <HowItWorksSection />
-        <WhatYouReceiveSection />
         <GallerySection />
+        <WhatYouReceiveSection />
         <TestimonialsSection />
         <WhyTrustUsSection />
         <FaqSection />
