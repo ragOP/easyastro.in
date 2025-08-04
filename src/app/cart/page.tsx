@@ -139,8 +139,8 @@ export default function CartPage() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    // amount: total,
-                    amount: 3,
+                    amount: total,
+                    // amount: 3,
                 }),
             });
 
@@ -154,8 +154,8 @@ export default function CartPage() {
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-                // amount: total,
-                amount: 3,
+                amount: total,
+                // amount: 3,
                 currency: 'INR',
                 name: 'AstraSoul',
                 description: 'Soulmate Sketch Order Payment',
@@ -169,8 +169,8 @@ export default function CartPage() {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                // amount: total,
-                                amount: 3,
+                                amount: total,
+                                // amount: 3,
                                 razorpayOrderId: response.razorpay_order_id,
                                 razorpayPaymentId: response.razorpay_payment_id,
                                 razorpaySignature: response.razorpay_signature,
