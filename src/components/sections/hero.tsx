@@ -1,8 +1,9 @@
+"use client";
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Users, Star, Clock, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-
+import { useRouter } from 'next/navigation';
 const stats = [
   {
     icon: <Users className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
@@ -26,7 +27,13 @@ const stats = [
   },
 ];
 
+
+
 export default function HeroSection() {
+   const router = useRouter();
+  const handleRedirect = () => {
+    router.push('/cart');
+  };
   return (
     <section className="relative overflow-hidden pt-2 pb-7 sm:py-16 bg-card">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background opacity-50"></div>
@@ -50,11 +57,13 @@ export default function HeroSection() {
             <p className="max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-foreground/80 mb-8">
               Ever wondered who your true soulmate is? Experience the magic of seeing your soulmate’s face – drawn just for you by gifted psychics and astrology experts.
             </p>
-            <a href={process.env.NEXT_PUBLIC_CTA_URL}>
-              <Button size="lg" className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine">
-                Reveal My Soulmate Now
-              </Button>
-            </a>
+            <Button
+              size="lg"
+              className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine"
+              onClick={handleRedirect}
+            >
+              Reveal My Soulmate Now
+            </Button>
             <p className="mt-4 text-sm text-primary/80 animate-pulse">
               Only a few spots left! Hurry before the special offer ends.
             </p>

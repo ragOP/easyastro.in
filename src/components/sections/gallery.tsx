@@ -37,10 +37,18 @@ const features = [
     "Rooted in astrology and psychic intuition."
 ]
 
-export default function GallerySection() {
+interface GallerySectionProps {
+  isCartPage?: boolean;
+}
+
+export default function GallerySection({ isCartPage = false }: GallerySectionProps) {
   const plugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <section className="py-7 sm:py-16 bg-background">
@@ -91,7 +99,8 @@ export default function GallerySection() {
           </div>
         </div>
         <div className="mt-11">
-          <CtaButton />
+      
+            <CtaButton isCartPage={isCartPage} />
         </div>
       </div>
     </section>

@@ -5,12 +5,16 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import CountdownTimer from "@/components/ui/countdown-timer";
 import SpecialOfferPopup from "@/components/common/special-offer-popup";
-
+import { useRouter } from 'next/navigation';
 export default function StickyCtaBar() {
+  
   const [offerEndTime, setOfferEndTime] = useState<Date | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupHasBeenShown, setPopupHasBeenShown] = useState(false);
-
+   const router = useRouter();
+  const handleRedirect = () => {
+    router.push('/cart');
+  };
   useEffect(() => {
     // This runs only on the client
     setOfferEndTime(new Date(Date.now() + 10 * 60 * 1000));
@@ -57,7 +61,9 @@ export default function StickyCtaBar() {
           </div>
           
           <a href={process.env.NEXT_PUBLIC_CTA_URL} className="w-auto shrink-0">
-            <Button size="lg" className="w-full font-bold text-base sm:text-lg py-3 sm:py-6 px-4 sm:px-6 animate-shine text-center">
+            <Button 
+               onClick={handleRedirect}
+            size="lg" className="w-full font-bold text-base sm:text-lg py-3 sm:py-6 px-4 sm:px-6 animate-shine text-center">
               Reveal My Soulmate
             </Button>
           </a>
