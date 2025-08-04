@@ -101,19 +101,7 @@ export default function CartContent({
             {/* Order Summary and Forms - Mobile: Stacked */}
             <div className="space-y-4 sm:space-y-6">
               {/* Additional Products Section */}
-              <div
-                className={`transition-all duration-700 delay-700 transform ${
-                  animateElements
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0"
-                }`}
-              >
-                <AdditionalProducts
-                  products={additionalProducts}
-                  selectedProducts={selectedProducts}
-                  onProductToggle={onProductToggle}
-                />
-              </div>
+           
 
               {/* Consultation Form */}
               <div
@@ -129,7 +117,19 @@ export default function CartContent({
                   setFormData={setConsultationFormData}
                 />
               </div>
-
+   <div
+                className={`transition-all duration-700 delay-700 transform ${
+                  animateElements
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <AdditionalProducts
+                  products={additionalProducts}
+                  selectedProducts={selectedProducts}
+                  onProductToggle={onProductToggle}
+                />
+              </div>
               {/* Order Summary */}
               <div
                 className={`transition-all duration-700 delay-900 transform ${
