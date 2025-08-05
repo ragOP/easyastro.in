@@ -62,7 +62,7 @@ export default function HeroSection() {
               className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine"
               onClick={handleRedirect}
             >
-              Reveal My Soulmate Now
+              Reveal My Soulmate Now!
             </Button>
             <p className="mt-4 text-sm text-primary/80 animate-pulse">
               Only a few spots left! Hurry before the special offer ends.
