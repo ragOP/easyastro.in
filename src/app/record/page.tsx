@@ -268,7 +268,7 @@ export default function RecordPage() {
                       {filteredOrders.length > 0 && (
                         <tfoot>
                           <tr className="bg-muted/50 border-t border-border font-semibold">
-                            <td colSpan={8} className="px-4 py-3 text-right">Total-</td>
+                            <td colSpan={8} className="px-4 py-3 text-right">Total</td>
                             <td className="px-4 py-3 text-primary">₹{totalAmount}</td>
                             <td></td>
                           </tr>
