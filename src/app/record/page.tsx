@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Card, CardContent } from "@/components/ui/card";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 import clsx from "clsx";
 import Papa from "papaparse";
 
@@ -177,28 +176,24 @@ export default function RecordPage() {
             </button>
           </div>
 
-          {filter === "custom" && (
-            <div className="mb-6 flex gap-4 items-center">
-              <DatePicker
-                selected={customStart}
-                onChange={(date) => setCustomStart(date)}
-                selectsStart
-                startDate={customStart}
-                endDate={customEnd}
-                placeholderText="Start Date"
-                className="border rounded px-2 py-1"
-              />
-              <DatePicker
-                selected={customEnd}
-                onChange={(date) => setCustomEnd(date)}
-                selectsEnd
-                startDate={customStart}
-                endDate={customEnd}
-                placeholderText="End Date"
-                className="border rounded px-2 py-1"
-              />
-            </div>
-          )}
+       {filter === "custom" && (
+  <div className="mb-6 flex gap-4 items-center">
+    <input
+      type="date"
+      value={customStart ? customStart.toISOString().split("T")[0] : ""}
+      onChange={(e) => setCustomStart(new Date(e.target.value))}
+      className="border px-2 py-1 rounded-md text-sm text-foreground bg-background"
+    />
+    <input
+      type="date"
+      value={customEnd ? customEnd.toISOString().split("T")[0] : ""}
+      onChange={(e) => setCustomEnd(new Date(e.target.value))}
+      className="border px-2 py-1 rounded-md text-sm text-foreground bg-background"
+    />
+  </div>
+)}
+
+
 
           <div className="max-w-7xl mx-auto">
             {loading ? (
