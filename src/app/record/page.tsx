@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import clsx from "clsx";
+import Papa from "papaparse";
 
 interface Order {
   _id: string;
@@ -31,7 +32,6 @@ export default function RecordPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterType>("all");
-  const [sortByPrice, setSortByPrice] = useState<"asc" | "desc">("desc");
   const [customStart, setCustomStart] = useState<Date | null>(null);
   const [customEnd, setCustomEnd] = useState<Date | null>(null);
 
@@ -41,14 +41,15 @@ export default function RecordPage() {
 
   useEffect(() => {
     applyFilters();
-  }, [orders, filter, sortByPrice, customStart, customEnd]);
+  }, [orders, filter, customStart, customEnd]);
 
   const fetchOrders = async () => {
     try {
       const response = await fetch('https://skyscale-be.onrender.com/api/get-orders3');
       const result = await response.json();
       if (result.success) {
-        setOrders(result.data);
+        const sorted = result.data.sort((a: Order, b: Order) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
+        setOrders(sorted);
       } else {
         setError('Failed to fetch orders');
       }
@@ -64,35 +65,29 @@ export default function RecordPage() {
   };
 
   const applyFilters = () => {
-    let filtered = [...orders];
     const now = new Date();
+    let filtered = [...orders];
 
     switch (filter) {
       case "today":
-        filtered = filtered.filter((order) => {
-          const d = new Date(order.orderDate);
-          return d.toDateString() === now.toDateString();
-        });
+        filtered = filtered.filter(order => new Date(order.orderDate).toDateString() === now.toDateString());
         break;
       case "yesterday":
         const y = new Date();
         y.setDate(y.getDate() - 1);
-        filtered = filtered.filter((order) => {
-          const d = new Date(order.orderDate);
-          return d.toDateString() === y.toDateString();
-        });
+        filtered = filtered.filter(order => new Date(order.orderDate).toDateString() === y.toDateString());
         break;
       case "last7days":
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(now.getDate() - 6);
-        filtered = filtered.filter((order) => {
+        filtered = filtered.filter(order => {
           const d = new Date(order.orderDate);
           return isWithin(d, sevenDaysAgo, now);
         });
         break;
       case "custom":
         if (customStart && customEnd) {
-          filtered = filtered.filter((order) => {
+          filtered = filtered.filter(order => {
             const d = new Date(order.orderDate);
             return isWithin(d, customStart, customEnd);
           });
@@ -102,18 +97,38 @@ export default function RecordPage() {
         break;
     }
 
-    filtered.sort((a, b) => sortByPrice === "asc" ? a.amount - b.amount : b.amount - a.amount);
+    filtered.sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
     setFilteredOrders(filtered);
   };
 
   const formatDate = (dateString: string) => new Date(dateString).toLocaleDateString();
   const formatDateTime = (dateTimeString: string) => new Date(dateTimeString).toLocaleString();
+  const isNewOrder = (orderDate: string) => (Date.now() - new Date(orderDate).getTime()) / (1000 * 60) < 60;
 
-  const isNewOrder = (orderDate: string) => {
-    const now = new Date();
-    const orderTime = new Date(orderDate);
-    const diff = (now.getTime() - orderTime.getTime()) / (1000 * 60); // in minutes
-    return diff < 60;
+  const totalAmount = filteredOrders.reduce((sum, order) => sum + order.amount, 0);
+
+  const exportToCSV = () => {
+    const csvData = filteredOrders.map((order) => ({
+      OrderID: order.orderId,
+      Name: order.fullName,
+      Email: order.email,
+      Phone: order.phoneNumber,
+      Gender: order.gender,
+      DOB: formatDate(order.dob),
+      PlaceOfBirth: order.placeOfBirth,
+      AdditionalProducts: order.additionalProducts.join(", "),
+      Amount: order.amount,
+      OrderDate: formatDateTime(order.orderDate),
+    }));
+
+    const csv = Papa.unparse(csvData);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "orders.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -122,13 +137,13 @@ export default function RecordPage() {
       <main className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
               <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
                 Order Records
               </span>
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Track and manage all soulmate sketch orders with detailed customer information
+              Total Orders: <span className="font-semibold">{filteredOrders.length}</span>
             </p>
           </div>
 
@@ -154,17 +169,12 @@ export default function RecordPage() {
               ))}
             </div>
 
-            <div className="flex items-center gap-3">
-              <label className="text-sm">Sort:</label>
-              <select
-                value={sortByPrice}
-                onChange={(e) => setSortByPrice(e.target.value as "asc" | "desc")}
-                className="border rounded px-2 py-1 text-sm"
-              >
-                <option value="desc">Price: High to Low</option>
-                <option value="asc">Price: Low to High</option>
-              </select>
-            </div>
+            <button
+              onClick={exportToCSV}
+              className="bg-primary text-white text-sm px-4 py-1.5 rounded-full shadow hover:bg-primary/90 transition"
+            >
+              Export CSV
+            </button>
           </div>
 
           {filter === "custom" && (
@@ -255,7 +265,17 @@ export default function RecordPage() {
                           </tr>
                         ))}
                       </tbody>
+                      {filteredOrders.length > 0 && (
+                        <tfoot>
+                          <tr className="bg-muted/50 border-t border-border font-semibold">
+                            <td colSpan={8} className="px-4 py-3 text-right">Total:</td>
+                            <td className="px-4 py-3 text-primary">₹{totalAmount}</td>
+                            <td></td>
+                          </tr>
+                        </tfoot>
+                      )}
                     </table>
+
                     {filteredOrders.length === 0 && (
                       <div className="p-8 text-center text-muted-foreground">No orders found</div>
                     )}
