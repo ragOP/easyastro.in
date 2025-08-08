@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Card, CardContent } from "@/components/ui/card";
+import { BACKEND_URL } from "@/lib/backendUrl";
 
 import clsx from "clsx";
 import Papa from "papaparse";
@@ -44,7 +45,7 @@ export default function RecordPage() {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('https://skyscale-be.onrender.com/api/get-orders3');
+      const response = await fetch(`${BACKEND_URL}/api/lander3/get-orders`);
       const result = await response.json();
       if (result.success) {
         const sorted = result.data.sort((a: Order, b: Order) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
@@ -250,7 +251,7 @@ export default function RecordPage() {
                               <div className="flex flex-wrap gap-1">
                                 {order.additionalProducts.map((product, i) => (
                                   <span key={i} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                                    {product}
+                                    {product} - ₹199
                                   </span>
                                 ))}
                               </div>

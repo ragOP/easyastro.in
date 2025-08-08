@@ -7,6 +7,7 @@ import CartContent from "@/components/cart/cart-content";
 import { useState, useEffect } from "react";
 import TestimonialsSection from "@/components/sections/testimonials";
 import GallerySection from "@/components/sections/gallery";
+import { BACKEND_URL } from "@/lib/backendUrl";
 
 // Mock data for demonstration
 const mockCartItems = [
@@ -133,14 +134,13 @@ export default function CartPage() {
             setIsCheckingOut(true);
 
             // Create Razorpay order
-            const response = await fetch('https://skyscale-be.onrender.com/api/payment/razorpay3', {
+            const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     amount: total,
-                    // amount: 3,
                 }),
             });
 
@@ -155,7 +155,6 @@ export default function CartPage() {
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
                 amount: total,
-                // amount: 3,
                 currency: 'INR',
                 name: 'AstraSoul',
                 description: 'Soulmate Sketch Order Payment',
@@ -163,14 +162,13 @@ export default function CartPage() {
                 handler: async function (response: any) {
                     try {
                         // Create order in database
-                        const orderResponse = await fetch('https://skyscale-be.onrender.com/api/create-order3', {
+                        const orderResponse = await fetch(`${BACKEND_URL}/api/lander3/create-order`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
                                 amount: total,
-                                // amount: 3,
                                 razorpayOrderId: response.razorpay_order_id,
                                 razorpayPaymentId: response.razorpay_payment_id,
                                 razorpaySignature: response.razorpay_signature,
