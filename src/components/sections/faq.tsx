@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+import Link from "next/link";
 const faqs = [
   {
     question: "How accurate is the soulmate sketch?",
@@ -46,6 +46,13 @@ export default function FaqSection() {
               </AccordionContent>
             </AccordionItem>
           ))}
+
+      <Link
+  href="/legal"
+  className="text-brand-700 hover:text-brand-500 underline cursor-pointer"
+>
+  Policy & Support
+</Link>
         </Accordion>
       </div>
     </section>
