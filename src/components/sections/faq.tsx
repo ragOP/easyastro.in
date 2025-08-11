@@ -53,6 +53,7 @@ export default function FaqSection() {
 >
   Policy & Support
 </Link>
+<p>Speklio media</p>
         </Accordion>
       </div>
     </section>
