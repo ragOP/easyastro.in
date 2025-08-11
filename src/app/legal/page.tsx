@@ -12,6 +12,20 @@ export default function LegalPage() {
   const sections = useMemo<Section[]>(
     () => [
       {
+        id: "about-us",
+        title: "About Us",
+        content: (
+          <div className="space-y-4">
+            <p>
+              At EasyAstro, we believe the universe holds answers to questions your heart hasn’t dared to ask yet.
+            </p>
+            <p>
+              We’re a team of passionate astrologers, intuitive artists, and energy readers helping people across India discover their soulmate, unlock wealth, and decode their life path — all through ancient wisdom delivered in modern ways.
+            </p>
+          </div>
+        )
+      },
+      {
         id: "privacy-policy",
         title: "Privacy Policy",
         content: (
@@ -165,10 +179,10 @@ Address -WeWork - Floor 19, C-001/A2, Sector 16B, Noida, Uttar Pradesh 201301</l
           </div>
 
           <h1 className="mt-4 text-3xl sm:text-5xl font-extrabold tracking-tight text-brand-900">
-            EasyAstro Legal & Policies
+            EasyAstro Legal & About Us
           </h1>
           <p className="mt-3 text-slate-600 max-w-2xl">
-            Learn how we handle your data, how deliveries and refunds work, and the terms for using our services.
+            Learn about our story, our policies, and the terms for using our services.
           </p>
 
           {/* Quick Nav */}
@@ -225,6 +239,7 @@ Address -WeWork - Floor 19, C-001/A2, Sector 16B, Noida, Uttar Pradesh 201301</l
               © {new Date().getFullYear()} EasyAstro. All rights reserved.
             </div>
             <div className="flex items-center gap-3 text-sm">
+              <a className="underline hover:text-brand-600" href="#about-us">About</a>
               <a className="underline hover:text-brand-600" href="#privacy-policy">Privacy</a>
               <a className="underline hover:text-brand-600" href="#terms">Terms</a>
               <a className="underline hover:text-brand-600" href="#cookie-policy">Cookies</a>
