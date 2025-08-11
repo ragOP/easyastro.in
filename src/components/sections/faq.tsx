@@ -53,12 +53,12 @@ export default function FaqSection() {
 >
   Policy & Support
 </Link>
- <Link
+ {/* <Link
   href="/about"
   className="text-brand-700 hover:text-brand-500 underline cursor-pointer"
 >
   About
-</Link>
+</Link> */}
 {/* <p>Speklio media</p> */}
         </Accordion>
       </div>
