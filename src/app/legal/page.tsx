@@ -143,6 +143,9 @@ export default function LegalPage() {
               </li>
               <li>Support available Monday–Saturday, 10 AM–6 PM IST.</li>
               <li>Average response time: 24–48 hours.</li>
+              <li>Astrasoul Digital LLP
+GST - 09ACHFA3083A1ZQ
+Address -WeWork - Floor 19, C-001/A2, Sector 16B, Noida, Uttar Pradesh 201301</li>
             </ul>
           </div>
         )
@@ -212,6 +215,7 @@ export default function LegalPage() {
                 <strong>Note:</strong> By using our website, you agree to these policies. If you have questions,{" "}
                 <a className="underline" href="mailto:support@easyastro.in">contact us</a>.
               </p>
+              <p>The refund amount will be credited within 24-48 working hours</p>
             </div>
           </div>
 
