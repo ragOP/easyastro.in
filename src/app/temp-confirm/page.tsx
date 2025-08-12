@@ -99,7 +99,7 @@ export default function TempConfirm() {
           throw new Error("Failed to verify payment status");
         }
 
-        if (statusData.data.state === "PAID") {
+        if (statusData.data.state === "COMPLETED") {
           const createRes = await fetch(
             `${API_BASE}/api/lander3/create-order2`,
             {
@@ -112,17 +112,17 @@ export default function TempConfirm() {
             }
           );
 
+          console.log("createRes", createRes);
           const createData = await createRes.json();
+
+          console.log("createData", createData);
 
           if (createData.success) {
             setPaymentStatus("COMPLETED");
             setOrderDetails({
-              orderId: createData.orderId || merchantId,
-              amount: statusData.data.amount / 100 || parsedData.amount,
-              orderDate: new Date().toLocaleDateString(),
-              estimatedDelivery: new Date(
-                Date.now() + 48 * 60 * 60 * 1000
-              ).toLocaleDateString(),
+              orderId: createData.data.orderId || merchantId,
+              amount: createData.data.amount || parsedData.amount,
+              orderDate: createData.data.orderDate,
             });
 
             localStorage.removeItem("pendingOrderData");
