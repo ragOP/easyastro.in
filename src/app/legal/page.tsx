@@ -81,7 +81,7 @@ export default function LegalPage() {
           <div className="space-y-4">
             <p>Our refund policy outlines when refunds are allowed.</p>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Approved refunds will be credited into original payment method within 5-7Days</li>
+              <li>Approved refunds will be credited into original payment method within 5-7 Days</li>
               <li>
                 As all products are <strong>digital and personalized</strong>, we generally do not offer refunds once the
                 product has been delivered.
