@@ -75,7 +75,7 @@ export default function TempConfirm() {
 
           // 2. Create order in backend
           const createRes = await fetch(
-            `${API_BASE}/api/lander3/create-order`,
+            `${API_BASE}/api/lander3/create-order2`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
