@@ -29,33 +29,6 @@ export default function TempConfirm() {
     description?: string;
   } | null>(null);
 
-  // useEffect(() => {
-  //   // Get order details from sessionStorage (passed from cart page)
-  //   const orderId = sessionStorage.getItem("orderId");
-  //   const amount = sessionStorage.getItem("orderAmount");
-
-  //   if (orderId && amount) {
-  //     setOrderDetails({
-  //       orderId,
-  //       amount: parseInt(amount),
-  //       orderDate: new Date().toLocaleDateString(),
-  //       estimatedDelivery: new Date(
-  //         Date.now() + 48 * 60 * 60 * 1000
-  //       ).toLocaleDateString(),
-  //     });
-  //     // Clear the session storage after getting the data
-  //     sessionStorage.removeItem("orderId");
-  //     sessionStorage.removeItem("orderAmount");
-  //   } else {
-  //     // If no order details found, redirect to home
-  //     router.push("/");
-  //     return;
-  //   }
-
-  //   setLoading(false);
-  //   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  // }, [router]);
-
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const merchantId = urlParams.get("orderId");
@@ -112,10 +85,7 @@ export default function TempConfirm() {
             }
           );
 
-          console.log("createRes", createRes);
           const createData = await createRes.json();
-
-          console.log("createData", createData);
 
           if (createData.success) {
             setPaymentStatus("COMPLETED");
@@ -137,32 +107,35 @@ export default function TempConfirm() {
             });
           }
         } else if (statusData.data.state === "FAILED") {
-          setPaymentStatus("failed");
-          setOrderDetails({
-            orderId: statusData.data.orderId || merchantId,
-            amount: statusData.data.amount / 100, // convert to rupees
-            orderDate: new Date().toLocaleDateString(),
-          });
+          // setPaymentStatus("failed");
+          // setOrderDetails({
+          //   orderId: statusData.data.orderId || merchantId,
+          //   amount: statusData.data.amount / 100, // convert to rupees
+          //   orderDate: new Date().toLocaleDateString(),
+          // });
 
-          setErrorDetails({
-            code: statusData.data.errorCode || "PAYMENT_FAILED",
-            message: "Payment Failed",
-            description:
-              statusData.data.errorContext?.description ||
-              "Your payment could not be processed.",
-          });
+          // setErrorDetails({
+          //   code: statusData.data.errorCode || "PAYMENT_FAILED",
+          //   message: "Payment Failed",
+          //   description:
+          //     statusData.data.errorContext?.description ||
+          //     "Your payment could not be processed.",
+          // });
+
+          router.push("/cart-temp");
         } else {
-          setPaymentStatus("failed");
-          setErrorDetails({
-            code: "PAYMENT_" + (statusData.data.state || "UNKNOWN"),
-            message: "Payment Status: " + (statusData.data.state || "Unknown"),
-            description:
-              "Your payment is in an unexpected state. Please contact support with your order details.",
-          });
+          // setPaymentStatus("failed");
+          // setErrorDetails({
+          //   code: "PAYMENT_" + (statusData.data.state || "UNKNOWN"),
+          //   message: "Payment Status: " + (statusData.data.state || "Unknown"),
+          //   description:
+          //     "Your payment is in an unexpected state. Please contact support with your order details.",
+          // });
+          router.push("/cart-temp");
         }
       } catch (err) {
         console.error("Error verifying payment", err);
-        router.push("/cart");
+        router.push("/cart-temp");
       } finally {
         setLoading(false);
       }

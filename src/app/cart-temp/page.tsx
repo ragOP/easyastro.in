@@ -120,128 +120,12 @@ export default function TempCartPage() {
     });
   };
 
-  //   useEffect(() => {
-  //     loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
-  //       (result) => {
-  //         if (result) {
-  //           console.log("Razorpay script loaded successfully");
-  //         }
-  //       }
-  //     );
-  //   }, []);
-
   const handleConsultationFormSubmit = (data: any) => {
     console.log("Consultation form submitted:", data);
     // Handle form submission
   };
 
-  //   const handleCheckout = async () => {
-  //     try {
-  //       setIsCheckingOut(true);
-
-  //       // Create Razorpay order
-  //       const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           amount: total,
-  //         }),
-  //       });
-
-  //       const result = await response.json();
-
-  //       if (!result.success) {
-  //         throw new Error("Failed to create payment order");
-  //       }
-
-  //       const data = result.data;
-
-  //       const options = {
-  //         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-  //         amount: total,
-  //         currency: "INR",
-  //         name: "AstraSoul",
-  //         description: "Soulmate Sketch Order Payment",
-  //         order_id: data.orderId,
-  //         handler: async function (response: any) {
-  //           try {
-  //             // Create order in database
-  //             const orderResponse = await fetch(
-  //               `${BACKEND_URL}/api/lander3/create-order`,
-  //               {
-  //                 method: "POST",
-  //                 headers: {
-  //                   "Content-Type": "application/json",
-  //                 },
-  //                 body: JSON.stringify({
-  //                   amount: total,
-  //                   razorpayOrderId: response.razorpay_order_id,
-  //                   razorpayPaymentId: response.razorpay_payment_id,
-  //                   razorpaySignature: response.razorpay_signature,
-  //                   name: consultationFormData?.name,
-  //                   email: consultationFormData?.email,
-  //                   phone: consultationFormData?.phoneNumber,
-  //                   dateOfBirth: consultationFormData?.dateOfBirth,
-  //                   placeOfBirth: consultationFormData?.placeOfBirth,
-  //                   gender: consultationFormData?.gender,
-  //                   orderId: data.orderId,
-  //                   additionalProducts: selectedProducts
-  //                     .map((id) => {
-  //                       const product = mockAdditionalProducts.find(
-  //                         (p) => p.id === id
-  //                       );
-  //                       return product?.title || "";
-  //                     })
-  //                     .filter(Boolean),
-  //                 }),
-  //               }
-  //             );
-
-  //             const orderResult = await orderResponse.json();
-
-  //             if (orderResult.success) {
-  //               sessionStorage.setItem("orderId", data.orderId);
-  //               sessionStorage.setItem("orderAmount", total.toString());
-  //               window.location.href = "/order-confirmation";
-  //             } else {
-  //               alert(
-  //                 "Payment successful but order creation failed. Please contact support."
-  //               );
-  //             }
-  //           } catch (error) {
-  //             console.error("Error creating order:", error);
-  //             alert(
-  //               "Payment successful but order creation failed. Please contact support."
-  //             );
-  //           }
-  //         },
-  //         prefill: {
-  //           name: consultationFormData?.name,
-  //           email: consultationFormData?.email,
-  //           contact: consultationFormData?.phoneNumber,
-  //         },
-  //         theme: {
-  //           color: "#ec4899",
-  //         },
-  //       };
-
-  //       const rzp = new (window as any).Razorpay(options);
-  //       rzp.open();
-  //     } catch (error) {
-  //       console.error("Checkout error:", error);
-  //       alert("Payment failed. Please try again.");
-  //     } finally {
-  //       setIsCheckingOut(false);
-  //     }
-  //   };
-
   const handleCheckout = async () => {
-    if (!consultationFormData.name || !consultationFormData.phoneNumber) {
-      return alert("Please fill in required details.");
-    }
-
     try {
       setIsCheckingOut(true);
 
@@ -249,7 +133,8 @@ export default function TempCartPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: 2,
+          amount: total,
+          // amount: 2,
           name: consultationFormData?.name,
           mobile: consultationFormData?.phoneNumber,
           description: "Soulmate Sketch Order Payment",
