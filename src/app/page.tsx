@@ -1,4 +1,3 @@
-
 import Header from "@/components/layout/header";
 import HeroSection from "@/components/sections/hero";
 import IntroductionSection from "@/components/sections/introduction";
