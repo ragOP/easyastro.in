@@ -46,7 +46,7 @@ export default function TempConfirm() {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const merchantId = urlParams.get("merchantId");
+    const merchantId = urlParams.get("orderId");
 
     // Retrieve form/order data from localStorage
     const storedFormData = localStorage.getItem("pendingOrderData");
