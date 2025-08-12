@@ -59,7 +59,7 @@ const mockAdditionalProducts = [
   },
 ];
 
-export default function CartPage() {
+export default function TempCartPage() {
   const [animateElements, setAnimateElements] = useState(false);
   const [cartItems, setCartItems] = useState(mockCartItems);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
@@ -120,17 +120,6 @@ export default function CartPage() {
     });
   };
 
-  useEffect(() => {
-    loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
-      (result) => {
-        if (result) {
-          console.log("Razorpay script loaded successfully");
-        }
-      }
-    );
-  }, []);
-
-  console.log("env data", process.env.NEXT_PUBLIC_RAZORPAY_KEY);
   const handleConsultationFormSubmit = (data: any) => {
     console.log("Consultation form submitted:", data);
     // Handle form submission
@@ -140,99 +129,46 @@ export default function CartPage() {
     try {
       setIsCheckingOut(true);
 
-      // Create Razorpay order
-      const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
+      const res = await fetch(`${BACKEND_URL}/api/phonepe-v2/pay`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: total,
+          // amount: 2,
+          name: consultationFormData?.name,
+          mobile: consultationFormData?.phoneNumber,
+          description: "Soulmate Sketch Order Payment",
         }),
       });
 
-      const result = await response.json();
+      const json = await res.json();
+      console.log(json);
 
-      if (!result.success) {
-        throw new Error("Failed to create payment order");
+      if (!json.success) {
+        throw new Error(json.error?.message || "Create payment failed");
       }
 
-      const data = result.data;
+      const { redirectUrl, merchantOrderId } = json.data || {};
+      if (merchantOrderId) {
+        localStorage.setItem("pp_last_order_id", merchantOrderId);
+      }
 
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-        amount: total,
-        currency: "INR",
-        name: "AstraSoul",
-        description: "Soulmate Sketch Order Payment",
-        order_id: data.orderId,
-        handler: async function (response: any) {
-          try {
-            // Create order in database
-            const orderResponse = await fetch(
-              `${BACKEND_URL}/api/lander3/create-order`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  amount: total,
-                  razorpayOrderId: response.razorpay_order_id,
-                  razorpayPaymentId: response.razorpay_payment_id,
-                  razorpaySignature: response.razorpay_signature,
-                  name: consultationFormData?.name,
-                  email: consultationFormData?.email,
-                  phone: consultationFormData?.phoneNumber,
-                  dateOfBirth: consultationFormData?.dateOfBirth,
-                  placeOfBirth: consultationFormData?.placeOfBirth,
-                  gender: consultationFormData?.gender,
-                  orderId: data.orderId,
-                  additionalProducts: selectedProducts
-                    .map((id) => {
-                      const product = mockAdditionalProducts.find(
-                        (p) => p.id === id
-                      );
-                      return product?.title || "";
-                    })
-                    .filter(Boolean),
-                }),
-              }
-            );
-
-            const orderResult = await orderResponse.json();
-
-            if (orderResult.success) {
-              sessionStorage.setItem("orderId", data.orderId);
-              sessionStorage.setItem("orderAmount", total.toString());
-              window.location.href = "/order-confirmation";
-            } else {
-              alert(
-                "Payment successful but order creation failed. Please contact support."
-              );
-            }
-          } catch (error) {
-            console.error("Error creating order:", error);
-            alert(
-              "Payment successful but order creation failed. Please contact support."
-            );
-          }
-        },
-        prefill: {
-          name: consultationFormData?.name,
-          email: consultationFormData?.email,
-          contact: consultationFormData?.phoneNumber,
-        },
-        theme: {
-          color: "#ec4899",
-        },
-      };
-
-      const rzp = new (window as any).Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      console.error("Checkout error:", error);
-      alert("Payment failed. Please try again.");
+      localStorage.setItem(
+        "pendingOrderData",
+        JSON.stringify({
+          ...consultationFormData,
+          amount: total,
+        })
+      );
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+        console.log("redireting here");
+      } else {
+        alert("No redirect URL from server");
+      }
+    } catch (e: any) {
+      console.error("Checkout error:", e);
+      alert(e.message || "Payment failed. Please try again.");
     } finally {
       setIsCheckingOut(false);
     }
