@@ -107,13 +107,13 @@ export default function TempConfirm() {
             });
           }
         } else if (statusData.data.state === "FAILED") {
-          router.push("/cart-temp");
+          router.push("/cart");
         } else {
-          router.push("/cart-temp");
+          router.push("/cart");
         }
       } catch (err) {
         console.error("Error verifying payment", err);
-        router.push("/cart-temp");
+        router.push("/cart");
       } finally {
         setLoading(false);
       }
