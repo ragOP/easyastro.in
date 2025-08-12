@@ -79,7 +79,10 @@ export default function TempConfirm() {
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(parsedData),
+              body: JSON.stringify({
+                ...parsedData,
+                orderId: merchantId,
+              }),
             }
           );
 
