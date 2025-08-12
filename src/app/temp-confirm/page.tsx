@@ -74,7 +74,7 @@ export default function TempConfirm() {
 
         if (statusData.data.state === "COMPLETED") {
           const createRes = await fetch(
-            `${API_BASE}/api/lander3/create-order2`,
+            `${API_BASE}/api/lander3/create-order-phonepe`,
             {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -107,30 +107,8 @@ export default function TempConfirm() {
             });
           }
         } else if (statusData.data.state === "FAILED") {
-          // setPaymentStatus("failed");
-          // setOrderDetails({
-          //   orderId: statusData.data.orderId || merchantId,
-          //   amount: statusData.data.amount / 100, // convert to rupees
-          //   orderDate: new Date().toLocaleDateString(),
-          // });
-
-          // setErrorDetails({
-          //   code: statusData.data.errorCode || "PAYMENT_FAILED",
-          //   message: "Payment Failed",
-          //   description:
-          //     statusData.data.errorContext?.description ||
-          //     "Your payment could not be processed.",
-          // });
-
           router.push("/cart-temp");
         } else {
-          // setPaymentStatus("failed");
-          // setErrorDetails({
-          //   code: "PAYMENT_" + (statusData.data.state || "UNKNOWN"),
-          //   message: "Payment Status: " + (statusData.data.state || "Unknown"),
-          //   description:
-          //     "Your payment is in an unexpected state. Please contact support with your order details.",
-          // });
           router.push("/cart-temp");
         }
       } catch (err) {
