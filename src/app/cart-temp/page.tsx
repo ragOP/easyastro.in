@@ -270,7 +270,10 @@ export default function TempCartPage() {
 
       localStorage.setItem(
         "pendingOrderData",
-        JSON.stringify(consultationFormData)
+        JSON.stringify({
+          ...consultationFormData,
+          amount: total,
+        })
       );
       if (redirectUrl) {
         window.location.href = redirectUrl;

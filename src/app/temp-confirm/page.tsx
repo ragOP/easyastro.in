@@ -11,6 +11,7 @@ import {
   PhoneCall,
   ArrowLeft,
 } from "lucide-react";
+import { BACKEND_URL as API_BASE } from "@/lib/backendUrl";
 
 export default function TempConfirm() {
   const router = useRouter();
@@ -62,7 +63,9 @@ export default function TempConfirm() {
     async function verifyAndCreateOrder() {
       try {
         // 1. Check payment status
-        const statusRes = await fetch(`/status/${merchantId}`);
+        const statusRes = await fetch(
+          `${API_BASE}/api/phonepe-v2/status/${merchantId}`
+        );
         const statusData = await statusRes.json();
 
         if (statusData.success) {
@@ -71,11 +74,14 @@ export default function TempConfirm() {
           // return;
 
           // 2. Create order in backend
-          const createRes = await fetch("/lander3/create-order", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(parsedData),
-          });
+          const createRes = await fetch(
+            `${API_BASE}/api/lander3/create-order`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(parsedData),
+            }
+          );
 
           const createData = await createRes.json();
 
