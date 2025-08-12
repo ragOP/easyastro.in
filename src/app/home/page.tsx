@@ -10,10 +10,10 @@ export default function Home() {
   const [logs, setLogs] = useState<string[]>([]);
   const [orderIdFromUrl, setOrderIdFromUrl] = useState<string | null>(null);
 
-  const API_BASE =
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("api") || ""
-      : "";
+  const API_BASE = "https://skyscale-be.onrender.com";
+  // typeof window !== "undefined"
+  //   ? new URLSearchParams(window.location.search).get("api") || ""
+  //   : "";
 
   const log = (...args: any[]) => {
     const time = new Date().toISOString().split("T")[1].replace("Z", "");
