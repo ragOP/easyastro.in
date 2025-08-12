@@ -21,7 +21,7 @@ export default function TempConfirm() {
   const [orderDetails, setOrderDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [paymentStatus, setPaymentStatus] = useState<
-    "success" | "failed" | "pending"
+    "COMPLETED" | "failed" | "pending"
   >("pending");
   const [errorDetails, setErrorDetails] = useState<{
     code: string;
@@ -115,7 +115,7 @@ export default function TempConfirm() {
           const createData = await createRes.json();
 
           if (createData.success) {
-            setPaymentStatus("success");
+            setPaymentStatus("COMPLETED");
             setOrderDetails({
               orderId: createData.orderId || merchantId,
               amount: statusData.data.amount / 100 || parsedData.amount,
@@ -197,7 +197,7 @@ export default function TempConfirm() {
   }
 
   // Success state UI
-  if (paymentStatus === "success") {
+  if (paymentStatus === "COMPLETED") {
     return (
       <div className="min-h-screen bg-background selection:bg-primary/20 selection:text-white">
         <Header />
