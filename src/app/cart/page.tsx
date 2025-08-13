@@ -252,7 +252,7 @@ export default function CartPage() {
               const deleteAbdOrderResult = await deleteAbdOrder.json();
               console.log("Abandoned Order Deleted", deleteAbdOrderResult);
 
-              // window.location.href = "/order-confirmation";
+              window.location.href = "/order-confirmation";
             } else {
               alert(
                 "Payment successful but order creation failed. Please contact support."
