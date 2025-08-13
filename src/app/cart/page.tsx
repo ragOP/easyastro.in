@@ -130,7 +130,6 @@ export default function CartPage() {
     );
   }, []);
 
-  console.log("env data", process.env.NEXT_PUBLIC_RAZORPAY_KEY);
   const handleConsultationFormSubmit = (data: any) => {
     console.log("Consultation form submitted:", data);
     // Handle form submission
@@ -139,6 +138,40 @@ export default function CartPage() {
   const handleCheckout = async () => {
     try {
       setIsCheckingOut(true);
+
+      const abdOrderResponse = await fetch(
+        `${BACKEND_URL}/api/lander3/create-order-abd`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: total,
+            name: consultationFormData?.name,
+            email: consultationFormData?.email,
+            phone: consultationFormData?.phoneNumber,
+            dateOfBirth: consultationFormData?.dateOfBirth,
+            placeOfBirth: consultationFormData?.placeOfBirth,
+            gender: consultationFormData?.gender,
+            additionalProducts: selectedProducts
+              .map((id) => {
+                const product = mockAdditionalProducts.find((p) => p.id === id);
+                return product?.title || "";
+              })
+              .filter(Boolean),
+          }),
+        }
+      );
+
+      const abdOrderResult = await abdOrderResponse.json();
+      const abdOrderId = abdOrderResult.data._id;
+
+      if (!abdOrderResult.success) {
+        throw new Error("Failed to create payment order");
+      } else {
+        console.log("Abandoned Order Created with Id", abdOrderId);
+      }
 
       // Create Razorpay order
       const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
@@ -205,7 +238,21 @@ export default function CartPage() {
             if (orderResult.success) {
               sessionStorage.setItem("orderId", data.orderId);
               sessionStorage.setItem("orderAmount", total.toString());
-              window.location.href = "/order-confirmation";
+
+              // Deleting item from Abandoned Order if Order is created successfuly
+              const deleteAbdOrder = await fetch(
+                `${BACKEND_URL}/api/lander3/delete-order-abd/${abdOrderId}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+              const deleteAbdOrderResult = await deleteAbdOrder.json();
+              console.log("Abandoned Order Deleted", deleteAbdOrderResult);
+
+              // window.location.href = "/order-confirmation";
             } else {
               alert(
                 "Payment successful but order creation failed. Please contact support."
