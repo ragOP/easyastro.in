@@ -154,13 +154,11 @@ export default function LegalPage() {
             <p>How to reach us for support.</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                For order questions, email <a className="underline" href="mailto:support@easyastro.in">support@easyastro.in</a>.
+                For order questions, email <a className="underline" href="mailto:no-reply@easyastro.in">no-reply@easyastro.in</a>.
               </li>
               <li>Support available Monday–Saturday, 10 AM–6 PM IST.</li>
               <li>Average response time: 24–48 hours.</li>
-              <li>Astrasoul Digital LLP
-GST - 09ACHFA3083A1ZQ
-Address -WeWork - Floor 19, C-001/A2, Sector 16B, Noida, Uttar Pradesh 201301</li>
+              /
             </ul>
           </div>
         )
