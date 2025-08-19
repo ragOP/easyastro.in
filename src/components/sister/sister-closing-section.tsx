@@ -10,7 +10,7 @@ export default function SisterClosingSection() {
   };
 
   return (
-    <div className="py-16 px-4 text-center bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 relative overflow-hidden">
+    <div className="py-6 mb-16 px-4 text-center bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         {/* Soft Watercolor Texture */}

@@ -82,7 +82,7 @@ export default function SisterWhatIsIt() {
         {/* Right Side - Offer & CTA */}
         <div className="text-center space-y-6">
           {/* Special Offer */}
-          <div className="bg-slate-100 rounded-full px-6 py-3 shadow-sm border border-slate-200">
+          <div className="bg-slate-100 rounded-full px-4 py-4 shadow-sm border border-slate-200">
             <p className="text-slate-800 text-base font-semibold">🔥 50% OFF for early access today only</p>
           </div>
 
