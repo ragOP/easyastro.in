@@ -1,303 +1,883 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <!-- META -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>INNER WORK — Digital Guide (Instant Download)</title>
-  <meta name="description" content="A refined, modern landing page for The Inner Work Guide. 100+ pages of shadow work & emotional clarity. Instant digital download." />
+  <meta name="description"
+    content="A refined, modern landing page for The Inner Work Guide. 100+ pages of shadow work & emotional clarity. Instant digital download." />
   <meta name="theme-color" content="#f9e9f0" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0f0a10" media="(prefers-color-scheme: dark)">
 
   <!-- TYPE -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@500;700;800&display=swap"
+    rel="stylesheet" />
 
   <!-- STYLES -->
   <style>
-    :root{
+    :root {
       /* Soft, feminine palette */
-      --page:#fff8fb;                  /* blush page */
-      --ink:#19141f;                   /* deep neutral */
-      --ink-2:#211a29;                 /* headings */
-      --muted:#7c7182;                 /* subtle text */
-      --line:#f0e2ec;                  /* hairline */
-      --card:#ffffff;
+      --page: #fff8fb;
+      /* blush page */
+      --ink: #19141f;
+      /* deep neutral */
+      --ink-2: #211a29;
+      /* headings */
+      --muted: #7c7182;
+      /* subtle text */
+      --line: #f0e2ec;
+      /* hairline */
+      --card: #ffffff;
 
       /* Accents (rose → lilac) */
-      --accent:#6b3ea8;
-      --accent-grad:linear-gradient(180deg,#ee6aa7 0%,#c26ed8 100%);
-      --accent-ghost:#fff;
-      --accent-ghost-border:#eed8ea;
+      --accent: #6b3ea8;
+      --accent-grad: linear-gradient(180deg, #ee6aa7 0%, #c26ed8 100%);
+      --accent-ghost: #fff;
+      --accent-ghost-border: #eed8ea;
 
-      --glow: drop-shadow(0 6px 14px rgba(182, 76, 151,.24)) drop-shadow(0 4px 22px rgba(98,36,171,.18));
-      --radius:18px;
-      --radius-sm:14px;
-      --shadow:0 14px 40px rgba(105, 35, 132, .10);
+      --glow: drop-shadow(0 6px 14px rgba(182, 76, 151, .24)) drop-shadow(0 4px 22px rgba(98, 36, 171, .18));
+      --radius: 18px;
+      --radius-sm: 14px;
+      --shadow: 0 14px 40px rgba(105, 35, 132, .10);
 
-      --container:1160px;
+      --container: 1160px;
 
       /* Background orbs */
-      --orb-a: radial-gradient(35% 35% at 10% 10%, #ffd9e8 0%, rgba(255,217,232,0) 70%);
-      --orb-b: radial-gradient(40% 40% at 90% 0%, #e6d4ff 0%, rgba(230,212,255,0) 70%);
-      --orb-c: radial-gradient(45% 45% at 50% 100%, #ffe8f3 0%, rgba(255,232,243,0) 70%);
+      --orb-a: radial-gradient(35% 35% at 10% 10%, #ffd9e8 0%, rgba(255, 217, 232, 0) 70%);
+      --orb-b: radial-gradient(40% 40% at 90% 0%, #e6d4ff 0%, rgba(230, 212, 255, 0) 70%);
+      --orb-c: radial-gradient(45% 45% at 50% 100%, #ffe8f3 0%, rgba(255, 232, 243, 0) 70%);
 
       /* FAQ */
       --faq-bg: #fff;
       --faq-border: #efdaeb;
       --faq-q: #5b2e6e;
       --faq-a: #4a3b55;
-      --faq-chip-bg:#fff0f6;
-      --faq-chip-text:#7b2c72;
+      --faq-chip-bg: #fff0f6;
+      --faq-chip-text: #7b2c72;
     }
 
     /* Base Reset */
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--page);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif}
-    img,video{max-width:100%;display:block;height:auto}
-    a{color:inherit;text-decoration:none}
-    button{font:inherit;cursor:pointer}
-    .container{max-width:var(--container);margin:0 auto;padding:0 16px}
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      display: block;
+      height: auto
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer
+    }
+
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 16px
+    }
 
     /* Decorative Background */
     body::before,
-    body::after{
-      content:"";
-      position:fixed;
-      inset:-20vmax -10vmax auto -10vmax;
-      pointer-events:none;
-      z-index:-2;
-      background:var(--orb-a),var(--orb-b),var(--orb-c);
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20vmax -10vmax auto -10vmax;
+      pointer-events: none;
+      z-index: -2;
+      background: var(--orb-a), var(--orb-b), var(--orb-c);
       filter: blur(40px) saturate(1.1);
-      opacity:.8;
-      transform:translateZ(0);
-      animation:floaty 24s linear infinite alternate;
+      opacity: .8;
+      transform: translateZ(0);
+      animation: floaty 24s linear infinite alternate;
     }
-    body::after{
-      inset:auto -10vmax -20vmax -10vmax;
-      opacity:.7;
-      animation:floaty2 28s linear infinite alternate;
+
+    body::after {
+      inset: auto -10vmax -20vmax -10vmax;
+      opacity: .7;
+      animation: floaty2 28s linear infinite alternate;
     }
-    @keyframes floaty { from{transform:translate3d(0,0,0)} to{transform:translate3d(0,-2.5vh,0)} }
-    @keyframes floaty2{ from{transform:translate3d(0,0,0)} to{transform:translate3d(0, 2.5vh,0)} }
-    @media (prefers-reduced-motion: reduce){
-      body::before, body::after { animation:none }
+
+    @keyframes floaty {
+      from {
+        transform: translate3d(0, 0, 0)
+      }
+
+      to {
+        transform: translate3d(0, -2.5vh, 0)
+      }
+    }
+
+    @keyframes floaty2 {
+      from {
+        transform: translate3d(0, 0, 0)
+      }
+
+      to {
+        transform: translate3d(0, 2.5vh, 0)
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      body::before,
+      body::after {
+        animation: none
+      }
     }
 
     /* HEADER */
-    .top{position:sticky;top:0;z-index:40;background:rgba(255,248,251,.85);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--line)}
-    .top-inner{height:66px;display:grid;place-items:center}
-    .brand{display:inline-flex;gap:10px;align-items:center}
-    .mark{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;font-weight:800;color:#a2337e;background:#ffe7f0}
-    .word{font-family:Manrope,Inter,sans-serif;letter-spacing:.02em;font-weight:800;font-size:22px;color:var(--ink-2)}
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255, 248, 251, .85);
+      backdrop-filter: saturate(1.2) blur(10px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .top-inner {
+      height: 66px;
+      display: grid;
+      place-items: center
+    }
+
+    .brand {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #a2337e;
+      background: #ffe7f0
+    }
+
+    .word {
+      font-family: Manrope, Inter, sans-serif;
+      letter-spacing: .02em;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--ink-2)
+    }
 
     /* LAYOUT */
-    .section{padding:28px 0}
-    .grid{display:grid;gap:16px}
-    .two{grid-template-columns:1.04fr 1fr}
-    @media (max-width:980px){ .two{grid-template-columns:1fr} }
+    .section {
+      padding: 14px 0
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px
+    }
+
+    .two {
+      grid-template-columns: 1.04fr 1fr
+    }
+
+    @media (max-width:980px) {
+      .two {
+        grid-template-columns: 1fr
+      }
+    }
 
     /* CARDS, TYPO */
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .pad-lg{padding:22px}
-    .pad-md{padding:16px}
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow)
+    }
 
-    .title-xl{
-      font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spacing:-.01em;color:var(--ink-2);
-      font-size:clamp(28px,7vw,48px);line-height:1.06;margin:0
+    .pad-lg {
+      padding: 22px
     }
-    .h2{
-      font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spacing:-.005em;color:var(--ink-2);
-      font-size:clamp(20px,4.6vw,28px);margin:0
+
+    .pad-md {
+      padding: 16px
     }
-    .lead{color:#2b2333;font-size:clamp(15px,4.4vw,18px);line-height:1.7}
-    .muted{color:var(--muted)}
+
+    .title-xl {
+      font-family: Manrope, Inter, sans-serif;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      color: var(--ink-2);
+      font-size: clamp(32px, 8vw, 56px);
+      line-height: 1.06;
+      margin: 0;
+      text-align: center;
+    }
+
+    .h2 {
+      font-family: Manrope, Inter, sans-serif;
+      font-weight: 800;
+      letter-spacing: -.005em;
+      color: var(--ink-2);
+      font-size: clamp(20px, 4.6vw, 28px);
+      margin: 0;
+      text-align: center;
+    }
+
+    .lead {
+      color: #2b2333;
+      font-size: clamp(15px, 4.4vw, 18px);
+      line-height: 1.7
+    }
+
+    .muted {
+      color: var(--muted);
+      text-align: center;
+    }
 
     /* HERO IMAGE */
-    .hero{padding:18px 0 24px;border-bottom:1px solid var(--line)}
-    .hero-media{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff3f8;box-shadow:var(--shadow)}
-    .hero-media img{width:100%;height:auto;object-fit:cover}
+    .hero {
+      padding: 18px 0 24px;
+      border-bottom: 1px solid var(--line)
+    }
 
-    .stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-    .chip{border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:700;font-size:12px;background:#fff;color:#4a3b55}
+    .hero-media {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff3f8;
+      box-shadow: var(--shadow)
+    }
 
-    .price{display:flex;align-items:baseline;gap:12px;margin:12px 0}
-    .now{font-weight:900;font-size:28px;color:#a23484}
-    .was{font-size:14px;color:#9b8ba5;text-decoration:line-through}
+    .hero-media img {
+      width: 100%;
+      height: auto;
+      object-fit: cover
+    }
+
+    .stats {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 24px 0
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 12px;
+      background: #fff;
+      color: #4a3b55
+    }
+
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin: 12px 0
+    }
+
+    .now {
+      font-weight: 900;
+      font-size: 28px;
+      color: #a23484
+    }
+
+    .was {
+      font-size: 14px;
+      color: #9b8ba5;
+      text-decoration: line-through
+    }
 
     /* CTA */
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{
-      position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:15px 18px;border-radius:16px;border:0;
-      background:var(--accent-grad); color:#fff9fc; font-weight:900; letter-spacing:.04em; text-transform:uppercase;
-      box-shadow:0 1px 0 rgba(255,255,255,.10) inset; filter:var(--glow);
-      transition:transform .08s ease, filter .2s ease, opacity .2s ease; overflow:hidden;
-      touch-action:manipulation;
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
     }
-    .btn:hover{filter:brightness(1.06) var(--glow)}
-    .btn:active{transform:translateY(1px)}
-    .btn .splash{
-      position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transform:scale(.85);
-      background:radial-gradient(120px 120px at var(--x,50%) var(--y,50%), rgba(255,255,255,.35), transparent 60%);
-      transition:opacity .35s ease, transform .35s ease;
-    }
-    .btn.rippling .splash{opacity:1;transform:scale(1)}
 
-    .btn-ghost{
-      background:var(--accent-ghost);color:#7b2c72;border:1.5px solid var(--accent-ghost-border);
-      box-shadow:none;font-weight:800;text-transform:none;letter-spacing:.01em;border-radius:16px;padding:13px 16px;
+    .row .btn,
+    .row .btn-ghost {
+      flex: 1 1 100%;
+      width: 100%;
     }
-    .btn-ghost:hover{border-color:#e8cfe0}
+
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 18px;
+      border-radius: 16px;
+      border: 0;
+      background: var(--accent-grad);
+      color: #fff9fc;
+      font-weight: 900;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .10) inset;
+      filter: var(--glow);
+      transition: transform .08s ease, filter .2s ease, opacity .2s ease;
+      overflow: hidden;
+      touch-action: manipulation;
+      text-align: center;
+      width: 100%;
+    }
+
+    .btn:hover {
+      filter: brightness(1.06) var(--glow)
+    }
+
+    .btn:active {
+      transform: translateY(1px)
+    }
+
+    .btn .splash {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(.85);
+      background: radial-gradient(120px 120px at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, .35), transparent 60%);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    .btn.rippling .splash {
+      opacity: 1;
+      transform: scale(1)
+    }
+
+    .btn-ghost {
+      background: var(--accent-ghost);
+      color: #7b2c72;
+      border: 1.5px solid var(--accent-ghost-border);
+      box-shadow: none;
+      font-weight: 800;
+      text-transform: none;
+      letter-spacing: .01em;
+      border-radius: 16px;
+      padding: 13px 16px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .btn-ghost:hover {
+      border-color: #e8cfe0
+    }
 
     /* MARQUEE STRIP */
-    .strip{border-block:1px solid var(--line);background:rgba(255,255,255,.7);backdrop-filter:blur(4px)}
-    .track{display:flex;gap:24px;white-space:nowrap;animation:mar 26s linear infinite;padding:12px 0;color:#4a3b55}
-    @keyframes mar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    .tag{font-weight:800;letter-spacing:.06em;color:#6f3c89}
+    .strip {
+      border-block: 1px solid var(--line);
+      background: rgba(255, 255, 255, .7);
+      backdrop-filter: blur(4px)
+    }
+
+    .track {
+      display: flex;
+      gap: 24px;
+      white-space: nowrap;
+      animation: mar 26s linear infinite;
+      padding: 12px 0;
+      color: #4a3b55
+    }
+
+    @keyframes mar {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    .tag {
+      font-weight: 800;
+      letter-spacing: .06em;
+      color: #6f3c89
+    }
 
     /* FEATURES */
-    .features{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
-    @media (max-width:880px){ .features{grid-template-columns:1fr} }
-    .feat{border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px;display:flex;gap:12px}
-    .dot{width:9px;height:9px;border-radius:50%;margin-top:8px;background:#a23484}
+    .features {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    @media (max-width:880px) {
+      .features {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .feat {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px;
+      display: flex;
+      gap: 12px
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-top: 8px;
+      background: #a23484
+    }
 
     /* ABOUT (video) */
-    .media{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff3f8;box-shadow:var(--shadow)}
-    .media video{width:100%;height:auto;object-fit:cover;border:0;outline:0}
+    .media {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff3f8;
+      box-shadow: var(--shadow)
+    }
+
+    .media video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border: 0;
+      outline: 0
+    }
 
     /* REVIEWS slider */
-    .reviews{overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}
-    .rail{display:flex;gap:16px;will-change:transform;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
-    .review{min-width:88%;max-width:88%;border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px}
-    @media (min-width:920px){ .review{min-width:48%;max-width:48%} }
-    .stars{color:#5a4768;margin-bottom:6px}
-    .dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
-    .dotbtn{width:7px;height:7px;border-radius:50%;border:0;background:#e7d6e3}
-    .dotbtn.active{background:#7b2c72}
+    .reviews {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow)
+    }
+
+    .rail {
+      display: flex;
+      gap: 16px;
+      will-change: transform;
+      transition: transform .45s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .review {
+      min-width: 100%;
+      max-width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 16px;
+      flex-shrink: 0
+    }
+
+    @media (min-width:920px) {
+      .review {
+        min-width: 100%;
+        max-width: 100%
+      }
+    }
+
+    .stars {
+      color: #5a4768;
+      margin-bottom: 6px
+    }
+
+    .dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 12px
+    }
+
+    .dotbtn {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 0;
+      background: #e7d6e3
+    }
+
+    .dotbtn.active {
+      background: #7b2c72
+    }
 
     /* BUY STRIP + STICKY BAR */
-    .buystrip{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,#ffffff 0%,#fff7fb 100%);padding:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;box-shadow:var(--shadow)}
-    .thumb{width:56px;height:56px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#fff0f6}
-    .thumb img{width:100%;height:100%;object-fit:cover}
-    .subtle{font-size:12px;color:#7f6f87}
+    .buystrip {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #ffffff 0%, #fff7fb 100%);
+      padding: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow)
+    }
 
-    .buybar{position:sticky;bottom:0;z-index:50;background:rgba(255,248,251,.92);backdrop-filter:blur(8px);border-top:1px solid var(--line)}
-    .buyin{max-width:var(--container);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px}
-    .mini{display:flex;gap:10px;align-items:center}
-    .thumb-sm{width:42px;height:42px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#fff0f6}
-    .small{font-size:12px;color:#7c7182}
+    .thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff0f6
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .subtle {
+      font-size: 12px;
+      color: #7f6f87
+    }
+
+    .buybar {
+      position: sticky;
+      bottom: 0;
+      z-index: 50;
+      background: rgba(255, 248, 251, .92);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--line)
+    }
+
+    .buyin {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px
+    }
+
+    .mini {
+      display: flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    .thumb-sm {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff0f6
+    }
+
+    .small {
+      font-size: 12px;
+      color: #7c7182
+    }
 
     /* FOOTER */
-    .footer{border-top:1px solid var(--line);padding:28px 0;color:#6c5f73}
-    .links{display:flex;gap:14px;flex-wrap:wrap}
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      color: #6c5f73
+    }
+
+    .links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap
+    }
 
     /* ------- BIG UPGRADE: FAQ STYLES ------- */
-    .faq-wrap{margin-top:8px}
-    .faq-head{
-      display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px
+    .faq-wrap {
+      margin-top: 8px
     }
-    .faq-title{
-      display:flex;align-items:center;gap:10px;
-      font-family:Manrope,Inter,sans-serif;font-weight:800;letter-spacing:-.005em;color:var(--ink-2);
-      font-size:clamp(20px,4.6vw,28px);margin:0;
-    }
-    .faq-search{
-      flex:1 1 340px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--faq-border);
-      border-radius:999px;padding:10px 14px;box-shadow:var(--shadow);
-    }
-    .faq-search input{
-      border:0;outline:0;flex:1;background:transparent;color:var(--ink);min-width:140px;
-      font-size:14px;
-    }
-    .faq-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .chip2{
-      border:1px solid var(--faq-border);background:var(--faq-chip-bg);color:var(--faq-chip-text);
-      border-radius:999px;padding:8px 12px;font-weight:700;font-size:12px
-    }
-    .chip2[aria-pressed="true"]{background:linear-gradient(180deg,#ffd5ea 0%,#edd6ff 100%);color:#4b235f}
 
-    .faq-ctrls{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
-    .tinybtn{
-      border:1px solid var(--faq-border);background:#fff;border-radius:999px;padding:8px 12px;font-weight:700;font-size:12px;
+    .faq-head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px
     }
-    .tinybtn:hover{border-color:#e6cfe0}
 
-    .faq-grid{display:grid;gap:12px;grid-template-columns:1fr}
-    @media (min-width:960px){ .faq-grid{grid-template-columns:1fr 1fr} }
+    .faq-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Manrope, Inter, sans-serif;
+      font-weight: 800;
+      letter-spacing: -.005em;
+      color: var(--ink-2);
+      font-size: clamp(20px, 4.6vw, 28px);
+      margin: 0;
+    }
 
-    .qa{
-      background:var(--faq-bg);
-      border-radius:16px;
-      position:relative;
-      overflow:hidden;
-      border:1px solid var(--faq-border);
-      box-shadow:var(--shadow);
-      transition:transform .15s ease;
+    .faq-search {
+      flex: 1 1 340px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid var(--faq-border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: var(--shadow);
     }
-    .qa:hover{transform:translateY(-1px)}
-    .qa::before{
-      content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
-      background:linear-gradient(120deg, rgba(238,106,167,.28), rgba(194,110,216,.28));
-      mix-blend-mode:overlay; opacity:0; transition:opacity .25s ease;
-    }
-    .qa[open]::before{opacity:.18}
 
-    .q-summary{
-      list-style:none; cursor:pointer; display:flex; align-items:flex-start; gap:12px;
-      padding:16px 16px 14px 16px; position:relative; user-select:none;
+    .faq-search input {
+      border: 0;
+      outline: 0;
+      flex: 1;
+      background: transparent;
+      color: var(--ink);
+      min-width: 140px;
+      font-size: 14px;
     }
-    .q-summary::-webkit-details-marker{display:none}
-    .q-icon{
-      width:28px;height:28px;border-radius:8px;flex:0 0 28px;display:grid;place-items:center;
-      color:#fff; background:var(--accent-grad); box-shadow:var(--glow); font-weight:900; font-size:14px;
-    }
-    .q-text{font-weight:800;color:var(--faq-q)}
-    .q-kicker{display:flex;gap:8px;align-items:center;margin-left:auto}
-    .q-kicker .pill{
-      font-size:11px;font-weight:800;border:1px solid var(--faq-border);padding:6px 8px;border-radius:999px;background:#fff;color:#71407f
-    }
-    .q-caret{
-      transition:transform .25s ease; margin-left:8px; color:#7b2c72; font-weight:900;
-    }
-    details[open] .q-caret{transform:rotate(180deg)}
 
-    .a-body{
-      padding:0 16px 16px 56px; color:var(--faq-a); line-height:1.7; font-size:15px;
-      border-top:1px dashed var(--faq-border);
+    .faq-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px
+    }
+
+    .chip2 {
+      border: 1px solid var(--faq-border);
+      background: var(--faq-chip-bg);
+      color: var(--faq-chip-text);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 12px
+    }
+
+    .chip2[aria-pressed="true"] {
+      background: linear-gradient(180deg, #ffd5ea 0%, #edd6ff 100%);
+      color: #4b235f
+    }
+
+
+
+    .faq-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr
+    }
+
+    @media (min-width:960px) {
+      .faq-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    .qa {
+      background: var(--faq-bg);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--faq-border);
+      box-shadow: var(--shadow);
+      transition: transform .15s ease;
+    }
+
+    .qa:hover {
+      transform: translateY(-1px)
+    }
+
+    .qa::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background: linear-gradient(120deg, rgba(238, 106, 167, .28), rgba(194, 110, 216, .28));
+      mix-blend-mode: overlay;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .qa[open]::before {
+      opacity: .18
+    }
+
+    .q-summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px 16px 14px 16px;
+      position: relative;
+      user-select: none;
+    }
+
+    .q-summary::-webkit-details-marker {
+      display: none
+    }
+
+    .q-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      flex: 0 0 28px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--accent-grad);
+      box-shadow: var(--glow);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .q-text {
+      font-weight: 800;
+      color: var(--faq-q)
+    }
+
+    .q-kicker {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: auto
+    }
+
+    .q-kicker .pill {
+      font-size: 11px;
+      font-weight: 800;
+      border: 1px solid var(--faq-border);
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: #fff;
+      color: #71407f
+    }
+
+    .q-caret {
+      transition: transform .25s ease;
+      margin-left: 8px;
+      color: #7b2c72;
+      font-weight: 900;
+    }
+
+    details[open] .q-caret {
+      transform: rotate(180deg)
+    }
+
+    .a-body {
+      padding: 0 16px 16px 56px;
+      color: var(--faq-a);
+      line-height: 1.7;
+      font-size: 15px;
+      border-top: 1px dashed var(--faq-border);
       background:
-        radial-gradient(120px 60px at 20% 0%, rgba(255,213,234,.2), transparent 60%);
+        radial-gradient(120px 60px at 20% 0%, rgba(255, 213, 234, .2), transparent 60%);
     }
 
-    .a-cta{
-      display:flex;gap:10px;flex-wrap:wrap;margin-top:10px
+    .a-cta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px
     }
-    .a-cta .btn-ghost{padding:10px 12px;border-radius:999px}
 
-    .faq-footnote{
-      margin-top:12px;border:1px dashed var(--faq-border);background:#fff; border-radius:var(--radius-sm);
-      padding:12px;color:#6e5e76;font-size:13px
+    .a-cta .btn-ghost {
+      padding: 10px 12px;
+      border-radius: 999px
+    }
+
+    .faq-footnote {
+      margin-top: 12px;
+      border: 1px dashed var(--faq-border);
+      background: #fff;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      color: #6e5e76;
+      font-size: 13px
     }
 
     /* MOBILE-FIRST TWEAKS */
-    @media (max-width:640px){
-      .pad-lg{padding:18px}
-      .row>.btn{flex:1 1 100%}
-      .row>.btn-ghost{flex:1 1 48%}
-      .stats .chip{padding:9px 12px}
-      .buystrip{padding:14px}
-      .container{padding:0 14px}
-      .hero{padding-top:12px}
-      .faq-head{gap:8px}
-      .faq-search{flex:1 1 100%}
-      .faq-ctrls{width:100%}
+    @media (max-width:640px) {
+      .pad-lg {
+        padding: 18px
+      }
+
+      .row>.btn {
+        flex: 1 1 100%;
+        width: 100%;
+      }
+
+      .row>.btn-ghost {
+        flex: 1 1 48%
+      }
+
+      .stats .chip {
+        padding: 9px 12px
+      }
+
+      .buystrip {
+        padding: 14px;
+        width: 100%;
+      }
+
+      .container {
+        padding: 0 14px
+      }
+
+      .hero {
+        padding-top: 12px
+      }
+
+      .faq-head {
+        gap: 8px
+      }
+
+      .faq-search {
+        flex: 1 1 100%
+      }
+
+      .faq-ctrls {
+        width: 100%
+      }
     }
 
     /* Safe area for iOS notch */
-    @supports(padding:max(0px)){
-      .buybar{padding-bottom:env(safe-area-inset-bottom)}
-      .buyin{padding-left:max(14px, env(safe-area-inset-left));padding-right:max(14px, env(safe-area-inset-right))}
+    @supports(padding:max(0px)) {
+      .buybar {
+        padding-bottom: env(safe-area-inset-bottom)
+      }
+
+      .buyin {
+        padding-left: max(14px, env(safe-area-inset-left));
+        padding-right: max(14px, env(safe-area-inset-right))
+      }
     }
   </style>
 
@@ -316,14 +896,15 @@
   }
   </script>
 </head>
+
 <body>
 
   <!-- HEADER -->
   <header class="top">
     <div class="container top-inner">
       <div class="brand" aria-label="Brand">
-        <div class="mark">IW</div>
-        <div class="word">INNER&nbsp;WORK</div>
+        <!-- <div class="mark">IW</div> -->
+        <img src="inner-work-logo.png" alt="Inner Work Logo" class="word" style="height: 22px; width: auto;" />
       </div>
     </div>
   </header>
@@ -333,12 +914,8 @@
     <div class="container grid two">
       <!-- Left: image -->
       <div class="hero-media">
-        <img
-          src="https://d1yei2z3i6k35z.cloudfront.net/5662724/678e0ad815073_WhatsAppImage2025-01-19at19.52.201.jpeg"
-          alt="The Inner Work Guide cover"
-          loading="eager"
-          width="1600" height="2000"
-        />
+        <img src="https://d1yei2z3i6k35z.cloudfront.net/5662724/678e0ad815073_WhatsAppImage2025-01-19at19.52.201.jpeg"
+          alt="The Inner Work Guide cover" loading="eager" width="1600" height="2000" />
       </div>
 
       <!-- Right: copy + CTAs -->
@@ -369,37 +946,44 @@
           <a href="#about" class="btn-ghost">Watch Preview</a>
         </div>
 
-        <div class="stats" style="margin-top:12px">
+        <div class="stats" style="margin-top:12px; align-items: center; justify-content: center;">
           <span class="chip">🔒 Secure checkout</span>
           <span class="chip">⚡ Instant access</span>
           <span class="chip">🛡️ 60-day guarantee</span>
         </div>
 
         <div class="row" style="margin-top:10px">
-          <a href="#buy" class="btn-ghost">Add to Bag</a>
+          <a href="#about" class="btn-ghost">Watch Preview</a>
           <a href="#reviews" class="btn-ghost">Read Reviews</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SUBTLE STRIP -->
-  <div class="strip" aria-hidden="true">
-    <div class="container track">
-      <span class="tag">SHADOW WORK</span>
-      <span class="tag">EMOTIONAL CLARITY</span>
-      <span class="tag">PRINT-FRIENDLY</span>
-      <span class="tag">MOBILE-FIRST</span>
-      <span class="tag">PRACTICAL PROMPTS</span>
-      <span class="tag">ZERO FLUFF</span>
-      <span class="tag">SHADOW WORK</span>
-      <span class="tag">EMOTIONAL CLARITY</span>
-      <span class="tag">PRINT-FRIENDLY</span>
-      <span class="tag">MOBILE-FIRST</span>
-      <span class="tag">PRACTICAL PROMPTS</span>
-      <span class="tag">ZERO FLUFF</span>
+  <!-- DESCRIPTION TEXT -->
+  <section class="section" style="padding: 20px 10px;">
+    <div class="container">
+      <p
+        style="color: var(--ink-2); line-height: 1.8; font-size: 18px; margin: 0; text-align: left; max-width: 800px; margin: 0 auto; letter-spacing: 0.02em;">
+        This book takes you on a transformative journey through your subconscious, helping you identify and heal
+        deep-rooted emotional patterns and limiting beliefs. Rooted in ancient wisdom traditions like Hinduism,
+        Buddhism, and yoga philosophy, The Inner Work Guide provides practical self-analysis and emotional healing
+        tools, including a three-step method to transcend negative cycles and embrace lasting happiness and freedom.
+      </p>
+      <p
+        style="color: var(--ink-2); line-height: 1.8; font-size: 18px; margin: 16px auto 0; text-align: left; max-width: 800px; letter-spacing: 0.02em;">
+        Through carefully crafted exercises, the book will help you recognize the influence of your inner shadows, heal
+        unresolved traumas, and reframe your mindset to unlock your full potential. With a focus on connecting with your
+        higher self and practicing mindfulness to bring true peace and joy.
+      </p>
+      <p
+        style="color: var(--ink-2); line-height: 1.8; font-size: 18px; margin: 16px auto 0; text-align: left; max-width: 800px; letter-spacing: 0.02em;">
+        Designed for anyone seeking personal growth, The Inner Work Guide encourages a deep exploration of your
+        consciousness, enabling you to break free from limiting beliefs and cultivate a life of emotional resilience and
+        spiritual clarity.
+      </p>
     </div>
-  </div>
+  </section>
 
   <!-- WHAT'S INSIDE + ABOUT -->
   <section id="inside" class="section">
@@ -408,15 +992,34 @@
         <h2 class="h2">What’s Inside</h2>
         <p class="muted" style="margin:8px 0 12px">Focused tools, no noise.</p>
         <div class="features">
-          <div class="feat"><div class="dot"></div><div>100+ pages to explore your inner world with intention.</div></div>
-          <div class="feat"><div class="dot"></div><div>Shadow-work exercises to reveal and heal hidden patterns.</div></div>
-          <div class="feat"><div class="dot"></div><div>Practices to transform difficult emotions into clarity.</div></div>
-          <div class="feat"><div class="dot"></div><div>Journal sections for release, reframing, and insight.</div></div>
-          <div class="feat"><div class="dot"></div><div>Affirmations & prompts for authentic living.</div></div>
-          <div class="feat"><div class="dot"></div><div>Clean, print-ready layout; phone → paper without fuss.</div></div>
+          <div class="feat">
+            <div class="dot"></div>
+            <div>100+ pages to explore your inner world with intention.</div>
+          </div>
+          <div class="feat">
+            <div class="dot"></div>
+            <div>Shadow-work exercises to reveal and heal hidden patterns.</div>
+          </div>
+          <div class="feat">
+            <div class="dot"></div>
+            <div>Practices to transform difficult emotions into clarity.</div>
+          </div>
+          <div class="feat">
+            <div class="dot"></div>
+            <div>Journal sections for release, reframing, and insight.</div>
+          </div>
+          <div class="feat">
+            <div class="dot"></div>
+            <div>Affirmations & prompts for authentic living.</div>
+          </div>
+          <div class="feat">
+            <div class="dot"></div>
+            <div>Clean, print-ready layout; phone → paper without fuss.</div>
+          </div>
         </div>
         <div class="row" style="margin-top:14px">
-          <button class="btn" onclick="handleCheckout(event)"><span>Get It Now</span><span class="splash"></span></button>
+          <button class="btn" onclick="handleCheckout(event)"><span>Get It Now</span><span
+              class="splash"></span></button>
           <a href="#faq" class="btn-ghost">Questions?</a>
         </div>
       </div>
@@ -428,15 +1031,12 @@
           Open it daily; let the pages do their quiet work.
         </p>
         <div class="media" style="margin-top:12px">
-          <video
-            src="https://d1yei2z3i6k35z.cloudfront.net/5662724/66f3be8a1c2c1_theinnerwork.mp4"
-            autoplay muted loop playsinline controls
-            controlslist="noplaybackrate nodownload"
-            width="1920" height="1080"
-          ></video>
+          <video src="https://d1yei2z3i6k35z.cloudfront.net/5662724/66f3be8a1c2c1_theinnerwork.mp4" autoplay muted loop
+            playsinline controls controlslist="noplaybackrate nodownload" width="1920" height="1080"></video>
         </div>
         <div class="row" style="margin-top:14px">
-          <button class="btn" onclick="handleCheckout(event)"><span>Instant Access</span><span class="splash"></span></button>
+          <button class="btn" onclick="handleCheckout(event)"><span>Instant Access</span><span
+              class="splash"></span></button>
           <a href="#reviews" class="btn-ghost">See Reviews</a>
         </div>
       </div>
@@ -471,7 +1071,8 @@
         <div class="dots" id="reviewDots" aria-hidden="true"></div>
 
         <div class="row" style="margin-top:14px;justify-content:center">
-          <button class="btn" onclick="handleCheckout(event)"><span>Buy — $19.90</span><span class="splash"></span></button>
+          <button class="btn" onclick="handleCheckout(event)"><span>Buy — $19.90</span><span
+              class="splash"></span></button>
         </div>
       </div>
     </div>
@@ -483,7 +1084,9 @@
       <div class="buystrip">
         <div class="mini">
           <div class="thumb">
-            <img src="https://d1yei2z3i6k35z.cloudfront.net/5662724/678e0ad815073_WhatsAppImage2025-01-19at19.52.201.jpeg" alt="Inner Work cover" width="300" height="300" />
+            <img
+              src="https://d1yei2z3i6k35z.cloudfront.net/5662724/678e0ad815073_WhatsAppImage2025-01-19at19.52.201.jpeg"
+              alt="Inner Work cover" width="300" height="300" />
           </div>
           <div>
             <div style="font-weight:900;letter-spacing:.01em;color:#5c2c6f">The Inner Work Guide</div>
@@ -497,9 +1100,9 @@
       </div>
 
       <div class="row" style="margin-top:12px;justify-content:center">
-        <a href="#buy" class="btn-ghost">Secure Checkout</a>
+        <a href="#buy" class="btn-ghost">Secure<br>Checkout</a>
         <a href="#buy" class="btn-ghost">60-Day Guarantee</a>
-        <a href="#buy" class="btn-ghost">Get It Now</a>
+        <a href="#about" class="btn-ghost">Watch Preview</a>
       </div>
     </div>
   </section>
@@ -510,21 +1113,21 @@
       <div class="card pad-lg">
         <div class="faq-head">
           <h2 class="faq-title">
-            <span style="display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(180deg,#ffd5ea,#edd6ff);box-shadow:var(--glow);font-size:16px;font-weight:900;color:#5b2e6e">?</span>
+            <span
+              style="display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(180deg,#ffd5ea,#edd6ff);box-shadow:var(--glow);font-size:16px;font-weight:900;color:#5b2e6e">?</span>
             Frequently Asked Questions
           </h2>
 
           <div class="faq-search" role="search">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M21 21l-4.2-4.2m1.2-5A7 7 0 1 1 5 5a7 7 0 0 1 13 0z" stroke="#7c7182" stroke-width="2" stroke-linecap="round"/>
+              <path d="M21 21l-4.2-4.2m1.2-5A7 7 0 1 1 5 5a7 7 0 0 1 13 0z" stroke="#7c7182" stroke-width="2"
+                stroke-linecap="round" />
             </svg>
-            <input id="faqSearch" type="search" placeholder="Search: delivery, refund, download…" aria-label="Search FAQs">
+            <input id="faqSearch" type="search" placeholder="Search: delivery, refund, download…"
+              aria-label="Search FAQs">
           </div>
 
-          <div class="faq-ctrls">
-            <button class="tinybtn" id="expandAll" type="button">Expand All</button>
-            <button class="tinybtn" id="collapseAll" type="button">Collapse All</button>
-          </div>
+
 
           <div class="faq-bar" aria-label="Quick topics">
             <button class="chip2" type="button" data-filter="delivery">Delivery</button>
@@ -544,7 +1147,8 @@
               <div class="q-kicker"><span class="pill">Instant</span><span class="q-caret">⌄</span></div>
             </summary>
             <div class="a-body">
-              You’ll get a secure download link immediately after checkout, plus a copy via email. If the email hasn’t arrived in 5 minutes, check spam/promotions or use the receipt page to re-download.
+              You’ll get a secure download link immediately after checkout, plus a copy via email. If the email hasn’t
+              arrived in 5 minutes, check spam/promotions or use the receipt page to re-download.
               <div class="a-cta">
                 <a href="#buy" class="btn-ghost">Go to Checkout</a>
                 <a href="#contact" class="btn-ghost">Need Help?</a>
@@ -560,7 +1164,8 @@
               <div class="q-kicker"><span class="pill">Start Today</span><span class="q-caret">⌄</span></div>
             </summary>
             <div class="a-body">
-              Yes. Simple steps, clean layout, and gentle guidance. Start anywhere, any day. Most readers begin with the “Check-In” pages and do one prompt daily for 10 minutes.
+              Yes. Simple steps, clean layout, and gentle guidance. Start anywhere, any day. Most readers begin with the
+              “Check-In” pages and do one prompt daily for 10 minutes.
             </div>
           </details>
 
@@ -572,7 +1177,8 @@
               <div class="q-kicker"><span class="pill">Disclaimer</span><span class="q-caret">⌄</span></div>
             </summary>
             <div class="a-body">
-              No. It’s a self-reflection tool. If you’re struggling, please consult a licensed professional. This guide can accompany your growth but isn’t a substitute for therapy.
+              No. It’s a self-reflection tool. If you’re struggling, please consult a licensed professional. This guide
+              can accompany your growth but isn’t a substitute for therapy.
             </div>
           </details>
 
@@ -584,7 +1190,8 @@
               <div class="q-kicker"><span class="pill">60-Day</span><span class="q-caret">⌄</span></div>
             </summary>
             <div class="a-body">
-              60-day, no-questions-asked refund. Just email us and we’ll help. If there’s a download issue, we’ll re-send access immediately.
+              60-day, no-questions-asked refund. Just email us and we’ll help. If there’s a download issue, we’ll
+              re-send access immediately.
               <div class="a-cta">
                 <a href="#buy" class="btn-ghost">Buy with Confidence</a>
                 <a href="#contact" class="btn-ghost">Contact Support</a>
@@ -600,7 +1207,8 @@
               <div class="q-kicker"><span class="pill">Fix Email</span><span class="q-caret">⌄</span></div>
             </summary>
             <div class="a-body">
-              No worries! Send your order number and the correct email to our team and we’ll update it, then re-send your download link within a few hours.
+              No worries! Send your order number and the correct email to our team and we’ll update it, then re-send
+              your download link within a few hours.
             </div>
           </details>
 
@@ -612,7 +1220,8 @@
               <div class="q-kicker"><span class="pill">Print-Ready</span><span class="q-caret">⌄</span></div>
             </summary>
             <div class="a-body">
-              Yes, it’s designed to look beautiful on phone and on paper. Use “Fit to page” and print in color or grayscale — both work well.
+              Yes, it’s designed to look beautiful on phone and on paper. Use “Fit to page” and print in color or
+              grayscale — both work well.
             </div>
           </details>
         </div>
@@ -625,7 +1234,8 @@
     </div>
 
     <div class="container" style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-      <button class="btn" onclick="handleCheckout(event)"><span>Get Instant Access</span><span class="splash"></span></button>
+      <button class="btn" onclick="handleCheckout(event)"><span>Get Instant Access</span><span
+          class="splash"></span></button>
       <a href="#buy" class="btn-ghost">Add to Bag — $19.90</a>
     </div>
   </section>
@@ -635,14 +1245,15 @@
     <div class="buyin">
       <div class="mini">
         <div class="thumb-sm">
-          <img src="https://d1yei2z3i6k35z.cloudfront.net/5662724/678e0ad815073_WhatsAppImage2025-01-19at19.52.201.jpeg" alt="Cover" width="160" height="160" />
+          <img src="https://d1yei2z3i6k35z.cloudfront.net/5662724/678e0ad815073_WhatsAppImage2025-01-19at19.52.201.jpeg"
+            alt="Cover" width="160" height="160" />
         </div>
         <div>
           <div style="font-weight:900;letter-spacing:.01em;color:#4b235f">Inner Work Guide</div>
           <div class="small">$19.90 · Instant PDF</div>
         </div>
       </div>
-      <button class="btn" style="padding:12px 16px;border-radius:14px" onclick="handleCheckout(event)">
+      <button class="btn" style="padding:12px 16px;border-radius:14px;width: fit-content;" onclick="handleCheckout(event)">
         <span>Buy Now</span><span class="splash"></span>
       </button>
     </div>
@@ -664,81 +1275,82 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Button ripple + hook checkout
-    function handleCheckout(e){
-      try{
+    function handleCheckout(e) {
+      try {
         const btn = e.currentTarget;
         const rect = btn.getBoundingClientRect();
-        const x = ((e.clientX || rect.left + rect.width/2) - rect.left) + 'px';
-        const y = ((e.clientY || rect.top + rect.height/2) - rect.top) + 'px';
+        const x = ((e.clientX || rect.left + rect.width / 2) - rect.left) + 'px';
+        const y = ((e.clientY || rect.top + rect.height / 2) - rect.top) + 'px';
         btn.style.setProperty('--x', x);
         btn.style.setProperty('--y', y);
         btn.classList.add('rippling');
-        setTimeout(()=>btn.classList.remove('rippling'), 350);
-      }catch(_){}
+        setTimeout(() => btn.classList.remove('rippling'), 350);
+      } catch (_) { }
       // TODO: connect to Razorpay/Stripe/PhonePe
       alert('Hook this button to your checkout flow.');
     }
 
     // Ensure every .btn has a .splash
-    (function attachSplashes(){
-      document.querySelectorAll('.btn').forEach(b=>{
-        if(!b.querySelector('.splash')){
-          const s=document.createElement('span');s.className='splash';b.appendChild(s);
+    (function attachSplashes() {
+      document.querySelectorAll('.btn').forEach(b => {
+        if (!b.querySelector('.splash')) {
+          const s = document.createElement('span'); s.className = 'splash'; b.appendChild(s);
         }
       });
     })();
 
     // Reviews slider (auto + dots)
-    (function(){
+    (function () {
       const rail = document.getElementById('reviewRail');
-      if(!rail) return;
+      if (!rail) return;
       const dotsWrap = document.getElementById('reviewDots');
       const slides = Array.from(rail.children);
       let idx = 0;
 
-      slides.forEach((_,i)=>{
-        const b=document.createElement('button');
-        b.className='dotbtn'+(i===0?' active':'');
-        b.addEventListener('click',()=>go(i,true));
+      slides.forEach((_, i) => {
+        const b = document.createElement('button');
+        b.className = 'dotbtn' + (i === 0 ? ' active' : '');
+        b.addEventListener('click', () => go(i, true));
         dotsWrap.appendChild(b);
       });
       const dots = Array.from(dotsWrap.children);
 
-      function widthWithGap(){
-        if(!slides.length) return 0;
+      function widthWithGap() {
+        if (!slides.length) return 0;
         const w = slides[0].getBoundingClientRect().width;
         const gap = parseFloat(getComputedStyle(rail).gap || 16);
         return w + gap;
       }
-      function go(i,manual){
+      function go(i, manual) {
         idx = (i + slides.length) % slides.length;
-        rail.style.transform = `translateX(${-idx*widthWithGap()}px)`;
-        dots.forEach((d,j)=>d.classList.toggle('active', j===idx));
-        if(manual){ reset(); }
+        const offset = -idx * widthWithGap();
+        rail.style.transform = `translateX(${offset}px)`;
+        dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+        if (manual) { reset(); }
       }
-      function next(){ go(idx+1) }
+
+      function next() { go(idx + 1) }
 
       let t = setInterval(next, 3600);
-      function reset(){ clearInterval(t); t = setInterval(next, 3600); }
-      window.addEventListener('resize', ()=>go(idx,false));
+      function reset() { clearInterval(t); t = setInterval(next, 3600); }
+      window.addEventListener('resize', () => go(idx, false));
     })();
 
     // ********** FAQ: Search, Filters, Expand/Collapse **********
-    (function(){
+    (function () {
       const grid = document.getElementById('faqGrid');
       const items = Array.from(grid.querySelectorAll('.qa'));
       const search = document.getElementById('faqSearch');
       const chips = Array.from(document.querySelectorAll('.chip2'));
-      const expandAll = document.getElementById('expandAll');
-      const collapseAll = document.getElementById('collapseAll');
+
 
       let activeTag = '';
 
-      function normalize(s){ return (s||'').toLowerCase().trim(); }
+      function normalize(s) { return (s || '').toLowerCase().trim(); }
 
-      function apply(){
+      function apply() {
         const q = normalize(search.value);
-        items.forEach(d=>{
+        items.forEach(d => {
           const tags = d.getAttribute('data-tags') || '';
           const text = (d.textContent || '').toLowerCase();
           const matchText = !q || text.includes(q);
@@ -749,23 +1361,23 @@
 
       search.addEventListener('input', apply);
 
-      chips.forEach(c=>{
-        c.addEventListener('click', ()=>{
-          if (c.getAttribute('aria-pressed') === 'true'){
-            c.setAttribute('aria-pressed','false');
+      chips.forEach(c => {
+        c.addEventListener('click', () => {
+          if (c.getAttribute('aria-pressed') === 'true') {
+            c.setAttribute('aria-pressed', 'false');
             activeTag = '';
           } else {
-            chips.forEach(x=>x.setAttribute('aria-pressed','false'));
-            c.setAttribute('aria-pressed','true');
+            chips.forEach(x => x.setAttribute('aria-pressed', 'false'));
+            c.setAttribute('aria-pressed', 'true');
             activeTag = c.getAttribute('data-filter');
           }
           apply();
         });
       });
 
-      expandAll.addEventListener('click', ()=> items.forEach(d=>d.open = true));
-      collapseAll.addEventListener('click', ()=> items.forEach(d=>d.open = false));
+
     })();
   </script>
 </body>
+
 </html>
