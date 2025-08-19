@@ -20,6 +20,7 @@ export default {
         body: ['var(--font-alegreya)', 'serif'],
         headline: ['var(--font-belleza)', 'sans-serif'],
         code: ['monospace'],
+        montserrat: ['Montserrat', 'sans-serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
