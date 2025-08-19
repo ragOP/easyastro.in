@@ -24,13 +24,16 @@ export default function SisterStickyFooter() {
                     onClick={handleGetSoulmateSketch}
                     className="relative bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-lg transform hover:scale-105 hover:shadow-amber-500/50 transition-all duration-300 active:scale-95 overflow-hidden group"
                 >
+                    {/* Spinning Border Animation */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 animate-spin-slow opacity-75"></div>
+                    <div className="absolute inset-[2px] rounded-xl bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500"></div>
+                    
                     {/* Animated Background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
 
                     {/* Button Content */}
                     <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
                         Buy Now
-
                     </span>
 
                     {/* Ripple Effect */}

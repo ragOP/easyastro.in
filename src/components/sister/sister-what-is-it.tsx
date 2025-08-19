@@ -2,6 +2,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import SisterCtaButton from './sister-cta-button';
+import { BookOpen } from 'lucide-react';
 
 export default function SisterWhatIsIt() {
   const router = useRouter();
@@ -87,7 +88,7 @@ export default function SisterWhatIsIt() {
           </div>
 
           {/* CTA Button */}
-          <SisterCtaButton onClick={handleGetSoulmateSketch}>
+          <SisterCtaButton onClick={handleGetSoulmateSketch} icon={<BookOpen className="w-5 h-5" />} position="after">
             Unlock My Soulmate Reading
           </SisterCtaButton>
         </div>

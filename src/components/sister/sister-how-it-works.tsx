@@ -2,6 +2,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import SisterCtaButton from './sister-cta-button';
+import { Pencil } from 'lucide-react';
 
 export default function SisterHowItWorks() {
   const router = useRouter();
@@ -131,7 +132,7 @@ export default function SisterHowItWorks() {
 
           {/* CTA Button using SisterCtaButton */}
           <div className="max-w-md mx-auto">
-            <SisterCtaButton onClick={handleGetSoulmateSketch}>
+            <SisterCtaButton onClick={handleGetSoulmateSketch} icon={<Pencil className="w-5 h-5" />} position="after">
               Get My Soulmate Sketch Now
             </SisterCtaButton>
           </div>
