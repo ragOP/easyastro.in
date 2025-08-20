@@ -57,6 +57,20 @@ const mockAdditionalProducts = [
       "Instant delivery to WhatsApp or Email",
     ],
   },
+  {
+    id: "add-3",
+    title: "Life path & Career guidance ebook",
+    description:
+      "Confused about your money, career, or success path? Your birth chart holds powerful insights into what's blocking your abundance. This report helps align your actions with your true financial destiny.",
+    price: 199,
+    originalPrice: 249,
+    features: [
+      "Discover your ideal career path",
+      "Align goals with your life purposes",
+      "Strength-based tips to grow faster",
+      "Avoid burnout by knowing what doesn't suit you",
+    ],
+  },
 ];
 
 export default function CartPage() {
