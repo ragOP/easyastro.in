@@ -8,6 +8,8 @@ import SisterWhyYouNeedThis from '@/components/sister/sister-why-you-need-this';
 import SisterClosingSection from '@/components/sister/sister-closing-section';
 import SisterStickyFooter from '@/components/sister/sister-sticky-footer';
 import SisterWelcomePopup from '@/components/sister/sister-welcome-popup';
+import SisterHeroSection2 from '@/components/sister/sister-hero-section-2';
+import SisterHeroSection3 from '@/components/sister/sister-hero-section-3';
 
 export default function SisterPage() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -35,7 +37,9 @@ export default function SisterPage() {
 
   return (
     <main className="bg-background">
-      <SisterHeroSection />
+      {/* <SisterHeroSection /> */}
+      <SisterHeroSection2 />
+      {/* <SisterHeroSection3 /> */}
       <SisterHowItWorks />
       <SisterWhatIsIt />
       <SisterHowYoullGetIt />
