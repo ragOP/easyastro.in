@@ -8,7 +8,7 @@ export default function SisterHeroSection() {
   const router = useRouter();
 
   const handleGenerateSoulmate = () => {
-    router.push('/cart');
+    router.push('/sister-cart');
   };
 
   return (

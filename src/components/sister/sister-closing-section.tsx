@@ -6,7 +6,7 @@ export default function SisterClosingSection() {
   const router = useRouter();
 
   const handleGetSoulmateSketch = () => {
-    router.push('/cart');
+    router.push('/sister-cart');
   };
 
   return (
@@ -15,7 +15,7 @@ export default function SisterClosingSection() {
       <div className="absolute inset-0">
         {/* Soft Watercolor Texture */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(245,158,11,0.08)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(249,115,22,0.06)_0%,transparent_50%),radial-gradient(circle_at_40%_40%,rgba(239,68,68,0.05)_0%,transparent_50%)]"></div>
-        
+
         {/* Floating Elements */}
         <div className="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full blur-xl animate-[float_20s_ease-in-out_infinite]"></div>
         <div className="absolute bottom-1/3 right-1/4 w-16 h-16 bg-gradient-to-br from-orange-200/20 to-red-200/20 rounded-full blur-xl animate-[float_25s_ease-in-out_infinite_reverse]"></div>
@@ -29,11 +29,11 @@ export default function SisterClosingSection() {
               💫 "Your love story shouldn't stay a mystery. See their face now!"
             </p>
           </div>
-          
+
           {/* Decorative Underline */}
           <div className="w-32 h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-full mx-auto"></div>
         </div>
-        
+
         {/* Final Big CTA Button */}
         <div className="max-w-3xl mx-auto">
           <button
@@ -52,11 +52,11 @@ export default function SisterClosingSection() {
 
             {/* Ripple Effect */}
             <div className="absolute inset-0 rounded-3xl bg-white/20 transform scale-0 group-hover:scale-100 transition-transform duration-500"></div>
-            
+
             {/* Glow Effect */}
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/20 to-orange-400/20 blur-xl -z-10"></div>
           </button>
-          
+
           {/* Additional Urgency Message */}
           <div className="mt-6">
             <p className="text-slate-600 text-sm sm:text-base font-medium">

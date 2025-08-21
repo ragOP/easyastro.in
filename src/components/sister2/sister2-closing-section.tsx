@@ -6,7 +6,7 @@ export default function Sister2ClosingSection() {
     const router = useRouter();
 
     const handleGetSoulmateSketch = () => {
-        router.push('/cart');
+        router.push('/sister2-cart');
     };
 
     return (

@@ -7,7 +7,7 @@ interface SisterCartLayoutProps {
 
 export default function SisterCartLayout({ children }: SisterCartLayoutProps) {
   return (
-    <div className="bg-gradient-to-br from-rose-50 via-pink-50 to-violet-50">
+    <div className="sister-cart-layout">
 
       <div className="relative z-10">
         {children}

@@ -7,7 +7,7 @@ export default function Sister2WhyYouNeedThis() {
   const router = useRouter();
 
   const handleGetSoulmateSketch = () => {
-    router.push('/cart');
+    router.push('/sister2-cart');
   };
 
   return (

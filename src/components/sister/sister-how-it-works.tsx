@@ -8,7 +8,7 @@ export default function SisterHowItWorks() {
   const router = useRouter();
 
   const handleGetSoulmateSketch = () => {
-    router.push('/cart');
+    router.push('/sister-cart');
   };
 
   return (

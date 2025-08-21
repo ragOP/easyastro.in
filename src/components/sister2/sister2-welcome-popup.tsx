@@ -15,7 +15,7 @@ export default function Sister2WelcomePopup({ isOpen, onClose }: Sister2WelcomeP
 
   const handleGetSoulmateSketch = () => {
     onClose();
-    router.push('/cart');
+    router.push('/sister2-cart');
   };
 
   useEffect(() => {

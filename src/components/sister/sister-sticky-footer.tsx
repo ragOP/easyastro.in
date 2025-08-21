@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 export default function SisterStickyFooter() {
     const router = useRouter();
 
-    const handleGetSoulmateSketch = () => {
-        router.push('/cart');
-    };
+      const handleGetSoulmateSketch = () => {
+    router.push('/sister-cart');
+  };
 
     return (
         <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 p-2 shadow-[0_-4px_15px_rgba(245,158,11,0.3)]">

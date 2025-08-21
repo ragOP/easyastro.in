@@ -9,7 +9,7 @@ export default function SisterHeroSection() {
   const router = useRouter();
 
   const handleRevealSoulmate = () => {
-    router.push('/cart');
+    router.push('/sister-cart');
   };
 
   return (
