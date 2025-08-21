@@ -1,0 +1,182 @@
+/* Sister2 Page Styles - Separate from sister.css to avoid conflicts */
+
+/* Import base styles */
+@import '../globals.css';
+
+/* Import Montserrat for consistent typography */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Import additional fonts for romantic theme */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+.sister2-layout {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #f3e8ff 100%);
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Custom font family utility for Montserrat */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Custom animation for spinning border */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Float animation for background elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+}
+
+.animate-\[float_20s_ease-in-out_infinite\] {
+  animation: float 20s ease-in-out infinite;
+}
+
+.animate-\[float_25s_ease-in-out_infinite_reverse\] {
+  animation: float 25s ease-in-out infinite reverse;
+}
+
+/* Mystical cosmic background animations */
+@keyframes float-stars {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(5px);
+  }
+}
+
+@keyframes cosmic-glow {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(-100%) translateY(0px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateX(100%) translateY(0px);
+    opacity: 0;
+  }
+}
+
+/* Apply animations to cosmic elements */
+.sister2-hero-section .stars-effect {
+  animation: float-stars 8s ease-in-out infinite;
+}
+
+.sister2-hero-section .clouds-effect-1 {
+  animation: cloud-drift 15s linear infinite;
+}
+
+.sister2-hero-section .clouds-effect-2 {
+  animation: cloud-drift 20s linear infinite reverse;
+}
+
+/* Hero Section Specific Styles */
+.sister2-hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.sister2-hero-section h1 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.sister2-hero-section p {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Enhanced text shadows for better readability over background image */
+.sister2-hero-section .text-pink-600 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.9);
+}
+
+.sister2-hero-section .text-slate-800 {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.sister2-hero-section .text-amber-600 {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4), 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Enhanced text shadows for better readability */
+.sister2-hero-section .drop-shadow-lg {
+  filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+}
+
+/* Image enhancements */
+.sister2-hero-section img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.sister2-hero-section img:hover {
+  transform: scale(1.02);
+}
+
+/* Chip section hover effects */
+.sister2-hero-section .bg-gradient-to-r {
+  transition: all 0.3s ease-in-out;
+}
+
+.sister2-hero-section .bg-gradient-to-r:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 10px 10px -5px rgb(0 0 0 / 0.04);
+}
+
+/* Custom animations for sister2 */
+@keyframes sister2-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sister2-fade-in {
+  animation: sister2-fade-in 0.8s ease-out;
+}
+
+/* Responsive adjustments for sister2 */
+@media (max-width: 768px) {
+  .sister2-layout {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  }
+}
+
+/* Sister2 specific button hover effects */
+.sister2-cta-button:hover {
+  box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+} 
