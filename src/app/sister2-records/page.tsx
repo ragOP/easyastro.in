@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import SisterHeader from '@/components/sister/sister-header';
+import Sister2Header from '@/components/sister2/sister2-header';
 import { Card, CardContent } from "@/components/ui/card";
 import { BACKEND_URL } from "@/lib/backendUrl";
 import { Heart, Eye, Download, Calendar, Clock, Sparkles } from 'lucide-react';
@@ -27,7 +27,7 @@ interface Order {
 
 type FilterType = "all" | "today" | "yesterday" | "last7days" | "custom";
 
-export default function SisterRecordsPage() {
+export default function Sister2RecordsPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,37 +126,37 @@ export default function SisterRecordsPage() {
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.setAttribute("download", "sister-orders.csv");
+    link.setAttribute("download", "sister2-orders.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-violet-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-pink-900">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(59,130,246,0.3) 1px, transparent 0)`,
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgba(236,72,153,0.3) 1px, transparent 0)`,
           backgroundSize: '40px 40px'
         }}></div>
       </div>
 
-      {/* Sister Header */}
-      <SisterHeader />
+      {/* Sister2 Header */}
+      <Sister2Header />
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto py-8 px-4">
         {/* Page Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-2">
-            <Heart className="w-8 h-8 text-rose-500" />
-            <span className="bg-gradient-to-r from-rose-500 via-pink-500 to-violet-500 bg-clip-text text-transparent">
-              Sister Order Records
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+            <Heart className="w-8 h-8 text-pink-400" />
+            <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-slate-300 bg-clip-text text-transparent">
+              Sister2 Order Records
             </span>
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Total Orders: <span className="font-semibold">{filteredOrders.length}</span>
+          <p className="text-gray-300 max-w-2xl mx-auto">
+            Total Orders: <span className="font-semibold text-white">{filteredOrders.length}</span>
           </p>
         </div>
 
@@ -170,8 +170,8 @@ export default function SisterRecordsPage() {
                 className={clsx(
                   "px-3 py-1 rounded-full border text-sm",
                   filter === f
-                    ? "bg-rose-500 text-white border-rose-500"
-                    : "bg-white/80 text-gray-700 border-rose-200"
+                    ? "bg-pink-500 text-white border-pink-500"
+                    : "bg-slate-800/50 text-gray-300 border-white/20"
                 )}
               >
                 {f === "all" && "All"}
@@ -185,7 +185,7 @@ export default function SisterRecordsPage() {
 
           <button
             onClick={exportToCSV}
-            className="bg-rose-500 text-white text-sm px-4 py-1.5 rounded-full shadow hover:bg-rose-600 transition"
+            className="bg-pink-500 text-white text-sm px-4 py-1.5 rounded-full shadow hover:bg-pink-600 transition"
           >
             Export CSV
           </button>
@@ -198,13 +198,13 @@ export default function SisterRecordsPage() {
               type="date"
               value={customStart ? customStart.toISOString().split("T")[0] : ""}
               onChange={(e) => setCustomStart(new Date(e.target.value))}
-              className="border border-rose-200 px-2 py-1 rounded-md text-sm text-gray-700 bg-white/80"
+              className="border border-white/20 px-2 py-1 rounded-md text-sm text-white bg-slate-800/50"
             />
             <input
               type="date"
               value={customEnd ? customEnd.toISOString().split("T")[0] : ""}
               onChange={(e) => setCustomEnd(new Date(e.target.value))}
-              className="border border-rose-200 px-2 py-1 rounded-md text-sm text-gray-700 bg-white/80"
+              className="border border-white/20 px-2 py-1 rounded-md text-sm text-white bg-slate-800/50"
             />
           </div>
         )}
@@ -212,35 +212,35 @@ export default function SisterRecordsPage() {
         {/* Orders Table */}
         <div className="max-w-7xl mx-auto">
           {loading ? (
-            <Card className="bg-white/80 border-rose-200">
+            <Card className="bg-slate-800/50 border-white/20">
               <CardContent className="p-8 text-center">
-                <div className="w-8 h-8 border-4 border-rose-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-gray-600">Loading orders...</p>
+                <div className="w-8 h-8 border-4 border-pink-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-gray-300">Loading orders...</p>
               </CardContent>
             </Card>
           ) : error ? (
-            <Card className="bg-white/80 border-rose-200">
+            <Card className="bg-slate-800/50 border-white/20">
               <CardContent className="p-8 text-center">
-                <p className="text-red-600 font-medium">{error}</p>
+                <p className="text-red-400 font-medium">{error}</p>
               </CardContent>
             </Card>
           ) : (
-            <Card className="bg-white/80 border-rose-200 overflow-hidden">
+            <Card className="bg-slate-800/50 border-white/20 overflow-hidden">
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-rose-50/50 border-b border-rose-200">
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Order ID</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Name</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Email</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Phone</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Gender</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">DOB</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Place of Birth</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Additional Products</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Amount</th>
-                        <th className="px-4 py-3 text-left font-medium text-gray-800">Order Date</th>
+                      <tr className="bg-slate-700/50 border-b border-white/20">
+                        <th className="px-4 py-3 text-left font-medium text-white">Order ID</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Name</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Email</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Phone</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Gender</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">DOB</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Place of Birth</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Additional Products</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Amount</th>
+                        <th className="px-4 py-3 text-left font-medium text-white">Order Date</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -248,38 +248,38 @@ export default function SisterRecordsPage() {
                         <tr
                           key={order._id}
                           className={clsx(
-                            "border-b border-rose-100 transition-colors",
+                            "border-b border-white/10 transition-colors",
                             isNewOrder(order.orderDate)
-                              ? "bg-green-50 hover:bg-green-100"
-                              : "hover:bg-rose-50/30"
+                              ? "bg-green-900/20 hover:bg-green-900/30"
+                              : "hover:bg-slate-700/30"
                           )}
                         >
-                          <td className="px-4 py-3 text-gray-700">{order.orderId}</td>
-                          <td className="px-4 py-3 font-medium text-gray-800">{order.fullName}</td>
-                          <td className="px-4 py-3 text-gray-700">{order.email}</td>
-                          <td className="px-4 py-3 text-gray-700">{order.phoneNumber}</td>
-                          <td className="px-4 py-3 capitalize text-gray-700">{order.gender}</td>
-                          <td className="px-4 py-3 text-gray-700">{formatDate(order.dob)}</td>
-                          <td className="px-4 py-3 text-gray-700">{order.placeOfBirth}</td>
+                          <td className="px-4 py-3 text-gray-300">{order.orderId}</td>
+                          <td className="px-4 py-3 font-medium text-white">{order.fullName}</td>
+                          <td className="px-4 py-3 text-gray-300">{order.email}</td>
+                          <td className="px-4 py-3 text-gray-300">{order.phoneNumber}</td>
+                          <td className="px-4 py-3 capitalize text-gray-300">{order.gender}</td>
+                          <td className="px-4 py-3 text-gray-300">{formatDate(order.dob)}</td>
+                          <td className="px-4 py-3 text-gray-300">{order.placeOfBirth}</td>
                           <td className="px-4 py-3">
                             <div className="flex flex-wrap gap-1">
                               {order.additionalProducts.map((product, i) => (
-                                <span key={i} className="px-2 py-1 bg-rose-100 text-rose-700 text-xs rounded-full">
+                                <span key={i} className="px-2 py-1 bg-pink-900/30 text-pink-300 text-xs rounded-full border border-pink-500/30">
                                   {product} - ₹199
                                 </span>
                               ))}
                             </div>
                           </td>
-                          <td className="px-4 py-3 font-semibold text-rose-600">₹{order.amount}</td>
-                          <td className="px-4 py-3 text-gray-500">{formatDateTime(order.orderDate)}</td>
+                          <td className="px-4 py-3 font-semibold text-pink-300">₹{order.amount}</td>
+                          <td className="px-4 py-3 text-gray-400">{formatDateTime(order.orderDate)}</td>
                         </tr>
                       ))}
                     </tbody>
                     {filteredOrders.length > 0 && (
                       <tfoot>
-                        <tr className="bg-rose-50/50 border-t border-rose-200 font-semibold">
-                          <td colSpan={8} className="px-4 py-3 text-right text-gray-800">Total</td>
-                          <td className="px-4 py-3 text-rose-600">₹{totalAmount}</td>
+                        <tr className="bg-slate-700/50 border-t border-white/20 font-semibold">
+                          <td colSpan={8} className="px-4 py-3 text-right text-white">Total</td>
+                          <td className="px-4 py-3 text-pink-300">₹{totalAmount}</td>
                           <td></td>
                         </tr>
                       </tfoot>
@@ -287,7 +287,7 @@ export default function SisterRecordsPage() {
                   </table>
 
                   {filteredOrders.length === 0 && (
-                    <div className="p-8 text-center text-gray-500">No orders found</div>
+                    <div className="p-8 text-center text-gray-400">No orders found</div>
                   )}
                 </div>
               </CardContent>
