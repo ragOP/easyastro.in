@@ -35,7 +35,7 @@ export default function Sister2CartPage() {
   const [cartItems, setCartItems] = useState<Sister2CartItem[]>([
     {
       id: 'soulmate-sketch',
-      name: 'AI Soulmate Sketch',
+      name: 'Soulmate Sketch',
       description: 'Discover your soulmate\'s face through advanced AI-powered astrology and psychic art',
       price: 389,
       originalPrice: 998,

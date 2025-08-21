@@ -43,7 +43,7 @@ export default function Sister2OrderConfirmationPage() {
               
               <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="text-gray-300">Product:</span>
-                <span className="font-semibold text-white">AI Soulmate Sketch</span>
+                <span className="font-semibold text-white">Soulmate Sketch</span>
               </div>
               
               <div className="flex justify-between items-center py-3 border-b border-white/10">
