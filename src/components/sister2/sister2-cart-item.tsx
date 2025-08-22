@@ -16,7 +16,7 @@ interface Sister2CartItemProps {
 
 export default function Sister2CartItem({ item, onRemove, showRemoveButton = true }: Sister2CartItemProps) {
   return (
-    <div className="bg-gradient-to-r from-purple-900/30 via-pink-900/30 to-purple-800/30 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 overflow-hidden">
+    <div className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-lg border border-white/10 overflow-hidden">
       <div className="px-4 py-4">
         {/* Header with Remove Button */}
         <div className="flex items-start justify-end">
@@ -45,10 +45,10 @@ export default function Sister2CartItem({ item, onRemove, showRemoveButton = tru
             
             {/* Title and Subtitle */}
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-white mb-1">
+              <h3 className="font-['Montserrat'] text-lg font-bold text-white mb-1">
                 {item.name}
               </h3>
-              <p className="text-sm text-gray-200">
+              <p className="text-sm text-white/80">
                 {item.description}
               </p>
             </div>
@@ -58,8 +58,8 @@ export default function Sister2CartItem({ item, onRemove, showRemoveButton = tru
           <div className="space-y-2 mb-2 pb-4">
             {item.features.map((feature, index) => (
               <div key={index} className="flex items-center space-x-2">
-                <Heart className="w-3 h-3 text-pink-400 flex-shrink-0" />
-                <span className="text-xs text-gray-200">{feature}</span>
+                <Heart className="w-3 h-3 text-[rgb(224,82,177)] flex-shrink-0" />
+                <span className="text-xs text-white/70">{feature}</span>
               </div>
             ))}
           </div>
@@ -68,10 +68,10 @@ export default function Sister2CartItem({ item, onRemove, showRemoveButton = tru
         {/* Price */}
         <div className="flex items-center justify-between pt-2 border-t border-white/20">
           <div className="flex items-center space-x-3">
-            <span className="text-2xl font-bold text-pink-300">
+            <span className="font-['Montserrat'] text-2xl font-bold text-[rgb(224,82,177)]">
               ₹{item.price}
             </span>
-            <span className="text-lg text-gray-300 line-through">
+            <span className="text-lg text-white/60 line-through">
               ₹{item.originalPrice}
             </span>
             <span className="text-sm text-green-400 font-medium">

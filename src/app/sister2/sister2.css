@@ -36,6 +36,20 @@
   animation: spin-slow 3s linear infinite;
 }
 
+/* Gradient animation for animated borders */
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 3s ease-in-out infinite;
+}
+
 /* Float animation for background elements */
 @keyframes float {
   0%, 100% {

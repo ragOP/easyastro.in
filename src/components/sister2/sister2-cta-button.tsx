@@ -14,11 +14,11 @@ export default function Sister2CtaButton({ onClick, children, className = "", ic
   return (
     <button
       onClick={onClick}
-      className={`relative w-full flex items-center justify-center bg-rose-500 text-white font-bold px-6 py-4 rounded-2xl shadow-2xl transform hover:scale-105 hover:shadow-rose-500/50 transition-all duration-300 active:scale-95 overflow-hidden group ${className}`}
+      className={`relative w-full flex items-center justify-center bg-[rgb(224,82,177)] text-white font-bold px-6 py-4 rounded-2xl shadow-2xl transform hover:scale-105 hover:shadow-[rgb(224,82,177)]/50 transition-all duration-300 active:scale-95 overflow-hidden group ${className}`}
     >
-      {/* Spinning Border Animation - Rose Theme */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-rose-400 via-pink-400 to-rose-300 animate-spin-slow opacity-75"></div>
-      <div className="absolute inset-[3px] rounded-2xl bg-rose-500"></div>
+      {/* Spinning Border Animation - New Color Theme */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[rgb(224,82,177)] via-[rgb(255,150,200)] to-[rgb(180,60,140)] animate-spin-slow opacity-80"></div>
+      <div className="absolute inset-[3px] rounded-2xl bg-[rgb(224,82,177)]"></div>
       
       {/* Button Content */}
       <span className="relative z-10 flex items-center justify-center gap-3">

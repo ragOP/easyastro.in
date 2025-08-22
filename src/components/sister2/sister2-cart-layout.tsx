@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../app/sister2/sister2.css';
 
 interface Sister2CartLayoutProps {
   children: React.ReactNode;

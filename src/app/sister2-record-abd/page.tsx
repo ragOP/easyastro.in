@@ -45,7 +45,7 @@ export default function Sister2RecordAbdPage() {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/lander3/get-orders-abd`);
+      const response = await fetch(`${BACKEND_URL}/api/lander5/get-orders-abd`);
       const result = await response.json();
       if (result.success) {
         const sorted = result.data.sort(
@@ -150,17 +150,17 @@ export default function Sister2RecordAbdPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-dvh bg-gradient-to-br from-slate-900 via-purple-900 to-pink-900 text-foreground">
+    <div className="flex flex-col min-h-dvh bg-[#1e1219] text-foreground">
       <Header />
       <main className="flex-1">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-              <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-slate-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[rgb(224,82,177)] via-[rgb(200,70,160)] to-[rgb(180,60,140)] bg-clip-text text-transparent">
                 Sister2 Order Records (ABD)
               </span>
             </h1>
-            <p className="text-gray-300 max-w-2xl mx-auto">
+            <p className="text-white/80 max-w-2xl mx-auto">
               Total Orders:{" "}
               <span className="font-semibold">{filteredOrders.length}</span>
             </p>
@@ -175,8 +175,8 @@ export default function Sister2RecordAbdPage() {
                   className={clsx(
                     "px-3 py-1 rounded-full border text-sm",
                     filter === f
-                      ? "bg-pink-500 text-white border-pink-500"
-                      : "bg-slate-800/50 text-white border-white/20"
+                      ? "bg-[rgb(224,82,177)] text-white border-[rgb(224,82,177)]"
+                      : "bg-white/10 text-white border-white/20"
                   )}
                 >
                   {f === "all" && "All"}
@@ -190,7 +190,7 @@ export default function Sister2RecordAbdPage() {
 
             <button
               onClick={exportToCSV}
-              className="bg-pink-500 text-white text-sm px-4 py-1.5 rounded-full shadow hover:bg-pink-600 transition"
+              className="bg-[rgb(224,82,177)] text-white text-sm px-4 py-1.5 rounded-full shadow hover:bg-[rgb(200,70,160)] transition"
             >
               Export CSV
             </button>
@@ -204,38 +204,38 @@ export default function Sister2RecordAbdPage() {
                   customStart ? customStart.toISOString().split("T")[0] : ""
                 }
                 onChange={(e) => setCustomStart(new Date(e.target.value))}
-                className="border border-white/20 px-2 py-1 rounded-md text-sm text-white bg-slate-800/50"
+                className="border border-white/20 px-2 py-1 rounded-md text-sm text-white bg-white/5"
               />
               <input
                 type="date"
                 value={customEnd ? customEnd.toISOString().split("T")[0] : ""}
                 onChange={(e) => setCustomEnd(new Date(e.target.value))}
-                className="border border-white/20 px-2 py-1 rounded-md text-sm text-white bg-slate-800/50"
+                className="border border-white/20 px-2 py-1 rounded-md text-sm text-white bg-white/5"
               />
             </div>
           )}
 
           <div className="max-w-7xl mx-auto">
             {loading ? (
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-white/20">
+              <Card className="bg-white/5 backdrop-blur-sm border-white/10">
                 <CardContent className="p-8 text-center">
-                  <div className="w-8 h-8 border-4 border-pink-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                  <p className="text-gray-300">Loading orders...</p>
+                  <div className="w-8 h-8 border-4 border-[rgb(224,82,177)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-white/70">Loading orders...</p>
                 </CardContent>
               </Card>
             ) : error ? (
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-white/20">
+              <Card className="bg-white/5 backdrop-blur-sm border-white/10">
                 <CardContent className="p-8 text-center">
                   <p className="text-red-400 font-medium">{error}</p>
                 </CardContent>
               </Card>
             ) : (
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-white/20 overflow-hidden">
+              <Card className="bg-white/5 backdrop-blur-sm border-white/10 overflow-hidden">
                 <CardContent className="p-0">
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="bg-slate-700/50 border-b border-white/20">
+                        <tr className="bg-white/10 border-b border-white/10">
                           <th className="px-4 py-3 text-left font-medium text-white">Order ID</th>
                           <th className="px-4 py-3 text-left font-medium text-white">Name</th>
                           <th className="px-4 py-3 text-left font-medium text-white">Email</th>
@@ -277,14 +277,14 @@ export default function Sister2RecordAbdPage() {
                                 {order.additionalProducts.map((product, i) => (
                                   <span
                                     key={i}
-                                    className="px-2 py-1 bg-pink-500/20 text-pink-300 text-xs rounded-full"
+                                    className="px-2 py-1 bg-[rgb(224,82,177)]/20 text-[rgb(224,82,177)] text-xs rounded-full"
                                   >
                                     {product} - ₹199
                                   </span>
                                 ))}
                               </div>
                             </td>
-                            <td className="px-4 py-3 font-semibold text-pink-400">
+                            <td className="px-4 py-3 font-semibold text-[rgb(224,82,177)]">
                               ₹{order.amount}
                             </td>
                             <td className="px-4 py-3 text-gray-400">
@@ -295,11 +295,11 @@ export default function Sister2RecordAbdPage() {
                       </tbody>
                       {filteredOrders.length > 0 && (
                         <tfoot>
-                          <tr className="bg-slate-700/50 border-t border-white/20 font-semibold">
+                          <tr className="bg-white/10 border-t border-white/10 font-semibold">
                             <td colSpan={8} className="px-4 py-3 text-right text-white">
                               Total
                             </td>
-                            <td className="px-4 py-3 text-pink-400">
+                            <td className="px-4 py-3 text-[rgb(224,82,177)]">
                               ₹{totalAmount}
                             </td>
                             <td></td>

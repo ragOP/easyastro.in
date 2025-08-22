@@ -24,13 +24,13 @@ export default function Sister2AdditionalProducts({
   if (products.length === 0) return null;
 
   return (
-    <div className="bg-gradient-to-r from-purple-900/30 via-pink-900/30 to-purple-800/30 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6">
+    <div className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-lg border border-white/10 p-6">
       {/* Header */}
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-white mb-2">
+        <h3 className="font-['Montserrat'] text-xl font-bold text-white mb-2">
           Enhance Your Soulmate Experience
         </h3>
-        <p className="text-sm text-gray-200">
+        <p className="text-sm text-white/80">
           Add these complementary services to get the most out of your soulmate sketch
         </p>
       </div>
@@ -44,18 +44,18 @@ export default function Sister2AdditionalProducts({
               key={product.id}
               className={`border rounded-xl p-4 cursor-pointer transition-all duration-200 ${
                 isSelected
-                  ? 'border-pink-500 bg-pink-500/10'
-                  : 'border-white/30 hover:border-pink-500/50'
+                  ? 'border-[rgb(224,82,177)] bg-[rgb(224,82,177)]/10'
+                  : 'border-white/30 hover:border-[rgb(224,82,177)]/50'
               }`}
               onClick={() => onProductToggle(product.id)}
             >
               {/* Product Header */}
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white mb-1">
+                  <h4 className="font-['Montserrat'] font-semibold text-white mb-1">
                     {product.title}
                   </h4>
-                  <p className="text-sm text-gray-200">
+                  <p className="text-sm text-white/80">
                     {product.description}
                   </p>
                 </div>
@@ -63,7 +63,7 @@ export default function Sister2AdditionalProducts({
                 {/* Selection Indicator */}
                 <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ml-3 ${
                   isSelected
-                    ? 'border-pink-500 bg-pink-500 text-white'
+                    ? 'border-[rgb(224,82,177)] bg-[rgb(224,82,177)] text-white'
                     : 'border-white/30'
                 }`}>
                   {isSelected ? (
@@ -78,8 +78,8 @@ export default function Sister2AdditionalProducts({
               <div className="space-y-2 mb-3">
                 {product.features.map((feature, index) => (
                   <div key={index} className="flex items-center gap-2 text-sm">
-                    <div className="w-1.5 h-1.5 bg-pink-400 rounded-full"></div>
-                    <span className="text-gray-200">{feature}</span>
+                    <div className="w-1.5 h-1.5 bg-[rgb(224,82,177)] rounded-full"></div>
+                    <span className="text-white/70">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -87,10 +87,10 @@ export default function Sister2AdditionalProducts({
               {/* Price */}
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg font-bold text-pink-300">
+                  <span className="font-['Montserrat'] text-lg font-bold text-[rgb(224,82,177)]">
                     ₹{product.price}
                   </span>
-                  <span className="text-sm text-gray-300 line-through">
+                  <span className="text-sm text-white/60 line-through">
                     ₹{product.originalPrice}
                   </span>
                 </div>

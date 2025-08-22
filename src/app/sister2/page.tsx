@@ -3,10 +3,16 @@ import React, { useState, useEffect } from 'react';
 import Sister2HeroSection from '@/components/sister2/sister2-hero-section';
 import Sister2HowItWorks from '@/components/sister2/sister2-how-it-works';
 import Sister2WhatIsIt from '@/components/sister2/sister2-what-is-it';
+import Sister2WhatIsItAbout from '@/components/sister2/sister2-what-is-it-about';
+import Sister2Testimonials from '@/components/sister2/sister2-testimonials';
+import Sister2HowWeMakeIt from '@/components/sister2/sister2-how-we-make-it';
+import Sister2Reviews from '@/components/sister2/sister2-reviews';
 import Sister2HowYoullGetIt from '@/components/sister2/sister2-how-youll-get-it';
 import Sister2WhyYouNeedThis from '@/components/sister2/sister2-why-you-need-this';
 import Sister2ClosingSection from '@/components/sister2/sister2-closing-section';
 import Sister2StickyFooter from '@/components/sister2/sister2-sticky-footer';
+import Sister2WhatYouGet from '@/components/sister2/sister2-what-you-get';
+import Sister2WhyChooseUs from '@/components/sister2/sister2-why-choose-us';
 import Sister2WelcomePopup from '@/components/sister2/sister2-welcome-popup';
 
 export default function Sister2Page() {
@@ -36,12 +42,18 @@ export default function Sister2Page() {
   return (
     <main className="bg-background">
       <Sister2HeroSection />
-      <Sister2HowItWorks />
-      <Sister2WhatIsIt />
-      <Sister2HowYoullGetIt />
-      <Sister2WhyYouNeedThis />
-      <Sister2ClosingSection />
-      <Sister2StickyFooter />
+      <Sister2WhatIsItAbout />
+      <Sister2Testimonials />
+      <Sister2HowWeMakeIt />
+      <Sister2Reviews />
+      <Sister2WhatYouGet />
+      <Sister2WhyChooseUs />
+      {/* <Sister2HowItWorks /> */}
+      {/* <Sister2WhatIsIt /> */}
+      {/* <Sister2HowYoullGetIt /> */}
+      {/* <Sister2WhyYouNeedThis /> */}
+      {/* <Sister2ClosingSection /> */}
+      {/* <Sister2StickyFooter /> */}
       
       {/* Welcome Popup */}
       <Sister2WelcomePopup isOpen={isPopupOpen} onClose={handleClosePopup} />

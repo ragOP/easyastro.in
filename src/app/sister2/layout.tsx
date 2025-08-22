@@ -16,7 +16,7 @@ export default function Sister2Layout({
 }) {
     return (
         <div className="sister2-layout font-montserrat">
-            <Sister2Header />
+            {/* <Sister2Header /> */}
 
             {children}
         </div>

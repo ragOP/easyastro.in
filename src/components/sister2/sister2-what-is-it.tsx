@@ -12,7 +12,7 @@ export default function Sister2WhatIsIt() {
   };
 
   return (
-    <div className="py-6 px-4 bg-gradient-to-br from-purple-900 via-pink-900 to-slate-900">
+    <div className="py-6 px-4 bg-[#1e1219]">
       {/* Section Header */}
       <div className="text-center mb-2">
         <div className='mb-8'>
@@ -50,7 +50,7 @@ export default function Sister2WhatIsIt() {
 
                         {/* Feature List */}
               <div className="space-y-3">
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg shadow-lg shadow-green-500/20">
                   <span className="text-green-400 text-lg mt-0.5">✅</span>
                   <div>
                     <span className="font-semibold text-white">Vedic Astrology</span>
@@ -58,7 +58,7 @@ export default function Sister2WhatIsIt() {
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg shadow-lg shadow-blue-500/20">
                   <span className="text-blue-400 text-lg mt-0.5">✅</span>
                   <div>
                     <span className="font-semibold text-white">Numerology</span>
@@ -66,7 +66,7 @@ export default function Sister2WhatIsIt() {
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 p-3 rounded-lg shadow-lg shadow-purple-500/20">
                   <span className="text-purple-400 text-lg mt-0.5">✅</span>
                   <div>
                     <span className="font-semibold text-white">Psychic Vision</span>

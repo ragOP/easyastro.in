@@ -1,10 +1,11 @@
 import React from 'react';
-// Sister2 cart components
 import Sister2CartEmpty from './sister2-cart-empty';
-import Sister2CartItem from './sister2-cart-item';
 import Sister2AdditionalProducts from './sister2-additional-products';
 import Sister2ConsultationForm from './sister2-consultation-form';
 import Sister2OrderSummary from './sister2-order-summary';
+import Sister2CartItem from './sister2-cart-item';
+// Sister2 cart components
+
 
 interface Sister2CartItem {
   id: string;
