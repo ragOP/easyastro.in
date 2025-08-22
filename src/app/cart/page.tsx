@@ -255,12 +255,13 @@ export default function CartPage() {
 
               // Deleting item from Abandoned Order if Order is created successfuly
               const deleteAbdOrder = await fetch(
-                `${BACKEND_URL}/api/lander3/delete-order-abd/${abdOrderId}`,
+                `${BACKEND_URL}/api/lander3/delete-order-abd`,
                 {
                   method: "DELETE",
                   headers: {
                     "Content-Type": "application/json",
                   },
+                  body: JSON.stringify({ email: consultationFormData?.email }), // send the email here
                 }
               );
               const deleteAbdOrderResult = await deleteAbdOrder.json();
