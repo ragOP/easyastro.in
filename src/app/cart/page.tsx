@@ -253,7 +253,7 @@ export default function CartPage() {
               sessionStorage.setItem("orderId", data.orderId);
               sessionStorage.setItem("orderAmount", total.toString());
 
-              // Deleting item from Abandoned Order if Order is created successfuly
+              // Deleting item from Abandoned Order if Order is created successfulyyyy
               const deleteAbdOrder = await fetch(
                 `${BACKEND_URL}/api/lander3/delete-order-abd`,
                 {
