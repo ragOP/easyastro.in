@@ -1,7 +1,15 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Heart, Sparkles, Quote } from 'lucide-react';
 import Sister2CtaButton from './sister2-cta-button';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const reviews = [
   {
@@ -39,10 +47,70 @@ const reviews = [
     location: "Pune, India",
     rating: 5,
     review: "My friends thought I was crazy, but when they saw the sketch, they were speechless. This is real magic, not a scam! 🔮"
+  },
+  {
+    name: "Riya Verma",
+    location: "Kolkata, India",
+    rating: 5,
+    review: "The accuracy is mind-blowing! I showed the sketch to my family and they couldn't believe it. This is definitely worth every penny! 💎"
+  },
+  {
+    name: "Sana Ahmed",
+    location: "Jaipur, India",
+    rating: 5,
+    review: "I've tried many psychic services before, but this one is different. The combination of astrology and art creates something truly special! 🌟"
   }
 ];
 
+function ReviewCard({ review }: { review: typeof reviews[0] }) {
+  return (
+    <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 relative overflow-hidden group hover:bg-white/10 transition-all duration-300 shadow-[0_6px_16px_rgba(224,82,177,0.12),0_3px_10px_rgba(224,82,177,0.08)] h-full">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-4 left-4 w-16 h-16 border border-[rgb(224,82,177)] rounded-full"></div>
+        <div className="absolute bottom-4 right-4 w-12 h-12 border border-[rgb(224,82,177)] rounded-full"></div>
+      </div>
+
+      <div className="relative z-10">
+        {/* Rating */}
+        <div className="mb-4">
+          <div className="flex items-center gap-1 mb-2">
+            {[...Array(review.rating)].map((_, i) => (
+              <Star key={i} className="h-4 w-4 text-[rgb(224,82,177)] fill-current" />
+            ))}
+          </div>
+        </div>
+
+        {/* Review Text */}
+        <blockquote className="text-white/90 text-sm leading-relaxed mb-4 italic">
+          "{review.review}"
+        </blockquote>
+
+        {/* Author */}
+        <div className="border-t border-white/10 pt-4">
+          <p className="font-bold text-white text-sm">{review.name}</p>
+          <p className="text-white/70 text-xs">{review.location}</p>
+        </div>
+      </div>
+
+      {/* Hover Effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[rgb(224,82,177)]/5 to-[rgb(200,70,160)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+    </div>
+  );
+}
+
 export default function Sister2Reviews() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-advance dots to match autoplay timing
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % reviews.length);
+    }, 4000); // Match the autoplay delay
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="py-8 px-4 bg-[#1e1219]">
       <div className="max-w-6xl mx-auto">
@@ -62,41 +130,51 @@ export default function Sister2Reviews() {
           </p>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {reviews.map((review, index) => (
-            <div key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 relative overflow-hidden group hover:bg-white/10 transition-all duration-300 shadow-[0_8px_25px_rgba(224,82,177,0.15),0_4px_15px_rgba(224,82,177,0.1),-8px_0_20px_rgba(224,82,177,0.08),8px_0_20px_rgba(224,82,177,0.08)]">
-              {/* Background Pattern */}
-              <div className="absolute inset-0 opacity-5">
-                <div className="absolute top-4 left-4 w-16 h-16 border border-[rgb(224,82,177)] rounded-full"></div>
-                <div className="absolute bottom-4 right-4 w-12 h-12 border border-[rgb(224,82,177)] rounded-full"></div>
-              </div>
-
-              <div className="relative z-10">
-                {/* Rating */}
-                <div className="mb-4">
-                  <div className="flex items-center gap-1 mb-2">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 text-[rgb(224,82,177)] fill-current" />
-                    ))}
+        {/* Reviews Carousel */}
+        <div className="mb-8">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+              skipSnaps: false,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+                stopOnInteraction: true,
+                stopOnMouseEnter: false,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {reviews.map((review, index) => (
+                <CarouselItem
+                  key={index}
+                  className="pl-4 basis-full md:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="p-1 h-full">
+                    <ReviewCard review={review} />
                   </div>
-                </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex bg-[rgb(224,82,177)]/20 border-[rgb(224,82,177)]/30 text-[rgb(224,82,177)] hover:bg-[rgb(224,82,177)]/30" />
+            <CarouselNext className="hidden sm:flex bg-[rgb(224,82,177)]/30 border-[rgb(224,82,177)]/30 text-[rgb(224,82,177)] hover:bg-[rgb(224,82,177)]/30" />
+          </Carousel>
+        </div>
 
-                {/* Review Text */}
-                <blockquote className="text-white/90 text-sm leading-relaxed mb-4 italic">
-                  "{review.review}"
-                </blockquote>
-
-                {/* Author */}
-                <div className="border-t border-white/10 pt-4">
-                  <p className="font-bold text-white text-sm">{review.name}</p>
-                  <p className="text-white/70 text-xs">{review.location}</p>
-                </div>
-              </div>
-
-              {/* Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[rgb(224,82,177)]/5 to-[rgb(200,70,160)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-            </div>
+        {/* Dots Indicator */}
+        <div className="flex justify-center items-center gap-3 mb-8">
+          {reviews.map((_, index) => (
+            <div
+              key={index}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentSlide
+                  ? 'bg-[rgb(224,82,177)] scale-125'
+                  : 'bg-white/30'
+              }`}
+            />
           ))}
         </div>
 
@@ -115,7 +193,6 @@ export default function Sister2Reviews() {
             </h3>
           </div>
         </div>
-
 
       </div>
     </div>
