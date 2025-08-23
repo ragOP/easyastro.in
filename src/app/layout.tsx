@@ -41,7 +41,7 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Meta Pixel */}
+        {/* Meta Pixel (Updated) */}
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -52,38 +52,20 @@ export default function RootLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '2413312665523975');
+            fbq('init', '1330934167928475');
             fbq('track', 'PageView');
-          `}
-        </Script>
-
-        {/* Google Tag Manager */}
-        <Script id="gtm-script" strategy="afterInteractive">
-          {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-WRP6CQRV');
           `}
         </Script>
       </head>
       <body className="font-body antialiased">
         {/* Meta Pixel NoScript */}
         <noscript>
-          <img height="1" width="1" style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=2413312665523975&ev=PageView&noscript=1"
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=1330934167928475&ev=PageView&noscript=1"
           />
-        </noscript>
-
-        {/* Google Tag Manager NoScript */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WRP6CQRV"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          ></iframe>
         </noscript>
 
         {children}
