@@ -1,6 +1,14 @@
+"use client";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 export default function Sister2Header() {
+  const router = useRouter();
+
+  const handleLogoClick = () => {
+    router.push('/sister2');
+  };
+
   return (
     <header className="py-4 px-4 sm:px-6 lg:px-8 bg-[#1e1219] border-b border-white/10 z-10">
       <div className="container mx-auto flex items-center justify-center">
@@ -9,8 +17,9 @@ export default function Sister2Header() {
           alt="Easy Astro Logo"
           width={200}
           height={50}
-          className="w-36 h-auto sm:w-52"
+          className="w-36 h-auto sm:w-52 cursor-pointer hover:opacity-80 transition-opacity duration-200"
           priority
+          onClick={handleLogoClick}
         />
       </div>
     </header>
