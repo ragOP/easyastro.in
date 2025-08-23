@@ -189,7 +189,7 @@ export default function Sister2Testimonials() {
             <div className="w-px h-8 bg-white/20"></div>
             <div className="text-center">
               <div className="text-2xl font-bold text-[rgb(224,82,177)]">24h</div>
-              <div className="text-white/80 text-sm">Delivery</div>
+              <div className="text-white/80 text-sm">Delivery Time</div>
             </div>
           </div>
         </div>
