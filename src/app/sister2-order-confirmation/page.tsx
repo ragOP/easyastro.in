@@ -1,8 +1,72 @@
-import React from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { CheckCircle, Heart, Sparkles, Clock, Shield } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Sister2OrderConfirmationPage() {
+  const router = useRouter();
+  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Get order details from sessionStorage (passed from cart page)
+    const orderId = sessionStorage.getItem('orderId');
+    const amount = sessionStorage.getItem('orderAmount');
+    // const productDetails = sessionStorage.getItem('productDetails');
+
+    if (orderId && amount) {
+      const orderData = {
+        orderId,
+        amount: parseInt(amount),
+        orderDate: new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        estimatedDelivery: new Date(Date.now() + 48 * 60 * 60 * 1000).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        // productDetails: productDetails ? JSON.parse(productDetails) : null,
+        timestamp: new Date().toISOString()
+      };
+
+      // Store in localStorage for future reference
+      const existingOrders = JSON.parse(localStorage.getItem('easyAstroOrders') || '[]');
+      existingOrders.push(orderData);
+      localStorage.setItem('easyAstroOrders', JSON.stringify(existingOrders));
+
+      setOrderDetails(orderData);
+
+      // Clear the session storage after getting the data
+      sessionStorage.removeItem('orderId');
+      sessionStorage.removeItem('orderAmount');
+      // sessionStorage.removeItem('productDetails');
+    } else {
+      // If no order details found, redirect to home
+      router.push('/sister2');
+      return;
+    }
+
+    setLoading(false);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#1e1219]">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-8 h-8 border-4 border-[rgb(224,82,177)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-white/70">Loading order details...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#1e1219]">
       {/* Background Pattern */}
@@ -38,17 +102,24 @@ export default function Sister2OrderConfirmationPage() {
             <div className="space-y-4">
               <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="text-white/70">Order ID:</span>
-                <span className="font-mono font-semibold text-[rgb(224,82,177)]">#SK-2024-001</span>
+                <span className="font-mono font-semibold text-[rgb(224,82,177)]">
+                  {orderDetails?.orderId || 'N/A'}
+                </span>
               </div>
 
               <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="text-white/70">Product:</span>
-                <span className="font-semibold text-white">Soulmate Sketch</span>
+                <span className="font-semibold text-white">
+                  {/* {orderDetails?.productDetails?.productName || 'Soulmate Sketch'} */}
+                  Soulmate Sketch
+                </span>
               </div>
 
               <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="text-white/70">Amount Paid:</span>
-                <span className="font-bold text-green-400 text-lg">₹389</span>
+                <span className="font-bold text-green-400 text-lg">
+                  ₹{orderDetails?.amount?.toLocaleString() || 'N/A'}
+                </span>
               </div>
 
               <div className="flex justify-between items-center py-3 border-b border-white/10">
@@ -58,21 +129,44 @@ export default function Sister2OrderConfirmationPage() {
                 </span>
               </div>
 
-              <div className="flex justify-between items-center py-3">
+              <div className="flex justify-between items-center py-3 border-b border-white/10">
                 <span className="text-white/70">Order Date:</span>
                 <span className="font-semibold text-white">
-                  {new Date().toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
+                  {orderDetails?.orderDate || 'N/A'}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center py-3">
+                <span className="text-white/70">Estimated Delivery:</span>
+                <span className="font-semibold text-white">
+                  {orderDetails?.estimatedDelivery || 'N/A'}
                 </span>
               </div>
             </div>
+
+            {/* Product Details */}
+            {/* {orderDetails?.productDetails && (
+              <div className="border-t border-white/10 pt-4 mt-4">
+                <h4 className="font-semibold text-white mb-3">Product Details</h4>
+                <div className="bg-white/5 rounded-lg p-4">
+                  <div className="grid grid-cols-1 gap-3">
+                    {Object.entries(orderDetails.productDetails).map(([key, value]) => (
+                      <div key={key} className="flex justify-between items-center">
+                        <span className="text-white/70 text-sm capitalize">
+                          {key.replace(/([A-Z])/g, ' $1').trim()}:
+                        </span>
+                        <span className="text-white text-sm font-medium">{String(value)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )} */}
+
           </div>
 
           {/* Next Steps */}
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-xl mb-8">
+          {/* <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 shadow-xl mb-8">
             <h2 className="font-['Montserrat'] text-xl font-bold text-white mb-6 text-center">
               What Happens Next?
             </h2>
@@ -108,16 +202,15 @@ export default function Sister2OrderConfirmationPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
             <Link
-              href="/cart"
+              href="/sister2-cart"
               className="border-2 border-[rgb(224,82,177)] text-[rgb(224,82,177)] px-8 py-4 rounded-xl font-semibold hover:bg-[rgb(224,82,177)]/10 transition-all duration-300 flex items-center justify-center gap-2"
             >
-
               Book Another Service
             </Link>
           </div>
@@ -129,7 +222,6 @@ export default function Sister2OrderConfirmationPage() {
             Back to Home
           </Link>
 
-
           {/* Contact Support */}
           <div className="text-center mt-8">
             <p className="text-white/70 mb-2">Need help? Contact our support team</p>
@@ -139,6 +231,7 @@ export default function Sister2OrderConfirmationPage() {
             >
               support@easyastro.in
             </a>
+
           </div>
         </div>
       </div>
