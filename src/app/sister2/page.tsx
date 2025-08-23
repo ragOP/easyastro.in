@@ -56,7 +56,7 @@ export default function Sister2Page() {
       {/* <Sister2StickyFooter /> */}
       
       {/* Welcome Popup */}
-      <Sister2WelcomePopup isOpen={isPopupOpen} onClose={handleClosePopup} />
+      {/* <Sister2WelcomePopup isOpen={isPopupOpen} onClose={handleClosePopup} /> */}
     </main>
   );
 } 
