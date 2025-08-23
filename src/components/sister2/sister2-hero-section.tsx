@@ -108,17 +108,16 @@ export default function Sister2HeroSection() {
           <Sister2CtaButton onClick={handleRevealSoulmate} icon={<Pen />} className='px-0'>Generate My Solumate Sketch</Sister2CtaButton>
 
           {/* Stats Section - Now properly positioned and styled */}
-          <div className="mt-12 mb-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-6 max-w-5xl mx-auto">
+          <div className="mt-8 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto">
               {stats.map((stat) => (
-                <div key={stat.label} className="flex flex-col items-center gap-3 text-center">
-                  <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-full p-3 shadow-lg">
-                    {React.cloneElement(stat.icon, { className: 'h-7 w-7 text-white' })}
+                <div key={stat.label} className="flex flex-col items-center gap-2 text-center">
+                  <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-full p-2 shadow-lg">
+                    {React.cloneElement(stat.icon, { className: 'h-5 w-5 text-white' })}
                   </div>
                   <div>
-
-                    <p className="text-xl font-bold text-white">{stat.value}</p>
-                    <p className="text-sm text-white/90 font-medium">{stat.label}</p>
+                    <p className="text-lg font-bold text-white">{stat.value}</p>
+                    <p className="text-xs text-white/90 font-medium">{stat.label}</p>
                   </div>
                 </div>
               ))}
