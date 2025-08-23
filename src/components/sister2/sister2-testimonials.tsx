@@ -126,7 +126,7 @@ export default function Sister2Testimonials() {
         </div>
 
         {/* Testimonials Carousel */}
-        <div className="mb-12">
+        <div className="mb-8">
           <Carousel
             opts={{
               align: "start",
@@ -175,7 +175,7 @@ export default function Sister2Testimonials() {
         </div>
 
         {/* Social Proof Stats */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-2">
           <div className="inline-flex items-center gap-6 bg-gradient-to-r from-[rgb(224,82,177)]/20 to-[rgb(200,70,160)]/20 backdrop-blur-md rounded-2xl px-8 py-4 shadow-sm ring-1 ring-[rgb(224,82,177)]/30">
             <div className="text-center">
               <div className="text-2xl font-bold text-[rgb(224,82,177)]">100K+</div>
