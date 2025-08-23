@@ -176,20 +176,20 @@ export default function Sister2Testimonials() {
 
         {/* Social Proof Stats */}
         <div className="text-center mb-2">
-          <div className="inline-flex items-center gap-6 bg-gradient-to-r from-[rgb(224,82,177)]/20 to-[rgb(200,70,160)]/20 backdrop-blur-md rounded-2xl px-8 py-4 shadow-sm ring-1 ring-[rgb(224,82,177)]/30">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[rgb(224,82,177)]">100K+</div>
-              <div className="text-white/80 text-sm">Happy Clients</div>
+          <div className="inline-flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 md:gap-6 bg-gradient-to-r from-[rgb(224,82,177)]/20 to-[rgb(200,70,160)]/20 backdrop-blur-md rounded-xl sm:rounded-2xl px-3 sm:px-6 md:px-8 py-4 shadow-sm ring-1 ring-[rgb(224,82,177)]/30">
+            <div className="text-center min-w-[80px] sm:min-w-0">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-[rgb(224,82,177)]">100K+</div>
+              <div className="text-white/80 text-xs sm:text-sm">Happy Clients</div>
             </div>
             <div className="w-px h-8 bg-white/20"></div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[rgb(224,82,177)]">99%</div>
-              <div className="text-white/80 text-sm">Accuracy Rate</div>
+            <div className="text-center min-w-[80px] sm:min-w-0">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-[rgb(224,82,177)]">99%</div>
+              <div className="text-white/80 text-xs sm:text-sm">Accuracy Rate</div>
             </div>
             <div className="w-px h-8 bg-white/20"></div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[rgb(224,82,177)]">24h</div>
-              <div className="text-white/80 text-sm">Delivery Time</div>
+            <div className="text-center min-w-[80px] sm:min-w-0">
+              <div className="text-lg sm:text-xl md:text-2xl font-bold text-[rgb(224,82,177)]">24h</div>
+              <div className="text-white/80 text-xs sm:text-sm">Delivery Time</div>
             </div>
           </div>
         </div>
