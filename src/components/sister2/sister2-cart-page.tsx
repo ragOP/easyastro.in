@@ -170,8 +170,8 @@ export default function Sister2CartPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            amount: 2,
-            // amount: total,
+            amount: total,
+            // amount: 2,
             name: consultationFormData?.name,
             email: consultationFormData?.email,
             phone: consultationFormData?.phoneNumber,
@@ -204,8 +204,8 @@ export default function Sister2CartPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // amount: total,
-          amount: 2,
+          amount: total,
+          // amount: 2,
         }),
       });
 
@@ -219,8 +219,8 @@ export default function Sister2CartPage() {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-        // amount: total,
-        amount: 2,
+        amount: total,
+        // amount: 2,
         currency: "INR",
         name: "EasyAstro",
         description: "Soulmate Sketch Order Payment",
@@ -236,8 +236,8 @@ export default function Sister2CartPage() {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  // amount: total,
-                  amount: 2,
+                  amount: total,
+                  // amount: 2,
                   razorpayOrderId: response.razorpay_order_id,
                   razorpayPaymentId: response.razorpay_payment_id,
                   razorpaySignature: response.razorpay_signature,
