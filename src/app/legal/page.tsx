@@ -226,7 +226,7 @@ export default function LegalPage() {
             <div className="mt-12 rounded-2xl bg-gradient-to-r from-brand-50 to-pink-50 p-5 border border-pink-100">
               <p className="text-sm text-slate-700">
                 <strong>Note:</strong> By using our website, you agree to these policies. If you have questions,{" "}
-                <a className="underline" href="mailto:support@easyastro.in">contact us</a>.
+                <a className="underline" href="mailto:no-reply@easyastro.in">contact us</a>.
               </p>
               <p>The refund amount will be credited within 24-48 working hours</p>
             </div>

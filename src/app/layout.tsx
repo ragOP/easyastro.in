@@ -41,8 +41,8 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Meta Pixel (Updated) */}
-        <Script id="meta-pixel" strategy="afterInteractive">
+        {/* Meta Pixel 1 */}
+        <Script id="meta-pixel-1" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -56,6 +56,14 @@ export default function RootLayout({
             fbq('track', 'PageView');
           `}
         </Script>
+
+        {/* Meta Pixel 2 */}
+        <Script id="meta-pixel-2" strategy="afterInteractive">
+          {`
+            fbq('init', '3960073624225686');
+            fbq('track', 'PageView');
+          `}
+        </Script>
       </head>
       <body className="font-body antialiased">
         {/* Meta Pixel NoScript */}
@@ -65,6 +73,14 @@ export default function RootLayout({
             width="1"
             style={{ display: 'none' }}
             src="https://www.facebook.com/tr?id=1330934167928475&ev=PageView&noscript=1"
+          />
+        </noscript>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=3960073624225686&ev=PageView&noscript=1"
           />
         </noscript>
 
