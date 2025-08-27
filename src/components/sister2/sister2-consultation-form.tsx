@@ -33,12 +33,12 @@ export default function Sister2ConsultationForm({
   return (
     <div className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-lg border border-white/10 p-6">
       {/* Header */}
-      <div className="mb-6">
-        <h3 className="font-['Montserrat'] text-xl font-bold text-white mb-2">
-          Personal Details for Soulmate Sketch
+      <div className="text-center mb-6">
+        <h3 className="text-2xl font-bold text-white mb-2">
+          💫 Your Love Details
         </h3>
-        <p className="text-sm text-white/80">
-          Provide your birth details for accurate astrological analysis
+        <p className="text-white/80">
+          Help us create your personalized love report
         </p>
       </div>
 

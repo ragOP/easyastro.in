@@ -37,59 +37,58 @@ export default function Sister2CartPage() {
     {
       id: 'soulmate-sketch',
       name: 'Soulmate Sketch',
-      description: 'Discover your soulmate\'s face through advanced AI-powered astrology and psychic art',
+      description: "Get a detailed sketch of your soulmate's face",
       price: 389,
-      originalPrice: 998,
+      originalPrice: 1999,
       features: [
-        'AI-generated soulmate visualization',
-        'Astrological birth chart analysis',
-        'Psychic art interpretation',
-        'Instant digital delivery',
-        'Money-back guarantee',
-        '24/7 customer support'
-      ]
+        "Detailed facial features",
+        "Personality insights",
+        "Meeting timeline",
+        "Compatibility analysis",
+      ],
     }
   ]);
 
   const [additionalProducts, setAdditionalProducts] = useState<Sister2Product[]>([
     {
-      id: 'compatibility-report',
-      title: 'Soulmate Compatibility Report',
-      description: 'Detailed analysis of your compatibility with your soulmate',
+      id: 'add-1',
+      title: '2-Year Personal Horoscope Report',
+      description: 'Get a roadmap of your next 24 months based on your unique birth chart. Know what\'s coming in love, career, money & health — so you can plan smarter.',
       price: 199,
-      originalPrice: 499,
+      originalPrice: 299,
       features: [
-        'Comprehensive compatibility score',
-        'Personality analysis',
-        'Relationship insights',
-        'Future predictions'
+        'Month-by-Month Predictions',
+        'Love & Marriage Forecast',
+        'Career & Wealth Cycles',
+        'Lucky Days & Time Windows',
+        'Remedies & Do\'s/Don\'ts'
       ]
     },
     {
-      id: 'relationship-guidance',
-      title: 'Relationship Guidance Session',
-      description: 'One-on-one consultation with our relationship expert',
-      price: 299,
-      originalPrice: 699,
+      id: 'add-2',
+      title: 'Wealth Report',
+      description: 'Confused about your money, career, or success path? Your birth chart holds powerful insights into what\'s blocking your abundance. This report helps align your actions with your true financial destiny.',
+      price: 199,
+      originalPrice: 299,
       features: [
-        'Personal consultation call',
-        'Customized advice',
-        'Follow-up support',
-        'Action plan creation'
+        'Personalized astrology + numerology-based wealth blueprint',
+        'Career timing, money blocks & success windows',
+        'Delivered as a digital report within 48 hours',
+        'Based on Vedic astrology',
+        'Instant delivery to WhatsApp or Email'
       ]
     },
     {
-      id: 'premium-package',
-      title: 'Premium Soulmate Package',
-      description: 'Complete soulmate discovery experience with all services',
-      price: 799,
-      originalPrice: 1899,
+      id: 'add-3',
+      title: 'Life path & Career guidance ebook',
+      description: 'Confused about your money, career, or success path? Your birth chart holds powerful insights into what\'s blocking your abundance. This report helps align your actions with your true financial destiny.',
+      price: 199,
+      originalPrice: 249,
       features: [
-        'AI soulmate sketch',
-        'Compatibility report',
-        'Relationship guidance',
-        'Priority support',
-        'Exclusive content access'
+        'Discover your ideal career path',
+        'Align goals with your life purposes',
+        'Strength-based tips to grow faster',
+        'Avoid burnout by knowing what doesn\'t suit you'
       ]
     }
   ]);
@@ -171,8 +170,8 @@ export default function Sister2CartPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // amount: 2,
-            amount: total,
+            amount: 2,
+            // amount: total,
             name: consultationFormData?.name,
             email: consultationFormData?.email,
             phone: consultationFormData?.phoneNumber,
@@ -205,8 +204,8 @@ export default function Sister2CartPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: total,
-          // amount: 2,
+          // amount: total,
+          amount: 2,
         }),
       });
 
@@ -220,8 +219,8 @@ export default function Sister2CartPage() {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-        amount: total,
-        // amount: 2,
+        // amount: total,
+        amount: 2,
         currency: "INR",
         name: "EasyAstro",
         description: "Soulmate Sketch Order Payment",
@@ -237,8 +236,8 @@ export default function Sister2CartPage() {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  amount: total,
-                  // amount: 2,
+                  // amount: total,
+                  amount: 2,
                   razorpayOrderId: response.razorpay_order_id,
                   razorpayPaymentId: response.razorpay_payment_id,
                   razorpaySignature: response.razorpay_signature,
@@ -333,6 +332,7 @@ export default function Sister2CartPage() {
           selectedProducts={selectedProducts}
           consultationFormData={consultationFormData}
           subtotal={subtotal}
+          additionalTotal={additionalTotal}
           discount={discount}
           total={total}
           isCheckingOut={isCheckingOut}

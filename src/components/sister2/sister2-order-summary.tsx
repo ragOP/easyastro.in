@@ -3,6 +3,7 @@ import { CreditCard, Shield, Truck, Zap } from 'lucide-react';
 
 interface Sister2OrderSummaryProps {
   subtotal: number;
+  additionalTotal: number;
   discount: number;
   total: number;
   onCheckout: () => void;
@@ -11,6 +12,7 @@ interface Sister2OrderSummaryProps {
 
 export default function Sister2OrderSummary({
   subtotal,
+  additionalTotal,
   discount,
   total,
   onCheckout,
@@ -31,9 +33,15 @@ export default function Sister2OrderSummary({
       {/* Price Breakdown */}
       <div className="space-y-3 mb-6">
         <div className="flex justify-between text-sm">
-          <span className="text-white/70">Subtotal</span>
+          <span className="text-white/70">Soulmate Sketch</span>
           <span className="text-white">₹{subtotal}</span>
         </div>
+        {additionalTotal > 0 && (
+          <div className="flex justify-between text-sm">
+            <span className="text-white/70">Additional Products</span>
+            <span className="text-white">₹{additionalTotal}</span>
+          </div>
+        )}
         <div className="flex justify-between text-sm">
           <span className="text-white/70">Discount</span>
           <span className="text-green-400">-₹{discount}</span>

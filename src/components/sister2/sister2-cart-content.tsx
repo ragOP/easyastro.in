@@ -40,6 +40,7 @@ interface Sister2CartContentProps {
   selectedProducts: string[];
   consultationFormData: Sister2FormData;
   subtotal: number;
+  additionalTotal: number;
   discount: number;
   total: number;
   isCheckingOut: boolean;
@@ -57,6 +58,7 @@ export default function Sister2CartContent({
   selectedProducts,
   consultationFormData,
   subtotal,
+  additionalTotal,
   discount,
   total,
   isCheckingOut,
@@ -140,6 +142,7 @@ export default function Sister2CartContent({
             >
               <Sister2OrderSummary
                 subtotal={subtotal}
+                additionalTotal={additionalTotal}
                 discount={discount}
                 total={total}
                 onCheckout={onCheckout}
