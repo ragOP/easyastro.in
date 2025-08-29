@@ -313,6 +313,7 @@ export default function CartPage() {
           subtotal={subtotal}
           discount={discount}
           total={total}
+          additionalTotal={additionalTotal}
           isCheckingOut={isCheckingOut}
           animateElements={animateElements}
           onRemove={removeItem}

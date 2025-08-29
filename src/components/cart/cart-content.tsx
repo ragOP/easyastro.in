@@ -40,6 +40,7 @@ interface CartContentProps {
   subtotal: number;
   discount: number;
   total: number;
+  additionalTotal: number;
   isCheckingOut: boolean;
   animateElements: boolean;
   onRemove: (id: string) => void;
@@ -57,6 +58,7 @@ export default function CartContent({
   subtotal,
   discount,
   total,
+  additionalTotal,
   isCheckingOut,
   animateElements,
   onRemove,
@@ -142,6 +144,7 @@ export default function CartContent({
                   subtotal={subtotal}
                   discount={discount}
                   total={total}
+                  additionalTotal={additionalTotal}
                   isCheckingOut={isCheckingOut}
                   onCheckout={onCheckout}
                 />
@@ -218,6 +221,7 @@ export default function CartContent({
                   subtotal={subtotal}
                   discount={discount}
                   total={total}
+                  additionalTotal={additionalTotal}
                   isCheckingOut={isCheckingOut}
                   onCheckout={onCheckout}
                 />
