@@ -48,6 +48,8 @@ interface CartContentProps {
   onConsultationFormSubmit: (data: FormData) => void;
   onCheckout: () => void;
   setConsultationFormData: (data: FormData) => void;
+  finalAmount: number;
+  setFinalAmount: (amount: number) => void;
 }
 
 export default function CartContent({
@@ -65,7 +67,9 @@ export default function CartContent({
   onProductToggle,
   onConsultationFormSubmit,
   onCheckout,
-  setConsultationFormData
+  setConsultationFormData,
+  finalAmount,
+  setFinalAmount
 }: CartContentProps) {
   return (
     <>
@@ -222,6 +226,8 @@ export default function CartContent({
                   discount={discount}
                   total={total}
                   additionalTotal={additionalTotal}
+                  finalAmount={finalAmount}
+                  setFinalAmount={setFinalAmount}
                   isCheckingOut={isCheckingOut}
                   onCheckout={onCheckout}
                 />

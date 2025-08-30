@@ -8,9 +8,11 @@ interface OrderSummaryProps {
   isCheckingOut: boolean;
   onCheckout: () => void;
   additionalTotal?: number;
+  finalAmount?: number;
+  setFinalAmount?: (amount: number) => void;
 }
 
-export default function OrderSummary({ subtotal, discount = 0, total = 0, isCheckingOut, onCheckout, additionalTotal = 0 }: OrderSummaryProps) {
+export default function OrderSummary({ subtotal, discount = 0, total = 0, isCheckingOut, onCheckout, additionalTotal = 0, finalAmount = 0, setFinalAmount = () => {} }: OrderSummaryProps) {
   const [isPressed, setIsPressed] = useState(false);
   const [finalDiscount, setFinalDiscount] = useState(discount);
   const [finalTotal, setFinalTotal] = useState(total || subtotal);
@@ -22,19 +24,23 @@ export default function OrderSummary({ subtotal, discount = 0, total = 0, isChec
       const discountValue = Math.round(totalBeforeDiscount * 0.6);
       setFinalDiscount(discountValue);
       setFinalTotal(totalBeforeDiscount - discountValue);
+      setFinalAmount(totalBeforeDiscount - discountValue);
     } else if (params.has('rag30')) {
       const totalBeforeDiscount = subtotal + additionalTotal;
       const discountValue = Math.round(totalBeforeDiscount * 0.3);
       setFinalDiscount(discountValue);
       setFinalTotal(totalBeforeDiscount - discountValue);
+      setFinalAmount(totalBeforeDiscount - discountValue);
     }else if (params.has('rag75')) {
       const totalBeforeDiscount = subtotal + additionalTotal;
       const discountValue = Math.round(totalBeforeDiscount * 0.75);
       setFinalDiscount(discountValue);
       setFinalTotal(totalBeforeDiscount - discountValue);
+      setFinalAmount(totalBeforeDiscount - discountValue);
     }else {
       setFinalDiscount(discount);
       setFinalTotal(total || (subtotal + additionalTotal) - discount);
+      setFinalAmount(total || (subtotal + additionalTotal) - discount);
     }
   }, [subtotal, discount, total, additionalTotal]);
 

@@ -86,6 +86,7 @@ export default function CartPage() {
     placeOfBirth: "",
     gender: "",
   });
+  const [finalAmount, setFinalAmount] = useState(0);
 
   // Calculate totals
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
@@ -161,7 +162,7 @@ export default function CartPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            amount: total,
+            amount: finalAmount,
             name: consultationFormData?.name,
             email: consultationFormData?.email,
             phone: consultationFormData?.phoneNumber,
@@ -194,7 +195,7 @@ export default function CartPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: total,
+          amount: finalAmount,
         }),
       });
 
@@ -208,7 +209,7 @@ export default function CartPage() {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-        amount: total,
+        amount: finalAmount,
         currency: "INR",
         name: "AstraSoul",
         description: "Soulmate Sketch Order Payment",
@@ -224,7 +225,7 @@ export default function CartPage() {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  amount: total,
+                  amount: finalAmount,
                   razorpayOrderId: response.razorpay_order_id,
                   razorpayPaymentId: response.razorpay_payment_id,
                   razorpaySignature: response.razorpay_signature,
@@ -251,7 +252,7 @@ export default function CartPage() {
 
             if (orderResult.success) {
               sessionStorage.setItem("orderId", data.orderId);
-              sessionStorage.setItem("orderAmount", total.toString());
+              sessionStorage.setItem("orderAmount", finalAmount.toString());
 
               // Deleting item from Abandoned Order if Order is created successfulyyyy
               const deleteAbdOrder = await fetch(
@@ -321,6 +322,8 @@ export default function CartPage() {
           onConsultationFormSubmit={handleConsultationFormSubmit}
           onCheckout={handleCheckout}
           setConsultationFormData={setConsultationFormData}
+          finalAmount={finalAmount}
+          setFinalAmount={setFinalAmount}
         />
 
         <TestimonialsSection isCartPage={true} />
