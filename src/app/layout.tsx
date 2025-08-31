@@ -40,7 +40,40 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-WRP6CQRV');
           `}
         </Script>
+
+        {/* Meta Pixel Code #1 */}
+        <Script id="fb-pixel-1" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1330934167928475');
+            fbq('track', 'PageView');
+          `}
+        </Script>
+
+        {/* Meta Pixel Code #2 */}
+        <Script id="fb-pixel-2" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '3960073624225686');
+            fbq('track', 'PageView');
+          `}
+        </Script>
       </head>
+
       <body className="font-body antialiased">
         {/* Google Tag Manager (noscript) */}
         <noscript>
@@ -50,6 +83,26 @@ export default function RootLayout({
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
           ></iframe>
+        </noscript>
+
+        {/* Meta Pixel (noscript) #1 */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=1330934167928475&ev=PageView&noscript=1"
+          />
+        </noscript>
+
+        {/* Meta Pixel (noscript) #2 */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=3960073624225686&ev=PageView&noscript=1"
+          />
         </noscript>
 
         {children}
