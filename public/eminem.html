@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Case Crushers — 30-Second Challenge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Optional font (safe fallback included) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0a0b10;
+      --card: rgba(255,255,255,0.04);
+      --muted: #9aa3b2;
+      --accent: #e50914;       /* detective red */
+      --accent-2: #5dd6ff;     /* cyan highlight */
+      --ok: #17c964;
+      --bad: #ff4d4f;
+      --ring: #ffffff;
+      --glow: 0 0 40px rgba(229,9,20,0.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Montserrat, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      color:#e7eaf3;
+      background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(229,9,20,0.15), transparent 40%),
+        radial-gradient(900px 400px at 10% 0%, rgba(93,214,255,0.12), transparent 35%),
+        linear-gradient(180deg, #0b0e14 0%, #08090f 100%);
+      background-color: var(--bg);
+    }
+
+    /* --- HERO (page behind the challenge) --- */
+    .hero{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:64px 20px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-inner{
+      max-width:1100px;
+      width:100%;
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:32px;
+      align-items:center;
+    }
+    @media (max-width: 900px){
+      .hero-inner{grid-template-columns:1fr}
+    }
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:6px 12px;
+      border-radius:999px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border:1px solid rgba(255,255,255,0.12);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:#c9d2e0;
+    }
+    .title{
+      font-weight:800;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height:1.05;
+      margin:14px 0 12px;
+      text-shadow: var(--glow);
+    }
+    .lead{
+      color:#c7cfdb;
+      font-size: clamp(15px, 2.3vw, 18px);
+    }
+    .cta{
+      margin-top:22px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      appearance:none;
+      border:0;
+      padding:14px 18px;
+      border-radius:14px;
+      font-weight:700;
+      cursor:pointer;
+      transition:transform .06s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+      outline:none;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn-primary{
+      background:linear-gradient(180deg, #e50914, #bb0811);
+      color:white;
+      box-shadow: 0 8px 28px rgba(229,9,20,0.35), inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .btn-primary:hover{ transform: translateY(-1px); }
+    .btn-ghost{
+      background: rgba(255,255,255,0.06);
+      color: #e7eaf3;
+      border:1px solid rgba(255,255,255,0.12);
+    }
+    .features{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:24px
+    }
+    @media (max-width: 900px){
+      .features{grid-template-columns:1fr 1fr}
+    }
+    .f{
+      background: var(--card);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:14px;
+      border-radius:12px;
+      font-size:14px;
+      color:#cbd2de;
+    }
+
+    /* --- OVERLAY CHALLENGE MODAL --- */
+    .overlay{
+      position:fixed; inset:0;
+      display:grid; place-items:center;
+      background: radial-gradient(1200px 500px at 20% -10%, rgba(229,9,20,0.22), transparent 40%),
+                  radial-gradient(900px 400px at 90% 10%, rgba(93,214,255,0.12), transparent 35%),
+                  rgba(6,8,12,0.86);
+      backdrop-filter: blur(6px);
+      z-index:50;
+      animation: fadeIn .35s ease both;
+    }
+    @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+    .modal{
+      width:min(860px, 94vw);
+      border-radius:20px;
+      padding:22px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      position:relative;
+      overflow:hidden;
+    }
+    .modal::after{
+      content:"";
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(260px 180px at 80% -10%, rgba(229,9,20,0.14), transparent 40%),
+        radial-gradient(220px 150px at 10% 110%, rgba(93,214,255,0.12), transparent 50%);
+      pointer-events:none;
+    }
+    .modal-head{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; padding:6px 4px 12px;
+    }
+    .mh-left{ display:flex; align-items:center; gap:12px; }
+    .logo{
+      width:42px; height:42px; display:grid; place-items:center; border-radius:10px;
+      background: radial-gradient(80px 80px at 50% 30%, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .logo svg{ width:26px; height:26px }
+    .mh-title{
+      display:flex; flex-direction:column; line-height:1.1
+    }
+    .mh-title .brand{ font-weight:800; letter-spacing:.06em }
+    .mh-title .sub{ color:var(--muted); font-size:12px }
+    .timer{
+      display:flex; align-items:center; gap:12px;
+      padding:6px 10px; border-radius:999px;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .ring{
+      width:44px; height:44px; position:relative;
+    }
+    .ring svg{ transform:rotate(-90deg) }
+    .ring .tl{
+      position:absolute; inset:0; display:grid; place-items:center;
+      font-size:12px; color:#e7eaf3; font-weight:700;
+    }
+    .ticking{ animation: tick .9s steps(1) infinite; }
+    @keyframes tick{
+      0%, 50% { opacity:1 } 50.01%, 100% { opacity:.6 }
+    }
+    .modal-body{
+      display:grid; grid-template-columns: .9fr 1.1fr; gap:20px; align-items:stretch;
+    }
+    @media (max-width:900px){ .modal-body{ grid-template-columns:1fr } }
+    .evidence{
+      background: rgba(0,0,0,0.4);
+      border:1px dashed rgba(255,255,255,0.18);
+      border-radius:16px; padding:18px; position:relative;
+    }
+    .evidence h3{ margin:0 0 8px; font-size:14px; color:#dfe6f2; letter-spacing:.1em; text-transform:uppercase }
+    .paper{
+      background:#f9f6ed; color:#111; border-radius:10px; padding:16px 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      border:1px solid #d9d1b7;
+      font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+      position:relative;
+    }
+    .paper:before{
+      content:"CONFIDENTIAL";
+      position:absolute; top:8px; right:10px;
+      font-size:10px; letter-spacing:.2em; color:#b31a1a;
+      border:1px solid #b31a1a; padding:3px 6px; transform:rotate(6deg);
+    }
+    .note{
+      font-size:18px; line-height:1.45; color:#1a1a1a;
+    }
+    .note b{ color:#b31a1a }
+    .hint{
+      margin-top:12px; font-size:13px; color:#5e5e5e; display:flex; gap:8px; align-items:center
+    }
+
+    .solve{
+      background: var(--card);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px; padding:18px;
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .solve h3{ margin:0; font-size:16px; color:#dfe6f2 }
+    .field{
+      display:flex; gap:10px; flex-wrap:wrap
+    }
+    .input{
+      flex:1 1 260px; min-width:220px;
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.18);
+      border-radius:12px; padding:12px 14px;
+      color:#fff; font-size:16px; outline:none;
+      transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .input:focus{
+      border-color: rgba(93,214,255,0.65);
+      box-shadow:0 0 0 3px rgba(93,214,255,0.22);
+      background: rgba(255,255,255,0.08);
+    }
+    .submit{
+      white-space:nowrap;
+      background:linear-gradient(180deg, #5dd6ff, #30b3df);
+      color:#07131a;
+      border:0; border-radius:12px; padding:12px 16px; font-weight:800; cursor:pointer;
+      box-shadow: 0 8px 26px rgba(48,179,223,0.35);
+    }
+    .meta{ color:var(--muted); font-size:13px }
+    .penalty{ color:#ffc13a }
+    .skip{
+      text-decoration: none; color:#9fb5ff; font-size:12px; opacity:.85;
+    }
+    .skip:hover{ text-decoration:underline; }
+
+    /* --- RESULT SCREEN --- */
+    .result{
+      display:none;
+      margin-top:8px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:14px;
+      padding:14px;
+    }
+    .res-title{
+      font-weight:800; font-size:20px; display:flex; align-items:center; gap:10px
+    }
+    .res-ok{ color: var(--ok) }
+    .res-bad{ color: var(--bad) }
+    .res-meta{ color:#cbd2de; font-size:14px; margin-top:6px }
+    .res-cta{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap }
+    .btn-enter{
+      background:linear-gradient(180deg, #e50914, #b10b14); color:#fff; border:0; border-radius:12px; padding:10px 14px; font-weight:800; cursor:pointer;
+    }
+    .btn-secondary{
+      background: rgba(255,255,255,0.06); color:#e7eaf3; border:1px solid rgba(255,255,255,0.14);
+      border-radius:12px; padding:10px 14px; font-weight:700; cursor:pointer;
+    }
+
+    /* small “scanline” vibe */
+    .scan{
+      position:absolute; inset:0; pointer-events:none; opacity:.06;
+      background-image: repeating-linear-gradient(180deg, rgba(255,255,255,0.45) 0px, rgba(255,255,255,0.45) 1px, transparent 1px, transparent 3px);
+      mix-blend-mode: overlay;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page content (visible after challenge or under it) -->
+  <main class="hero" aria-label="Case Crushers">
+    <div class="hero-inner">
+      <section>
+        <span class="badge">India’s #1 Murder Mystery Game</span>
+        <h1 class="title">Crack the case. <span style="color:var(--accent-2)">Feel the rush.</span></h1>
+        <p class="lead">
+          Tactile, story-rich mystery kits for 1–6 players. Examine evidence, decode ciphers, connect the dots.
+        </p>
+        <div class="cta">
+          <a href="#shop" class="btn btn-primary">Shop Cases</a>
+          <a href="#how" class="btn btn-ghost">How it Works</a>
+        </div>
+        <div class="features">
+          <div class="f">🔥 Screen-free gameplay</div>
+          <div class="f">🕵️ Hand-crafted clues</div>
+          <div class="f">👥 Perfect for 1–6 players</div>
+        </div>
+      </section>
+      <section aria-hidden="true">
+        <!-- Decorative illustration (SVG) -->
+        <svg viewBox="0 0 400 320" width="100%" height="100%" role="img" aria-label="Detective silhouette">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#e50914" stop-opacity="0.75"/>
+              <stop offset="1" stop-color="#111827" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <rect width="400" height="320" fill="url(#g1)"/>
+          <g opacity=".35">
+            <circle cx="290" cy="40" r="80" fill="#5dd6ff"/>
+          </g>
+          <g fill="#0a0f17">
+            <path d="M220 250c-25-8-35-25-35-45 0-18 8-33 26-39-3-8-2-16 5-22 8-8 22-8 29 1 4 4 6 10 5 15l40 11c9 3 15 12 15 21v39c0 9-6 18-15 21-27 9-69 10-95-2z" />
+            <path d="M232 131c-14 0-26-12-26-27s12-26 26-26 27 11 27 26-13 27-27 27z"/>
+            <rect x="160" y="265" width="200" height="10" fill="#000" opacity=".35"/>
+          </g>
+        </svg>
+      </section>
+    </div>
+  </main>
+
+  <!-- OVERLAY GAME -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="challengeTitle" aria-describedby="challengeDesc">
+    <div class="modal">
+      <div class="scan"></div>
+
+      <header class="modal-head">
+        <div class="mh-left">
+          <div class="logo" aria-hidden="true">
+            <!-- magnifying glass icon -->
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 21l-4.2-4.2m1.2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="mh-title">
+            <div class="brand">CASE CRUSHERS</div>
+            <div class="sub">30-Second Cold-Open</div>
+          </div>
+        </div>
+        <div class="timer" aria-live="polite">
+          <div class="ring" aria-hidden="true">
+            <!-- SVG progress ring -->
+            <svg width="44" height="44">
+              <circle cx="22" cy="22" r="18" stroke="rgba(255,255,255,0.15)" stroke-width="5" fill="none"/>
+              <circle id="ring" cx="22" cy="22" r="18" stroke="var(--ring)" stroke-width="5" stroke-linecap="round" fill="none"
+                      stroke-dasharray="113.097" stroke-dashoffset="0"/>
+            </svg>
+            <div class="tl"><span id="sec" class="ticking">30</span>s</div>
+          </div>
+          <div style="font-size:12px; color:#cbd2de">You have <b>30 seconds</b></div>
+        </div>
+      </header>
+
+      <div class="modal-body">
+        <!-- Evidence/Note -->
+        <section class="evidence">
+          <h3 id="challengeTitle">Intercepted Note</h3>
+          <div class="paper">
+            <div class="note" id="challengeDesc">
+              <p>
+                A scrambled message was found on the suspect’s burner phone:
+              </p>
+              <p style="font-size:22px; margin:10px 0; letter-spacing:.12em;">
+                <b>DAWN</b> • <b>FOG</b> • <b>RAVEN</b> • <b>GLASS</b> • <b>RAVEN</b> • <b>NIGHT</b>
+              </p>
+              <p>
+                Intel says their <b>codename</b> is hidden in plain sight — the <b>only word that repeats exactly once</b>.
+              </p>
+              <p style="margin-top:10px">
+                Enter that codename to halt the data wipe.
+              </p>
+            </div>
+          </div>
+          <div class="hint">💡 Tip: Type the repeating word (case doesn’t matter).</div>
+        </section>
+
+        <!-- Solve panel -->
+        <section class="solve">
+          <h3>Defuse the wipe</h3>
+          <div class="field">
+            <input id="answer" class="input" placeholder="Enter codename…" autocomplete="off" aria-label="Enter codename" />
+            <button id="submit" class="submit">Submit</button>
+          </div>
+          <div class="meta">
+            Attempts: <b id="tries">0</b>
+            <span id="feedback" style="margin-left:10px"></span>
+            <span style="float:right">
+              <a class="skip" id="skip" href="#">Skip challenge</a>
+            </span>
+          </div>
+
+          <!-- RESULT BLOCK -->
+          <div id="result" class="result" aria-live="polite">
+            <div class="res-title" id="resTitle"></div>
+            <div class="res-meta" id="resMeta"></div>
+            <div class="res-cta">
+              <button class="btn-enter" id="enterSite">Enter Site</button>
+              <a class="btn-secondary" id="shopBtn" href="#shop">Shop Cases</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const TOTAL = 30.0;                 // seconds
+      const CORRECT = "raven";            // easy to swap puzzle
+      const overlay = document.getElementById('overlay');
+      const secEl = document.getElementById('sec');
+      const ring = document.getElementById('ring');
+      const answer = document.getElementById('answer');
+      const submit = document.getElementById('submit');
+      const triesEl = document.getElementById('tries');
+      const feedback = document.getElementById('feedback');
+      const result = document.getElementById('result');
+      const resTitle = document.getElementById('resTitle');
+      const resMeta = document.getElementById('resMeta');
+      const enterSite = document.getElementById('enterSite');
+      const shopBtn = document.getElementById('shopBtn');
+      const skip = document.getElementById('skip');
+
+      let tries = 0;
+      let solved = false;
+      let start, timerId;
+      let remaining = TOTAL; // seconds, float with tenths
+
+      // SVG circle circumference (2πr) r=18 ⇒ ~113.097
+      const CIRC = 2 * Math.PI * 18;
+
+      function format(sec){
+        return (Math.max(0, sec)).toFixed(1);
+      }
+
+      function updateRing(){
+        const ratio = Math.max(0, remaining) / TOTAL;
+        ring.style.strokeDasharray = CIRC.toFixed(3);
+        ring.style.strokeDashoffset = ((1 - ratio) * CIRC).toFixed(3);
+        secEl.textContent = Math.ceil(remaining).toString();
+      }
+
+      function endGame(status){
+        // status: "solved" | "failed" | "skipped"
+        if (timerId) cancelAnimationFrame(timerId);
+        solved = status === "solved";
+        const elapsed = (TOTAL - Math.max(0, remaining));
+        // Fill result UI
+        result.style.display = 'block';
+
+        if (status === "solved"){
+          resTitle.innerHTML = `<span class="res-ok">✔ Solved</span>`;
+        } else if (status === "skipped") {
+          resTitle.innerHTML = `<span class="res-bad">⏭ Skipped</span>`;
+        } else {
+          resTitle.innerHTML = `<span class="res-bad">✖ Time’s up</span>`;
+        }
+
+        const timeTaken = status === "solved"
+          ? `${format(elapsed)}s`
+          : `${format(TOTAL)}s`;
+
+        const solvedText = status === "solved" ? "Yes" : "No";
+        resMeta.textContent = `Solved: ${solvedText} • Time Taken: ${timeTaken} • Attempts: ${tries}`;
+
+        // Make “Enter Site” actually leave the overlay
+        enterSite.onclick = () => {
+          overlay.style.display = 'none';
+          // Optional: record to sessionStorage for A/B or analytics
+          try{
+            sessionStorage.setItem('cc_challenge', JSON.stringify({
+              solved, attempts: tries, timeTaken, endedAt: new Date().toISOString()
+            }));
+          }catch(_){}
+        };
+
+        // Auto-focus the primary CTA for keyboard users
+        setTimeout(()=>enterSite.focus(), 50);
+      }
+
+      function loop(ts){
+        if (!start) start = ts;
+        const dt = (ts - start) / 1000; // seconds elapsed since start
+        remaining = Math.max(0, TOTAL - dt);
+        updateRing();
+        if (remaining <= 0){
+          // time over
+          endGame("failed");
+          return;
+        }
+        timerId = requestAnimationFrame(loop);
+      }
+
+      function submitAnswer(){
+        if (result.style.display === 'block') return; // already ended
+        const val = (answer.value || "").trim().toLowerCase();
+        tries += 1;
+        triesEl.textContent = tries.toString();
+
+        if (!val){
+          feedback.innerHTML = `<span style="color:#ffdd88">Enter something…</span>`;
+          return;
+        }
+
+        if (val === CORRECT){
+          feedback.innerHTML = `<span style="color:var(--ok)">Correct.</span>`;
+          endGame("solved");
+        } else {
+          feedback.innerHTML = `<span class="penalty">Wrong — try again.</span>`;
+          // Optional: tiny focus bounce
+          answer.style.transform = 'translateX(-2px)';
+          setTimeout(()=>answer.style.transform='translateX(0)', 80);
+          answer.focus();
+        }
+      }
+
+      // Wire events
+      submit.addEventListener('click', submitAnswer);
+      answer.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter') submitAnswer();
+      });
+      skip.addEventListener('click', (e)=>{
+        e.preventDefault();
+        endGame("skipped");
+      });
+
+      // Start the timer when the overlay shows
+      updateRing();
+      answer.focus();
+      requestAnimationFrame(loop);
+
+      // Optional: deep-link CTAs
+      shopBtn.href = (new URLSearchParams(location.search).get('shop') || '#shop');
+      enterSite.setAttribute('aria-label', 'Enter the site after the challenge');
+
+      // If you want to auto-dismiss after solve, uncomment:
+      // enterSite.click();
+    })();
+  </script>
+</body>
+</html>
