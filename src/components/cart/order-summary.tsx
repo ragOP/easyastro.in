@@ -26,6 +26,7 @@ export default function OrderSummary({
   const [finalDiscount, setFinalDiscount] = useState(discount);
   const [finalTotal, setFinalTotal] = useState(total || subtotal);
   const [superDiscount, setSuperDiscount] = useState(0);
+  const [appliedCoupon, setAppliedCoupon] = useState(0);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -36,6 +37,7 @@ export default function OrderSummary({
       setSuperDiscount(discountValue);
       setFinalTotal(totalBeforeDiscount - discountValue);
       setFinalAmount(totalBeforeDiscount - discountValue);
+      setAppliedCoupon(60);
     } else if (params.has("rag30")) {
       const totalBeforeDiscount = subtotal + additionalTotal;
       const discountValue = Math.round(totalBeforeDiscount * 0.3);
@@ -43,6 +45,7 @@ export default function OrderSummary({
       setSuperDiscount(discountValue);
       setFinalTotal(totalBeforeDiscount - discountValue);
       setFinalAmount(totalBeforeDiscount - discountValue);
+      setAppliedCoupon(30);
     } else if (params.has("rag75")) {
       const totalBeforeDiscount = subtotal + additionalTotal;
       const discountValue = Math.round(totalBeforeDiscount * 0.75);
@@ -50,6 +53,7 @@ export default function OrderSummary({
       setSuperDiscount(discountValue);
       setFinalTotal(totalBeforeDiscount - discountValue);
       setFinalAmount(totalBeforeDiscount - discountValue);
+      setAppliedCoupon(75);
     } else {
       setFinalDiscount(discount);
       setFinalTotal(total || subtotal + additionalTotal - discount);
@@ -97,7 +101,7 @@ export default function OrderSummary({
                   <div className="absolute -top-2 -left-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full shadow-md">SPECIAL</div>
                   <div className="flex items-center gap-2 ml-6">
                     <Sparkles className="w-5 h-5 text-green-600 animate-pulse" />
-                    <span className="text-green-800 font-bold text-lg">Super Discount</span>
+                    <span className="text-green-800 font-bold text-lg">Yay! {appliedCoupon}% off applied on this order 🎉</span>
                   </div>
                   <span className="text-green-700 text-xl font-bold bg-white px-3 py-1 rounded-md shadow border border-green-200 animate-pulse">
                     -₹{superDiscount.toLocaleString()}
