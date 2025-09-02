@@ -93,12 +93,13 @@ export default function OrderSummary({
             )}
             <div className="border-t border-border pt-4">
               {superDiscount > 0 && (
-                <div className="flex justify-between items-center py-2 mb-2 border-b border-green-100">
-                  <div className="flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-green-500" />
-                    <span className="text-green-600 font-medium">Super Discount</span>
+                <div className="relative flex justify-between items-center py-3 px-3 my-3 bg-gradient-to-r from-green-100 to-emerald-50 rounded-lg border border-green-300 shadow-md">
+                  <div className="absolute -top-2 -left-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full shadow-md">SPECIAL</div>
+                  <div className="flex items-center gap-2 ml-6">
+                    <Sparkles className="w-5 h-5 text-green-600 animate-pulse" />
+                    <span className="text-green-800 font-bold text-lg">Super Discount</span>
                   </div>
-                  <span className="text-green-600 text-lg font-semibold">
+                  <span className="text-green-700 text-xl font-bold bg-white px-3 py-1 rounded-md shadow border border-green-200 animate-pulse">
                     -₹{superDiscount.toLocaleString()}
                   </span>
                 </div>
