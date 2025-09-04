@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
+/* Playfair Display font family classes for headings */
+.font-playfair {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-playfair-regular {
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+}
+
+.font-playfair-medium {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+}
+
+.font-playfair-semibold {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.font-playfair-bold {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.font-playfair-extrabold {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+}
+
+.font-playfair-black {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+}
+
+/* Poppins font family classes */
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-poppins-thin {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 100;
+}
+
+.font-poppins-extralight {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 200;
+}
+
+.font-poppins-light {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+}
+
+.font-poppins-regular {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.font-poppins-medium {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.font-poppins-semibold {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.font-poppins-bold {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+.font-poppins-extrabold {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+}
+
+.font-poppins-black {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 900;
+}
+
+/* Override default font for exp pages */
+.exp-page {
+  font-family: 'Poppins', sans-serif;
+}
+
+.exp-page h1,
+.exp-page h2,
+.exp-page h3,
+.exp-page h4,
+.exp-page h5,
+.exp-page h6 {
+  font-family: 'Playfair Display', serif;
+}
+
+.exp-page .font-headline {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+/* Romantic + Mystical Color Palette */
+:root {
+  --deep-purple: #4C1D95;
+  --deep-purple-light: #6B46C1;
+  --gold: #F59E0B;
+  --gold-light: #FCD34D;
+  --rose-pink: #EC4899;
+  --rose-pink-light: #F472B6;
+  --white-glow: #F8FAFC;
+  --mystical-purple: #7C3AED;
+  --mystical-purple-light: #A855F7;
+}
+
+/* Custom animations for exp page */
+@keyframes mystical-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(124, 58, 237, 0.8);
+  }
+}
+
+@keyframes floating-stars {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+@keyframes golden-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+  }
+}
+
+@keyframes rose-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(236, 72, 153, 0.8);
+  }
+}
+
+.mystical-glow {
+  animation: mystical-glow 2s ease-in-out infinite;
+}
+
+.golden-glow {
+  animation: golden-glow 2s ease-in-out infinite;
+}
+
+.rose-glow {
+  animation: rose-glow 2s ease-in-out infinite;
+}
+
+.floating-stars {
+  animation: floating-stars 3s ease-in-out infinite;
+}
+
+/* Enhanced button styles for exp page */
+.exp-cta-button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Custom gradient backgrounds with new color palette */
+.mystical-bg {
+  background: linear-gradient(135deg, var(--deep-purple) 0%, var(--mystical-purple) 100%);
+}
+
+.galaxy-bg {
+  background: radial-gradient(ellipse at center, var(--deep-purple) 0%, #0f0f23 100%);
+}
+
+.romantic-bg {
+  background: linear-gradient(135deg, var(--deep-purple) 0%, var(--rose-pink) 50%, var(--gold) 100%);
+}
+
+/* Text gradients */
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-rose-gradient {
+  background: linear-gradient(135deg, var(--rose-pink) 0%, var(--rose-pink-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-mystical-gradient {
+  background: linear-gradient(135deg, var(--mystical-purple) 0%, var(--mystical-purple-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+} 
+/* Additional mystical effects for hero section */
+.hero-mystical-bg {
+  background: 
+    radial-gradient(ellipse at top, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #4C1D95 0%, #7C3AED 50%, #EC4899 100%);
+}
+
+.moon-beam {
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: moon-beam 4s ease-in-out infinite;
+}
+
+@keyframes moon-beam {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.bracelet-glow {
+  box-shadow: 
+    0 0 20px rgba(245, 158, 11, 0.4),
+    0 0 40px rgba(245, 158, 11, 0.2),
+    0 0 60px rgba(245, 158, 11, 0.1);
+  animation: bracelet-glow 3s ease-in-out infinite;
+}
+
+@keyframes bracelet-glow {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(245, 158, 11, 0.4),
+      0 0 40px rgba(245, 158, 11, 0.2),
+      0 0 60px rgba(245, 158, 11, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 30px rgba(245, 158, 11, 0.6),
+      0 0 50px rgba(245, 158, 11, 0.4),
+      0 0 70px rgba(245, 158, 11, 0.2);
+  }
+}
+
+/* Split screen visual effects */
+.split-visual {
+  position: relative;
+  overflow: hidden;
+}
+
+.split-visual::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Enhanced button styles */
+.mystical-button {
+  background: linear-gradient(135deg, #EC4899 0%, #7C3AED 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.mystical-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.mystical-button:hover::before {
+  left: 100%;
+}
+
+/* Badge styling */
+.purnima-badge {
+  background: linear-gradient(135deg, #EF4444 0%, #F97316 100%);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+  }
+}
+
+/* Scarcity Bar Animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(100%) skewX(-12deg);
+  }
+}
+
+@keyframes progress-bar {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 15%;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-progress-bar {
+  animation: progress-bar 8s ease-out infinite;
+}
+
+/* Scarcity bar specific styles */
+.scarcity-bar {
+  background: linear-gradient(135deg, #DC2626 0%, #EA580C 50%, #DC2626 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.scarcity-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+/* Enhanced scarcity bar effects */
+.scarcity-glow {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+  animation: scarcity-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scarcity-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.8);
+  }
+}

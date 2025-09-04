@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import CountdownTimer from "@/components/ui/countdown-timer";
 import { useRouter } from 'next/navigation';
 import SpecialOfferPopup from "./special-offer-popup";
+import CtaButton from "./cta-button";
 export default function StickyCtaBar() {
   
   const [offerEndTime, setOfferEndTime] = useState<Date | null>(null);
@@ -47,7 +48,7 @@ export default function StickyCtaBar() {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-card p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-primary/20 sm:p-3">
+      <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-50 to-purple-100 p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-primary/20 sm:p-3">
         <div className="container mx-auto flex flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="text-center">
@@ -61,11 +62,12 @@ export default function StickyCtaBar() {
           </div>
           
           <a href={process.env.NEXT_PUBLIC_CTA_URL} className="w-auto shrink-0">
-            <Button 
+            <CtaButton title="Buy Now" />
+            {/* <Button 
                onClick={handleRedirect}
             size="lg" className="w-full font-bold text-base sm:text-lg py-3 sm:py-6 px-4 sm:px-6 animate-shine text-center">
               Reveal My Soulmate
-            </Button>
+            </Button> */}
           </a>
         </div>
       </div>

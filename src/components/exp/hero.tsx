@@ -1,99 +1,125 @@
 "use client";
-import React from 'react';
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Users, Star, Clock, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
-const stats = [
-  {
-    icon: <Users className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
-    value: "100,000+",
-    label: "Happy Clients",
-  },
-  {
-    icon: <Star className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
-    value: "4.8/5",
-    label: "Average Rating",
-  },
-  {
-    icon: <Clock className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
-    value: "24 Hours",
-    label: "Delivered Privately",
-  },
-  {
-    icon: <ShieldCheck className="h-9 w-9 sm:h-8 sm:w-8 text-primary" />,
-    value: "100%",
-    label: "Safe & Confidential",
-  },
-];
-
-
+import { useRouter } from "next/navigation";
+import CtaButton from "./cta-button";
+import ScarcityBar from "./scarcity-bar";
 
 export default function HeroSection() {
-   const router = useRouter();
+  const router = useRouter();
   const handleRedirect = () => {
-    router.push('/exp-cart');
+    router.push("/exp-cart");
   };
+
   return (
-    <section className="relative overflow-hidden pt-2 pb-7 sm:py-16 bg-card">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background opacity-50"></div>
-      <div className="container relative z-10 mx-auto">
-        <div className="grid lg:grid-cols-2 lg:gap-12 lg:items-center">
-          <div className="text-center lg:text-left">
-            <h1 className="font-headline font-bold text-3xl md:text-5xl text-primary leading-tight tracking-wide mb-4">
-              Discover Your Soulmate’s Face Today!
+    <section className="relative overflow-hidden min-h-screen bg-background">
+      {/* Mystical Background Elements */}
+      <div className="absolute inset-0">
+        {/* Galaxy background with stars */}
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-indigo-900/60 to-purple-800/80"></div> */}
+        <div className="absolute inset-0 bg-background"></div>
+
+        <div
+          className="absolute top-72 left-1/3 w-1.5 h-1.5 bg-cyan-300 rounded-full opacity-30 floating-stars"
+          style={{ animationDelay: "2.5s" }}
+        ></div>
+
+        {/* Moon glow effect */}
+        <div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full opacity-20 blur-xl moon-beam"></div>
+      </div>
+
+      <div className="container relative z-10 mx-auto px-4 py-4">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh]">
+          {/* Left Side - Content */}
+          <div className="text-center lg:text-left space-y-6">
+            {/* Badge Overlay */}
+
+            <h1 className="font-playfair-bold font-headline text-2xl md:text-5xl lg:text-6xl leading-tight tracking-wide">
+              💖 "See Your Soulmate's Face + Wear the Energy That Attracts Love
+              & Money – For Just ₹799"
             </h1>
-            <div className="lg:hidden my-8">
-              <Image
-                src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png"
-                alt="Soulmate Sketch Example"
-                width={500}
-                height={500}
-                className="rounded-lg shadow-xl mx-auto"
-                data-ai-hint="soulmate sketch"
-                priority
+
+            <div className="inline-flex items-center px-4 py-1 purnima-badge text-white text-sm font-bold rounded-full shadow-lg mb-6">
+              🔥 Only 501 Bracelets Energized on Purnima
+            </div>
+
+            {/* Right Side - Split Visual */}
+            {/* Right Side - Split Visual */}
+            <div className="relative split-visual">
+              <div className="grid grid-cols-2 gap-4 h-96 lg:h-[500px]">
+                {/* Left - Soulmate Sketch (Blurred Preview) */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-2xl blur-sm"></div>
+                  <Image
+                    src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png"
+                    alt="Soulmate Sketch Preview"
+                    width={300}
+                    height={500}
+                    className="rounded-2xl shadow-2xl w-full h-full object-cover filter blur-[2px] group-hover:blur-[1px] transition-all duration-300"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
+                  <div className="absolute bottom-4 left-4 right-4 text-white text-sm font-poppins-semibold">
+                    Your Soulmate's Face
+                  </div>
+                  {/* Mystical aura around soulmate sketch */}
+                  <div className="absolute -inset-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                {/* Right - Bracelet with Moon Glow */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/30 to-orange-400/30 rounded-2xl blur-lg"></div>
+                  <Image
+                    src="/bracelet.jpg"
+                    alt="Energized Love & Money Bracelet"
+                    width={300}
+                    height={500}
+                    className="rounded-2xl shadow-2xl w-full h-full object-cover bracelet-glow"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
+                  <div className="absolute bottom-4 left-4 right-4 text-white text-sm font-poppins-semibold">
+                    Energized Bracelet
+                  </div>
+
+                  {/* Moon beam effect */}
+                  <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full opacity-60 blur-md"></div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-300 rounded-full opacity-80 blur-sm"></div>
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-yellow-100 to-yellow-300 rounded-full opacity-30 blur-lg"></div>
+                </div>
+              </div>
+
+              {/* Connecting mystical aura between images */}
+              {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full opacity-60 blur-sm"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full opacity-80"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-pink-300/30 to-purple-300/30 rounded-full opacity-40 blur-md"></div> */}
+            </div>
+
+            <p className="text-lg md:text-xl text-black font-poppins-regular max-w-2xl mx-auto lg:mx-0">
+              ✨ Exclusive Bundle: Personalized Soulmate Sketch + Energized Love
+              & Money Bracelet
+              <br />
+              {/* <span className="text-yellow-300 font-poppins-semibold">
+                (Limited to 501 pieces worldwide)
+              </span> */}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+              <CtaButton
+                isCartPage={false}
+                title="Get My Bundle Now – Only ₹799"
               />
             </div>
-            <p className="max-w-2xl mx-auto lg:mx-0 text-lg md:text-xl text-foreground/80 mb-8">
-              Ever wondered who your true soulmate is? Experience the magic of seeing your soulmate’s face – drawn just for you by gifted psychics and astrology experts.
-            </p>
-            <Button
-              size="lg"
-              className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine"
-              onClick={handleRedirect}
-            >
-              Reveal My Soulmate Now!
-            </Button>
-            <p className="mt-4 text-sm text-primary/80 animate-pulse">
-              Only a few spots left! Hurry before the special offer ends.
-            </p>
-            <p className="mt-2 text-sm font-bold text-primary animate-pulse">
-              9 spots left for free in-depth love reading!
-            </p>
-          </div>
 
-          <div className="hidden lg:block">
-            <Image
-              src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png"
-              alt="Soulmate Sketch Example"
-              width={500}
-              height={500}
-              className="rounded-lg shadow-xl mx-auto"
-              data-ai-hint="soulmate sketch"
-              priority
-            />
+            <p className="text-sm text-white/80 font-poppins-regular animate-pulse">
+              100% Secure • Delivered in 24h • Limited Edition
+            </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
-          {stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col items-center gap-2 text-center">
-              {React.cloneElement(stat.icon, { className: 'h-9 w-9 sm:h-8 sm:w-8 text-primary' })}
-              <p className="text-3xl sm:text-2xl font-bold text-primary">{stat.value}</p>
-              <p className="text-base sm:text-sm text-foreground/70">{stat.label}</p>
-            </div>
-          ))}
-        </div>
+        <ScarcityBar />
       </div>
     </section>
   );

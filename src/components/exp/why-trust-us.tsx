@@ -11,36 +11,34 @@ const trustFactors = [
 ];
 
 export default function WhyTrustUsSection() {
+  const features = [
+    { icon: "🌙", text: "Soulmate’s sketch gives clarity of destiny" },
+    { icon: "💎", text: "Bracelet activates attraction energy in real life" },
+    { icon: "⚡", text: "Energized on Full Moon (Purnima) by expert astrologers" },
+    { icon: "🧿", text: "Combines spirituality + astrology for maximum results" },
+  ];
+
   return (
-    <section className="py-7 sm:py-16 bg-card">
-      <div className="container mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="order-2 lg:order-1">
-            <h2 className="text-3xl md:text-4xl font-headline mb-7">Why Trust Us?</h2>
-            <ul className="space-y-4 mb-8">
-              {trustFactors.map((factor, index) => (
-                <li key={index} className="flex items-center gap-3">
-                  <CheckCircle className="h-6 w-6 text-primary flex-shrink-0" />
-                  <span className="text-lg text-foreground/90">{factor}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="text-lg font-semibold text-accent">
-              Safe, secure, and always confidential. Your trust is our priority.
-            </p>
+    <section className="py-8 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold px-4 py-1 rounded-full text-base shadow animate-glow inline-block mb-4">💖 Bundle Offer</span>
+          <h2 className="text-2xl md:text-3xl font-playfair text-purple-700 mb-6">Energy You Can See. Energy You Can Wear.</h2>
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-6">
+            {features.map((feature, idx) => (
+              <div key={idx} className="bg-white rounded-xl shadow-lg border border-purple-100 px-6 py-5 flex flex-col items-center w-full md:w-56">
+                <span className="text-3xl mb-2">{feature.icon}</span>
+                <span className="text-lg text-gray-700 text-center">{feature.text}</span>
+              </div>
+            ))}
           </div>
-          <div className="order-1 lg:order-2 flex justify-center">
-            <Image
-              src="https://ik.imagekit.io/5r36kvobl/Untitled%20design.png"
-              alt="Beautiful soulmate sketch"
-              width={500}
-              height={500}
-              className="aspect-square object-contain"
-            />
+          <div className="flex flex-col items-center justify-center mb-2">
+            <span className="text-xl text-gray-500 line-through">Bundle Value ₹2,499</span>
+            <span className="text-3xl font-bold text-pink-600  px-4 rounded-lg animate-glow">Today Only ₹799</span>
           </div>
-        </div>
-        <div className="mt-11">
-          <CtaButton />
+          <div className="mt-6 w-full flex justify-center">
+            <CtaButton title="Get My Bundle Now (₹799)" />
+          </div>
         </div>
       </div>
     </section>

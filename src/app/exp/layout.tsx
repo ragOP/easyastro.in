@@ -1,19 +1,21 @@
 import type { Metadata } from 'next';
 import '../globals.css';
+import './exp.css';
 import { Toaster } from "@/components/ui/toaster"
-import { Alegreya, Belleza } from 'next/font/google';
+import { Poppins, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
 
-const alegreya = Alegreya({
+const poppins = Poppins({
   subsets: ['latin'],
-  variable: '--font-alegreya',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-poppins',
   display: 'swap',
 });
 
-const belleza = Belleza({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-belleza',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-playfair',
   display: 'swap',
 });
 
@@ -28,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${alegreya.variable} ${belleza.variable} !scroll-smooth`}>
+    <html lang="en" className={`${poppins.variable} ${playfair.variable} !scroll-smooth`}>
       <head>
         {/* Google Tag Manager */}
         <Script id="gtm" strategy="afterInteractive">
@@ -74,7 +76,7 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body className="font-body antialiased">
+      <body className="font-poppins antialiased exp-page">
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

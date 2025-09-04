@@ -1,9 +1,12 @@
+"use client";
+
 import SocialProofPopup from "@/components/common/social-proof-popup";
 import FaqSection from "@/components/exp/faq";
 import GallerySection from "@/components/exp/gallery";
 import HeroSection from "@/components/exp/hero";
 import HowItWorksSection from "@/components/exp/how-it-works";
 import IntroductionSection from "@/components/exp/introduction";
+import ScarcityBar from "@/components/exp/scarcity-bar";
 import StickyCtaBar from "@/components/exp/sticky-cta-bar";
 import TestimonialsSection from "@/components/exp/testimonials";
 import WhatYouReceiveSection from "@/components/exp/what-you-receive";
@@ -17,13 +20,33 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <HeroSection />
-        <IntroductionSection />
-        <HowItWorksSection />
-        <GallerySection />
         <WhatYouReceiveSection />
-        <TestimonialsSection />
         <WhyTrustUsSection />
+        <TestimonialsSection />
+        <HowItWorksSection />
         <FaqSection />
+
+        {/* Final Call-to-Action (Bottom Fold) */}
+        <section className="py-14 sm:py-20 bg-background">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-black drop-shadow mb-6">
+              💖 See Your Soulmate. Attract Love & Money. All For Just ₹799.
+            </h2>
+            <button
+              onClick={() => (window.location.href = "/exp-cart")}
+              className="mt-4 mb-6 px-10 py-5 text-lg font-bold rounded-full shadow-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-700 text-white border-2 border-yellow-300 animate-glow hover:scale-105 transition-transform duration-200"
+            >
+              👉 Get My Bundle Now (₹799)
+            </button>
+            <div className="mt-2 text-sm text-black font-semibold flex flex-col sm:flex-row items-center justify-center gap-2">
+              <span>🔒 Secure Checkout</span>
+              <span>• Fast Delivery</span>
+              <span>• Limited Edition 501 Bracelets</span>
+            </div>
+          </div>
+        </section>
+        {/* <IntroductionSection />
+        <GallerySection /> */}
       </main>
       <Footer />
       <StickyCtaBar />

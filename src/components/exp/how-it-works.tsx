@@ -22,24 +22,27 @@ const steps = [
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-7 sm:py-16 bg-card">
-      <div className="container mx-auto">
-        <h2 className="text-3xl md:text-4xl font-headline text-center mb-7 sm:mb-16">How It Works</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
-            <Card key={index} className="text-center bg-background border-primary/20 shadow-lg hover:shadow-primary/20 transition-shadow duration-300">
-              <CardHeader className="flex flex-col items-center">
-                <div className="mb-4">{step.icon}</div>
-                <CardTitle className="font-headline text-2xl">{step.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-foreground/80">{step.description}</p>
-              </CardContent>
-            </Card>
+    <section className="py-14 sm:py-20 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="max-w-2xl mx-auto text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-playfair text-purple-700 mb-6">Getting Your Bundle is Super Simple</h2>
+        </div>
+        <div className="grid md:grid-cols-4 gap-8 justify-center items-stretch mb-8">
+          {["1", "2", "3", "4"].map((num, idx) => (
+            <div key={num} className="relative bg-white rounded-2xl shadow-xl border border-purple-100 px-4 py-6 flex flex-col items-center">
+              <span className="absolute -top-4 -left-4 bg-gradient-to-r from-purple-500 via-pink-400 to-yellow-300 text-white font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-lg text-lg border-2 border-white">{num}</span>
+              {/* <span className="text-3xl mb-3">{num}⃣</span> */}
+              <span className="text-lg text-gray-700 text-center font-semibold mb-2">
+                {idx === 0 && "Share your name + birth details"}
+                {idx === 1 && "Psychic artists create your personalized sketch + love reading"}
+                {idx === 2 && "Energized bracelet is shipped to your doorstep"}
+                {idx === 3 && "Receive sketch (24h) + bracelet (3–5 days)"}
+              </span>
+            </div>
           ))}
         </div>
-        <div className="mt-11">
-          <CtaButton />
+        <div className="mt-8 text-center">
+          <CtaButton title="👉 Order My Bundle Now" />
         </div>
       </div>
     </section>
