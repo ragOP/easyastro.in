@@ -13,9 +13,9 @@ import CartHeader from "@/components/cart/cart-header";
 const mockCartItems = [
   {
     id: "1",
-    name: "Soulmate Sketch",
-    description: "Get a detailed sketch of your soulmate's face",
-    price: 389,
+    name: "Soulmate Sketch + Energised Money and Love Attractor Bracelet",
+    description: "Get a detailed sketch of your soulmate's face and an energized bracelet to attract love and wealth.",
+    price: 799,
     originalPrice: 1999,
     features: [
       "Detailed facial features",
@@ -71,20 +71,20 @@ const mockAdditionalProducts = [
       "Avoid burnout by knowing what doesn't suit you",
     ],
   },
-  {
-    id: "add-4",
-    title: "Energised Money and Love Attractor Bracelet",
-    description:
-      "Attract money, love and prosperity with this Limited Edition Money and Love attractor bracelet, specially energized by astrologers on Purnima under the powerful full moon. Combining Money Magnet and Rose Quartz, it carries potent blessings from Purnima to solve issues and enhance positive energy.",
-    price: 799,
-    originalPrice: 1999,
-    features: [
-      "Discover your ideal career path",
-      "Align goals with your life purposes",
-      "Strength-based tips to grow faster",
-      "Avoid burnout by knowing what doesn't suit you",
-    ],
-  },
+  // {
+  //   id: "add-4",
+  //   title: "Energised Money and Love Attractor Bracelet",
+  //   description:
+  //     "Attract money, love and prosperity with this Limited Edition Money and Love attractor bracelet, specially energized by astrologers on Purnima under the powerful full moon. Combining Money Magnet and Rose Quartz, it carries potent blessings from Purnima to solve issues and enhance positive energy.",
+  //   price: 799,
+  //   originalPrice: 1999,
+  //   features: [
+  //     "Discover your ideal career path",
+  //     "Align goals with your life purposes",
+  //     "Strength-based tips to grow faster",
+  //     "Avoid burnout by knowing what doesn't suit you",
+  //   ],
+  // },
 ];
 
 export default function CartPage() {

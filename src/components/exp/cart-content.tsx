@@ -1,9 +1,9 @@
-import React from 'react';
-import CartEmpty from './cart-empty';
-import CartItem from './cart-item';
-import AdditionalProducts from './additional-products';
-import ConsultationForm from './consultation-form';
-import OrderSummary from './order-summary';
+import React from "react";
+import CartEmpty from "./cart-empty";
+import CartItem from "./cart-item";
+import AdditionalProducts from "./additional-products";
+import ConsultationForm from "./consultation-form";
+import OrderSummary from "./order-summary";
 
 interface CartItem {
   id: string;
@@ -69,7 +69,7 @@ export default function CartContent({
   onCheckout,
   setConsultationFormData,
   finalAmount,
-  setFinalAmount
+  setFinalAmount,
 }: CartContentProps) {
   return (
     <>
@@ -99,7 +99,11 @@ export default function CartContent({
                       : "translate-x-8 opacity-0"
                   }`}
                 >
-                  <CartItem item={item} onRemove={onRemove} showRemoveButton={false} />
+                  <CartItem
+                    item={item}
+                    onRemove={onRemove}
+                    showRemoveButton={false}
+                  />
                 </div>
               ))}
             </div>
@@ -107,7 +111,6 @@ export default function CartContent({
             {/* Order Summary and Forms - Mobile: Stacked */}
             <div className="space-y-4 sm:space-y-6">
               {/* Additional Products Section */}
-           
 
               {/* Consultation Form */}
               <div
@@ -123,7 +126,7 @@ export default function CartContent({
                   setFormData={setConsultationFormData}
                 />
               </div>
-   <div
+              <div
                 className={`transition-all duration-700 delay-700 transform ${
                   animateElements
                     ? "translate-y-0 opacity-100"
@@ -184,7 +187,6 @@ export default function CartContent({
               </div>
 
               {/* Additional Products Section */}
-            
 
               {/* Consultation Form */}
               <div
@@ -200,7 +202,7 @@ export default function CartContent({
                   setFormData={setConsultationFormData}
                 />
               </div>
-  <div
+              <div
                 className={`transition-all duration-700 delay-400 transform ${
                   animateElements
                     ? "translate-y-0 opacity-100"
@@ -238,4 +240,4 @@ export default function CartContent({
       )}
     </>
   );
-} 
+}
