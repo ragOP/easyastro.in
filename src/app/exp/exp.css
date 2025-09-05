@@ -275,7 +275,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  /* background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); */
   animation: shimmer 3s ease-in-out infinite;
 }
 
@@ -312,19 +312,19 @@
 
 /* Badge styling */
 .purnima-badge {
-  background: linear-gradient(135deg, #EF4444 0%, #F97316 100%);
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  background: linear-gradient(135deg, #5a38f2 0%, #5c77fc 100%);
+  box-shadow: 0 4px 15px rgba(2, 49, 240, 0.4);
   animation: badge-pulse 2s ease-in-out infinite;
 }
 
 @keyframes badge-pulse {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 48, 181, 0.4);
   }
   50% {
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+    box-shadow: 0 6px 20px rgba(0, 48, 181, 0.5);
   }
 }
 

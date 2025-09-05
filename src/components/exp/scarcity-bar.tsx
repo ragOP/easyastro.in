@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import React, { useEffect, useState } from "react";
 
 export default function ScarcityBar() {
@@ -7,6 +7,8 @@ export default function ScarcityBar() {
     minutes: 59,
     seconds: 34,
   });
+
+  const [spotsLeft, setSpotsLeft] = useState(301);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,6 +26,23 @@ export default function ScarcityBar() {
 
     return () => clearInterval(timer);
   }, []);
+
+  // Spots reduction timer
+  useEffect(() => {
+    const spotsTimer = setInterval(() => {
+      setSpotsLeft((prev) => {
+        if (prev > 5) {
+          const decrease = Math.floor(Math.random() * 2) + 1;
+          return prev - decrease;
+        }
+        return prev;
+      });
+    }, 10000 + Math.random() * 5000); // Every 10-15 seconds
+
+    return () => clearInterval(spotsTimer);
+  }, []);
+
+  const progressPercentage = ((501 - spotsLeft) / 501) * 100;
 
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 border-t border-b border-purple-200/30">
@@ -92,7 +111,7 @@ export default function ScarcityBar() {
                 <span className="text-purple-800 font-semibold">Mystical Bracelets Remaining</span>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-yellow-600">146</div>
+                <div className="text-2xl font-bold text-yellow-600">{spotsLeft}</div>
                 <div className="text-sm text-purple-600">of 501</div>
               </div>
             </div>
@@ -101,8 +120,8 @@ export default function ScarcityBar() {
             <div className="relative">
               <div className="w-full bg-gradient-to-r from-purple-100 to-pink-100 rounded-full h-3 overflow-hidden shadow-inner">
                 <div 
-                  className="h-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 rounded-full relative overflow-hidden"
-                  style={{ width: "29%" }}
+                  className="h-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 rounded-full relative overflow-hidden transition-all duration-1000 ease-out"
+                  style={{ width: `${progressPercentage}%` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer"></div>
                 </div>
