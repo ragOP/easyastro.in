@@ -1,12 +1,14 @@
 "use client";
 
 import SocialProofPopup from "@/components/common/social-proof-popup";
+import ExpSocialProofPopup from "@/components/exp/exp-social-proof-popup";
 import FaqSection from "@/components/exp/faq";
 import GallerySection from "@/components/exp/gallery";
 import HeroSection from "@/components/exp/hero";
 import HowItWorksSection from "@/components/exp/how-it-works";
 import IntroductionSection from "@/components/exp/introduction";
 import ScarcityBar from "@/components/exp/scarcity-bar";
+import SocialProofSection from "@/components/exp/social-proof-section";
 import StickyCtaBar from "@/components/exp/sticky-cta-bar";
 import TestimonialsSection from "@/components/exp/testimonials";
 import WhatYouReceiveSection from "@/components/exp/what-you-receive";
@@ -50,7 +52,7 @@ export default function Home() {
       </main>
       <Footer />
       <StickyCtaBar />
-      <SocialProofPopup />
+      <ExpSocialProofPopup />
     </div>
   );
 }

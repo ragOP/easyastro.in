@@ -113,7 +113,7 @@ export default function HeroSection() {
               />
             </div>
 
-            <p className="text-sm text-white/80 font-poppins-regular animate-pulse">
+            <p className="text-sm text-black font-poppins-regular animate-pulse">
               100% Secure • Delivered in 24h • Limited Edition
             </p>
           </div>

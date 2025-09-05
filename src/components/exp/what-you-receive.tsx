@@ -53,7 +53,7 @@ const Bundle = {
 
 export default function WhatYouReceiveSection() {
     return (
-        <section className="py-12 sm:py-20 bg-background">
+        <section className="py-6 sm:py-20 bg-background">
             <div className="container mx-auto px-4">
                 <div className="max-w-4xl mx-auto text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-playfair mb-4 bg-clip-text text-transparent bg-black">

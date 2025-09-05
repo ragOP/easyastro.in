@@ -3,23 +3,50 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import CountdownTimer from "@/components/ui/countdown-timer";
 import { useRouter } from 'next/navigation';
 import SpecialOfferPopup from "./special-offer-popup";
 import CtaButton from "./cta-button";
+import ExpSpecialOfferPopup from "./exp-special-offer-popup";
+
 export default function StickyCtaBar() {
   
   const [offerEndTime, setOfferEndTime] = useState<Date | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupHasBeenShown, setPopupHasBeenShown] = useState(false);
-   const router = useRouter();
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const router = useRouter();
+  
   const handleRedirect = () => {
     router.push('/exp-cart');
   };
+  
   useEffect(() => {
     // This runs only on the client
     setOfferEndTime(new Date(Date.now() + 10 * 60 * 1000));
   }, []);
+
+  // Simple timer effect
+  useEffect(() => {
+    if (!offerEndTime) return;
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = offerEndTime.getTime() - now;
+
+      if (distance > 0) {
+        const hours = Math.floor(distance / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        setTimeLeft({ hours, minutes, seconds });
+      } else {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 });
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [offerEndTime]);
 
   useEffect(() => {
     if (!offerEndTime || popupHasBeenShown) return;
@@ -48,30 +75,35 @@ export default function StickyCtaBar() {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-50 to-purple-100 p-3 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] border-t border-primary/20 sm:p-3">
-        <div className="container mx-auto flex flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="text-center">
-              <p className="font-bold text-primary animate-pulse text-sm mb-1">Offer Ends In:</p>
-              <CountdownTimer endTime={offerEndTime} />
+      <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-background backdrop-blur-sm border-t border-purple-200/30 shadow-lg">
+        <div className="container mx-auto px-3 py-2">
+          <div className="flex items-center justify-between gap-3">
+            {/* Timer section - compact */}
+            <div className="flex items-center gap-3">
+              <div className="text-center">
+                <p className="text-xs font-semibold text-purple-700 mb-0.5">Offer Ends In:</p>
+                <div className="font-mono text-sm font-bold text-purple-600">
+                  {String(timeLeft.hours).padStart(2, "0")}:
+                  {String(timeLeft.minutes).padStart(2, "0")}:
+                  {String(timeLeft.seconds).padStart(2, "0")}
+                </div>
+              </div>
+              
+              {/* Price - compact */}
+              <div className="flex items-baseline gap-2">
+                <span className="text-base text-gray-500 font-poppins-regular line-through">₹1998</span>
+                <span className="text-2xl font-bold text-purple-600 font-poppins-semibold">₹998</span>
+              </div>
             </div>
-            <div className="hidden sm:flex items-baseline gap-3">
-              <span className="text-2xl text-muted-foreground line-through">₹998</span>
-              <span className="text-4xl font-bold text-primary">₹389</span>
-            </div>
+            
+            {/* CTA Button - smaller */}
+            <a href={process.env.NEXT_PUBLIC_CTA_URL} className="shrink-0">
+              <CtaButton title="Buy Now" />
+            </a>
           </div>
-          
-          <a href={process.env.NEXT_PUBLIC_CTA_URL} className="w-auto shrink-0">
-            <CtaButton title="Buy Now" />
-            {/* <Button 
-               onClick={handleRedirect}
-            size="lg" className="w-full font-bold text-base sm:text-lg py-3 sm:py-6 px-4 sm:px-6 animate-shine text-center">
-              Reveal My Soulmate
-            </Button> */}
-          </a>
         </div>
       </div>
-      <SpecialOfferPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
+      <ExpSpecialOfferPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
     </>
   );
 }

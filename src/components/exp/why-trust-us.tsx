@@ -19,7 +19,7 @@ export default function WhyTrustUsSection() {
   ];
 
   return (
-    <section className="py-8 bg-background">
+    <section className="bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto text-center">
           <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold px-4 py-1 rounded-full text-base shadow animate-glow inline-block mb-4">💖 Bundle Offer</span>
