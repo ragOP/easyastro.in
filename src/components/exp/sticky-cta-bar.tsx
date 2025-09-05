@@ -56,8 +56,8 @@ export default function StickyCtaBar() {
               <CountdownTimer endTime={offerEndTime} />
             </div>
             <div className="hidden sm:flex items-baseline gap-3">
-              <span className="text-2xl text-muted-foreground line-through">₹998</span>
-              <span className="text-4xl font-bold text-primary">₹389</span>
+              <span className="text-2xl text-muted-foreground line-through">₹1999</span>
+              <span className="text-4xl font-bold text-primary">₹799</span>
             </div>
           </div>
           
