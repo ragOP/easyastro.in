@@ -45,7 +45,7 @@ export default function ScarcityBar() {
   const progressPercentage = ((501 - spotsLeft) / 501) * 100;
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 border-t border-b border-purple-200/30">
+    <div className="relative overflow-hidden mt-6 bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 border-t border-b border-purple-200/30">
       {/* Animated background effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 animate-shimmer"></div>

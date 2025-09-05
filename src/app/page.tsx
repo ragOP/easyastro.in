@@ -13,7 +13,7 @@ import SocialProofPopup from "@/components/common/social-proof-popup";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-dvh bg-background text-foreground">
+    <div className="flex flex-col min-h-dvh w-full bg-background text-foreground">
       <Header />
       <main className="flex-1">
         <HeroSection />

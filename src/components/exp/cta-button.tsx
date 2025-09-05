@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 interface CtaButtonProps {
   isCartPage?: boolean;
   title?: string;
+  className?: string;
 }
 
 export default function CtaButton({
   isCartPage = false,
   title,
+  className
 }: CtaButtonProps) {
   const router = useRouter();
 
@@ -28,7 +30,7 @@ export default function CtaButton({
       {isCartPage ? (
         <Button
           size="lg"
-          className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400 text-white border-2 border-yellow-300 animate-glow"
+          className={`font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400 text-white border-2 border-yellow-300 animate-glow ${className}`}
         >
           Reveal My Soulmate Now!
         </Button>
@@ -37,7 +39,7 @@ export default function CtaButton({
           <Button
             onClick={handleRedirect}
             size="lg"
-            className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400 text-white border-2 border-yellow-300 animate-glow"
+            className={`font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400 text-white border-2 border-yellow-300 animate-glow ${className}`}
           >
             {title || "Get My Bundle Now – Only ₹799"}
           </Button>

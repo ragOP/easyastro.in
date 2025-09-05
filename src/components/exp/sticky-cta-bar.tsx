@@ -9,17 +9,17 @@ import CtaButton from "./cta-button";
 import ExpSpecialOfferPopup from "./exp-special-offer-popup";
 
 export default function StickyCtaBar() {
-  
+
   const [offerEndTime, setOfferEndTime] = useState<Date | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupHasBeenShown, setPopupHasBeenShown] = useState(false);
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const router = useRouter();
-  
+
   const handleRedirect = () => {
     router.push('/exp-cart');
   };
-  
+
   useEffect(() => {
     // This runs only on the client
     setOfferEndTime(new Date(Date.now() + 10 * 60 * 1000));
@@ -75,35 +75,33 @@ export default function StickyCtaBar() {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-background backdrop-blur-sm border-t border-purple-200/30 shadow-lg">
-        <div className="container mx-auto px-3 py-2">
-          <div className="flex items-center justify-between gap-3">
-            {/* Timer section - compact */}
-            <div className="flex items-center gap-3">
-              <div className="text-center">
-                <p className="text-xs font-semibold text-purple-700 mb-0.5">Offer Ends In:</p>
-                <div className="font-mono text-sm font-bold text-purple-600">
-                  {String(timeLeft.hours).padStart(2, "0")}:
-                  {String(timeLeft.minutes).padStart(2, "0")}:
-                  {String(timeLeft.seconds).padStart(2, "0")}
-                </div>
-              </div>
-              
-              {/* Price - compact */}
-              <div className="flex items-baseline gap-2">
-                <span className="text-base text-gray-500 font-poppins-regular line-through">₹1998</span>
-                <span className="text-2xl font-bold text-purple-600 font-poppins-semibold">₹998</span>
+      <div className="fixed bottom-0 left-0 right-0 z-50 w-[100vw] bg-background backdrop-blur-sm border-t border-purple-200/30 shadow-lg">
+        <div className="px-3 py-2 flex flex-row items-center justify-between gap-2">
+          {/* Timer section - compact */}
+          <div className="flex items-center gap-3">
+            <div className="text-center">
+              <p className="text-xs font-semibold text-purple-700 mb-0.5">Offer Ends In:</p>
+              <div className="font-mono text-sm font-bold text-purple-600">
+                {String(timeLeft.hours).padStart(2, "0")}:
+                {String(timeLeft.minutes).padStart(2, "0")}:
+                {String(timeLeft.seconds).padStart(2, "0")}
               </div>
             </div>
-            
-            {/* CTA Button - smaller */}
-            <a href={process.env.NEXT_PUBLIC_CTA_URL} className="shrink-0">
-              <CtaButton title="Buy Now" />
-            </a>
+
+            {/* Price - compact */}
+            <div className="flex items-baseline gap-2">
+              <span className="text-base text-gray-500 font-poppins-regular line-through">₹1998</span>
+              <span className="text-xl font-bold text-purple-600 font-poppins-semibold">₹998</span>
+            </div>
           </div>
+
+          {/* CTA Button - smaller */}
+          <a href={process.env.NEXT_PUBLIC_CTA_URL} className="">
+            <CtaButton title="Buy Now" className="shrink-0" />
+          </a>
         </div>
       </div>
-      <ExpSpecialOfferPopup isOpen={isPopupOpen} onClose={handleClosePopup} />
+      {/* <ExpSpecialOfferPopup isOpen={isPopupOpen} onClose={handleClosePopup} /> */}
     </>
   );
 }
