@@ -76,7 +76,7 @@ export default function StickyCtaBar() {
   return (
     <>
       <div className="fixed bottom-0 left-0 right-0 z-50 w-[100vw] bg-background backdrop-blur-sm border-t border-purple-200/30 shadow-lg">
-        <div className="px-3 py-2 flex flex-row items-center justify-between gap-2">
+        <div className="px-3 py-4 flex flex-row items-center justify-between gap-2">
           {/* Timer section - compact */}
           <div className="flex items-center gap-3">
             <div className="text-center">
@@ -90,8 +90,8 @@ export default function StickyCtaBar() {
 
             {/* Price - compact */}
             <div className="flex items-baseline gap-2">
-              <span className="text-base text-gray-500 font-poppins-regular line-through">₹1998</span>
-              <span className="text-xl font-bold text-purple-600 font-poppins-semibold">₹998</span>
+              <span className="text-base text-gray-500 font-poppins-regular line-through">₹2499</span>
+              <span className="text-2xl font-bold text-purple-600 font-poppins-semibold">₹799</span>
             </div>
           </div>
 
