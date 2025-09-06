@@ -121,10 +121,10 @@ export default function OrderSummary({
           <button
             onClick={handleButtonClick}
             disabled={isCheckingOut}
-            className={`w-full bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-4 rounded-full font-semibold transition-all duration-300 transform shadow-xl animate-shine disabled:opacity-50 disabled:cursor-not-allowed ${
+            className={`w-full bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400 text-white py-4 rounded-full font-bold text-lg border-2 border-yellow-300 shadow-lg hover:shadow-xl transition-all duration-300 transform animate-glow disabled:opacity-50 disabled:cursor-not-allowed ${
               isPressed
-                ? "scale-95 shadow-inner from-primary/90 to-primary/70"
-                : "hover:from-primary/90 hover:to-primary/70 hover:scale-105 hover:shadow-primary/25"
+                ? "scale-95 shadow-inner"
+                : "hover:scale-105"
             }`}
           >
             {isCheckingOut ? (

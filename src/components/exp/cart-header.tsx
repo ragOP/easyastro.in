@@ -11,13 +11,18 @@ export default function CartHeader({ animateElements = true }: CartHeaderProps) 
           : "translate-y-8 opacity-0"
       }`}
     >
-      <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-1 sm:mb-2">
-        <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent animate-pulse">
-          Your Love Cart
+      {/* Badge Overlay - Similar to exp page */}
+      <div className="inline-flex items-center px-3 sm:px-4 py-1 purnima-badge text-white text-xs sm:text-sm font-bold rounded-full shadow-lg mb-4">
+        🔥 Complete Your Love Journey
+      </div>
+      
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-playfair-bold mb-1 sm:mb-2">
+        <span className="bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400 bg-clip-text text-transparent">
+          💖 Your Love Cart
         </span>
       </h1>
-      <p className="text-base sm:text-lg lg:text-xl text-foreground/80 max-w-2xl mx-auto px-2">
-        Review your selected love services and prepare for your romantic journey
+      <p className="text-base sm:text-lg lg:text-xl text-black/80 max-w-2xl mx-auto px-2 font-poppins-regular">
+        ✨ Review your selected mystical services and prepare for your romantic journey
       </p>
     </div>
   );

@@ -7,7 +7,8 @@ import { BACKEND_URL } from "@/lib/backendUrl";
 import TestimonialsSection from "@/components/exp/testimonials";
 import GallerySection from "@/components/exp/gallery";
 import CartContent from "@/components/exp/cart-content";
-import CartHeader from "@/components/cart/cart-header";
+import "../exp/exp.css";
+import CartHeader from "@/components/exp/cart-header";
 
 // Mock data for demonstration
 const mockCartItems = [
@@ -316,33 +317,67 @@ export default function CartPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-dvh bg-background text-foreground">
+    <div className="flex flex-col min-h-dvh bg-background text-foreground exp-page font-poppins">
       <Header />
-      <main className="flex-1">
-        <CartHeader animateElements={animateElements} />
-        <CartContent
-          cartItems={cartItems}
-          additionalProducts={mockAdditionalProducts}
-          selectedProducts={selectedProducts}
-          consultationFormData={consultationFormData}
-          subtotal={subtotal}
-          discount={discount}
-          total={total}
-          additionalTotal={additionalTotal}
-          isCheckingOut={isCheckingOut}
-          animateElements={animateElements}
-          onRemove={removeItem}
-          onProductToggle={onProductToggle}
-          onConsultationFormSubmit={handleConsultationFormSubmit}
-          onCheckout={handleCheckout}
-          setConsultationFormData={setConsultationFormData}
-          finalAmount={finalAmount}
-          setFinalAmount={setFinalAmount}
-        />
+      <main className="flex-1 relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-background"></div>
+          <div
+            className="absolute top-20 left-1/4 w-1 h-1 bg-cyan-300 rounded-full opacity-40 floating-stars"
+            style={{ animationDelay: "1s" }}
+          ></div>
+          <div
+            className="absolute top-40 right-1/3 w-1.5 h-1.5 bg-purple-400 rounded-full opacity-30 floating-stars"
+            style={{ animationDelay: "2s" }}
+          ></div>
+          <div
+            className="absolute top-72 left-1/3 w-1.5 h-1.5 bg-cyan-300 rounded-full opacity-30 floating-stars"
+            style={{ animationDelay: "2.5s" }}
+          ></div>
+          <div
+            className="absolute top-96 right-1/4 w-1 h-1 bg-purple-400 rounded-full opacity-40 floating-stars"
+            style={{ animationDelay: "1.5s" }}
+          ></div>
+          <div
+            className="absolute bottom-1/3 left-1/4 w-1.5 h-1.5 bg-yellow-400 rounded-full opacity-30 floating-stars"
+            style={{ animationDelay: "3s" }}
+          ></div>
+          <div
+            className="absolute bottom-1/4 right-1/5 w-1 h-1 bg-pink-400 rounded-full opacity-35 floating-stars"
+            style={{ animationDelay: "2.8s" }}
+          ></div>
+          <div className="absolute top-10 right-10 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 bg-gradient-to-br from-yellow-200 to-yellow-400 rounded-full opacity-20 blur-xl moon-beam"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(168,85,247,0.08),transparent_50%)]"></div>
+          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,rgba(251,191,36,0.08),transparent_50%)]"></div>
+          <div className="absolute top-1/2 left-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.05),transparent_60%)]"></div>
+        </div>
 
-        <TestimonialsSection isCartPage={true} />
+        <div className="relative z-10">
+          <CartHeader animateElements={animateElements} />
+          <CartContent
+            cartItems={cartItems}
+            additionalProducts={mockAdditionalProducts}
+            selectedProducts={selectedProducts}
+            consultationFormData={consultationFormData}
+            subtotal={subtotal}
+            discount={discount}
+            total={total}
+            additionalTotal={additionalTotal}
+            isCheckingOut={isCheckingOut}
+            animateElements={animateElements}
+            onRemove={removeItem}
+            onProductToggle={onProductToggle}
+            onConsultationFormSubmit={handleConsultationFormSubmit}
+            onCheckout={handleCheckout}
+            setConsultationFormData={setConsultationFormData}
+            finalAmount={finalAmount}
+            setFinalAmount={setFinalAmount}
+          />
 
-        <GallerySection isCartPage={true} />
+          <TestimonialsSection isCartPage={true} />
+
+          <GallerySection isCartPage={true} />
+        </div>
       </main>
       <Footer />
     </div>
