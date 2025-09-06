@@ -82,8 +82,8 @@ export default function TestimonialsSection({
   };
 
   return (
-    <section className="bg-background mx-auto pt-10 px-4">
-      <h2 className="text-3xl md:text-4xl font-headline text-center mb-7 sm:mb-16">
+    <section className="bg-background mx-auto pt-8 px-4">
+      <h2 className="text-3xl md:text-4xl font-headline text-center mb-4 sm:mb-16">
         What Our Clients Say
       </h2>
       <Carousel
@@ -135,7 +135,7 @@ export default function TestimonialsSection({
         ))}
       </div>
 
-      <div className="mt-11">
+      <div className="mt-6">
         <CtaButton isCartPage={isCartPage} />
       </div>
     </section>

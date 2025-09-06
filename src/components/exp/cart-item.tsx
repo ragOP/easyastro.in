@@ -37,10 +37,10 @@ export default function CartItem({
         {/* Main Column Stack */}
         <div className="space-y-4">
           {/* Row: Image + Title/Subtitle */}
-          <div className="flex  flex-col">
+          <div className="flex flex-col items-center">
             <div className="flex items-start gap-4">
               {/* Product Image */}
-              <div className="w-24 pl-2 h-30 rounded-xl overflow-hidden flex-shrink-0 shadow-lg">
+              <div className="w-24 h-30 rounded-xl overflow-hidden flex-shrink-0 shadow-lg">
                 <img
                   src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png"
                   alt={item.name}
@@ -48,7 +48,7 @@ export default function CartItem({
                 />
               </div>
 
-              <div className="w-24 pl-2 h-30 rounded-xl overflow-hidden flex-shrink-0 shadow-lg">
+              <div className="w-24 h-30 rounded-xl overflow-hidden flex-shrink-0 shadow-lg">
                 <img
                   src="/bracelet.jpg"
                   alt={item.name}
@@ -57,14 +57,14 @@ export default function CartItem({
               </div>
             </div>
 
-            <h3 className="text-lg font-bold text-foreground mb-1 leading-5 mt-4">
+            <h3 className="text-lg text-center font-bold text-foreground mb-1 leading-5 mt-4">
               {item.name}
             </h3>
-            <p className="text-sm text-muted-foreground">{item.description}</p>
+            <p className="text-sm text-center text-muted-foreground">{item.description}</p>
           </div>
 
           {/* Points - Full Row */}
-          <div className="space-y-2 mb-2 pb-4">
+          <div className="space-y-2 mb-2 pb-4 ">
             {item.features.map((feature, index) => (
               <div key={index} className="flex items-center space-x-2">
                 <Heart className="w-3 h-3 text-primary flex-shrink-0" />

@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 
 export default function ScarcityBar() {
   const [timeLeft, setTimeLeft] = useState({
-    hours: 5,
-    minutes: 59,
-    seconds: 34,
+    hours: 0,
+    minutes: 9,
+    seconds: 0,
   });
 
   const [spotsLeft, setSpotsLeft] = useState(301);
@@ -63,7 +63,7 @@ export default function ScarcityBar() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 container mx-auto px-4 py-6">
+      <div className="relative z-10 container mx-auto px-4 pt-2 pb-0">
         <div className="text-center space-y-4">
           {/* Header with mystical styling */}
           <div className="space-y-2">
@@ -111,7 +111,10 @@ export default function ScarcityBar() {
                 <span className="text-purple-800 font-semibold">Mystical Bracelets Remaining</span>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-yellow-600">{spotsLeft}</div>
+                <div className="text-2xl font-bold text-yellow-600">
+                  27
+                  {/* {spotsLeft} */}
+                  </div>
                 <div className="text-sm text-purple-600">of 501</div>
               </div>
             </div>

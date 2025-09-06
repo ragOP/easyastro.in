@@ -34,7 +34,7 @@ export default function FaqSection() {
   return (
     <section className="bg-background">
       <div className="container mx-auto max-w-3xl">
-        <h2 className="text-3xl md:text-4xl font-playfair text-purple-700 text-center mb-7 sm:mb-16">
+        <h2 className="text-3xl md:text-4xl font-playfair text-purple-700 text-center mb-4 sm:mb-10">
           Got Questions? We’ve Got Answers.
         </h2>
         <Accordion type="single" collapsible className="w-full">

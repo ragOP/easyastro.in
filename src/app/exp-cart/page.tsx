@@ -320,7 +320,7 @@ export default function CartPage() {
     <div className="flex flex-col min-h-dvh bg-background text-foreground exp-page font-poppins">
       <Header />
       <main className="flex-1 relative overflow-hidden">
-        <div className="absolute inset-0">
+        {/* <div className="absolute inset-0">
           <div className="absolute inset-0 bg-background"></div>
           <div
             className="absolute top-20 left-1/4 w-1 h-1 bg-cyan-300 rounded-full opacity-40 floating-stars"
@@ -350,7 +350,7 @@ export default function CartPage() {
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,rgba(168,85,247,0.08),transparent_50%)]"></div>
           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_70%,rgba(251,191,36,0.08),transparent_50%)]"></div>
           <div className="absolute top-1/2 left-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.05),transparent_60%)]"></div>
-        </div>
+        </div> */}
 
         <div className="relative z-10">
           <CartHeader animateElements={animateElements} />

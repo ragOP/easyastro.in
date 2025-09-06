@@ -22,7 +22,7 @@ export default function StickyCtaBar() {
 
   useEffect(() => {
     // This runs only on the client
-    setOfferEndTime(new Date(Date.now() + 10 * 60 * 1000));
+    setOfferEndTime(new Date(Date.now() + 9 * 60 * 1000));
   }, []);
 
   // Simple timer effect

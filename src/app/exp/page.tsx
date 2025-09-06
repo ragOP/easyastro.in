@@ -29,14 +29,14 @@ export default function Home() {
         <FaqSection />
 
         {/* Final Call-to-Action (Bottom Fold) */}
-        <section className="py-14 sm:py-20 bg-background">
+        <section className="py-10 sm:py-20 bg-background">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-playfair font-bold text-black drop-shadow mb-6">
               💖 See Your Soulmate. Attract Love & Money. All For Just ₹799.
             </h2>
             <button
               onClick={() => (window.location.href = "/exp-cart")}
-              className="mt-4 mb-6 px-10 py-5 text-lg font-bold rounded-full shadow-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-700 text-white border-2 border-yellow-300 animate-glow hover:scale-105 transition-transform duration-200"
+              className="mt-2 mb-4 px-10 py-5 text-lg font-bold rounded-full shadow-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-700 text-white border-2 border-yellow-300 animate-glow hover:scale-105 transition-transform duration-200"
             >
               👉 Get My Bundle Now (₹799)
             </button>
