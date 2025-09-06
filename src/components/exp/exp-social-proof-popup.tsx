@@ -63,7 +63,8 @@ export default function ExpSocialProofPopup() {
         >
             <div className="flex items-center gap-3">
                 <div className="p-2 bg-white/20 rounded-full">
-                    <Sparkles className="h-5 w-5 text-white" />
+                <img src="/brand-logo.png" className='h-6 w-6' />
+                    {/* <Sparkles className="h-5 w-5 text-white" /> */}
                 </div>
                 <div className="text-sm">
                     <p className="font-semibold">{popup.name} from {popup.city}</p>

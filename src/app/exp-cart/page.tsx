@@ -16,7 +16,7 @@ const mockCartItems = [
     name: "Soulmate Sketch + Energised Money and Love Attractor Bracelet",
     description: "Get a detailed sketch of your soulmate's face and an energized bracelet to attract love and wealth.",
     price: 799,
-    originalPrice: 1999,
+    originalPrice: 2499,
     features: [
       "Detailed facial features",
       "Personality insights",
