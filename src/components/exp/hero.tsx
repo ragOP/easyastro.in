@@ -38,8 +38,8 @@ export default function HeroSection() {
             </div>
 
             <h1 className="font-playfair-bold font-headline text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-wide text-rose-600">
-              💖 "See Your Soulmate's Face + Wear the Energy That Attracts Love
-              & Money – For Just ₹799"
+              💖 See Your Soulmate's Face + Wear the Energy That Attracts Love
+              & Money – For Just ₹799
             </h1>
 
             {/* Split Visual - Moved outside content div for better responsive layout */}
