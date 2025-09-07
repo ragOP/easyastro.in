@@ -43,7 +43,8 @@ export default function ScarcityBar() {
   }, []);
 
   // const progressPercentage = ((501 - spotsLeft) / 501) * 100;
-  const progressPercentage = ((501 - 27) / 501) * 100;
+  // const progressPercentage = ((501 - 27) / 501) * 100;
+  const progressPercentage = (27 / 501) * 100;
 
   return (
     <div className="relative overflow-hidden mt-6 bg-gradient-to-br from-purple-50 via-pink-50 to-yellow-50 border-t border-b border-purple-200/30">
