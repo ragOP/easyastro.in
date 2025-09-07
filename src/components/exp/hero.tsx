@@ -68,7 +68,7 @@ export default function HeroSection() {
                   />
                   {/* <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl sm:rounded-2xl"></div> */}
                   <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 text-white text-xs sm:text-sm font-poppins-semibold">
-                    Your Soulmate's Face
+                    {isSketchImageBlurred ? "Click to Reveal" : "Your Soulmate's Face"}
                   </div>
                   {/* Mystical aura around soulmate sketch */}
                   {/* <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-xl sm:rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div> */}
@@ -86,7 +86,7 @@ export default function HeroSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl sm:rounded-2xl"></div>
                   <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 text-white text-xs sm:text-sm font-poppins-semibold">
-                    Energized Bracelet
+                    {isBraceletImageBlurred ? "Click to Reveal" : "Energized Bracelet"}
                   </div>
                 </div>
 
