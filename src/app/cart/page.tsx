@@ -1,5 +1,4 @@
 "use client";
-
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import CartHeader from "@/components/cart/cart-header";
@@ -8,7 +7,7 @@ import { useState, useEffect } from "react";
 import TestimonialsSection from "@/components/sections/testimonials";
 import GallerySection from "@/components/sections/gallery";
 import { BACKEND_URL } from "@/lib/backendUrl";
-
+import { useRouter } from 'next/navigation';
 // Mock data for demonstration
 const mockCartItems = [
   {
@@ -25,7 +24,6 @@ const mockCartItems = [
     ],
   },
 ];
-
 const mockAdditionalProducts = [
   {
     id: "add-1",
@@ -72,8 +70,8 @@ const mockAdditionalProducts = [
     ],
   },
 ];
-
 export default function CartPage() {
+  const router = useRouter();
   const [animateElements, setAnimateElements] = useState(false);
   const [cartItems, setCartItems] = useState(mockCartItems);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
@@ -87,7 +85,6 @@ export default function CartPage() {
     gender: "",
   });
   const [finalAmount, setFinalAmount] = useState(0);
-
   // Calculate totals
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
   const additionalTotal = selectedProducts.reduce((sum, productId) => {
@@ -104,7 +101,6 @@ export default function CartPage() {
       const product = mockAdditionalProducts.find((p) => p.id === productId);
       return sum + ((product?.originalPrice || 0) - (product?.price || 0));
     }, 0);
-
   useEffect(() => {
     // Trigger animations after component mounts
     const timer = setTimeout(() => {
@@ -112,11 +108,9 @@ export default function CartPage() {
     }, 100);
     return () => clearTimeout(timer);
   }, []);
-
   const removeItem = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
-
   const onProductToggle = (productId: string) => {
     setSelectedProducts((prev) =>
       prev.includes(productId)
@@ -124,7 +118,6 @@ export default function CartPage() {
         : [...prev, productId]
     );
   };
-
   const loadScript = (src: string) => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -134,7 +127,6 @@ export default function CartPage() {
       document.body.appendChild(script);
     });
   };
-
   useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
       (result) => {
@@ -144,16 +136,13 @@ export default function CartPage() {
       }
     );
   }, []);
-
   const handleConsultationFormSubmit = (data: any) => {
     console.log("Consultation form submitted:", data);
     // Handle form submission
   };
-
   const handleCheckout = async () => {
     try {
       setIsCheckingOut(true);
-
       const abdOrderResponse = await fetch(
         `${BACKEND_URL}/api/lander3/create-order-abd`,
         {
@@ -178,16 +167,13 @@ export default function CartPage() {
           }),
         }
       );
-
       const abdOrderResult = await abdOrderResponse.json();
       const abdOrderId = abdOrderResult.data._id;
-
       if (!abdOrderResult.success) {
         throw new Error("Failed to create payment order");
       } else {
         console.log("Abandoned Order Created with Id", abdOrderId);
       }
-
       // Create Razorpay order
       const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
         method: "POST",
@@ -198,15 +184,11 @@ export default function CartPage() {
           amount: finalAmount,
         }),
       });
-
       const result = await response.json();
-
       if (!result.success) {
         throw new Error("Failed to create payment order");
       }
-
       const data = result.data;
-
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
         amount: finalAmount,
@@ -247,13 +229,10 @@ export default function CartPage() {
                 }),
               }
             );
-
             const orderResult = await orderResponse.json();
-
             if (orderResult.success) {
               sessionStorage.setItem("orderId", data.orderId);
               sessionStorage.setItem("orderAmount", finalAmount.toString());
-
               // Deleting item from Abandoned Order if Order is created successfulyyyy
               const deleteAbdOrder = await fetch(
                 `${BACKEND_URL}/api/lander3/delete-order-abd`,
@@ -267,7 +246,6 @@ export default function CartPage() {
               );
               const deleteAbdOrderResult = await deleteAbdOrder.json();
               console.log("Abandoned Order Deleted", deleteAbdOrderResult);
-
               window.location.href = "/order-confirmation";
             } else {
               alert(
@@ -290,7 +268,6 @@ export default function CartPage() {
           color: "#ec4899",
         },
       };
-
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
     } catch (error) {
@@ -300,7 +277,70 @@ export default function CartPage() {
       setIsCheckingOut(false);
     }
   };
+  const handlePayuPayment = async () => {
+    try {
+      setIsCheckingOut(true);
+      // 1) Create ABD (abandoned) order first
+      const abdOrderResponse = await fetch(
+        `${BACKEND_URL}/api/lander3/create-order-abd`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: finalAmount,
+            name: consultationFormData?.name,
+            email: consultationFormData?.email,
+            phone: consultationFormData?.phoneNumber,
+            dateOfBirth: consultationFormData?.dateOfBirth,
+            placeOfBirth: consultationFormData?.placeOfBirth,
+            gender: consultationFormData?.gender,
+            additionalProducts: selectedProducts
+              .map((id) => {
+                const product = mockAdditionalProducts.find((p) => p.id === id);
+                return product?.title || "";
+              })
+              .filter(Boolean),
+          }),
+        }
+      );
+      const abdOrderResult = await abdOrderResponse.json();
+      const abdOrderId = abdOrderResult?.data?._id;
+      if (!abdOrderResult?.success) {
+        throw new Error("Failed to create ABD order");
+      }
+      console.log("Abandoned Order Created with Id", abdOrderId);
 
+      // 2) Redirect to PayU with all user-provided details
+      const additionalProductsTitles = selectedProducts
+        .map((id) => {
+          const product = mockAdditionalProducts.find((p) => p.id === id);
+          return product?.title || "";
+        })
+        .filter(Boolean);
+
+      const params = new URLSearchParams({
+        amount: String(finalAmount || 0),
+        productinfo: "Soulmate Sketch Order",
+        name: consultationFormData?.name || "Customer",
+        email: consultationFormData?.email || "customer@example.com",
+        phone: consultationFormData?.phoneNumber || "9876543210",
+        dateOfBirth: consultationFormData?.dateOfBirth || "",
+        placeOfBirth: consultationFormData?.placeOfBirth || "",
+        gender: consultationFormData?.gender || "",
+        additionalProducts: additionalProductsTitles.join(","),
+      });
+
+      const payuUrl = `${BACKEND_URL}/api/payu/pay?${params.toString()}`;
+      router.push(payuUrl);
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Payment failed. Please try again.");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  }
   return (
     <div className="flex flex-col min-h-dvh bg-background text-foreground">
       <Header />
@@ -320,17 +360,16 @@ export default function CartPage() {
           onRemove={removeItem}
           onProductToggle={onProductToggle}
           onConsultationFormSubmit={handleConsultationFormSubmit}
-          onCheckout={handleCheckout}
+          // onCheckout={handleCheckout}
+          onCheckout={handlePayuPayment}
           setConsultationFormData={setConsultationFormData}
           finalAmount={finalAmount}
           setFinalAmount={setFinalAmount}
         />
-
         <TestimonialsSection isCartPage={true} />
-
         <GallerySection isCartPage={true} />
       </main>
       <Footer />
     </div>
   );
-}
+  }
