@@ -61,6 +61,15 @@ export default function FaqSection() {
     <br />
     SPEKLIO MEDIA-09PTKPS8265R1ZX
   </Link>
+   <Link
+    href="/legal"
+    className="text-brand-700 hover:text-brand-500 underline cursor-pointer pt-4 mt-4 block"
+  >
+   Legal name (SPEKLIO MEDIA)
+Address (Office 2.0, Galaxy Blue Sapphire Ghaziabad UTTAR PRADESH)
+  </Link>
+
+ 
  {/* <Link
   href="/about"
   className="text-brand-700 hover:text-brand-500 underline cursor-pointer"
