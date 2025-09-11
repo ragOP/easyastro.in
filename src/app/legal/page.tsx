@@ -235,6 +235,10 @@ export default function LegalPage() {
           {/* Bottom CTA */}
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-slate-600 text-sm">
+            SAKSHI SRIVASTAVA
+SPEKLIO MEDIA-09PTKPS8265R1ZX
+            </div>
+            <div className="text-slate-600 text-sm">
               © {new Date().getFullYear()} Speklio Media All Right Reserved
             </div>
             <div className="flex items-center gap-3 text-sm">
