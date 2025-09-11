@@ -68,6 +68,7 @@ export default function FaqSection() {
         >
           Policy & Support
         </Link>
+      
       </div>
     </section>
   );

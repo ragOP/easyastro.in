@@ -53,6 +53,14 @@ export default function FaqSection() {
 >
   Policy & Support
 </Link>
+  <Link
+    href="/legal"
+    className="text-brand-700 hover:text-brand-500 underline cursor-pointer pt-4 mt-4 block"
+  >
+    SAKSHI SRIVASTAVA
+    <br />
+    SPEKLIO MEDIA-09PTKPS8265R1ZX
+  </Link>
  {/* <Link
   href="/about"
   className="text-brand-700 hover:text-brand-500 underline cursor-pointer"
