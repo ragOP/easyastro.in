@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Sister2Header from './sister2-header';
 import Sister2CartContent from './sister2-cart-content';
 import { BACKEND_URL } from '@/lib/backendUrl';
+import { useRouter } from 'next/navigation';
 
 interface Sister2CartItem {
   id: string;
@@ -105,6 +106,7 @@ export default function Sister2CartPage() {
 
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [animateElements, setAnimateElements] = useState(false);
+  const router = useRouter();
 
   // Calculate totals
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
@@ -313,6 +315,71 @@ export default function Sister2CartPage() {
     }
   };
 
+  const handlePayuPayment = async () => {
+      try {
+        setIsCheckingOut(true);
+        // 1) Create ABD (abandoned) order first
+        const abdOrderResponse = await fetch(
+          `${BACKEND_URL}/api/lander5/create-order-abd`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              amount: total,
+              name: consultationFormData?.name,
+              email: consultationFormData?.email,
+              phone: consultationFormData?.phoneNumber,
+              dateOfBirth: consultationFormData?.dateOfBirth,
+              placeOfBirth: consultationFormData?.placeOfBirth,
+              gender: consultationFormData?.gender,
+              additionalProducts: selectedProducts
+                .map((id) => {
+                  const product = additionalProducts.find((p) => p.id === id);
+                  return product?.title || "";
+                })
+                .filter(Boolean),
+            }),
+          }
+        );
+        const abdOrderResult = await abdOrderResponse.json();
+        const abdOrderId = abdOrderResult?.data?._id;
+        if (!abdOrderResult?.success) {
+          throw new Error("Failed to create ABD order");
+        }
+        console.log("Abandoned Order Created with Id", abdOrderId);
+  
+        // 2) Redirect to PayU with all user-provided details
+        const additionalProductsTitles = selectedProducts
+          .map((id) => {
+            const product = additionalProducts.find((p) => p.id === id);
+            return product?.title || "";
+          })
+          .filter(Boolean);
+  
+        const params = new URLSearchParams({
+          amount: String(1 || 0),
+          productinfo: "Soulmate Sketch Order",
+          name: consultationFormData?.name || "Customer",
+          email: consultationFormData?.email || "customer@example.com",
+          phone: consultationFormData?.phoneNumber || "9876543210",
+          dateOfBirth: consultationFormData?.dateOfBirth || "",
+          placeOfBirth: consultationFormData?.placeOfBirth || "",
+          gender: consultationFormData?.gender || "",
+          additionalProducts: additionalProductsTitles.join(","),
+        });
+  
+        const payuUrl = `${BACKEND_URL}/api/payu/pay-sister?${params.toString()}`;
+        router.push(payuUrl);
+      } catch (error) {
+        console.error("Checkout error:", error);
+        alert("Payment failed. Please try again.");
+      } finally {
+        setIsCheckingOut(false);
+      }
+    }
+
   // Animation trigger
   useEffect(() => {
     const timer = setTimeout(() => setAnimateElements(true), 100);
@@ -340,7 +407,7 @@ export default function Sister2CartPage() {
           onRemove={handleRemove}
           onProductToggle={handleProductToggle}
           onConsultationFormSubmit={handleConsultationFormSubmit}
-          onCheckout={handleCheckout}
+          onCheckout={handlePayuPayment}
           setConsultationFormData={setConsultationFormData}
         />
       </div>
