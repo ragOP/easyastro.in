@@ -359,7 +359,7 @@ export default function Sister2CartPage() {
           .filter(Boolean);
   
         const params = new URLSearchParams({
-          amount: String(1 || 0),
+          amount: String(total || 0),
           productinfo: "Soulmate Sketch Order",
           name: consultationFormData?.name || "Customer",
           email: consultationFormData?.email || "customer@example.com",
