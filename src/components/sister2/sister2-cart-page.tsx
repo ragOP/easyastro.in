@@ -407,7 +407,7 @@ export default function Sister2CartPage() {
           onRemove={handleRemove}
           onProductToggle={handleProductToggle}
           onConsultationFormSubmit={handleConsultationFormSubmit}
-          onCheckout={handlePayuPayment}
+          onCheckout={handleCheckout}
           setConsultationFormData={setConsultationFormData}
         />
       </div>

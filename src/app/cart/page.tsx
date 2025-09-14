@@ -361,7 +361,7 @@ export default function CartPage() {
           onProductToggle={onProductToggle}
           onConsultationFormSubmit={handleConsultationFormSubmit}
           // onCheckout={handleCheckout}
-          onCheckout={handlePayuPayment}
+          onCheckout={handleCheckout}
           setConsultationFormData={setConsultationFormData}
           finalAmount={finalAmount}
           setFinalAmount={setFinalAmount}
