@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Heart } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 interface CartItemProps {
   item: {
@@ -15,6 +16,29 @@ interface CartItemProps {
 }
 
 export default function CartItem({ item, onRemove, showRemoveButton = true }: CartItemProps) {
+  const searchParams = useSearchParams();
+  const [displayPrice, setDisplayPrice] = useState(item.price);
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+
+  useEffect(() => {
+    // Check for coupon codes in URL parameters
+    if (searchParams.has('rag30')) {
+      const discountedPrice = Math.round(item.price * 0.7); // 30% off
+      setDisplayPrice(discountedPrice);
+      setDiscountPercentage(30);
+    } else if (searchParams.has('rag60')) {
+      const discountedPrice = Math.round(item.price * 0.4); // 60% off
+      setDisplayPrice(discountedPrice);
+      setDiscountPercentage(60);
+    } else if (searchParams.has('rag75')) {
+      const discountedPrice = Math.round(item.price * 0.25); // 75% off
+      setDisplayPrice(discountedPrice);
+      setDiscountPercentage(75);
+    } else {
+      setDisplayPrice(item.price);
+      setDiscountPercentage(0);
+    }
+  }, [item.price, searchParams]);
   return (
     <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
       <div className="px-4 py-4">
@@ -71,14 +95,25 @@ export default function CartItem({ item, onRemove, showRemoveButton = true }: Ca
         <div className="flex items-center justify-between pt-2 border-t border-border">
           <div className="flex items-center space-x-3">
             <span className="text-2xl font-bold text-primary">
-              ₹{item.price}
+              ₹{displayPrice}
             </span>
             <span className="text-lg text-muted-foreground line-through">
               ₹{item.originalPrice}
             </span>
-            <span className="text-sm text-green-600 font-medium">
-              {Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)}% OFF
-            </span>
+            {discountPercentage > 0 ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-green-600 font-medium">
+                  {discountPercentage}% OFF
+                </span>
+                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-semibold">
+                  COUPON APPLIED
+                </span>
+              </div>
+            ) : (
+              <span className="text-sm text-green-600 font-medium">
+                {Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)}% OFF
+              </span>
+            )}
           </div>
         </div>
       </div>
