@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { X, Heart } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
@@ -15,7 +15,8 @@ interface CartItemProps {
   showRemoveButton?: boolean;
 }
 
-export default function CartItem({ item, onRemove, showRemoveButton = true }: CartItemProps) {
+// Inner component that uses useSearchParams
+function CartItemInner({ item, onRemove, showRemoveButton = true }: CartItemProps) {
   const searchParams = useSearchParams();
   const [displayPrice, setDisplayPrice] = useState(item.price);
   const [discountPercentage, setDiscountPercentage] = useState(0);
@@ -118,5 +119,14 @@ export default function CartItem({ item, onRemove, showRemoveButton = true }: Ca
         </div>
       </div>
     </div>
+  );
+}
+
+// Main export component with Suspense boundary
+export default function CartItem(props: CartItemProps) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CartItemInner {...props} />
+    </Suspense>
   );
 } 
