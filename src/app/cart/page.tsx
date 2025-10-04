@@ -233,6 +233,37 @@ export default function CartPage() {
             if (orderResult.success) {
               sessionStorage.setItem("orderId", data.orderId);
               sessionStorage.setItem("orderAmount", finalAmount.toString());
+              
+              // Send campaign notification if phone number is present
+              if (consultationFormData?.phoneNumber) {
+                try {
+                  await fetch('https://backend.aisensy.com/campaign/t1/api/v2', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      "apiKey": process.env.NEXT_PUBLIC_AISENSY_API_KEY,
+                      "campaignName": "ragOP",
+                      "destination": consultationFormData.phoneNumber,
+                      "userName": "Speklio Media 2134",
+                      "templateParams": [],
+                      "source": "new-landing-page form",
+                      "media": {},
+                      "buttons": [],
+                      "carouselCards": [],
+                      "location": {},
+                      "attributes": {},
+                      "paramsFallbackValue": {}
+                    })
+                  });
+                  console.log("Campaign notification sent successfully");
+                } catch (error) {
+                  console.error("Failed to send campaign notification:", error);
+                  // Don't block the flow if campaign notification fails
+                }
+              }
+              
               // Deleting item from Abandoned Order if Order is created successfulyyyy
               const deleteAbdOrder = await fetch(
                 `${BACKEND_URL}/api/lander3/delete-order-abd`,
