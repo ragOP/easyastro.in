@@ -8,6 +8,8 @@ interface OrderSummaryProps {
   isCheckingOut: boolean;
   onCheckout: () => void;
   additionalTotal?: number;
+  discountWithMRP?: number;
+  totalWithMRP?: number;
   finalAmount?: number;
   setFinalAmount?: (amount: number) => void;
 }
@@ -15,6 +17,8 @@ interface OrderSummaryProps {
 export default function OrderSummary({
   subtotal,
   discount = 0,
+  discountWithMRP = 0,
+  totalWithMRP = 0,
   total = 0,
   isCheckingOut,
   onCheckout,
@@ -84,14 +88,14 @@ export default function OrderSummary({
             <div className="flex justify-between items-center">
               <span className="text-muted-foreground">Subtotal</span>
               <span className="text-foreground font-semibold">
-                ₹{subtotal.toLocaleString()}
+                ₹{totalWithMRP.toLocaleString()}
               </span>
             </div>
-            {finalDiscount > 0 && (
+            {discountWithMRP > 0 && (
               <div className="flex justify-between items-center">
                 <span className="text-green-600">Discount</span>
                 <span className="text-green-600 font-semibold">
-                  -₹{finalDiscount.toLocaleString()}
+                  -₹{discountWithMRP.toLocaleString()}
                 </span>
               </div>
             )}
