@@ -39,6 +39,8 @@ interface CartContentProps {
   consultationFormData: FormData;
   subtotal: number;
   discount: number;
+  discountWithMRP: number;
+  totalWithMRP: number;
   total: number;
   additionalTotal: number;
   isCheckingOut: boolean;
@@ -59,6 +61,8 @@ export default function CartContent({
   consultationFormData,
   subtotal,
   discount,
+  discountWithMRP,
+  totalWithMRP,
   total,
   additionalTotal,
   isCheckingOut,
@@ -147,6 +151,8 @@ export default function CartContent({
                 <OrderSummary
                   subtotal={subtotal}
                   discount={discount}
+                  discountWithMRP={discountWithMRP}
+                  totalWithMRP={totalWithMRP}
                   total={total}
                   additionalTotal={additionalTotal}
                   isCheckingOut={isCheckingOut}
@@ -224,6 +230,8 @@ export default function CartContent({
                 <OrderSummary
                   subtotal={subtotal}
                   discount={discount}
+                  discountWithMRP={discountWithMRP}
+                  totalWithMRP={totalWithMRP}
                   total={total}
                   additionalTotal={additionalTotal}
                   finalAmount={finalAmount}

@@ -87,12 +87,27 @@ export default function CartPage() {
   const [finalAmount, setFinalAmount] = useState(0);
   // Calculate totals
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const subtotalWithMRP = cartItems.reduce((sum, item) => sum + item.originalPrice, 0);
   const additionalTotal = selectedProducts.reduce((sum, productId) => {
     const product = mockAdditionalProducts.find((p) => p.id === productId);
     return sum + (product?.price || 0);
   }, 0);
+  const additionalTotalWithMRP = selectedProducts.reduce((sum, productId) => {
+    const product = mockAdditionalProducts.find((p) => p.id === productId);
+    return sum + (product?.originalPrice || 0);
+  }, 0);
   const total = subtotal + additionalTotal;
+  const totalWithMRP = subtotalWithMRP + additionalTotalWithMRP;
   const discount =
+    cartItems.reduce(
+      (sum, item) => sum + (item.originalPrice - item.price),
+      0
+    ) +
+    selectedProducts.reduce((sum, productId) => {
+      const product = mockAdditionalProducts.find((p) => p.id === productId);
+      return sum + ((product?.originalPrice || 0) - (product?.price || 0));
+    }, 0);
+  const discountWithMRP =
     cartItems.reduce(
       (sum, item) => sum + (item.originalPrice - item.price),
       0
@@ -384,6 +399,8 @@ export default function CartPage() {
           consultationFormData={consultationFormData}
           subtotal={subtotal}
           discount={discount}
+          discountWithMRP={discountWithMRP}
+          totalWithMRP={totalWithMRP}
           total={total}
           additionalTotal={additionalTotal}
           isCheckingOut={isCheckingOut}
