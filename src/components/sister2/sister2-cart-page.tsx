@@ -110,12 +110,23 @@ export default function Sister2CartPage() {
 
   // Calculate totals
   const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const subtotalWithMRP = cartItems.reduce((sum, item) => sum + item.originalPrice, 0);
   const additionalTotal = selectedProducts.reduce((sum, productId) => {
     const product = additionalProducts.find(p => p.id === productId);
     return sum + (product?.price || 0);
   }, 0);
+  const additionalTotalWithMRP = selectedProducts.reduce((sum, productId) => {
+    const product = additionalProducts.find(p => p.id === productId);
+    return sum + (product?.originalPrice || 0);
+  }, 0);
   const total = subtotal + additionalTotal;
+  const totalWithMRP = subtotalWithMRP + additionalTotalWithMRP;
   const discount = cartItems.reduce((sum, item) => sum + (item.originalPrice - item.price), 0) +
+    selectedProducts.reduce((sum, productId) => {
+      const product = additionalProducts.find(p => p.id === productId);
+      return sum + ((product?.originalPrice || 0) - (product?.price || 0));
+    }, 0);
+  const discountWithMRP = cartItems.reduce((sum, item) => sum + (item.originalPrice - item.price), 0) +
     selectedProducts.reduce((sum, productId) => {
       const product = additionalProducts.find(p => p.id === productId);
       return sum + ((product?.originalPrice || 0) - (product?.price || 0));
@@ -399,6 +410,8 @@ export default function Sister2CartPage() {
           selectedProducts={selectedProducts}
           consultationFormData={consultationFormData}
           subtotal={subtotal}
+          discountWithMRP={discountWithMRP}
+          totalWithMRP={totalWithMRP}
           additionalTotal={additionalTotal}
           discount={discount}
           total={total}

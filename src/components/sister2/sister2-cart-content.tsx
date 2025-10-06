@@ -40,6 +40,8 @@ interface Sister2CartContentProps {
   selectedProducts: string[];
   consultationFormData: Sister2FormData;
   subtotal: number;
+  discountWithMRP: number;
+  totalWithMRP: number;
   additionalTotal: number;
   discount: number;
   total: number;
@@ -58,6 +60,8 @@ export default function Sister2CartContent({
   selectedProducts,
   consultationFormData,
   subtotal,
+  discountWithMRP,
+  totalWithMRP,
   additionalTotal,
   discount,
   total,
@@ -142,6 +146,8 @@ export default function Sister2CartContent({
             >
               <Sister2OrderSummary
                 subtotal={subtotal}
+                discountWithMRP={discountWithMRP}
+                totalWithMRP={totalWithMRP}
                 additionalTotal={additionalTotal}
                 discount={discount}
                 total={total}
@@ -224,6 +230,9 @@ export default function Sister2CartContent({
                 <Sister2OrderSummary
                   subtotal={subtotal}
                   discount={discount}
+                  discountWithMRP={discountWithMRP}
+                  totalWithMRP={totalWithMRP}
+                  additionalTotal={additionalTotal}
                   total={total}
                   onCheckout={onCheckout}
                   isCheckingOut={isCheckingOut}
