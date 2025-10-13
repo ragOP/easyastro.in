@@ -14,7 +14,7 @@ const mockCartItems = [
     id: "1",
     name: "Soulmate Sketch",
     description: "Get a detailed sketch of your soulmate's face",
-    price: 389,
+    price: 289,
     originalPrice: 1999,
     features: [
       "Detailed facial features",
@@ -30,7 +30,7 @@ const mockAdditionalProducts = [
     title: "2-Year Personal Horoscope Report",
     description:
       "Get a roadmap of your next 24 months based on your unique birth chart. Know what's coming in love, career, money & health — so you can plan smarter.",
-    price: 199,
+    price: 99,
     originalPrice: 299,
     features: [
       "Month-by-Month Predictions",
@@ -45,7 +45,7 @@ const mockAdditionalProducts = [
     title: "Wealth Report",
     description:
       "Confused about your money, career, or success path? Your birth chart holds powerful insights into what's blocking your abundance. This report helps align your actions with your true financial destiny.",
-    price: 199,
+    price: 99,
     originalPrice: 299,
     features: [
       "Personalized astrology + numerology-based wealth blueprint",
@@ -60,7 +60,7 @@ const mockAdditionalProducts = [
     title: "Life path & Career guidance ebook",
     description:
       "Confused about your money, career, or success path? Your birth chart holds powerful insights into what's blocking your abundance. This report helps align your actions with your true financial destiny.",
-    price: 199,
+    price: 99,
     originalPrice: 249,
     features: [
       "Discover your ideal career path",
