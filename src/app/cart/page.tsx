@@ -259,7 +259,7 @@ export default function CartPage() {
                     },
                     body: JSON.stringify({
                       "apiKey": process.env.NEXT_PUBLIC_AISENSY_API_KEY,
-                      "campaignName": "ragOP",
+                      "campaignName": "28oct",
                       "destination": consultationFormData.phoneNumber,
                       "userName": "Speklio Media 2134",
                       "templateParams": [],
