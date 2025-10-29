@@ -258,7 +258,7 @@ export default function CartPage() {
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      "apiKey": process.env.NEXT_PUBLIC_AISENSY_API_KEY,
+                      "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGY5YTMyZDQ3MzczMGU3MzNhZTZiMCIsIm5hbWUiOiJTcGVrbGlvIE1lZGlhIDIxMzQiLCJhcHBOYW1lIjoiQWlTZW5zeSIsImNsaWVudElkIjoiNjhkZjlhMzJkNDczNzMwZTczM2FlNmFiIiwiYWN0aXZlUGxhbiI6IkZSRUVfRk9SRVZFUiIsImlhdCI6MTc1OTQ4NDQ2Nn0.D5rCrsjtikR4N68HNS7ZOpNfzTSTuN9otxZ9-UBvi1g",
                       "campaignName": "28oct",
                       "destination": consultationFormData.phoneNumber,
                       "userName": "Speklio Media 2134",
