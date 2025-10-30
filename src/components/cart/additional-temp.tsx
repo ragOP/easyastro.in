@@ -29,13 +29,13 @@ export default function AdditionalTemp({
   return (
     <div className="relative group">
       <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-primary/20 to-primary/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-      <div className="relative bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-xl rounded-3xl p-3 border border-primary/20">
+      <div className="relative bg-gradient-to-br from-white/90 to-white/80 backdrop-blur-xl rounded-3xl p-2 border border-primary/20">
         <div>
           {/* Title */}
-          <div className="text-left mb-3">
+          <div className="text-left mb-2">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-gradient-to-r from-primary to-primary/80 rounded-full animate-pulse"></div>
-              <span className="text-sm font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+              <span className="text-xs font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
                 Enhance Your Love Journey
               </span>
             </div>
@@ -44,11 +44,11 @@ export default function AdditionalTemp({
             </p>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             {products.map((product) => (
-              <div key={product.id} className="space-y-1.5">
-                <div className="flex items-start space-x-2 p-1.5 rounded-lg hover:bg-primary/5 transition-all duration-300">
-                  <div className="relative mt-1">
+              <div key={product.id} className="space-y-1">
+                <div className="flex items-start space-x-2 p-1 rounded-lg hover:bg-primary/5 transition-all duration-300">
+                  <div className="relative mt-0.5">
                     <input
                       type="checkbox"
                       id={`product-${product.id}`}
@@ -58,15 +58,15 @@ export default function AdditionalTemp({
                     />
                     <label
                       htmlFor={`product-${product.id}`}
-                      className={`relative flex items-center justify-center w-5 h-5 rounded-lg border-2 cursor-pointer transition-all duration-300 transform hover:scale-125 hover:rotate-3 ${
+                      className={`relative flex items-center justify-center w-4 h-4 rounded border-1.5 cursor-pointer transition-all duration-300 transform hover:scale-110 ${
                         selectedProducts.includes(product.id)
-                          ? "bg-gradient-to-r from-primary to-primary/80 border-primary shadow-xl shadow-primary/40"
+                          ? "bg-gradient-to-r from-primary to-primary/80 border-primary shadow-lg shadow-primary/30"
                           : "bg-white border-primary/30 hover:border-primary hover:bg-primary/5"
                       }`}
                     >
                       {selectedProducts.includes(product.id) && (
                         <svg
-                          className="w-3 h-3 text-white animate-pulse"
+                          className="w-2.5 h-2.5 text-white animate-pulse"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
@@ -88,7 +88,7 @@ export default function AdditionalTemp({
                       <div>
                         <label
                           htmlFor={`product-${product.id}`}
-                          className="text-foreground font-medium text-sm cursor-pointer"
+                          className="text-foreground font-medium text-xs cursor-pointer"
                         >
                           {product.title}
                         </label>
@@ -113,7 +113,7 @@ export default function AdditionalTemp({
                         </div>
                       </div>
                       <div className="text-right ml-2">
-                        <div className="text-foreground font-bold text-sm">
+                        <div className="text-foreground font-bold text-xs">
                           ₹{product.price.toLocaleString()}
                         </div>
                         <div className="text-muted-foreground text-xs line-through">
@@ -127,17 +127,20 @@ export default function AdditionalTemp({
                 {/* Expanded Content - Features in Grid */}
                 {expandedProduct === product.id && (
                   <>
-                    <div className="pl-4 mt-1.5 p-2 bg-primary/5 rounded-lg border border-primary/20">
+                    <div className="pl-4 mt-1 p-1.5 bg-primary/5 rounded-lg border border-primary/20">
                       <div className="grid grid-cols-2 gap-1.5">
                         {product.features.map((feature, index) => (
                           <div
                             key={index}
                             className="flex items-start space-x-1.5"
                           >
-                            <div className="w-2.5 h-2.5 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                              <div className="w-1 h-1 bg-white rounded-full"></div>
+                            <div className="w-2 h-2 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <div className="w-0.5 h-0.5 bg-white rounded-full"></div>
                             </div>
-                            <span className="text-foreground/80 text-xs">
+                            <span
+                              className="text-foreground/80"
+                              style={{ fontSize: "9px", lineHeight: "1" }}
+                            >
                               {feature}
                             </span>
                           </div>
