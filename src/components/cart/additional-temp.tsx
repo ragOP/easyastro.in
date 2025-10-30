@@ -58,10 +58,10 @@ export default function AdditionalTemp({
                     />
                     <label
                       htmlFor={`product-${product.id}`}
-                      className={`relative flex items-center justify-center w-4 h-4 rounded border-1.5 cursor-pointer transition-all duration-300 transform hover:scale-110 ${
+                      className={`relative flex items-center justify-center w-4 h-4 rounded cursor-pointer transition-all duration-300 transform hover:scale-110 ${
                         selectedProducts.includes(product.id)
-                          ? "bg-gradient-to-r from-primary to-primary/80 border-primary shadow-lg shadow-primary/30"
-                          : "bg-white border-primary/30 hover:border-primary hover:bg-primary/5"
+                          ? "bg-gradient-to-r from-primary to-primary/80 border border-gray-300 shadow-lg shadow-primary/30"
+                          : "bg-white border border-gray-300 hover:border-primary hover:bg-primary/5"
                       }`}
                     >
                       {selectedProducts.includes(product.id) && (
