@@ -2,7 +2,9 @@ interface CartHeaderProps {
   animateElements?: boolean;
 }
 
-export default function CartHeader({ animateElements = true }: CartHeaderProps) {
+export default function CartHeader({
+  animateElements = true,
+}: CartHeaderProps) {
   return (
     <div
       className={`text-center mb-4 sm:mb-6 px-4 mt-2 transition-all duration-1000 transform ${
@@ -21,4 +23,4 @@ export default function CartHeader({ animateElements = true }: CartHeaderProps) 
       </p>
     </div>
   );
-} 
+}
