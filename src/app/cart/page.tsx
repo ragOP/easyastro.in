@@ -416,15 +416,7 @@ export default function CartPage() {
         />
         <TestimonialsSection isCartPage={true} />
         <GallerySection isCartPage={true} />
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-white via-white to-white/80 backdrop-blur-sm border-t border-border p-4 shadow-2xl">
-          <button
-            onClick={handleCheckout}
-            disabled={isCheckingOut}
-            className="w-full bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-bold py-3 px-4 rounded-xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 text-base"
-          >
-            Proceed to Checkout • ₹{finalAmount}
-          </button>
-        </div>
+     
       </main>
       <Footer />
     </div>
