@@ -1,4 +1,4 @@
-import Header from "@/components/layout/header";
+import Header from "@/components/sectionscousin/headercousin";
 import HeroSection from "@/components/sectionscousin/hero";
 import IntroductionSection from "@/components/sectionscousin/introduction";
 import HowItWorksSection from "@/components/sectionscousin/how-it-works";
@@ -8,7 +8,7 @@ import TestimonialsSection from "@/components/sectionscousin/testimonials";
 import WhyTrustUsSection from "@/components/sectionscousin/why-trust-us";
 import FaqSection from "@/components/sectionscousin/faq";
 import Footer from "@/components/layout/footer";
-import StickyCtaBar from "@/components/layout/sticky-cta-bar";
+import StickyCtaBar from "@/components/sectionscousin/sticky-cta-bar";
 import SocialProofPopup from "@/components/common/social-proof-popup";
 
 export default function Home() {

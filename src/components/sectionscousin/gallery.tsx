@@ -9,10 +9,21 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 import CtaButton from "../common/cta-button";
-import { Sparkles, ShieldCheck, Paintbrush, CheckCircle2 } from "lucide-react";
+import { Sparkles, ShieldCheck, Paintbrush, CheckCircle2, ChevronsLeftRight } from "lucide-react";
+
+/**
+ * GallerySection — mobile-first redesign
+ * - Tighter vertical rhythm on small screens
+ * - Larger tap targets, reduced glow on mobile
+ * - Safe aspect ratios (no layout shift)
+ * - Swipe hint on phones + pagination dots
+ * - Autoplay pause on hover/press; resumes on leave
+ * - Subtle decorative accents only ≥sm
+ */
 
 type GalleryItem = {
   src: string;
@@ -51,8 +62,19 @@ interface GallerySectionProps {
 export default function GallerySection({ isCartPage = false }: GallerySectionProps) {
   const plugin = React.useRef(Autoplay({ delay: 4200, stopOnInteraction: true }));
   const [isPaused, setIsPaused] = React.useState(false);
+  const [api, setApi] = React.useState<CarouselApi | null>(null);
+  const [index, setIndex] = React.useState(0);
 
-  // Accessible pause/resume for autoplay
+  React.useEffect(() => {
+    if (!api) return;
+    setIndex(api.selectedScrollSnap());
+    const onSelect = () => setIndex(api.selectedScrollSnap());
+    api.on("select", onSelect);
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
   const handleMouseEnter = () => {
     plugin.current.stop();
     setIsPaused(true);
@@ -65,15 +87,16 @@ export default function GallerySection({ isCartPage = false }: GallerySectionPro
   return (
     <section
       aria-labelledby="gallery-title"
-      className="relative overflow-hidden bg-gradient-to-b from-background via-background/70 to-background py-10 sm:py-16"
+      className="relative overflow-hidden py-8 sm:py-14 bg-background"
     >
-      {/* Background accents */}
-      <div className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-primary/15 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-fuchsia-500/15 blur-3xl" />
-      <div className="pointer-events-none absolute inset-0 [background:radial-gradient(900px_280px_at_50%_-10%,theme(colors.primary/10),transparent)]" />
+      {/* background accents (desktop/tablet only) */}
+      <div className="pointer-events-none absolute -top-24 -left-24 hidden h-80 w-80 rounded-full bg-primary/15 blur-3xl sm:block" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 hidden h-80 w-80 rounded-full bg-fuchsia-500/15 blur-3xl sm:block" />
+      <div className="pointer-events-none absolute inset-0 hidden sm:block [background:radial-gradient(900px_280px_at_50%_-10%,theme(colors.primary/10),transparent)]" />
 
       <div className="container mx-auto px-4">
-        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+        {/* Layout: stack on mobile, split on lg */}
+        <div className="grid items-center gap-6 lg:grid-cols-2 lg:gap-10">
           {/* LEFT: Copy */}
           <div className="order-2 text-center lg:order-1 lg:text-left">
             <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary lg:mx-0">
@@ -83,26 +106,26 @@ export default function GallerySection({ isCartPage = false }: GallerySectionPro
 
             <h2
               id="gallery-title"
-              className="mt-4 font-headline text-3xl leading-tight text-foreground md:text-4xl"
+              className="mt-3 font-headline text-[1.65rem] leading-tight text-foreground md:text-4xl"
             >
               Past Work & Proof
             </h2>
 
-            <p className="mt-4 text-lg leading-relaxed text-foreground/80">
+            <p className="mt-3 text-base leading-relaxed text-foreground/80 md:text-lg">
               Imagine seeing the detailed features of the person you’re destined for. These real
               examples show the care, accuracy, and emotion our artists bring to every piece.
             </p>
 
-            <ul className="mx-auto mt-6 grid max-w-xl gap-3 text-left lg:mx-0">
+            <ul className="mx-auto mt-5 grid max-w-xl gap-2.5 text-left lg:mx-0">
               {FEATURES.map(({ icon: Icon, text }) => (
                 <li
                   key={text}
-                  className="flex items-start gap-3 rounded-xl border border-foreground/10 bg-card/70 px-4 py-3 backdrop-blur"
+                  className="flex items-start gap-3 rounded-xl border border-foreground/10 bg-card/80 px-3 py-2.5 backdrop-blur"
                 >
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
                   <div className="flex items-center gap-2 text-foreground/85">
                     <Icon className="h-5 w-5 text-primary" />
-                    <span>{text}</span>
+                    <span className="text-[0.95rem]">{text}</span>
                   </div>
                 </li>
               ))}
@@ -111,38 +134,41 @@ export default function GallerySection({ isCartPage = false }: GallerySectionPro
 
           {/* RIGHT: Carousel */}
           <div className="order-1">
-            <div className="relative mx-auto w-full max-w-md sm:max-w-lg">
-              {/* Glow frame */}
-              <div className="absolute -inset-0.5 -z-10 rounded-[28px] bg-gradient-to-br from-primary/30 via-fuchsia-500/25 to-primary/10 opacity-80 blur-2xl" />
-              <div className="rounded-3xl border border-white/10 bg-card/80 p-2 shadow-2xl backdrop-blur">
+            <div className="relative mx-auto w-full max-w-sm sm:max-w-md">
+              {/* Subtle frame (muted on mobile) */}
+              <div className="absolute -inset-0.5 -z-10 hidden rounded-[28px] bg-gradient-to-br from-primary/30 via-fuchsia-500/25 to-primary/10 opacity-80 blur-2xl sm:block" />
+              <div className="rounded-2xl border border-white/10 bg-card/90 p-2 shadow-xl backdrop-blur">
                 <Carousel
                   aria-label="Soulmate sketch examples"
                   plugins={[plugin.current]}
                   className="w-full"
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
-                  opts={{ loop: true, align: "center" }}
+                  opts={{ loop: true, align: "center", skipSnaps: true }}
+                  setApi={setApi}
                 >
                   <CarouselContent>
-                    {GALLERY_ITEMS.map((item, index) => (
-                      <CarouselItem key={index} className="select-none">
-                        <Card className="overflow-hidden rounded-2xl border border-foreground/10 shadow-sm">
+                    {GALLERY_ITEMS.map((item, i) => (
+                      <CarouselItem key={i} className="select-none">
+                        <Card className="overflow-hidden rounded-xl border border-foreground/10 shadow-sm">
                           <CardContent className="p-0">
                             <figure className="relative">
-                              <div className="relative aspect-[5/6] w-full overflow-hidden">
+                              {/* Fixed, safe aspect to prevent layout shift */}
+                              <div className="relative aspect-[4/5] w-full overflow-hidden">
                                 <Image
                                   src={item.src}
                                   alt={item.alt}
-                                  width={1000}
-                                  height={1200}
+                                  width={800}
+                                  height={1000}
                                   data-ai-hint={item.hint}
                                   className="h-full w-full object-cover"
-                                  priority={index === 0}
+                                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 520px, 600px"
+                                  priority={i === 0}
                                 />
                               </div>
-                              <figcaption className="flex items-center justify-between gap-2 px-4 py-3 text-xs text-foreground/70">
-                                <span>{item.alt}</span>
-                                <span className="rounded-full border border-primary/20 bg-primary/10 px-2 py-1 text-[10px] font-semibold text-primary">
+                              <figcaption className="flex items-center justify-between gap-2 px-3 py-2 text-[11px] text-foreground/70 sm:text-xs">
+                                <span className="truncate">{item.alt}</span>
+                                <span className="rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
                                   Sample artwork
                                 </span>
                               </figcaption>
@@ -153,13 +179,37 @@ export default function GallerySection({ isCartPage = false }: GallerySectionPro
                     ))}
                   </CarouselContent>
 
+                  {/* Prev/Next visible ≥sm, hidden on phones for simplicity */}
                   <CarouselPrevious className="hidden sm:flex" />
                   <CarouselNext className="hidden sm:flex" />
                 </Carousel>
               </div>
 
-              {/* Autoplay status pill */}
-              <div className="pointer-events-none absolute -bottom-5 left-1/2 w-max -translate-x-1/2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold text-primary backdrop-blur">
+              {/* Dots + swipe hint (mobile) */}
+              <div className="mt-3 flex items-center justify-between">
+                {/* Dots */}
+                <div className="flex items-center gap-2">
+                  {GALLERY_ITEMS.map((_, i) => (
+                    <button
+                      key={i}
+                      aria-label={`Go to slide ${i + 1}`}
+                      onClick={() => api?.scrollTo(i)}
+                      className={`h-2.5 w-2.5 rounded-full transition-all ${
+                        index === i ? "bg-primary w-5" : "bg-foreground/20"
+                      }`}
+                    />
+                  ))}
+                </div>
+
+                {/* Swipe hint (only on small screens) */}
+                <div className="flex items-center gap-1 text-xs text-foreground/50 sm:hidden">
+                  <ChevronsLeftRight className="h-4 w-4" />
+                  Swipe
+                </div>
+              </div>
+
+              {/* Autoplay status pill (muted on mobile) */}
+              <div className="pointer-events-none mx-auto mt-2 w-max rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[10px] font-semibold text-primary backdrop-blur sm:text-xs">
                 {isPaused ? "Paused preview" : "Auto-rotating preview"}
               </div>
             </div>
@@ -167,12 +217,12 @@ export default function GallerySection({ isCartPage = false }: GallerySectionPro
         </div>
 
         {/* CTA */}
-        <div className="mt-10 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <CtaButton isCartPage={isCartPage} />
         </div>
 
         {/* Helper caption */}
-        <p className="mt-3 text-center text-sm text-foreground/60">
+        <p className="mt-2 text-center text-xs text-foreground/60 sm:text-sm">
           Your final sketch is personalized to your energy and details.
         </p>
       </div>

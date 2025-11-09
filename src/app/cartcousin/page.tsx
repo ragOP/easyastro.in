@@ -1,0 +1,623 @@
+// app/cart/page.tsx
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  ShieldCheck,
+  Star,
+  Timer,
+  Sparkles,
+  CheckCircle2,
+  Phone,
+  Mail,
+  ChevronDown,
+  ChevronUp,
+  Plus,
+} from "lucide-react";
+
+/**
+ * Cart Page — Easy Astro (UX-optimized)
+ * - Compact form (short first screen)
+ * - Bump offers: minimal rows by default (less height), expand for details
+ * - Multiple “Buy Now” CTAs placed strategically:
+ *   1) Quick CTA under product preview (above fold)
+ *   2) After essentials form (for fast users)
+ *   3) In the right summary card (desktop)
+ *   4) Full-width bottom CTA (mobile & desktop)
+ * - Removed sticky bottom bar as requested
+ */
+
+type Bump = {
+  id: string;
+  title: string;
+  blurb: string;
+  price: number;
+  compareAt?: number;
+  features?: string[];
+  defaultOpen?: boolean;
+};
+
+const PRODUCT = {
+  id: "soulmate-sketch",
+  title: "Soulmate Sketch + Free Love Report",
+  img: "https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png",
+  price: 289,
+  compareAt: 998,
+  includes: [
+    "Personalized hand-drawn sketch",
+    "FREE in-depth love reading",
+    "Private delivery within 24–48 hours",
+  ],
+};
+
+const BUMPS: Bump[] = [
+  {
+    id: "bump-horoscope-24m",
+    title: "2-Year Personal Horoscope",
+    blurb:
+      "Your next 24 months at a glance — love, career, money & health. Plan smarter with clear timelines.",
+    price: 99,
+    compareAt: 299,
+    features: [
+      "Month-by-month predictions",
+      "Love & marriage forecast",
+      "Career & wealth cycles",
+      "Lucky days & windows",
+      "Remedies & do’s/don’ts",
+    ],
+  },
+  {
+    id: "bump-wealth",
+    title: "Wealth Report",
+    blurb: "Remove money blocks and align with your financial destiny.",
+    price: 99,
+    compareAt: 299,
+    features: ["Money blocks + fixes", "Investment timelines", "Savings & risk windows"],
+  },
+  {
+    id: "bump-life-path-ebook",
+    title: "Life Path & Career eBook",
+    blurb: "Actionable clarity on purpose, strengths & career path.",
+    price: 99,
+    compareAt: 249,
+    features: ["Purpose & strengths", "Weekly practice plan", "Decision frameworks"],
+  },
+];
+
+function useCountdown(seconds: number) {
+  const [left, setLeft] = useState(seconds);
+  useEffect(() => {
+    const t = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const mmss = useMemo(() => {
+    const m = String(Math.floor(left / 60)).padStart(2, "0");
+    const s = String(left % 60).padStart(2, "0");
+    return `${m}:${s}`;
+  }, [left]);
+  return { left, mmss };
+}
+
+export default function CartPage() {
+  const router = useRouter();
+  const { mmss } = useCountdown(10 * 60);
+
+  // Essentials-first form
+  const [showMore, setShowMore] = useState(false);
+  const [form, setForm] = useState({
+    fullName: "",
+    gender: "female",
+    email: "",
+    whatsapp: "",
+    birthDate: "",
+    birthTime: "",
+    birthPlace: "",
+    notes: "",
+  });
+  const on = (k: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  // Bumps
+  const [selectedBumps, setSelectedBumps] = useState<Record<string, boolean>>({});
+  const toggleBump = (id: string) => setSelectedBumps((s) => ({ ...s, [id]: !s[id] }));
+  const bumpsTotal = useMemo(
+    () => BUMPS.filter((b) => selectedBumps[b.id]).reduce((sum, b) => sum + b.price, 0),
+    [selectedBumps]
+  );
+  const total = PRODUCT.price + bumpsTotal;
+
+  const proceed = () => {
+    console.log("Order Payload", { productId: PRODUCT.id, form, bumps: selectedBumps, total });
+    router.push("/checkout");
+  };
+
+  return (
+    <main className="relative min-h-screen overflow-x-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#fee9f2] via-[#fdd7e8]/75 to-[#fbcadb]" />
+      <div className="absolute inset-0 opacity-45 [background:repeating-linear-gradient(110deg,rgba(255,255,255,.58)_0_8px,transparent_8px_16px)]" />
+
+      <div className="relative mx-auto w-full max-w-[980px] px-4 sm:px-6 pb-12 pt-6 sm:pt-10">
+        {/* Top chip */}
+        <div className="mb-5 text-center sm:mb-8">
+          <span className="inline-flex items-center gap-2 rounded-full border border-pink-200/60 bg-pink-100/40 px-3 py-1 text-xs font-medium text-pink-600">
+            <Sparkles className="h-4 w-4" />
+            Secure Checkout • Loved by 100k+
+          </span>
+        </div>
+
+        {/* GRID */}
+        <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+          {/* LEFT */}
+          <section className="space-y-6">
+            {/* Product Preview */}
+            <Card className="overflow-hidden border-pink-200/60 bg-white/95 backdrop-blur">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg sm:text-xl">{PRODUCT.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-4 sm:grid-cols-[220px_1fr]">
+                <div className="relative">
+                  <Image
+                    src={PRODUCT.img}
+                    alt="Soulmate Sketch preview"
+                    width={800}
+                    height={800}
+                    className="h-auto w-full rounded-xl border border-white/60 object-cover shadow-sm"
+                    priority
+                  />
+                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-pink-300/60 bg-pink-100/70 px-3 py-1 text-[11px] font-semibold text-pink-700">
+                    Sample illustration • Yours is personalized
+                  </div>
+                </div>
+                <ul className="mt-1 space-y-2 text-sm text-zinc-700">
+                  {PRODUCT.includes.map((i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 text-green-500" />
+                      <span>{i}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Quick CTA (above the fold) */}
+                <div className="sm:col-span-2">
+                  <PrimaryCTA price={PRODUCT.price} compareAt={PRODUCT.compareAt} mmss={mmss} onClick={proceed} />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* FORM — compact essentials */}
+            <Card className="border-pink-200/60 bg-white/95 backdrop-blur">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg sm:text-xl">Your Details</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid gap-3">
+                  <div className="grid gap-1.5">
+                    <label className="text-[13px] font-medium text-zinc-800">
+                      Full Name <span className="text-pink-600">*</span>
+                    </label>
+                    <input
+                      value={form.fullName}
+                      onChange={on("fullName")}
+                      placeholder="e.g., Aisha Khan"
+                      className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="grid gap-1.5">
+                      <label className="text-[13px] font-medium text-zinc-800">Gender</label>
+                      <select
+                        value={form.gender}
+                        onChange={(e) => setForm((f) => ({ ...f, gender: e.target.value }))}
+                        className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                      >
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                        <option value="other">Other</option>
+                        <option value="prefer_not_to_say">Prefer not to say</option>
+                      </select>
+                    </div>
+                    <div className="grid gap-1.5">
+                      <label className="text-[13px] font-medium text-zinc-800 flex items-center gap-1">
+                        <Phone className="h-3.5 w-3.5 text-pink-500" />
+                        WhatsApp
+                      </label>
+                      <input
+                        value={form.whatsapp}
+                        onChange={on("whatsapp")}
+                        placeholder="+91 98765 43210"
+                        className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-1.5">
+                    <label className="text-[13px] font-medium text-zinc-800 flex items-center gap-1">
+                      <Mail className="h-3.5 w-3.5 text-pink-500" />
+                      Email
+                    </label>
+                    <input
+                      value={form.email}
+                      onChange={on("email")}
+                      type="email"
+                      placeholder="you@example.com"
+                      className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                    />
+                  </div>
+                </div>
+
+                {/* Secondary CTA right after essentials */}
+                <div className="pt-1">
+                  <Button
+                    onClick={proceed}
+                    size="lg"
+                    className="w-full rounded-xl py-5 text-base font-bold"
+                  >
+                    Buy Now — ₹{PRODUCT.price}
+                  </Button>
+                </div>
+
+                {/* Expand Optional */}
+                <div className="rounded-lg border border-zinc-200/70 bg-zinc-50/60">
+                  <button
+                    type="button"
+                    onClick={() => setShowMore((s) => !s)}
+                    className="flex w-full items-center justify-between px-3 py-2 text-[13px] font-medium text-zinc-800"
+                  >
+                    Additional birth details (optional)
+                    {showMore ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                  </button>
+
+                  {showMore && (
+                    <div className="grid gap-3 px-3 pb-3">
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        <div className="grid gap-1.5">
+                          <label className="text-[12px] text-zinc-700">Date of Birth</label>
+                          <input
+                            value={form.birthDate}
+                            onChange={on("birthDate")}
+                            placeholder="26/05/1999"
+                            className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                          />
+                        </div>
+                        <div className="grid gap-1.5">
+                          <label className="text-[12px] text-zinc-700">Time of Birth</label>
+                          <input
+                            value={form.birthTime}
+                            onChange={on("birthTime")}
+                            placeholder="03:45 AM"
+                            className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                          />
+                        </div>
+                        <div className="grid gap-1.5">
+                          <label className="text-[12px] text-zinc-700">Place of Birth</label>
+                          <input
+                            value={form.birthPlace}
+                            onChange={on("birthPlace")}
+                            placeholder="City, Country"
+                            className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid gap-1.5">
+                        <label className="text-[12px] text-zinc-700">Special Notes</label>
+                        <textarea
+                          value={form.notes}
+                          onChange={on("notes")}
+                          rows={3}
+                          placeholder="Anything you'd like our artist to focus on…"
+                          className="w-full resize-none rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* BUMP OFFERS — compact rows */}
+            <Card className="border-pink-200/70 bg-white/96 backdrop-blur">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-pink-700">
+                  <span className="h-2 w-2 rounded-full bg-pink-500 inline-block" />
+                  Enhance Your Love Journey
+                </CardTitle>
+                <p className="text-sm text-pink-700/80">
+                  Optional add-ons. Tap “Add to order” to include.
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {BUMPS.map((b) => (
+                  <CompactBumpRow
+                    key={b.id}
+                    bump={b}
+                    checked={!!selectedBumps[b.id]}
+                    onToggle={() => toggleBump(b.id)}
+                  />
+                ))}
+              </CardContent>
+            </Card>
+
+            {/* Bottom full-width CTA */}
+            <div className="mt-2">
+              <Button
+                onClick={proceed}
+                size="lg"
+                className="w-full rounded-xl py-5 text-base font-extrabold"
+              >
+                Buy Now — Pay ₹{total}
+              </Button>
+              <div className="mt-2 flex items-center justify-center gap-2 text-xs text-zinc-600">
+                <ShieldCheck className="h-4 w-4 text-pink-600" />
+                100% Private • Money-back Guarantee • Secure Checkout
+              </div>
+            </div>
+          </section>
+
+          {/* RIGHT — Summary (desktop only) */}
+          <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start hidden lg:block">
+            <SummaryCard
+              price={PRODUCT.price}
+              compareAt={PRODUCT.compareAt}
+              mmss={mmss}
+              total={total}
+              onPay={proceed}
+            />
+            <AssureCard />
+          </aside>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+/* ---------- Reusable CTA ---------- */
+
+function PrimaryCTA({
+  price,
+  compareAt,
+  mmss,
+  onClick,
+}: {
+  price: number;
+  compareAt?: number;
+  mmss: string;
+  onClick: () => void;
+}) {
+  return (
+    <div className="rounded-xl border border-zinc-200 bg-white/80 p-3 sm:p-4">
+      <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <div className="text-right">
+            <div className="text-xl font-extrabold text-pink-600 sm:text-2xl">₹{price}</div>
+            {!!compareAt && (
+              <div className="text-xs text-zinc-500 line-through">₹{compareAt}</div>
+            )}
+          </div>
+          <div className="hidden h-8 w-px bg-zinc-200 sm:block" />
+          <div className="flex items-center gap-2 rounded-lg bg-pink-50 px-2.5 py-1.5 text-sm text-pink-700">
+            <Star className="h-4 w-4" />
+            Limited-time special • Ends in <b className="ml-1">{mmss}</b>
+          </div>
+        </div>
+        <Button
+          onClick={onClick}
+          size="lg"
+          className="w-full rounded-xl py-5 text-base font-bold sm:w-auto"
+        >
+          Buy Now
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Summary & Assure ---------- */
+
+function SummaryCard({
+  price,
+  compareAt,
+  mmss,
+  total,
+  onPay,
+}: {
+  price: number;
+  compareAt?: number;
+  mmss: string;
+  total: number;
+  onPay: () => void;
+}) {
+  return (
+    <Card className="border-pink-200/60 bg-white/96 backdrop-blur">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg sm:text-xl">Order Summary</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-5">
+        <div className="rounded-xl border border-zinc-200 bg-white/70 p-4">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm text-zinc-500">Today’s Price</span>
+            <div className="text-right">
+              <div className="text-2xl font-extrabold text-pink-600">₹{price}</div>
+              {!!compareAt && (
+                <div className="text-xs text-zinc-500 line-through">₹{compareAt}</div>
+              )}
+            </div>
+          </div>
+          <div className="mt-3 flex items-center justify-between rounded-lg bg-pink-50 px-3 py-2 text-sm text-pink-700">
+            <div className="flex items-center gap-2">
+              <Star className="h-4 w-4" />
+              Limited-time special applied
+            </div>
+            <div className="flex items-center gap-1 font-semibold">
+              <Timer className="h-4 w-4" />
+              <span>{mmss}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center justify-between text-zinc-600">
+            <span>Subtotal</span>
+            <span>₹{price}</span>
+          </div>
+          <div className="flex items-center justify-between text-zinc-600">
+            <span>Delivery</span>
+            <span>Free</span>
+          </div>
+          <div className="h-px w-full bg-zinc-200" />
+          <div className="flex items-center justify-between text-base font-bold text-zinc-900">
+            <span>Total</span>
+            <span>₹{total}</span>
+          </div>
+        </div>
+
+        <Button size="lg" className="w-full rounded-xl py-6 text-base font-bold" onClick={onPay}>
+          Complete Order Securely
+        </Button>
+
+        <div className="flex items-center justify-center gap-2 text-xs text-zinc-600">
+          <ShieldCheck className="h-4 w-4 text-pink-600" />
+          100% Private • Money-back Guarantee • Secure Checkout
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function AssureCard() {
+  return (
+    <Card className="border-pink-200/60 bg-white/90 backdrop-blur">
+      <CardContent className="space-y-3 p-4 text-sm text-zinc-700">
+        <div className="flex items-start gap-2">
+          <CheckCircle2 className="mt-0.5 h-4 w-4 text-green-500" />
+          <p>
+            Delivery via Email & WhatsApp within <b>24–48 hours</b>.
+          </p>
+        </div>
+        <div className="flex items-start gap-2">
+          <CheckCircle2 className="mt-0.5 h-4 w-4 text-green-500" />
+          <p>
+            Every sketch is <b>hand-drawn</b> and <b>unique to you</b>.
+          </p>
+        </div>
+        <div className="flex items-start gap-2">
+          <CheckCircle2 className="mt-0.5 h-4 w-4 text-green-500" />
+          <p>
+            Full refund if you’re not satisfied — <b>no questions asked</b>.
+          </p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+/* ---------- Compact Bump Row ---------- */
+
+function CompactBumpRow({
+  bump,
+  checked,
+  onToggle,
+}: {
+  bump: Bump;
+  checked: boolean;
+  onToggle: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="rounded-xl border border-pink-200/70 bg-pink-50/40 p-3 sm:p-4">
+      <div className="flex items-start justify-between gap-3">
+        {/* Left: checkbox + title + blurb (1–2 lines) */}
+        <div className="flex min-w-0 flex-1 items-start gap-3">
+          <input
+            id={`b-${bump.id}`}
+            type="checkbox"
+            checked={checked}
+            onChange={onToggle}
+            className="mt-1 h-5 w-5 rounded border-pink-400 text-pink-600 focus:ring-pink-300"
+          />
+          <div className="min-w-0">
+            <label
+              htmlFor={`b-${bump.id}`}
+              className="cursor-pointer text-[15px] font-semibold text-pink-800 sm:text-base"
+            >
+              {bump.title}
+            </label>
+            <p className="mt-0.5 line-clamp-2 text-[13px] text-pink-900/85">
+              {bump.blurb}
+            </p>
+            {/* Chips preview of features (first 2) */}
+            {bump.features?.length ? (
+              <div className="mt-2 hidden flex-wrap gap-1.5 sm:flex">
+                {bump.features.slice(0, 2).map((f) => (
+                  <span
+                    key={f}
+                    className="rounded-full border border-pink-200 bg-white/70 px-2 py-0.5 text-[11px] text-pink-800"
+                  >
+                    {f}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        {/* Right: price + “Add to order” */}
+        <div className="shrink-0 text-right">
+          <div className="text-sm font-extrabold text-pink-700 sm:text-base">₹{bump.price}</div>
+          {!!bump.compareAt && (
+            <div className="text-[11px] text-pink-700/60 line-through">₹{bump.compareAt}</div>
+          )}
+          <button
+            type="button"
+            onClick={onToggle}
+            className="mt-1 inline-flex items-center gap-1 rounded-md border border-pink-300 bg-white/80 px-2 py-1 text-[12px] font-semibold text-pink-700 hover:bg-white"
+          >
+            <Plus className="h-3.5 w-3.5" />
+            {checked ? "Remove" : "Add"}
+          </button>
+        </div>
+      </div>
+
+      {/* Expand for full features (kept lightweight) */}
+      {bump.features?.length ? (
+        <div className="mt-2">
+          {open ? (
+            <>
+              <ul className="space-y-1.5 rounded-lg border border-pink-200/70 bg-white/80 p-3 text-[13px] text-pink-900/90">
+                {bump.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2">
+                    <span className="mt-[6px] inline-block h-2 w-2 rounded-full bg-pink-500/70" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                className="mt-2 text-[12px] font-medium text-pink-700 underline underline-offset-2"
+                onClick={() => setOpen(false)}
+              >
+                Show Less
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="text-[12px] font-medium text-pink-700 underline underline-offset-2"
+              onClick={() => setOpen(true)}
+            >
+              Show More
+            </button>
+          )}
+        </div>
+      ) : null}
+    </div>
+  );
+}
