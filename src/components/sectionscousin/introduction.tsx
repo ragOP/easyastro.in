@@ -1,5 +1,5 @@
 import Image from "next/image";
-import CtaButton from "@/components/common/cta-button";
+import CousinCta from "./CousinCta";
 import { Sparkles, HeartHandshake, CheckCircle2 } from "lucide-react";
 
 export default function IntroductionSection() {
@@ -52,7 +52,7 @@ export default function IntroductionSection() {
 
           {/* CTA + trust */}
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:items-start">
-            <CtaButton />
+            <CousinCta />
             <div className="inline-flex items-center gap-2 rounded-xl border border-foreground/10 bg-card/60 px-4 py-3 text-sm text-foreground/70 backdrop-blur">
               <HeartHandshake className="h-5 w-5 text-primary" />
               <span>Thousands of happy customers</span>

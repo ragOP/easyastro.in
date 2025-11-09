@@ -2,7 +2,7 @@
 
 import { ArtIcon, ReadingIcon } from "@/components/icons";
 import { CircleDollarSign, Sparkles, ShieldCheck } from "lucide-react";
-import CtaButton from "../common/cta-button";
+import CousinCta from "./CousinCta";
 
 const deliverables = [
   {
@@ -95,7 +95,7 @@ export default function WhatYouReceiveSection() {
 
         {/* CTA */}
         <div className="mt-10 flex justify-center">
-          <CtaButton />
+          <CousinCta />
         </div>
       </div>
     </section>

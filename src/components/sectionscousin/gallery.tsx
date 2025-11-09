@@ -12,8 +12,8 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import CtaButton from "../common/cta-button";
 import { Sparkles, ShieldCheck, Paintbrush, CheckCircle2, ChevronsLeftRight } from "lucide-react";
+import CousinCta from "./CousinCta";
 
 /**
  * GallerySection — mobile-first redesign
@@ -218,7 +218,7 @@ export default function GallerySection({ isCartPage = false }: GallerySectionPro
 
         {/* CTA */}
         <div className="mt-8 flex justify-center">
-          <CtaButton isCartPage={isCartPage} />
+          <CousinCta isCartPage={isCartPage} />
         </div>
 
         {/* Helper caption */}

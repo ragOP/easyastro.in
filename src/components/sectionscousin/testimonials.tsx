@@ -11,7 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
-import CtaButton from "../common/cta-button";
+import CousinCta from "./CousinCta";
 
 type Testimonial = { name: string; quote: string };
 
@@ -151,7 +151,7 @@ export default function TestimonialsSection({ isCartPage = false }: Testimonials
 
         {/* CTA */}
         <div className="mt-10 flex justify-center">
-          <CtaButton isCartPage={isCartPage} />
+          <CousinCta isCartPage={isCartPage} />
         </div>
       </div>
     </section>

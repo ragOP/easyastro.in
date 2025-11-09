@@ -3,7 +3,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DetailsIcon, PsychicIcon, DeliveryIcon } from "@/components/icons";
-import CtaButton from "@/components/common/cta-button";
+import CousinCta from "./CousinCta";
 
 /**
  * Completely redesigned "How It Works" section
@@ -123,7 +123,7 @@ export default function HowItWorksSection() {
 
         {/* CTA */}
         <div className="mt-10 flex justify-center">
-          <CtaButton />
+          <CousinCta />
         </div>
 
         {/* Helper caption */}

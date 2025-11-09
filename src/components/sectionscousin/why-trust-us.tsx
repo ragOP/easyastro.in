@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import CtaButton from "../common/cta-button";
 import {
   CheckCircle,
   ShieldCheck,
@@ -10,6 +9,7 @@ import {
   Trophy,
   BadgeCheck,
 } from "lucide-react";
+import CousinCta from "./CousinCta";
 
 const TRUST_FACTORS = [
   "Over 100,000 sketches delivered",
@@ -107,7 +107,7 @@ export default function WhyTrustUsSection() {
 
         {/* CTA */}
         <div className="mt-10 flex justify-center">
-          <CtaButton />
+          <CousinCta />
         </div>
       </div>
     </section>
