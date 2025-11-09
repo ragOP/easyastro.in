@@ -1,61 +1,203 @@
 // app/questionnaire/page.tsx
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, CheckCircle2, Sparkles } from "lucide-react";
 
 /**
- * Mobile-first Questionnaire (Step-by-Step)
- * - Minimal above-the-fold height
- * - One column, large tap targets
- * - Progressive disclosure (name/email/dob first, then details)
- * - LocalStorage autosave + restore
- * - Lightweight validation per step
- * - Summary screen -> proceeds to /cart with payload in sessionStorage
+ * ONE-QUESTION-AT-A-TIME QUESTIONNAIRE (mobile-first + silky animations)
+ * - Super compact first screen
+ * - Smooth slide/fade between questions (AnimatePresence + variants)
+ * - Tap/Swipe (←/→) to navigate
+ * - Per-question validation
+ * - Autosave (localStorage) + final payload -> sessionStorage → /cart
+ * - No external UI kit required (pure Tailwind + Framer Motion)
  *
- * Tailwind classes assume your global theme. No shadcn dependency required.
+ * Tip: ensure framer-motion is installed:
+ *   npm i framer-motion
  */
 
 type FormState = {
   fullName: string;
   email: string;
-  whatsapp: string;
   birthDate: string;
   birthTime: string;
   birthPlace: string;
+  whatsapp: string;
   gender: "female" | "male" | "other" | "prefer_not_to_say";
-  goal: "curious" | "serious_relationship" | "closure" | "fun";
-  notes: string;
   consent: boolean;
 };
 
-const DEFAULT_STATE: FormState = {
+const DEFAULT: FormState = {
   fullName: "",
   email: "",
-  whatsapp: "",
   birthDate: "",
   birthTime: "",
   birthPlace: "",
+  whatsapp: "",
   gender: "female",
-  goal: "curious",
-  notes: "",
   consent: false,
 };
 
-const STORAGE_KEY = "ea_questionnaire_v1";
+const STORAGE_KEY = "ea_questionnaire_onebyone_v1";
 
-export default function QuestionnairePage() {
+// ----- Steps (one question each) -----
+type Step = {
+  key: keyof FormState | "summary";
+  label: string;
+  placeholder?: string;
+  type?: "text" | "email" | "date" | "time";
+  required?: boolean;
+  render?: (form: FormState, setForm: React.Dispatch<React.SetStateAction<FormState>>) => React.ReactNode;
+  validate?: (form: FormState) => boolean;
+};
+
+const STEPS: Step[] = [
+  {
+    key: "fullName",
+    label: "What's your full name?",
+    placeholder: "e.g., Aisha Khan",
+    required: true,
+    validate: (f) => f.fullName.trim().length >= 2,
+  },
+  {
+    key: "email",
+    label: "Your email address?",
+    placeholder: "you@example.com",
+    type: "email",
+    required: true,
+    validate: (f) => /\S+@\S+\.\S+/.test(f.email),
+  },
+  {
+    key: "birthDate",
+    label: "Date of birth?",
+    placeholder: "DD/MM/YYYY",
+    required: true,
+    validate: (f) => f.birthDate.trim().length >= 4,
+  },
+  {
+    key: "birthTime",
+    label: "Time of birth? (rough is fine)",
+    placeholder: "03:45 AM",
+    required: true,
+    validate: (f) => f.birthTime.trim().length >= 3,
+  },
+  {
+    key: "birthPlace",
+    label: "Place of birth?",
+    placeholder: "City, Country",
+    required: true,
+    validate: (f) => f.birthPlace.trim().length >= 2,
+  },
+  {
+    key: "whatsapp",
+    label: "WhatsApp (optional)",
+    placeholder: "+91 98765 43210",
+  },
+  {
+    key: "gender",
+    label: "How do you identify?",
+    required: true,
+    render: (form, setForm) => (
+      <div className="grid grid-cols-2 gap-2">
+        {([
+          { v: "female", t: "Female" },
+          { v: "male", t: "Male" },
+          { v: "other", t: "Other" },
+          { v: "prefer_not_to_say", t: "Prefer not to say" },
+        ] as const).map((g) => (
+          <button
+            key={g.v}
+            type="button"
+            onClick={() => setForm((f) => ({ ...f, gender: g.v }))}
+            className={
+              "rounded-xl border px-3 py-2 text-sm transition " +
+              (form.gender === g.v
+                ? "border-pink-400 bg-pink-50 font-semibold text-pink-700 shadow-[0_0_0_3px_rgba(236,72,153,.15)]"
+                : "border-zinc-200 bg-white text-zinc-700 hover:border-pink-200")
+            }
+          >
+            {g.t}
+          </button>
+        ))}
+      </div>
+    ),
+  },
+  {
+    key: "summary",
+    label: "Review & consent",
+    render: (form, setForm) => (
+      <div className="space-y-4">
+        <div className="rounded-xl border border-zinc-200 bg-white/80 p-4 text-sm text-zinc-800">
+          <dl className="grid grid-cols-1 gap-2">
+            <Row label="Name" value={form.fullName || "—"} />
+            <Row label="Email" value={form.email || "—"} />
+            <Row label="DOB" value={form.birthDate || "—"} />
+            <Row label="Time" value={form.birthTime || "—"} />
+            <Row label="Place" value={form.birthPlace || "—"} />
+            <Row label="WhatsApp" value={form.whatsapp || "—"} />
+            <Row label="Gender" value={pretty(form.gender)} />
+          </dl>
+        </div>
+
+        <label className="flex items-start gap-3 text-sm text-zinc-800">
+          <input
+            type="checkbox"
+            checked={form.consent}
+            onChange={(e) => setForm((f) => ({ ...f, consent: e.target.checked }))}
+            className="mt-1 h-5 w-5 rounded border-pink-400 text-pink-600 focus:ring-pink-300"
+          />
+          <span>
+            I consent to receive my personalized sketch & love reading via Email/WhatsApp.
+          </span>
+        </label>
+      </div>
+    ),
+    validate: (f) => f.consent,
+  },
+];
+
+// ----- Animations -----
+const pageVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? 40 : -40,
+    opacity: 0,
+    filter: "blur(6px)",
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      stiffness: 420,
+      damping: 42,
+      mass: 0.6,
+    },
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? -40 : 40,
+    opacity: 0,
+    filter: "blur(6px)",
+    transition: { duration: 0.18 },
+  }),
+};
+
+export default function QuestionnaireOneByOne() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
-  const [form, setForm] = useState<FormState>(DEFAULT_STATE);
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-  // ----- Restore & Autosave -----
+  const [form, setForm] = useState<FormState>(DEFAULT);
+  const [index, setIndex] = useState(0); // which step
+  const [dir, setDir] = useState(1); // animation direction
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Restore / autosave
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setForm({ ...DEFAULT_STATE, ...JSON.parse(raw) });
+      if (raw) setForm({ ...DEFAULT, ...JSON.parse(raw) });
     } catch {}
   }, []);
   useEffect(() => {
@@ -64,417 +206,195 @@ export default function QuestionnairePage() {
     } catch {}
   }, [form]);
 
-  // ----- Helpers -----
-  const on = (k: keyof FormState) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      const v = e.target.type === "checkbox"
-        ? (e.target as HTMLInputElement).checked
-        : e.target.value;
-      setForm((f) => ({ ...f, [k]: v as any }));
+  // Swipe gestures (mobile)
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let startX = 0;
+    let endX = 0;
+
+    const onTouchStart = (e: TouchEvent) => {
+      startX = e.changedTouches[0].clientX;
     };
-  const mark = (k: keyof FormState) => setTouched((t) => ({ ...t, [k]: true }));
+    const onTouchEnd = (e: TouchEvent) => {
+      endX = e.changedTouches[0].clientX;
+      const dx = endX - startX;
+      if (Math.abs(dx) > 50) {
+        if (dx < 0) handleNext();
+        else handleBack();
+      }
+    };
 
-  // ----- Validation per step -----
-  const stepValid = useMemo(() => {
-    if (step === 1) {
-      return (
-        form.fullName.trim().length >= 2 &&
-        /\S+@\S+\.\S+/.test(form.email) &&
-        (form.birthDate || "").trim().length >= 4
-      );
-    }
-    if (step === 2) {
-      return (form.birthTime || "").trim().length >= 3 && (form.birthPlace || "").trim().length >= 2;
-    }
-    if (step === 3) {
-      return true; // optional notes
-    }
-    if (step === 4) {
-      return form.consent;
-    }
-    return false;
-  }, [step, form]);
+    el.addEventListener("touchstart", onTouchStart);
+    el.addEventListener("touchend", onTouchEnd);
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [index, form]);
 
-  const next = () => setStep((s) => Math.min(4, s + 1));
-  const back = () => setStep((s) => Math.max(1, s - 1));
+  const step = STEPS[index];
 
-  const submit = () => {
-    // Put payload where your cart/checkout can read it.
-    try {
-      sessionStorage.setItem("ea_checkout_payload", JSON.stringify(form));
-    } catch {}
-    router.push("/cart");
-  };
+  const valid = useMemo(() => {
+    if (!step.validate) {
+      // generic required check for basic input steps
+      if (step.required) {
+        const v = (form[step.key as keyof FormState] as string) ?? "";
+        return String(v).trim().length > 0;
+      }
+      return true;
+    }
+    return step.validate(form);
+  }, [form, step]);
 
-  // ----- Progress -----
-  const progress = useMemo(() => (step / 4) * 100, [step]);
+  function handleNext() {
+    if (!valid) return;
+    if (index < STEPS.length - 1) {
+      setDir(1);
+      setIndex((i) => i + 1);
+    } else {
+      // submit
+      try {
+        sessionStorage.setItem("ea_checkout_payload", JSON.stringify(form));
+      } catch {}
+      router.push("/cart");
+    }
+  }
+  function handleBack() {
+    if (index === 0) return;
+    setDir(-1);
+    setIndex((i) => i - 1);
+  }
+
+  // field binder
+  const bind = (k: keyof FormState) => ({
+    value: form[k] as string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value })),
+  });
 
   return (
     <main className="relative min-h-screen overflow-x-hidden">
-      {/* Background (matches your hero/cart palette) */}
+      {/* Background to match your site */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#fee9f2] via-[#fdd7e8]/75 to-[#fbcadb]" />
       <div className="absolute inset-0 opacity-45 [background:repeating-linear-gradient(110deg,rgba(255,255,255,.58)_0_8px,transparent_8px_16px)]" />
 
-      <div className="relative mx-auto w-full max-w-[720px] px-4 sm:px-6 pb-16 pt-6">
-        {/* Top pill */}
+      <div className="relative mx-auto w-full max-w-[680px] px-4 sm:px-6 pb-20 pt-6">
+        {/* Top chip */}
         <div className="mb-4 text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-pink-200/60 bg-pink-100/40 px-3 py-1 text-xs font-medium text-pink-600">
             <Sparkles className="h-4 w-4" />
-            Quick Questionnaire • 60–90 sec
+            Smooth & fast • One question at a time
           </span>
         </div>
 
         {/* Progress */}
         <div className="mb-4">
           <div className="mb-1 flex items-center justify-between text-xs text-pink-800/80">
-            <span>Step {step} of 4</span>
-            <span>{Math.round(progress)}%</span>
+            <span>
+              Step {index + 1} of {STEPS.length}
+            </span>
+            <span>{Math.round(((index + 1) / STEPS.length) * 100)}%</span>
           </div>
           <div className="h-2 w-full overflow-hidden rounded-full bg-white/60">
-            <div
+            <motion.div
               className="h-full rounded-full bg-pink-500"
-              style={{ width: `${progress}%` }}
+              initial={{ width: 0 }}
+              animate={{ width: `${((index + 1) / STEPS.length) * 100}%` }}
+              transition={{ type: "spring", stiffness: 240, damping: 30 }}
             />
           </div>
         </div>
 
         {/* Card */}
-        <section className="rounded-2xl border border-pink-200/70 bg-white/95 p-4 shadow-sm backdrop-blur sm:p-6">
-          {step === 1 && (
-            <StepOne
-              form={form}
-              on={on}
-              mark={mark}
-              touched={touched}
-            />
-          )}
-          {step === 2 && (
-            <StepTwo
-              form={form}
-              on={on}
-              mark={mark}
-              touched={touched}
-            />
-          )}
-          {step === 3 && (
-            <StepThree form={form} on={on} />
-          )}
-          {step === 4 && (
-            <StepFour form={form} on={on} />
-          )}
+        <div
+          ref={containerRef}
+          className="relative overflow-hidden rounded-2xl border border-pink-200/70 bg-white/95 p-4 shadow-sm backdrop-blur sm:p-6"
+        >
+          <AnimatePresence mode="popLayout" custom={dir}>
+            <motion.div
+              key={step.key}
+              custom={dir}
+         
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="min-h-[210px]"
+            >
+              <h2 className="mb-4 text-balance text-lg font-bold leading-snug text-pink-800 sm:text-xl">
+                {step.label}
+              </h2>
+
+              {/* Render type: custom or input */}
+              {step.render ? (
+                <div className="space-y-4">{step.render(form, setForm)}</div>
+              ) : (
+                <div className="space-y-2">
+                  <input
+                    {...bind(step.key as keyof FormState)}
+                    type={step.type ?? "text"}
+                    placeholder={step.placeholder}
+                    className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-base outline-none transition focus:border-pink-300 focus:ring-2 focus:ring-pink-200/60"
+                  />
+                  {!valid && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-[12px] text-pink-600"
+                    >
+                      {step.required ? "This field is required." : ""}
+                      {step.key === "email" && " Please enter a valid email."}
+                    </motion.p>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
 
           {/* Nav */}
-          <div className="mt-5 flex items-center justify-between gap-3">
+          <div className="mt-6 flex items-center justify-between gap-3">
             <button
-              onClick={back}
-              disabled={step === 1}
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 disabled:opacity-50"
+              onClick={handleBack}
+              disabled={index === 0}
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50 disabled:opacity-50"
             >
               <ChevronLeft className="h-4 w-4" />
               Back
             </button>
 
-            {step < 4 ? (
+            {index === STEPS.length - 1 ? (
               <button
-                onClick={next}
-                disabled={!stepValid}
-                className="inline-flex items-center gap-2 rounded-xl bg-pink-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-pink-700 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                Continue
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            ) : (
-              <button
-                onClick={submit}
-                disabled={!stepValid}
+                onClick={handleNext}
+                disabled={!valid}
                 className="inline-flex items-center gap-2 rounded-xl bg-pink-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-pink-700 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Proceed to Cart
                 <CheckCircle2 className="h-4 w-4" />
               </button>
+            ) : (
+              <button
+                onClick={handleNext}
+                disabled={!valid}
+                className="inline-flex items-center gap-2 rounded-xl bg-pink-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-pink-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Continue
+                <ChevronRight className="h-4 w-4" />
+              </button>
             )}
           </div>
-        </section>
+        </div>
 
-        {/* Assure footer */}
+        {/* Footer mini-assure */}
         <p className="mt-4 text-center text-xs text-zinc-700">
-          100% Private • Your details are used only to craft your personalized sketch and reading.
+          100% Private • Your details are used only to craft your personalized sketch & reading.
         </p>
       </div>
     </main>
   );
 }
 
-/* ------------------ Steps ------------------ */
-
-function Label({ children, req = false }: { children: React.ReactNode; req?: boolean }) {
-  return (
-    <label className="text-[13px] font-medium text-zinc-900">
-      {children} {req && <span className="text-pink-600">*</span>}
-    </label>
-  );
-}
-
-function Input({
-  value,
-  onChange,
-  placeholder,
-  type = "text",
-  onBlur,
-}: {
-  value: string | number | readonly string[] | undefined;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  placeholder?: string;
-  type?: string;
-  onBlur?: () => void;
-}) {
-  return (
-    <input
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      type={type}
-      placeholder={placeholder}
-      className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2.5 text-sm outline-none focus:border-pink-300"
-    />
-  );
-}
-
-function Error({ show, children }: { show: boolean; children: React.ReactNode }) {
-  if (!show) return null;
-  return <p className="text-[12px] text-pink-600">{children}</p>;
-}
-
-/* Step 1 — Basic identity (short, mobile) */
-function StepOne({
-  form,
-  on,
-  mark,
-  touched,
-}: {
-  form: FormState;
-  on: (k: keyof FormState) => any;
-  mark: (k: keyof FormState) => void;
-  touched: Record<string, boolean>;
-}) {
-  const emailInvalid = touched.email && !/\S+@\S+\.\S+/.test(form.email);
-  return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold text-pink-800">Tell us about you</h2>
-
-      <div className="grid gap-3">
-        <div className="grid gap-1.5">
-          <Label req>Full Name</Label>
-          <Input
-            value={form.fullName}
-            onChange={on("fullName")}
-            onBlur={() => mark("fullName")}
-            placeholder="e.g., Aisha Khan"
-          />
-          <Error show={touched.fullName && form.fullName.trim().length < 2}>
-            Please enter your full name.
-          </Error>
-        </div>
-
-        <div className="grid gap-1.5">
-          <Label req>Email</Label>
-          <Input
-            value={form.email}
-            onChange={on("email")}
-            onBlur={() => mark("email")}
-            placeholder="you@example.com"
-            type="email"
-          />
-          <Error show={!!emailInvalid}>Please enter a valid email.</Error>
-        </div>
-
-        <div className="grid gap-1.5">
-          <Label>WhatsApp (optional)</Label>
-          <Input
-            value={form.whatsapp}
-            onChange={on("whatsapp")}
-            placeholder="+91 98765 43210"
-          />
-        </div>
-
-        <div className="grid gap-1.5">
-          <Label req>Date of Birth</Label>
-          <Input
-            value={form.birthDate}
-            onChange={on("birthDate")}
-            onBlur={() => mark("birthDate")}
-            placeholder="DD/MM/YYYY"
-          />
-          <Error show={touched.birthDate && form.birthDate.trim().length < 4}>
-            Add your date of birth to personalize your sketch.
-          </Error>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* Step 2 — Birth details */
-function StepTwo({
-  form,
-  on,
-  mark,
-  touched,
-}: {
-  form: FormState;
-  on: (k: keyof FormState) => any;
-  mark: (k: keyof FormState) => void;
-  touched: Record<string, boolean>;
-}) {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold text-pink-800">Birth details</h2>
-
-      <div className="grid gap-3 sm:grid-cols-3">
-        <div className="grid gap-1.5">
-          <Label req>Time</Label>
-          <Input
-            value={form.birthTime}
-            onChange={on("birthTime")}
-            onBlur={() => mark("birthTime")}
-            placeholder="03:45 AM"
-          />
-          <Error show={touched.birthTime && form.birthTime.trim().length < 3}>
-            Add your birth time (approx. is fine).
-          </Error>
-        </div>
-
-        <div className="grid gap-1.5 sm:col-span-2">
-          <Label req>Place</Label>
-          <Input
-            value={form.birthPlace}
-            onChange={on("birthPlace")}
-            onBlur={() => mark("birthPlace")}
-            placeholder="City, Country"
-          />
-          <Error show={touched.birthPlace && form.birthPlace.trim().length < 2}>
-            Add your birth place.
-          </Error>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* Step 3 — Preferences & goal */
-function StepThree({
-  form,
-  on,
-}: {
-  form: FormState;
-  on: (k: keyof FormState) => any;
-}) {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold text-pink-800">A few preferences</h2>
-
-      <div className="grid gap-3">
-        <div className="grid gap-1.5">
-          <Label>Gender</Label>
-          <select
-            value={form.gender}
-            onChange={on("gender")}
-            className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2.5 text-sm outline-none focus:border-pink-300"
-          >
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-            <option value="other">Other</option>
-            <option value="prefer_not_to_say">Prefer not to say</option>
-          </select>
-        </div>
-
-        <div className="grid gap-1.5">
-          <Label>Your current goal</Label>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {([
-              { k: "curious", label: "Just curious" },
-              { k: "serious_relationship", label: "Serious love" },
-              { k: "closure", label: "Closure/clarity" },
-              { k: "fun", label: "Fun gift" },
-            ] as const).map((g) => (
-              <button
-                key={g.k}
-                type="button"
-                onClick={() => on("goal")({ target: { value: g.k } } as any)}
-                className={
-                  "rounded-xl border px-3 py-2 text-sm " +
-                  (form.goal === g.k
-                    ? "border-pink-400 bg-pink-50 font-semibold text-pink-700"
-                    : "border-zinc-200 bg-white text-zinc-700")
-                }
-              >
-                {g.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid gap-1.5">
-          <Label>Anything we should know?</Label>
-          <textarea
-            value={form.notes}
-            onChange={on("notes")}
-            rows={3}
-            placeholder="Optional notes for our artist…"
-            className="w-full resize-none rounded-lg border border-zinc-200 bg-white/90 px-3 py-2.5 text-sm outline-none focus:border-pink-300"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* Step 4 — Summary & consent */
-function StepFour({
-  form,
-  on,
-}: {
-  form: FormState;
-  on: (k: keyof FormState) => any;
-}) {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold text-pink-800">Review & consent</h2>
-
-      <div className="rounded-xl border border-zinc-200 bg-white/80 p-4 text-sm text-zinc-800">
-        <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <Row label="Name" value={form.fullName || "—"} />
-          <Row label="Email" value={form.email || "—"} />
-          <Row label="WhatsApp" value={form.whatsapp || "—"} />
-          <Row label="Birth Date" value={form.birthDate || "—"} />
-          <Row label="Birth Time" value={form.birthTime || "—"} />
-          <Row label="Birth Place" value={form.birthPlace || "—"} />
-          <Row label="Gender" value={pretty(form.gender)} />
-          <Row label="Goal" value={pretty(form.goal)} />
-        </dl>
-        {form.notes?.trim() && (
-          <div className="mt-2">
-            <span className="text-xs font-semibold text-zinc-500">Notes:</span>
-            <p className="mt-1 whitespace-pre-wrap">{form.notes}</p>
-          </div>
-        )}
-      </div>
-
-      <label className="flex items-start gap-3 text-sm text-zinc-800">
-        <input
-          type="checkbox"
-          checked={form.consent}
-          onChange={on("consent")}
-          className="mt-1 h-5 w-5 rounded border-pink-400 text-pink-600 focus:ring-pink-300"
-        />
-        <span>
-          I confirm the details above are correct and consent to receive my
-          personalized soulmate sketch and love reading via Email/WhatsApp.
-        </span>
-      </label>
-    </div>
-  );
-}
+/* ---------------- helpers ---------------- */
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
@@ -486,7 +406,5 @@ function Row({ label, value }: { label: string; value: string }) {
 }
 
 function pretty(v: string) {
-  return v
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (m) => m.toUpperCase());
+  return v.replace(/_/g, " ").replace(/\b\w/g, (m) => m.toUpperCase());
 }

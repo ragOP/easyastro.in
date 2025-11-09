@@ -18,17 +18,15 @@ import {
   ChevronUp,
   Plus,
 } from "lucide-react";
+import StickyBuyBar from "./sticky";
 
 /**
- * Cart Page — Easy Astro (UX-optimized)
- * - Compact form (short first screen)
- * - Bump offers: minimal rows by default (less height), expand for details
- * - Multiple “Buy Now” CTAs placed strategically:
- *   1) Quick CTA under product preview (above fold)
- *   2) After essentials form (for fast users)
- *   3) In the right summary card (desktop)
- *   4) Full-width bottom CTA (mobile & desktop)
- * - Removed sticky bottom bar as requested
+ * Cart Page — compact, mobile-first
+ * Changes per request:
+ * 1) Mobile product image smaller + three badges positioned around it on mobile, inline row on desktop.
+ * 2) Sticky buy-now bar with timer (bottom) added.
+ * 3) Additional birth details completely hidden (removed).
+ * 4) Bundle/bumps remain here; for "bundle below hero", mount your bundle component under the Hero on home page.
  */
 
 type Bump = {
@@ -38,7 +36,6 @@ type Bump = {
   price: number;
   compareAt?: number;
   features?: string[];
-  defaultOpen?: boolean;
 };
 
 const PRODUCT = {
@@ -106,20 +103,15 @@ export default function CartPage() {
   const router = useRouter();
   const { mmss } = useCountdown(10 * 60);
 
-  // Essentials-first form
-  const [showMore, setShowMore] = useState(false);
+  // Essentials-only form (no extra birth details)
   const [form, setForm] = useState({
     fullName: "",
     gender: "female",
     email: "",
     whatsapp: "",
-    birthDate: "",
-    birthTime: "",
-    birthPlace: "",
-    notes: "",
   });
   const on = (k: keyof typeof form) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
       setForm((f) => ({ ...f, [k]: e.target.value }));
 
   // Bumps
@@ -142,7 +134,9 @@ export default function CartPage() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#fee9f2] via-[#fdd7e8]/75 to-[#fbcadb]" />
       <div className="absolute inset-0 opacity-45 [background:repeating-linear-gradient(110deg,rgba(255,255,255,.58)_0_8px,transparent_8px_16px)]" />
 
-      <div className="relative mx-auto w-full max-w-[980px] px-4 sm:px-6 pb-12 pt-6 sm:pt-10">
+       <StickyBuyBar />
+
+      <div className="relative mx-auto w-full max-w-[980px] px-4 sm:px-6 pb-24 pt-6 sm:pt-10">
         {/* Top chip */}
         <div className="mb-5 text-center sm:mb-8">
           <span className="inline-flex items-center gap-2 rounded-full border border-pink-200/60 bg-pink-100/40 px-3 py-1 text-xs font-medium text-pink-600">
@@ -155,25 +149,51 @@ export default function CartPage() {
         <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
           {/* LEFT */}
           <section className="space-y-6">
-            {/* Product Preview */}
+            {/* Product Preview (mobile image smaller + 3 badges positioned around on mobile, row on desktop) */}
             <Card className="overflow-hidden border-pink-200/60 bg-white/95 backdrop-blur">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg sm:text-xl">{PRODUCT.title}</CardTitle>
               </CardHeader>
               <CardContent className="grid gap-4 sm:grid-cols-[220px_1fr]">
-                <div className="relative">
-                  <Image
-                    src={PRODUCT.img}
-                    alt="Soulmate Sketch preview"
-                    width={800}
-                    height={800}
-                    className="h-auto w-full rounded-xl border border-white/60 object-cover shadow-sm"
-                    priority
-                  />
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-pink-300/60 bg-pink-100/70 px-3 py-1 text-[11px] font-semibold text-pink-700">
+                <div className="relative mx-auto w-full max-w-[220px] sm:max-w-none">
+                  <div className="relative rounded-xl border border-white/60 bg-white/80 p-1 shadow-sm">
+                    <div className="overflow-hidden rounded-lg">
+                      <Image
+                        src={PRODUCT.img}
+                        alt="Soulmate Sketch preview"
+                        width={800}
+                        height={800}
+                        className="h-auto w-full object-cover"
+                        priority
+                      />
+                    </div>
+                  </div>
+
+                  {/* MOBILE badges positioned left/right/bottom around image */}
+                  <div className="sm:hidden">
+                    <div className="pointer-events-none absolute -left-2 top-2">
+                      <Badge text="Personalized" />
+                    </div>
+                    <div className="pointer-events-none absolute -right-2 top-1/2 -translate-y-1/2">
+                      <Badge text="Free Love Report" />
+                    </div>
+                    <div className="pointer-events-none absolute -left-2 bottom-2">
+                      <Badge text="Hand-drawn" />
+                    </div>
+                  </div>
+
+                  {/* Desktop row */}
+                  <div className="mt-2 hidden items-center gap-2 sm:flex">
+                    <Badge text="Personalized" />
+                    <Badge text="Hand-drawn" />
+                    <Badge text="Free Love Report" />
+                  </div>
+
+                  <div className="mt-1 text-center text-[11px] text-pink-900/70">
                     Sample illustration • Yours is personalized
                   </div>
                 </div>
+
                 <ul className="mt-1 space-y-2 text-sm text-zinc-700">
                   {PRODUCT.includes.map((i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -189,8 +209,28 @@ export default function CartPage() {
                 </div>
               </CardContent>
             </Card>
-
-            {/* FORM — compact essentials */}
+ <Card className="border-pink-200/70 bg-white/96 backdrop-blur">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-pink-700">
+                  <span className="h-2 w-2 rounded-full bg-pink-500 inline-block" />
+                  Enhance Your Love Journey
+                </CardTitle>
+                <p className="text-sm text-pink-700/80">
+                  Optional add-ons. Tap “Add” to include.
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {BUMPS.map((b) => (
+                  <CompactBumpRow
+                    key={b.id}
+                    bump={b}
+                    checked={!!selectedBumps[b.id]}
+                    onToggle={() => toggleBump(b.id)}
+                  />
+                ))}
+              </CardContent>
+            </Card>
+            {/* FORM — essentials only (no additional birth details) */}
             <Card className="border-pink-200/60 bg-white/95 backdrop-blur">
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg sm:text-xl">Your Details</CardTitle>
@@ -214,7 +254,7 @@ export default function CartPage() {
                       <label className="text-[13px] font-medium text-zinc-800">Gender</label>
                       <select
                         value={form.gender}
-                        onChange={(e) => setForm((f) => ({ ...f, gender: e.target.value }))}
+                        onChange={on("gender")}
                         className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
                       >
                         <option value="female">Female</option>
@@ -252,7 +292,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {/* Secondary CTA right after essentials */}
+                {/* CTA right after essentials */}
                 <div className="pt-1">
                   <Button
                     onClick={proceed}
@@ -262,88 +302,11 @@ export default function CartPage() {
                     Buy Now — ₹{PRODUCT.price}
                   </Button>
                 </div>
-
-                {/* Expand Optional */}
-                <div className="rounded-lg border border-zinc-200/70 bg-zinc-50/60">
-                  <button
-                    type="button"
-                    onClick={() => setShowMore((s) => !s)}
-                    className="flex w-full items-center justify-between px-3 py-2 text-[13px] font-medium text-zinc-800"
-                  >
-                    Additional birth details (optional)
-                    {showMore ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                  </button>
-
-                  {showMore && (
-                    <div className="grid gap-3 px-3 pb-3">
-                      <div className="grid gap-3 sm:grid-cols-3">
-                        <div className="grid gap-1.5">
-                          <label className="text-[12px] text-zinc-700">Date of Birth</label>
-                          <input
-                            value={form.birthDate}
-                            onChange={on("birthDate")}
-                            placeholder="26/05/1999"
-                            className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
-                          />
-                        </div>
-                        <div className="grid gap-1.5">
-                          <label className="text-[12px] text-zinc-700">Time of Birth</label>
-                          <input
-                            value={form.birthTime}
-                            onChange={on("birthTime")}
-                            placeholder="03:45 AM"
-                            className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
-                          />
-                        </div>
-                        <div className="grid gap-1.5">
-                          <label className="text-[12px] text-zinc-700">Place of Birth</label>
-                          <input
-                            value={form.birthPlace}
-                            onChange={on("birthPlace")}
-                            placeholder="City, Country"
-                            className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid gap-1.5">
-                        <label className="text-[12px] text-zinc-700">Special Notes</label>
-                        <textarea
-                          value={form.notes}
-                          onChange={on("notes")}
-                          rows={3}
-                          placeholder="Anything you'd like our artist to focus on…"
-                          className="w-full resize-none rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
               </CardContent>
             </Card>
 
-            {/* BUMP OFFERS — compact rows */}
-            <Card className="border-pink-200/70 bg-white/96 backdrop-blur">
-              <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-lg sm:text-xl text-pink-700">
-                  <span className="h-2 w-2 rounded-full bg-pink-500 inline-block" />
-                  Enhance Your Love Journey
-                </CardTitle>
-                <p className="text-sm text-pink-700/80">
-                  Optional add-ons. Tap “Add to order” to include.
-                </p>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {BUMPS.map((b) => (
-                  <CompactBumpRow
-                    key={b.id}
-                    bump={b}
-                    checked={!!selectedBumps[b.id]}
-                    onToggle={() => toggleBump(b.id)}
-                  />
-                ))}
-              </CardContent>
-            </Card>
+            {/* BUMP OFFERS — compact/mobile-first */}
+           
 
             {/* Bottom full-width CTA */}
             <div className="mt-2">
@@ -378,8 +341,16 @@ export default function CartPage() {
   );
 }
 
-/* ---------- Reusable CTA ---------- */
+/* ---------- Small badge used around image ---------- */
+function Badge({ text }: { text: string }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-pink-300/60 bg-pink-50/80 px-3 py-1 text-[11px] font-semibold text-pink-700 backdrop-blur">
+      {text}
+    </span>
+  );
+}
 
+/* ---------- Reusable CTA ---------- */
 function PrimaryCTA({
   price,
   compareAt,
@@ -420,7 +391,6 @@ function PrimaryCTA({
 }
 
 /* ---------- Summary & Assure ---------- */
-
 function SummaryCard({
   price,
   compareAt,
@@ -519,7 +489,6 @@ function AssureCard() {
 }
 
 /* ---------- Compact Bump Row ---------- */
-
 function CompactBumpRow({
   bump,
   checked,
@@ -534,7 +503,7 @@ function CompactBumpRow({
   return (
     <div className="rounded-xl border border-pink-200/70 bg-pink-50/40 p-3 sm:p-4">
       <div className="flex items-start justify-between gap-3">
-        {/* Left: checkbox + title + blurb (1–2 lines) */}
+        {/* Left */}
         <div className="flex min-w-0 flex-1 items-start gap-3">
           <input
             id={`b-${bump.id}`}
@@ -553,7 +522,8 @@ function CompactBumpRow({
             <p className="mt-0.5 line-clamp-2 text-[13px] text-pink-900/85">
               {bump.blurb}
             </p>
-            {/* Chips preview of features (first 2) */}
+
+            {/* small chips preview (first 2) */}
             {bump.features?.length ? (
               <div className="mt-2 hidden flex-wrap gap-1.5 sm:flex">
                 {bump.features.slice(0, 2).map((f) => (
@@ -569,7 +539,7 @@ function CompactBumpRow({
           </div>
         </div>
 
-        {/* Right: price + “Add to order” */}
+        {/* Right */}
         <div className="shrink-0 text-right">
           <div className="text-sm font-extrabold text-pink-700 sm:text-base">₹{bump.price}</div>
           {!!bump.compareAt && (
@@ -586,7 +556,7 @@ function CompactBumpRow({
         </div>
       </div>
 
-      {/* Expand for full features (kept lightweight) */}
+      {/* Expand features */}
       {bump.features?.length ? (
         <div className="mt-2">
           {open ? (
