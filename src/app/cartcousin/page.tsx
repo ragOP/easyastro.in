@@ -82,7 +82,7 @@ function useCountdown(seconds: number) {
   }, []);
   const mmss = useMemo(() => {
     const m = String(Math.floor(left / 60)).padStart(2, "0");
-    const s = String(left % 60)).padStart(2, "0");
+    const s = String(left % 60).padStart(2, "0");
     return `${m}:${s}`;
   }, [left]);
   return { left, mmss };
