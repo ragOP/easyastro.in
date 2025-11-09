@@ -15,8 +15,11 @@ import {
   Phone,
   Mail,
   Plus,
+  ChevronDown,
 } from "lucide-react";
 import StickyBuyBar from "./sticky";
+
+/** ───────────────────────── Types & Data ───────────────────────── */
 
 type Bump = {
   id: string;
@@ -74,6 +77,8 @@ const BUMPS: Bump[] = [
   },
 ];
 
+/** ───────────────────────── Hooks ───────────────────────── */
+
 function useCountdown(seconds: number) {
   const [left, setLeft] = useState(seconds);
   useEffect(() => {
@@ -88,10 +93,13 @@ function useCountdown(seconds: number) {
   return { left, mmss };
 }
 
+/** ───────────────────────── Page ───────────────────────── */
+
 export default function CartPage() {
   const router = useRouter();
   const { mmss } = useCountdown(10 * 60);
 
+  // Essentials form
   const [form, setForm] = useState({
     fullName: "",
     gender: "female",
@@ -102,6 +110,7 @@ export default function CartPage() {
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
       setForm((f) => ({ ...f, [k]: e.target.value }));
 
+  // Bumps
   const [selectedBumps, setSelectedBumps] = useState<Record<string, boolean>>({});
   const toggleBump = (id: string) => setSelectedBumps((s) => ({ ...s, [id]: !s[id] }));
   const bumpsTotal = useMemo(
@@ -110,20 +119,43 @@ export default function CartPage() {
   );
   const total = PRODUCT.price + bumpsTotal;
 
+  // Proceed
   const proceed = () => {
     console.log("Order Payload", { productId: PRODUCT.id, form, bumps: selectedBumps, total });
     router.push("/checkout");
   };
 
+  // Listen for “reveal-form” (from sticky bar)
+  const [formGlow, setFormGlow] = useState(false);
+  useEffect(() => {
+    const handler = () => {
+      setFormGlow(true);
+      setTimeout(() => setFormGlow(false), 1400);
+    };
+    document.addEventListener("reveal-form", handler);
+    return () => document.removeEventListener("reveal-form", handler);
+  }, []);
+
   return (
-    <main className="relative min-h-screen overflow-x-hidden">
+    <main className="relative min-h-screen overflow-x-hidden scroll-smooth">
       {/* BG */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#fee9f2] via-[#fdd7e8]/75 to-[#fbcadb]" />
       <div className="absolute inset-0 opacity-45 [background:repeating-linear-gradient(110deg,rgba(255,255,255,.58)_0_8px,transparent_8px_16px)]" />
 
-      <StickyBuyBar />
+      {/* Sticky CTA (Fill your details) */}
+      <StickyBuyBar
+        price={PRODUCT.price}
+        compareAt={PRODUCT.compareAt}
+        mmss={mmss}
+        total={total}
+        scrollTargetId="details-form"
+      />
 
-      <div className="relative mx-auto w-full max-w-[980px] px-4 sm:px-6 pb-24 pt-6 sm:pt-10">
+      {/* Scroll cue */}
+      <ScrollCue />
+
+      <div className="relative mx-auto w-full max-w-[980px] px-4 sm:px-6 pb-28 pt-6 sm:pt-10">
+        {/* Top chip */}
         <div className="mb-5 text-center sm:mb-8">
           <span className="inline-flex items-center gap-2 rounded-full border border-pink-200/60 bg-pink-100/40 px-3 py-1 text-xs font-medium text-pink-600">
             <Sparkles className="h-4 w-4" />
@@ -134,7 +166,7 @@ export default function CartPage() {
         <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
           {/* LEFT */}
           <section className="space-y-6">
-            {/* PRODUCT PREVIEW — COMPACT: features column LEFT, small image RIGHT (even on mobile) */}
+            {/* PRODUCT PREVIEW — features left, compact image right */}
             <Card className="overflow-hidden border-pink-200/60 bg-white/95 backdrop-blur">
               <CardHeader className="pb-1">
                 <CardTitle className="text-sm sm:text-base font-semibold truncate">
@@ -142,9 +174,8 @@ export default function CartPage() {
                 </CardTitle>
               </CardHeader>
 
-              {/* Two columns at all sizes: [features | small image] */}
               <CardContent className="grid items-start gap-3 [grid-template-columns:minmax(0,1fr)_140px] sm:[grid-template-columns:minmax(0,1fr)_200px]">
-                {/* LEFT: three lines (compact) */}
+                {/* LEFT: three lines */}
                 <div className="pr-1">
                   <ul className="space-y-2">
                     {PRODUCT.includes.map((i) => (
@@ -157,15 +188,6 @@ export default function CartPage() {
                       </li>
                     ))}
                   </ul>
-
-                  {/* <div className="mt-3">
-                    <PrimaryCTA
-                      price={PRODUCT.price}
-                      compareAt={PRODUCT.compareAt}
-                      mmss={mmss}
-                      onClick={proceed}
-                    />
-                  </div> */}
                 </div>
 
                 {/* RIGHT: small image */}
@@ -196,9 +218,7 @@ export default function CartPage() {
                   <span className="h-2 w-2 rounded-full bg-pink-500 inline-block" />
                   Enhance Your Love Journey
                 </CardTitle>
-                <p className="text-sm text-pink-700/80">
-                  Optional add-ons. Tap “Add” to include.
-                </p>
+                <p className="text-sm text-pink-700/80">Optional add-ons. Tap “Add” to include.</p>
               </CardHeader>
               <CardContent className="space-y-4">
                 {BUMPS.map((b) => (
@@ -212,8 +232,14 @@ export default function CartPage() {
               </CardContent>
             </Card>
 
-            {/* FORM — essentials only */}
-            <Card className="border-pink-200/60 bg-white/95 backdrop-blur">
+            {/* FORM — essentials only (scroll target) */}
+            <Card
+              id="details-form"
+              className={[
+                "border-pink-200/60 bg-white/95 backdrop-blur transition-all",
+                formGlow ? "ring-2 ring-pink-400 shadow-[0_0_0_6px_rgba(244,114,182,0.18)]" : "",
+              ].join(" ")}
+            >
               <CardHeader className="pb-2">
                 <CardTitle className="text-lg sm:text-xl">Your Details</CardTitle>
               </CardHeader>
@@ -275,23 +301,16 @@ export default function CartPage() {
                 </div>
 
                 <div className="pt-1">
-                  <Button
-                    onClick={proceed}
-                    size="lg"
-                    className="w-full rounded-xl py-5 text-base font-bold"
-                  >
+                  <Button onClick={proceed} size="lg" className="w-full rounded-xl py-5 text-base font-bold">
                     Buy Now — ₹{PRODUCT.price}
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
+            {/* Bottom CTA */}
             <div className="mt-2">
-              <Button
-                onClick={proceed}
-                size="lg"
-                className="w-full rounded-xl py-5 text-base font-extrabold"
-              >
+              <Button onClick={proceed} size="lg" className="w-full rounded-xl py-5 text-base font-extrabold">
                 Buy Now — Pay ₹{total}
               </Button>
               <div className="mt-2 flex items-center justify-center gap-2 text-xs text-zinc-600">
@@ -318,52 +337,7 @@ export default function CartPage() {
   );
 }
 
-function Badge({ text }: { text: string }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-pink-300/60 bg-pink-50/80 px-3 py-1 text-[11px] font-semibold text-pink-700 backdrop-blur">
-      {text}
-    </span>
-  );
-}
-
-function PrimaryCTA({
-  price,
-  compareAt,
-  mmss,
-  onClick,
-}: {
-  price: number;
-  compareAt?: number;
-  mmss: string;
-  onClick: () => void;
-}) {
-  return (
-    <div className="rounded-xl border border-zinc-200 bg-white/80 p-3 sm:p-4">
-      <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <div className="text-right">
-            <div className="text-xl font-extrabold text-pink-600 sm:text-2xl">₹{price}</div>
-            {!!compareAt && (
-              <div className="text-xs text-zinc-500 line-through">₹{compareAt}</div>
-            )}
-          </div>
-          <div className="hidden h-8 w-px bg-zinc-200 sm:block" />
-          <div className="flex items-center gap-2 rounded-lg bg-pink-50 px-2.5 py-1.5 text-sm text-pink-700">
-            <Star className="h-4 w-4" />
-            Limited-time special • Ends in <b className="ml-1">{mmss}</b>
-          </div>
-        </div>
-        <Button
-          onClick={onClick}
-          size="lg"
-          className="w-full rounded-xl py-5 text-base font-bold sm:w-auto"
-        >
-          Buy Now
-        </Button>
-      </div>
-    </div>
-  );
-}
+/** ───────────────────────── Small UI helpers ───────────────────────── */
 
 function SummaryCard({
   price,
@@ -389,9 +363,7 @@ function SummaryCard({
             <span className="text-sm text-zinc-500">Today’s Price</span>
             <div className="text-right">
               <div className="text-2xl font-extrabold text-pink-600">₹{price}</div>
-              {!!compareAt && (
-                <div className="text-xs text-zinc-500 line-through">₹{compareAt}</div>
-              )}
+              {!!compareAt && <div className="text-xs text-zinc-500 line-through">₹{compareAt}</div>}
             </div>
           </div>
           <div className="mt-3 flex items-center justify-between rounded-lg bg-pink-50 px-3 py-2 text-sm text-pink-700">
@@ -485,9 +457,7 @@ function CompactBumpRow({
             >
               {bump.title}
             </label>
-            <p className="mt-0.5 line-clamp-2 text-[13px] text-pink-900/85">
-              {bump.blurb}
-            </p>
+            <p className="mt-0.5 line-clamp-2 text-[13px] text-pink-900/85">{bump.blurb}</p>
             {bump.features?.length ? (
               <div className="mt-2 hidden flex-wrap gap-1.5 sm:flex">
                 {bump.features.slice(0, 2).map((f) => (
@@ -550,6 +520,27 @@ function CompactBumpRow({
           )}
         </div>
       ) : null}
+    </div>
+  );
+}
+
+/** Scroll cue that fades out after user scrolls a bit */
+function ScrollCue() {
+  const [visible, setVisible] = useState(true);
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY < 120);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  if (!visible) return null;
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-[76px] z-30 flex justify-center">
+      <div className="flex items-center gap-2 rounded-full border border-pink-300/60 bg-pink-50/80 px-3 py-1 text-xs font-medium text-pink-700 shadow-sm">
+        <span className="animate-bounce">
+          <ChevronDown className="h-4 w-4" />
+        </span>
+        Scroll to fill details & complete order
+      </div>
     </div>
   );
 }
