@@ -18,6 +18,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import StickyBuyBar from "./sticky";
+import { BACKEND_URL } from "@/lib/backendUrl";
 
 /** ───────────────────────── Types & Data ───────────────────────── */
 
@@ -105,6 +106,8 @@ export default function CartPage() {
     gender: "female",
     email: "",
     whatsapp: "",
+    dateOfBirth: "",
+    placeOfBirth: "",
   });
   const on = (k: keyof typeof form) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -119,13 +122,35 @@ export default function CartPage() {
   );
   const total = PRODUCT.price + bumpsTotal;
 
-  // Proceed
-  const proceed = () => {
-    console.log("Order Payload", { productId: PRODUCT.id, form, bumps: selectedBumps, total });
-    router.push("/checkout");
+  // Checkout state
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [finalAmount, setFinalAmount] = useState(total);
+
+  // Update finalAmount when total changes
+  useEffect(() => {
+    setFinalAmount(total);
+  }, [total]);
+
+  // Load Razorpay script
+  const loadScript = (src: string) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
   };
 
-  // Listen for “reveal-form” (from sticky bar)
+  useEffect(() => {
+    loadScript("https://checkout.razorpay.com/v1/checkout.js").then((result) => {
+      if (result) {
+        console.log("Razorpay script loaded successfully");
+      }
+    });
+  }, []);
+
+  // Listen for "reveal-form" (from sticky bar)
   const [formGlow, setFormGlow] = useState(false);
   useEffect(() => {
     const handler = () => {
@@ -135,6 +160,171 @@ export default function CartPage() {
     document.addEventListener("reveal-form", handler);
     return () => document.removeEventListener("reveal-form", handler);
   }, []);
+
+  // Handle checkout with all APIs
+  const handleCheckout = async () => {
+    try {
+      setIsCheckingOut(true);
+      
+      // Get selected bumps as additional products
+      const additionalProducts = BUMPS.filter((b) => selectedBumps[b.id]).map((b) => b.title);
+
+      // 1) Create abandoned order first
+      const abdOrderResponse = await fetch(
+        `${BACKEND_URL}/api/lander11/create-order-abd`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: finalAmount,
+            name: form.fullName,
+            email: form.email,
+            phone: form.whatsapp,
+            dateOfBirth: form.dateOfBirth,
+            placeOfBirth: form.placeOfBirth,
+            gender: form.gender,
+            additionalProducts: additionalProducts,
+          }),
+        }
+      );
+      const abdOrderResult = await abdOrderResponse.json();
+      if (!abdOrderResult.success) {
+        throw new Error("Failed to create payment order");
+      }
+      const abdOrderId = abdOrderResult.data?._id;
+      if (abdOrderId) {
+        console.log("Abandoned Order Created with Id", abdOrderId);
+      }
+
+      // 2) Create Razorpay order
+      const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: finalAmount,
+        }),
+      });
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error("Failed to create payment order");
+      }
+      const data = result.data;
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+        amount: finalAmount,
+        currency: "INR",
+        name: "AstraSoul",
+        description: "Soulmate Sketch Order Payment",
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          try {
+            // Create order in database
+            const orderResponse = await fetch(
+              `${BACKEND_URL}/api/lander11/create-order`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  amount: finalAmount,
+                  razorpayOrderId: response.razorpay_order_id,
+                  razorpayPaymentId: response.razorpay_payment_id,
+                  razorpaySignature: response.razorpay_signature,
+                  name: form.fullName,
+                  email: form.email,
+                  phone: form.whatsapp,
+                  dateOfBirth: form.dateOfBirth,
+                  placeOfBirth: form.placeOfBirth,
+                  gender: form.gender,
+                  orderId: data.orderId,
+                  additionalProducts: additionalProducts,
+                }),
+              }
+            );
+            const orderResult = await orderResponse.json();
+            if (orderResult.success) {
+              sessionStorage.setItem("orderId", data.orderId);
+              sessionStorage.setItem("orderAmount", finalAmount.toString());
+              
+              // Send campaign notification if phone number is present
+              if (form.whatsapp) {
+                try {
+                  await fetch('https://backend.aisensy.com/campaign/t1/api/v2', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGY5YTMyZDQ3MzczMGU3MzNhZTZiMCIsIm5hbWUiOiJTcGVrbGlvIE1lZGlhIDIxMzQiLCJhcHBOYW1lIjoiQWlTZW5zeSIsImNsaWVudElkIjoiNjhkZjlhMzJkNDczNzMwZTczM2FlNmFiIiwiYWN0aXZlUGxhbiI6IkZSRUVfRk9SRVZFUiIsImlhdCI6MTc1OTQ4NDQ2Nn0.D5rCrsjtikR4N68HNS7ZOpNfzTSTuN9otxZ9-UBvi1g",
+                      "campaignName": "28oct",
+                      "destination": form.whatsapp,
+                      "userName": "Speklio Media 2134",
+                      "templateParams": [],
+                      "source": "new-landing-page form",
+                      "media": {},
+                      "buttons": [],
+                      "carouselCards": [],
+                      "location": {},
+                      "attributes": {},
+                      "paramsFallbackValue": {}
+                    })
+                  });
+                  console.log("Campaign notification sent successfully");
+                } catch (error) {
+                  console.error("Failed to send campaign notification:", error);
+                  // Don't block the flow if campaign notification fails
+                }
+              }
+              
+              // Delete abandoned order if order is created successfully
+              const deleteAbdOrder = await fetch(
+                `${BACKEND_URL}/api/lander11/delete-order-abd`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ email: form.email }),
+                }
+              );
+              const deleteAbdOrderResult = await deleteAbdOrder.json();
+              console.log("Abandoned Order Deleted", deleteAbdOrderResult);
+              window.location.href = "/order-confirmation";
+            } else {
+              alert(
+                "Payment successful but order creation failed. Please contact support."
+              );
+            }
+          } catch (error) {
+            console.error("Error creating order:", error);
+            alert(
+              "Payment successful but order creation failed. Please contact support."
+            );
+          }
+        },
+        prefill: {
+          name: form.fullName,
+          email: form.email,
+          contact: form.whatsapp,
+        },
+        theme: {
+          color: "#ec4899",
+        },
+      };
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Payment failed. Please try again.");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
   return (
     <main className="relative min-h-screen overflow-x-hidden scroll-smooth">
@@ -298,11 +488,41 @@ export default function CartPage() {
                       className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
                     />
                   </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="grid gap-1.5">
+                      <label className="text-[13px] font-medium text-zinc-800">
+                        Date of Birth
+                      </label>
+                      <input
+                        value={form.dateOfBirth}
+                        onChange={on("dateOfBirth")}
+                        type="date"
+                        className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                      />
+                    </div>
+                    <div className="grid gap-1.5">
+                      <label className="text-[13px] font-medium text-zinc-800">
+                        Place of Birth
+                      </label>
+                      <input
+                        value={form.placeOfBirth}
+                        onChange={on("placeOfBirth")}
+                        placeholder="City, State"
+                        className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 text-sm outline-none focus:border-pink-300"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="pt-1">
-                  <Button onClick={proceed} size="lg" className="w-full rounded-xl py-5 text-base font-bold">
-                    Buy Now — ₹{PRODUCT.price}
+                  <Button 
+                    onClick={handleCheckout} 
+                    size="lg" 
+                    className="w-full rounded-xl py-5 text-base font-bold"
+                    disabled={isCheckingOut}
+                  >
+                    {isCheckingOut ? "Processing..." : `Buy Now — ₹${PRODUCT.price}`}
                   </Button>
                 </div>
               </CardContent>
@@ -310,8 +530,13 @@ export default function CartPage() {
 
             {/* Bottom CTA */}
             <div className="mt-2">
-              <Button onClick={proceed} size="lg" className="w-full rounded-xl py-5 text-base font-extrabold">
-                Buy Now — Pay ₹{total}
+              <Button 
+                onClick={handleCheckout} 
+                size="lg" 
+                className="w-full rounded-xl py-5 text-base font-extrabold"
+                disabled={isCheckingOut}
+              >
+                {isCheckingOut ? "Processing..." : `Buy Now — Pay ₹${total}`}
               </Button>
               <div className="mt-2 flex items-center justify-center gap-2 text-xs text-zinc-600">
                 <ShieldCheck className="h-4 w-4 text-pink-600" />
@@ -327,7 +552,7 @@ export default function CartPage() {
               compareAt={PRODUCT.compareAt}
               mmss={mmss}
               total={total}
-              onPay={proceed}
+              onPay={handleCheckout}
             />
             <AssureCard />
           </aside>
@@ -394,7 +619,12 @@ function SummaryCard({
           </div>
         </div>
 
-        <Button size="lg" className="w-full rounded-xl py-6 text-base font-bold" onClick={onPay}>
+        <Button 
+          size="lg" 
+          className="w-full rounded-xl py-6 text-base font-bold" 
+          onClick={onPay}
+          disabled={false}
+        >
           Complete Order Securely
         </Button>
 
