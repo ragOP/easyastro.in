@@ -22,6 +22,7 @@ import { BACKEND_URL } from "@/lib/backendUrl";
 
 // ⬇️ ADD: import your Gallery section
 import GallerySection from "../../components/sections/gallery";
+import TestimonialsSection from "@/components/sections/testimonials";
 
 /** ───────────────────────── Types & Data ───────────────────────── */
 
@@ -622,6 +623,9 @@ export default function CartPage() {
         {/* ⬇️ GALLERY SECTION BELOW (full width inside the same container) */}
         <div className="mt-10">
           <GallerySection isCartPage />
+        </div>
+          <div className="mt-10">
+          <TestimonialsSection isCartPage={true} />
         </div>
       </div>
     </main>
