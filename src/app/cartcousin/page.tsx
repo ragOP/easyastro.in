@@ -20,6 +20,9 @@ import {
 import StickyBuyBar from "./sticky";
 import { BACKEND_URL } from "@/lib/backendUrl";
 
+// ⬇️ ADD: import your Gallery section
+import GallerySection from "../../components/sections/gallery";
+
 /** ───────────────────────── Types & Data ───────────────────────── */
 
 type Bump = {
@@ -272,7 +275,6 @@ export default function CartPage() {
                   console.log("Campaign notification sent successfully");
                 } catch (error) {
                   console.error("Failed to send campaign notification:", error);
-                  // Don't block the flow if campaign notification fails
                 }
               }
 
@@ -423,16 +425,14 @@ export default function CartPage() {
         <div className="grid gap-7 lg:grid-cols-[1fr_380px]">
           {/* LEFT */}
           <section className="space-y-7">
-            {/* PRODUCT PREVIEW — features left, compact image right */}
+            {/* PRODUCT PREVIEW */}
             <Card className="overflow-hidden border-pink-200/60 bg-white/95 backdrop-blur">
               <CardHeader className="pb-1.5">
                 <CardTitle className="text-base sm:text-lg font-bold truncate text-zinc-900">
                   {PRODUCT.title}
                 </CardTitle>
               </CardHeader>
-
               <CardContent className="grid items-start gap-3 [grid-template-columns:minmax(0,1fr)_150px] sm:[grid-template-columns:minmax(0,1fr)_220px]">
-                {/* LEFT: three lines */}
                 <div className="pr-1">
                   <ul className="space-y-2.5">
                     {PRODUCT.includes.map((i) => (
@@ -446,8 +446,6 @@ export default function CartPage() {
                     ))}
                   </ul>
                 </div>
-
-                {/* RIGHT: small image */}
                 <div className="justify-self-end w-[150px] sm:w-[220px]">
                   <div className="rounded-xl border border-white/60 bg-white/80 p-1.5 shadow-sm">
                     <div className="overflow-hidden rounded-lg">
@@ -468,7 +466,7 @@ export default function CartPage() {
               </CardContent>
             </Card>
 
-            {/* BUMPS (bundle) */}
+            {/* BUMPS */}
             <Card className="border-pink-200/70 bg-white/96 backdrop-blur">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-xl sm:text-[22px] text-pink-700 font-extrabold">
@@ -491,7 +489,7 @@ export default function CartPage() {
               </CardContent>
             </Card>
 
-            {/* FORM — essentials only (scroll target) */}
+            {/* FORM */}
             <Card
               id="details-form"
               className={[
@@ -571,6 +569,8 @@ export default function CartPage() {
                         value={form.dateOfBirth}
                         onChange={on("dateOfBirth")}
                         type="date"
+                           placeholder="YYYY-MM-DD"
+                     required
                         className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 text-[15px] outline-none focus:border-pink-300"
                       />
                     </div>
@@ -581,7 +581,7 @@ export default function CartPage() {
                       <input
                         value={form.placeOfBirth}
                         onChange={on("placeOfBirth")}
-                        placeholder="City, State"
+                  
                         className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 text-[15px] outline-none focus:border-pink-300"
                       />
                     </div>
@@ -617,6 +617,11 @@ export default function CartPage() {
             />
             <AssureCard />
           </aside>
+        </div>
+
+        {/* ⬇️ GALLERY SECTION BELOW (full width inside the same container) */}
+        <div className="mt-10">
+          <GallerySection isCartPage />
         </div>
       </div>
     </main>
