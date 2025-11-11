@@ -561,32 +561,73 @@ export default function CartPage() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="grid gap-1.5">
-                      <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-                        Date of Birth
-                      </label>
-                      <input
-                        value={form.dateOfBirth}
-                        onChange={on("dateOfBirth")}
-                        type="date"
-                           placeholder="YYYY-MM-DD"
-                     required
-                        className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 text-[15px] outline-none focus:border-pink-300"
-                      />
-                    </div>
-                    <div className="grid gap-1.5">
-                      <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-                        Place of Birth
-                      </label>
-                      <input
-                        value={form.placeOfBirth}
-                        onChange={on("placeOfBirth")}
-                  
-                        className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 text-[15px] outline-none focus:border-pink-300"
-                      />
-                    </div>
-                  </div>
+                 <div className="grid grid-cols-2 gap-3">
+  <div className="grid gap-1.5">
+    <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
+      Date of Birth
+    </label>
+
+    <div className="relative">
+      {/* iOS placeholder hack */}
+      {!form.dateOfBirth && (
+        <span
+          style={{
+            position: "absolute",
+            left: "14px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            fontSize: "14px",
+            color: "#9ca3af",
+            pointerEvents: "none",
+          }}
+        >
+          YYYY-MM-DD
+        </span>
+      )}
+
+      <input
+        value={form.dateOfBirth}
+        onChange={on("dateOfBirth")}
+        type="date"
+        required
+        style={{
+          width: "100%",
+          borderRadius: "8px",
+          border: "1px solid #e5e7eb",
+          background: "rgba(255,255,255,0.9)",
+          padding: "12px",
+          fontSize: "15px",
+          outline: "none",
+          minHeight: "46px", // fixes iPhone squish
+          WebkitAppearance: "none", // removes default iOS look
+        }}
+        className="focus:border-pink-300"
+      />
+    </div>
+  </div>
+
+  <div className="grid gap-1.5">
+    <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
+      Place of Birth
+    </label>
+    <input
+      value={form.placeOfBirth}
+      onChange={on("placeOfBirth")}
+      placeholder="City, State"
+      style={{
+        width: "100%",
+        borderRadius: "8px",
+        border: "1px solid #e5e7eb",
+        background: "rgba(255,255,255,0.9)",
+        padding: "12px",
+        fontSize: "15px",
+        outline: "none",
+      }}
+      className="focus:border-pink-300"
+    />
+  </div>
+</div>
+
                 </div>
 
                 <div className="pt-1">
