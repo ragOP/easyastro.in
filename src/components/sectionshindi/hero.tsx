@@ -21,7 +21,7 @@ export default function HeroSection() {
   const router = useRouter();
 
   const handleRedirect = () => {
-    router.push("/cartcousin");
+    router.push("/hindicart");
   };
 
   return (

@@ -13,7 +13,7 @@ export default function StickyCtaBar() {
   const [popupHasBeenShown, setPopupHasBeenShown] = useState(false);
    const router = useRouter();
   const handleRedirect = () => {
-    router.push('/cartcousin');
+    router.push('/hindicart');
   };
   useEffect(() => {
     // This runs only on the client
