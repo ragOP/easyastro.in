@@ -37,48 +37,56 @@ type Bump = {
 
 const PRODUCT = {
   id: "soulmate-sketch",
-  title: "Soulmate Sketch + Free Love Report",
+  title: "सोलमेट स्केच + मुफ़्त लव रिपोर्ट",
   img: "https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png",
   price: 289,
   compareAt: 998,
   includes: [
-    "Personalized hand-drawn sketch",
-    "FREE in-depth love reading",
-    "Private delivery within 24–48 hours",
+    "आपके लिए बनाया गया पर्सनल हैंड-ड्रॉन स्केच",
+    "मुफ़्त डीटेल्ड लव रीडिंग",
+    "ईमेल और व्हाट्सएप पर 24–48 घंटे के अंदर प्राइवेट डिलीवरी",
   ],
 };
 
 const BUMPS: Bump[] = [
   {
     id: "bump-horoscope-24m",
-    title: "2-Year Personal Horoscope",
+    title: "2 साल का पर्सनल राशिफल",
     blurb:
-      "Your next 24 months at a glance — love, career, money & health. Plan smarter with clear timelines.",
+      "आने वाले 24 महीनों का स्पष्ट नक्शा — प्यार, करियर, पैसा और हेल्थ। सही समय पर सही फ़ैसले लें।",
     price: 99,
     compareAt: 299,
     features: [
-      "Month-by-month predictions",
-      "Love & marriage forecast",
-      "Career & wealth cycles",
-      "Lucky days & windows",
-      "Remedies & do’s/don’ts",
+      "हर महीने की भविष्यवाणी",
+      "प्यार और शादी का फ़ोरकास्ट",
+      "करियर और धन की साइकल",
+      "लकी दिन और सही मौके",
+      "उपाय, क्या करें और क्या न करें",
     ],
   },
   {
     id: "bump-wealth",
-    title: "Wealth Report",
-    blurb: "Remove money blocks and align with your financial destiny.",
+    title: "वेल्थ रिपोर्ट",
+    blurb: "पैसों की रुकावटें पहचानें और अपनी फाइनेंशियल डेस्टिनी के साथ अलाइन हों।",
     price: 99,
     compareAt: 299,
-    features: ["Money blocks + fixes", "Investment timelines", "Savings & risk windows"],
+    features: [
+      "मनी ब्लॉक्स और उनके समाधान",
+      "इन्वेस्टमेंट के सही टाइमलाइन",
+      "बचत और रिस्क लेने की सही विंडो",
+    ],
   },
   {
     id: "bump-life-path-ebook",
-    title: "Life Path & Career eBook",
-    blurb: "Actionable clarity on purpose, strengths & career path.",
+    title: "लाइफ़ पाथ और करियर ई-बुक",
+    blurb: "आपके पर्पज़, स्ट्रेंथ और करियर पाथ पर क्लियर, एक्शन-योग्य गाइड।",
     price: 99,
     compareAt: 249,
-    features: ["Purpose & strengths", "Weekly practice plan", "Decision frameworks"],
+    features: [
+      "आपका पर्पज़ और स्ट्रेंथ",
+      "साप्ताहिक प्रैक्टिस प्लान",
+      "फ़ैसले लेने के प्रैक्टिकल फ्रेमवर्क",
+    ],
   },
 ];
 
@@ -219,7 +227,7 @@ export default function CartPage() {
         amount: finalAmount,
         currency: "INR",
         name: "AstraSoul",
-        description: "Soulmate Sketch Order Payment",
+        description: "सोलमेट स्केच ऑर्डर पेमेंट",
         order_id: data.orderId,
         handler: async function (response: any) {
           try {
@@ -291,11 +299,11 @@ export default function CartPage() {
               console.log("Abandoned Order Deleted", deleteAbdOrderResult);
               window.location.href = "/order-confirmation";
             } else {
-              alert("Payment successful but order creation failed. Please contact support.");
+              alert("पेमेंट सफल हुआ, लेकिन ऑर्डर क्रिएट नहीं हो पाया। कृपया सपोर्ट से संपर्क करें।");
             }
           } catch (error) {
             console.error("Error creating order:", error);
-            alert("Payment successful but order creation failed. Please contact support.");
+            alert("पेमेंट सफल हुआ, लेकिन ऑर्डर क्रिएट नहीं हो पाया। कृपया सपोर्ट से संपर्क करें।");
           }
         },
         prefill: {
@@ -311,7 +319,7 @@ export default function CartPage() {
       rzp.open();
     } catch (error) {
       console.error("Checkout error:", error);
-      alert("Payment failed. Please try again.");
+      alert("पेमेंट फ़ेल हो गया, कृपया दोबारा कोशिश करें।");
     } finally {
       setIsCheckingOut(false);
     }
@@ -419,7 +427,7 @@ export default function CartPage() {
         <div className="mb-6 text-center sm:mb-9">
           <span className="inline-flex items-center gap-2 rounded-full border border-pink-200/60 bg-pink-100/50 px-3.5 py-1.5 text-[13px] font-semibold text-pink-700 sm:text-sm">
             <Sparkles className="h-4 w-4" />
-            Secure Checkout • Loved by 100k+
+            सुरक्षित चेकआउट • 100k+ लोगों का भरोसा
           </span>
         </div>
 
@@ -452,7 +460,7 @@ export default function CartPage() {
                     <div className="overflow-hidden rounded-lg">
                       <Image
                         src={PRODUCT.img}
-                        alt="Soulmate Sketch preview"
+                        alt="सोलमेट स्केच का सैंपल प्रीव्यू"
                         width={440}
                         height={440}
                         className="h-auto w-full object-cover"
@@ -461,7 +469,7 @@ export default function CartPage() {
                     </div>
                   </div>
                   <div className="mt-1.5 text-center text-[11px] text-pink-900/70">
-                    Sample • Yours is personalized
+                    सैंपल इमेज • आपका स्केच पूरी तरह पर्सनल होगा
                   </div>
                 </div>
               </CardContent>
@@ -472,10 +480,10 @@ export default function CartPage() {
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-xl sm:text-[22px] text-pink-700 font-extrabold">
                   <span className="h-2 w-2 rounded-full bg-pink-500 inline-block" />
-                  Enhance Your Love Journey
+                  अपने लव जर्नी को और पावरफ़ुल बनाएं
                 </CardTitle>
                 <p className="text-[13.5px] sm:text-sm text-pink-700/80">
-                  Optional add-ons. Tap “Add” to include.
+                  यह वैकल्पिक ऐड-ऑन हैं। शामिल करने के लिए “Add” पर टैप करें।
                 </p>
               </CardHeader>
               <CardContent className="space-y-4.5">
@@ -500,19 +508,19 @@ export default function CartPage() {
             >
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl sm:text-[22px] font-extrabold text-zinc-900">
-                  Your Details
+                  आपकी डिटेल्स
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4.5">
                 <div className="grid gap-3">
                   <div className="grid gap-1.5">
                     <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-                      Full Name <span className="text-pink-600">*</span>
+                      पूरा नाम <span className="text-pink-600">*</span>
                     </label>
                     <input
                       value={form.fullName}
                       onChange={on("fullName")}
-                      placeholder="e.g., Aisha Khan"
+                      placeholder="जैसे: Aisha Khan"
                       className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 text-[15px] outline-none focus:border-pink-300"
                     />
                   </div>
@@ -520,23 +528,23 @@ export default function CartPage() {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="grid gap-1.5">
                       <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-                        Gender
+                        जेंडर
                       </label>
                       <select
                         value={form.gender}
                         onChange={on("gender")}
                         className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 text-[15px] outline-none focus:border-pink-300"
                       >
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="other">Other</option>
-                        <option value="prefer_not_to_say">Prefer not to say</option>
+                        <option value="female">महिला</option>
+                        <option value="male">पुरुष</option>
+                        <option value="other">अन्य</option>
+                        <option value="prefer_not_to_say">न बताना पसंद है</option>
                       </select>
                     </div>
                     <div className="grid gap-1.5">
                       <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900 flex items-center gap-1.5">
                         <Phone className="h-4 w-4 text-pink-500" />
-                        WhatsApp
+                        व्हाट्सएप नंबर
                       </label>
                       <input
                         value={form.whatsapp}
@@ -550,84 +558,83 @@ export default function CartPage() {
                   <div className="grid gap-1.5">
                     <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900 flex items-center gap-1.5">
                       <Mail className="h-4 w-4 text-pink-500" />
-                      Email
+                      ईमेल
                     </label>
                     <input
                       value={form.email}
                       onChange={on("email")}
                       type="email"
-                      placeholder="you@example.com"
+                      placeholder="aap@example.com"
                       className="w-full rounded-lg border border-zinc-200 bg-white/90 px-3.5 py-2.5 text-[15px] outline-none focus:border-pink-300"
                     />
                   </div>
 
-                 <div className="grid grid-cols-2 gap-3">
-  <div className="grid gap-1.5">
-    <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-      Date of Birth
-    </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="grid gap-1.5">
+                      <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
+                        जन्म तिथि
+                      </label>
 
-    <div className="relative">
-      {/* iOS placeholder hack */}
-      {!form.dateOfBirth && (
-        <span
-          style={{
-            position: "absolute",
-            left: "14px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            fontSize: "14px",
-            color: "#9ca3af",
-            pointerEvents: "none",
-          }}
-        >
-          YYYY-MM-DD
-        </span>
-      )}
+                      <div className="relative">
+                        {/* iOS placeholder hack */}
+                        {!form.dateOfBirth && (
+                          <span
+                            style={{
+                              position: "absolute",
+                              left: "14px",
+                              top: "50%",
+                              transform: "translateY(-50%)",
+                              fontSize: "14px",
+                              color: "#9ca3af",
+                              pointerEvents: "none",
+                            }}
+                          >
+                            YYYY-MM-DD
+                          </span>
+                        )}
 
-      <input
-        value={form.dateOfBirth}
-        onChange={on("dateOfBirth")}
-        type="date"
-        required
-        style={{
-          width: "100%",
-          borderRadius: "8px",
-          border: "1px solid #e5e7eb",
-          background: "rgba(255,255,255,0.9)",
-          padding: "12px",
-          fontSize: "15px",
-          outline: "none",
-          minHeight: "46px", // fixes iPhone squish
-          WebkitAppearance: "none", // removes default iOS look
-        }}
-        className="focus:border-pink-300"
-      />
-    </div>
-  </div>
+                        <input
+                          value={form.dateOfBirth}
+                          onChange={on("dateOfBirth")}
+                          type="date"
+                          required
+                          style={{
+                            width: "100%",
+                            borderRadius: "8px",
+                            border: "1px solid #e5e7eb",
+                            background: "rgba(255,255,255,0.9)",
+                            padding: "12px",
+                            fontSize: "15px",
+                            outline: "none",
+                            minHeight: "46px", // fixes iPhone squish
+                            WebkitAppearance: "none", // removes default iOS look
+                          }}
+                          className="focus:border-pink-300"
+                        />
+                      </div>
+                    </div>
 
-  <div className="grid gap-1.5">
-    <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-      Place of Birth
-    </label>
-    <input
-      value={form.placeOfBirth}
-      onChange={on("placeOfBirth")}
-      placeholder="City, State"
-      style={{
-        width: "100%",
-        borderRadius: "8px",
-        border: "1px solid #e5e7eb",
-        background: "rgba(255,255,255,0.9)",
-        padding: "12px",
-        fontSize: "15px",
-        outline: "none",
-      }}
-      className="focus:border-pink-300"
-    />
-  </div>
-</div>
-
+                    <div className="grid gap-1.5">
+                      <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
+                        जन्म स्थान
+                      </label>
+                      <input
+                        value={form.placeOfBirth}
+                        onChange={on("placeOfBirth")}
+                        placeholder="शहर, राज्य"
+                        style={{
+                          width: "100%",
+                          borderRadius: "8px",
+                          border: "1px solid #e5e7eb",
+                          background: "rgba(255,255,255,0.9)",
+                          padding: "12px",
+                          fontSize: "15px",
+                          outline: "none",
+                        }}
+                        className="focus:border-pink-300"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="pt-1">
@@ -641,7 +648,7 @@ export default function CartPage() {
                     ].join(" ")}
                     disabled={isCheckingOut}
                   >
-                    {isCheckingOut ? "Processing..." : `Buy Now — ₹${PRODUCT.price}`}
+                    {isCheckingOut ? "प्रोसेस हो रहा है..." : `अभी खरीदें — ₹${PRODUCT.price}`}
                   </Button>
                 </div>
               </CardContent>
@@ -665,7 +672,7 @@ export default function CartPage() {
         <div className="mt-10">
           <GallerySection isCartPage />
         </div>
-          <div className="mt-10">
+        <div className="mt-10">
           <TestimonialsSection isCartPage={true} />
         </div>
       </div>
@@ -692,13 +699,13 @@ function SummaryCard({
     <Card className="border-pink-200/60 bg-white/96 backdrop-blur">
       <CardHeader className="pb-2">
         <CardTitle className="text-xl sm:text-[22px] font-extrabold text-zinc-900">
-          Order Summary
+          ऑर्डर सारांश
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="rounded-xl border border-zinc-200 bg-white/70 p-4.5">
           <div className="flex items-baseline justify-between">
-            <span className="text-[13.5px] sm:text-sm text-zinc-600">Today’s Price</span>
+            <span className="text-[13.5px] sm:text-sm text-zinc-600">आज की कीमत</span>
             <div className="text-right">
               <div className="text-[26px] sm:text-[28px] font-black text-pink-600">₹{price}</div>
               {!!compareAt && (
@@ -709,7 +716,7 @@ function SummaryCard({
           <div className="mt-3 flex items-center justify-between rounded-lg bg-pink-50 px-3 py-2 text-[13.5px] sm:text-sm text-pink-700">
             <div className="flex items-center gap-2">
               <Star className="h-4 w-4" />
-              Limited-time special applied
+              लिमिटेड-टाइम स्पेशल अपने आप लागू हो चुका है
             </div>
             <div className="flex items-center gap-1 font-bold">
               <Timer className="h-4 w-4" />
@@ -720,16 +727,16 @@ function SummaryCard({
 
         <div className="space-y-2 text-[14.5px] sm:text-[15px]">
           <div className="flex items-center justify-between text-zinc-700">
-            <span>Subtotal</span>
+            <span>सब-टोटल</span>
             <span>₹{price}</span>
           </div>
           <div className="flex items-center justify-between text-zinc-700">
-            <span>Delivery</span>
-            <span>Free</span>
+            <span>डिलीवरी</span>
+            <span>मुफ़्त</span>
           </div>
           <div className="h-px w-full bg-zinc-200" />
           <div className="flex items-center justify-between text-[16.5px] font-extrabold text-zinc-900">
-            <span>Total</span>
+            <span>टोटल</span>
             <span>₹{total}</span>
           </div>
         </div>
@@ -744,12 +751,12 @@ function SummaryCard({
           onClick={onPay}
           disabled={false}
         >
-          Complete Order Securely
+          ऑर्डर सुरक्षित रूप से पूरा करें
         </Button>
 
         <div className="flex items-center justify-center gap-2 text-xs sm:text-[13px] text-zinc-600">
           <ShieldCheck className="h-4 w-4 text-pink-600" />
-          100% Private • Money-back Guarantee • Secure Checkout
+          100% प्राइवेट • मनी-बैक गारंटी • सुरक्षित चेकआउट
         </div>
       </CardContent>
     </Card>
@@ -763,19 +770,20 @@ function AssureCard() {
         <div className="flex items-start gap-2">
           <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 text-green-500" />
           <p>
-            Delivery via Email & WhatsApp within <b>24–48 hours</b>.
+            डिलीवरी <b>ईमेल और व्हाट्सएप</b> के ज़रिए{" "}
+            <b>24–48 घंटों</b> के अंदर।
           </p>
         </div>
         <div className="flex items-start gap-2">
           <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 text-green-500" />
           <p>
-            Every sketch is <b>hand-drawn</b> and <b>unique to you</b>.
+            हर स्केच <b>हाथ से बनाया जाता है</b> और <b>पूरी तरह आपके लिए यूनिक</b> होता है।
           </p>
         </div>
         <div className="flex items-start gap-2">
           <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 text-green-500" />
           <p>
-            Full refund if you’re not satisfied — <b>no questions asked</b>.
+            अगर आप संतुष्ट नहीं हैं तो <b>फुल रिफंड</b> — बिना किसी सवाल-जवाब के।
           </p>
         </div>
       </CardContent>
@@ -863,7 +871,7 @@ function CompactBumpRow({
                 className="mt-2 text-[12.5px] font-semibold text-pink-700 underline underline-offset-2"
                 onClick={() => setOpen(false)}
               >
-                Show Less
+                कम दिखाएं
               </button>
             </>
           ) : (
@@ -872,7 +880,7 @@ function CompactBumpRow({
               className="text-[12.5px] font-semibold text-pink-700 underline underline-offset-2"
               onClick={() => setOpen(true)}
             >
-              Show More
+              और डिटेल देखें
             </button>
           )}
         </div>
@@ -896,7 +904,7 @@ function ScrollCue() {
         <span className="animate-bounce">
           <ChevronDown className="h-4 w-4" />
         </span>
-        Scroll to fill details & complete order
+        नीचे स्क्रॉल करें, डिटेल भरें और अपना ऑर्डर पूरा करें
       </div>
     </div>
   );
