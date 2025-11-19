@@ -1,4 +1,4 @@
-'use client'; // 👈 add this at the top if in app/ directory
+'use client'; // 👈 app/ directory में हो तो ऊपर यह ज़रूर लिखें
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
@@ -25,21 +25,22 @@ export default function CousinCta({ isCartPage = false }: CousinCtaProps) {
                 <Button 
                     size="lg" 
                     className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine"
-             
                 >
-                    Reveal My Soulmate Now!
+                    अभी अपना सोलमेट देखें!
                 </Button>
             ) : (
-                <a >
+                <a>
                     <Button 
-                           onClick={handleRedirect}
-                    size="lg" className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine">
-                        Reveal My Soulmate Now!
+                        onClick={handleRedirect}
+                        size="lg" 
+                        className="font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine"
+                    >
+                        अभी अपना सोलमेट देखें!
                     </Button>
                 </a>
             )}
             <p className="mt-4 text-sm text-primary/80 animate-pulse">
-                Only a few spots left! Hurry before the special offer ends.
+                केवल कुछ ही स्थान बचे हैं! ऑफ़र खत्म होने से पहले जल्दी करें।
             </p>
         </div>
     );
