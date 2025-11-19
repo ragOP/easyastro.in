@@ -115,7 +115,7 @@ export default function FaqSection() {
             </span>
             <span className="inline-flex items-center gap-2 rounded-xl border border-foreground/10 bg-card/60 px-3 py-2 backdrop-blur">
               <Mail className="h-5 w-5 text-primary" />
-              support@yourbrand.com
+              no-reply@easyastro.in.
             </span>
           </div>
         </div>

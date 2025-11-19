@@ -21,8 +21,9 @@ import StickyBuyBar from "./sticky";
 import { BACKEND_URL } from "@/lib/backendUrl";
 
 // ⬇️ ADD: import your Gallery section
-import GallerySection from "../../components/sections/gallery";
-import TestimonialsSection from "@/components/sections/testimonials";
+import GalleryHindi from "../../components/sections/GalleryHindi";
+import TestimonialsHindi from "../../components/sections/TestimonialsHindi";
+import TestimonialsSection from "../../components/sections/TestimonialsHindi";
 
 /** ───────────────────────── Types & Data ───────────────────────── */
 
@@ -641,8 +642,9 @@ export default function CartPage() {
                   <Button
                     onClick={handleCheckout}
                     size="lg"
+
                     className={[
-                      "w-full rounded-2xl py-5 text-[17px] sm:text-[18px] font-extrabold",
+                      "w-full rounded-2xl py-5 text-[17px] mt-[14px] sm:text-[18px] font-extrabold",
                       "bg-pink-600 hover:bg-pink-600/95 text-white",
                       "btn-glow btn-shine btn-bounce",
                     ].join(" ")}
@@ -670,7 +672,7 @@ export default function CartPage() {
 
         {/* ⬇️ GALLERY SECTION BELOW (full width inside the same container) */}
         <div className="mt-10">
-          <GallerySection isCartPage />
+          <GalleryHindi isCartPage />
         </div>
         <div className="mt-10">
           <TestimonialsSection isCartPage={true} />
