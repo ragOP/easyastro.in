@@ -9,7 +9,7 @@ import WhyTrustUsSection from "@/components/sectionshindi/why-trust-us";
 import FaqSection from "@/components/sectionshindi/faq";
 import Footer from "@/components/layout/footer";
 import StickyCtaBar from "@/components/sectionshindi/sticky-cta-bar";
-import SocialProofPopup from "@/components/common/social-proof-popup";
+import SocialProofPopup from "@/components/common/socialhidni";
 
 export default function Home() {
   return (

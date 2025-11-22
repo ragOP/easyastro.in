@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import CountdownTimer from "@/components/ui/countdown-timer";
-import SpecialOfferPopup from "@/components/common/special-offer-popup";
+import SpecialOfferPopup from "@/components/common/special-hindi";
 import { useRouter } from 'next/navigation';
 
 export default function StickyCtaBar() {
