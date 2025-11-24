@@ -248,38 +248,33 @@ export default function CartPage() {
             if (orderResult.success) {
               sessionStorage.setItem("orderId", data.orderId);
               sessionStorage.setItem("orderAmount", finalAmount.toString());
-              
-              // Send campaign notification if phone number is present
-              if (consultationFormData?.phoneNumber) {
-                try {
-                  await fetch('https://backend.aisensy.com/campaign/t1/api/v2', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGY5YTMyZDQ3MzczMGU3MzNhZTZiMCIsIm5hbWUiOiJTcGVrbGlvIE1lZGlhIDIxMzQiLCJhcHBOYW1lIjoiQWlTZW5zeSIsImNsaWVudElkIjoiNjhkZjlhMzJkNDczNzMwZTczM2FlNmFiIiwiYWN0aXZlUGxhbiI6IkZSRUVfRk9SRVZFUiIsImlhdCI6MTc1OTQ4NDQ2Nn0.D5rCrsjtikR4N68HNS7ZOpNfzTSTuN9otxZ9-UBvi1g",
-                      "campaignName": "28oct",
-                      "destination": consultationFormData.phoneNumber,
-                      "userName": "Speklio Media 2134",
-                      "templateParams": [],
-                      "source": "new-landing-page form",
-                      "media": {},
-                      "buttons": [],
-                      "carouselCards": [],
-                      "location": {},
-                      "attributes": {},
-                      "paramsFallbackValue": {}
-                    })
-                  });
-                  console.log("Campaign notification sent successfully");
-                } catch (error) {
-                  console.error("Failed to send campaign notification:", error);
-                  // Don't block the flow if campaign notification fails
-                }
+              try {
+                await fetch('https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    amount: finalAmount,
+                    name: consultationFormData?.name || "",
+                    email: consultationFormData?.email || "",
+                    phone: consultationFormData?.phoneNumber || "",
+                    dateOfBirth: consultationFormData?.dateOfBirth || "",
+                    placeOfBirth: consultationFormData?.placeOfBirth || "",
+                    gender: consultationFormData?.gender || "",
+                    additionalProducts: selectedProducts
+                      .map((id) => {
+                        const product = mockAdditionalProducts.find((p) => p.id === id);
+                        return product?.title || "";
+                      })
+                      .filter(Boolean),
+                    isChatsonorderSuccessfull: "Order Successfull"
+                  })
+                });
+                console.log("Webhook notification sent successfully");
+              } catch (error) {
+                console.error("Failed to send webhook notification:", error);
               }
-              
-              // Deleting item from Abandoned Order if Order is created successfulyyyy
               const deleteAbdOrder = await fetch(
                 `${BACKEND_URL}/api/lander3/delete-order-abd`,
                 {
