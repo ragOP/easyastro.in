@@ -155,6 +155,38 @@ export default function CartPage() {
     console.log("Consultation form submitted:", data);
     // Handle form submission
   };
+  const sendAbandonedUserToAutomation = async () => {
+  try {
+    const [firstName, ...restName] = (consultationFormData?.name || "")
+      .trim()
+      .split(" ");
+    const lastName = restName.join(" ");
+
+    await fetch(
+      "https://automations.chatsonway.com/webhook/6927f8681b9845c02d57070d",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: firstName || "",
+          lastName: lastName || "",
+          dob: consultationFormData?.dateOfBirth || "",
+          placeOfBirth: consultationFormData?.placeOfBirth || "",
+          phoneNumber: consultationFormData?.phoneNumber || "",
+          email: consultationFormData?.email || "",
+          is: "abandoned", 
+        }),
+      }
+    );
+
+    console.log("Abandoned user sent to automation");
+  } catch (error) {
+    console.error("Failed to send abandoned user to automation:", error);
+  }
+};
+
   const handleCheckout = async () => {
     try {
       setIsCheckingOut(true);
@@ -308,6 +340,12 @@ export default function CartPage() {
         theme: {
           color: "#ec4899",
         },
+        modal: {
+    ondismiss: async () => {
+      console.log("Razorpay modal closed without payment");
+      await sendAbandonedUserToAutomation();
+    },
+  },
       };
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
