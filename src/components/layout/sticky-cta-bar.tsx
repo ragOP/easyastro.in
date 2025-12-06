@@ -7,7 +7,7 @@ import CountdownTimer from "@/components/ui/countdown-timer";
 import SpecialOfferPopup from "@/components/common/special-offer-popup";
 import { useRouter } from 'next/navigation';
 export default function StickyCtaBar() {
-  
+  // sds 
   const [offerEndTime, setOfferEndTime] = useState<Date | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupHasBeenShown, setPopupHasBeenShown] = useState(false);
