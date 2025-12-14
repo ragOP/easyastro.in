@@ -1,4 +1,3 @@
-"use client";
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -6,7 +5,6 @@ import { Alegreya, Belleza } from "next/font/google";
 import Script from "next/script";
 import React from "react";
 
-// ================= Fonts =================
 const alegreya = Alegreya({
   subsets: ["latin"],
   variable: "--font-alegreya",
@@ -20,46 +18,14 @@ const belleza = Belleza({
   display: "swap",
 });
 
-// ================= Metadata =================
 export const metadata: Metadata = {
   title: "Easy Astro",
   description:
     "Discover your soulmate's face today with a personalized sketch from our gifted psychics.",
 };
 
-// ================= Pixel IDs =================
 const PIXEL_1 = "1330934167928475";
 const PIXEL_2 = "3960073624225686";
-
-/**
- * Client-only PageView tracker (SPA safe)
- * Lives INSIDE layout file
- */
-function MetaPixelPageViewClient() {
-  "use client";
-
-  const { usePathname, useSearchParams } = require("next/navigation");
-  const { useEffect, useRef } = require("react");
-
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const lastKeyRef = useRef("");
-
-  useEffect(() => {
-    const qs = searchParams?.toString?.() ?? "";
-    const key = `${pathname}?${qs}`;
-
-    // Prevent double fire (StrictMode, re-renders)
-    if (lastKeyRef.current === key) return;
-    lastKeyRef.current = key;
-
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      (window as any).fbq("track", "PageView");
-    }
-  }, [pathname, searchParams]);
-
-  return null;
-}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -68,8 +34,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${alegreya.variable} ${belleza.variable} scroll-smooth`}
     >
       <body className="font-body antialiased">
-        {/* ================= Meta Pixel (load ONCE, init BOTH) ================= */}
-        <Script id="meta-pixel" strategy="afterInteractive">
+        {/* ================= META PIXEL: load once, init both ================= */}
+        <Script id="meta-pixel-base" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -86,10 +52,60 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
 
-        {/* SPA route-change PageView */}
-        <MetaPixelPageViewClient />
+        {/* ========== SPA PAGEVIEW TRACKER (NO hooks, stays in layout) ========== */}
+        <Script id="meta-pixel-spa-pageview" strategy="afterInteractive">
+          {`
+            (function () {
+              function safeFbqTrackPageView() {
+                try {
+                  if (!window.fbq) return;
 
-        {/* ================= noscript fallback ================= */}
+                  // de-dupe per URL (prevents double firing)
+                  var url = location.href;
+                  if (window.__lastFbqPV === url) return;
+                  window.__lastFbqPV = url;
+
+                  window.fbq('track', 'PageView');
+                } catch (e) {}
+              }
+
+              // Wait until fbq exists, then attach listeners
+              function initWhenReady(attempt) {
+                if (window.fbq) {
+                  // Track immediately once (for safety)
+                  safeFbqTrackPageView();
+
+                  // Hook history changes for SPA navigation
+                  var _pushState = history.pushState;
+                  var _replaceState = history.replaceState;
+
+                  history.pushState = function () {
+                    _pushState.apply(this, arguments);
+                    safeFbqTrackPageView();
+                  };
+
+                  history.replaceState = function () {
+                    _replaceState.apply(this, arguments);
+                    safeFbqTrackPageView();
+                  };
+
+                  window.addEventListener('popstate', function () {
+                    safeFbqTrackPageView();
+                  });
+
+                  return;
+                }
+
+                // retry a few times (pixel script loads async)
+                if (attempt < 60) setTimeout(function () { initWhenReady(attempt + 1); }, 100);
+              }
+
+              initWhenReady(0);
+            })();
+          `}
+        </Script>
+
+        {/* ================= noscript fallback (both pixels) ================= */}
         <noscript>
           <img
             height="1"
