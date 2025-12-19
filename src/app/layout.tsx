@@ -24,17 +24,21 @@ export const metadata: Metadata = {
     "Discover your soulmate's face today with a personalized sketch from our gifted psychics.",
 };
 
-const PIXEL_1 = "1330934167928475";
-const PIXEL_2 = "3960073624225686";
+// ✅ ONLY ONE PIXEL LEFT
+const PIXEL = "3960073624225686";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
       className={`${alegreya.variable} ${belleza.variable} scroll-smooth`}
     >
       <body className="font-body antialiased">
-        {/* ================= META PIXEL: load once, init both ================= */}
+        {/* ================= META PIXEL ================= */}
         <Script id="meta-pixel-base" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -46,79 +50,65 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
 
-            fbq('init', '${PIXEL_1}');
-            fbq('init', '${PIXEL_2}');
+            fbq('init', '${PIXEL}');
             fbq('track', 'PageView');
           `}
         </Script>
 
-        {/* ========== SPA PAGEVIEW TRACKER (NO hooks, stays in layout) ========== */}
+        {/* ========== SPA PAGEVIEW TRACKER (deduped) ========== */}
         <Script id="meta-pixel-spa-pageview" strategy="afterInteractive">
           {`
             (function () {
-              function safeFbqTrackPageView() {
+              function safeTrack() {
                 try {
                   if (!window.fbq) return;
-
-                  // de-dupe per URL (prevents double firing)
                   var url = location.href;
                   if (window.__lastFbqPV === url) return;
                   window.__lastFbqPV = url;
-
                   window.fbq('track', 'PageView');
                 } catch (e) {}
               }
 
-              // Wait until fbq exists, then attach listeners
-              function initWhenReady(attempt) {
+              function init(attempt) {
                 if (window.fbq) {
-                  // Track immediately once (for safety)
-                  safeFbqTrackPageView();
+                  safeTrack();
 
-                  // Hook history changes for SPA navigation
                   var _pushState = history.pushState;
                   var _replaceState = history.replaceState;
 
                   history.pushState = function () {
                     _pushState.apply(this, arguments);
-                    safeFbqTrackPageView();
+                    safeTrack();
                   };
 
                   history.replaceState = function () {
                     _replaceState.apply(this, arguments);
-                    safeFbqTrackPageView();
+                    safeTrack();
                   };
 
-                  window.addEventListener('popstate', function () {
-                    safeFbqTrackPageView();
-                  });
-
+                  window.addEventListener('popstate', safeTrack);
                   return;
                 }
 
-                // retry a few times (pixel script loads async)
-                if (attempt < 60) setTimeout(function () { initWhenReady(attempt + 1); }, 100);
+                if (attempt < 60) {
+                  setTimeout(function () {
+                    init(attempt + 1);
+                  }, 100);
+                }
               }
 
-              initWhenReady(0);
+              init(0);
             })();
           `}
         </Script>
 
-        {/* ================= noscript fallback (both pixels) ================= */}
+        {/* ================= noscript fallback ================= */}
         <noscript>
           <img
             height="1"
             width="1"
             style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${PIXEL_1}&ev=PageView&noscript=1`}
-            alt=""
-          />
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${PIXEL_2}&ev=PageView&noscript=1`}
+            src={`https://www.facebook.com/tr?id=${PIXEL}&ev=PageView&noscript=1`}
             alt=""
           />
         </noscript>
