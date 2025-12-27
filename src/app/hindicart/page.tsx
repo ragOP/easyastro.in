@@ -40,7 +40,7 @@ const PRODUCT = {
   id: "soulmate-sketch",
   title: "सोलमेट स्केच + मुफ़्त लव रिपोर्ट",
   img: "https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png",
-  price: 289,
+  price: 389,
   compareAt: 998,
   includes: [
     "आपके लिए बनाया गया पर्सनल हैंड-ड्रॉन स्केच",
