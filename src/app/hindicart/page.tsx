@@ -227,7 +227,7 @@ export default function CartPage() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
         amount: finalAmount,
         currency: "INR",
-        name: "AstraSoul",
+        name: "EasyAstro",
         description: "सोलमेट स्केच ऑर्डर पेमेंट",
         order_id: data.orderId,
         handler: async function (response: any) {
