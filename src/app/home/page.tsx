@@ -10,7 +10,7 @@ export default function Home() {
   const [logs, setLogs] = useState<string[]>([]);
   const [orderIdFromUrl, setOrderIdFromUrl] = useState<string | null>(null);
 
-  const API_BASE = "https://skyscale-be.onrender.com";
+  const API_BASE = "https://skyscale-be-cr0i.onrender.com";
 
   const log = (...args: any[]) => {
     const time = new Date().toISOString().split("T")[1].replace("Z", "");
