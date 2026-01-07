@@ -15,7 +15,7 @@ const mockCartItems = [
     id: "1",
     name: "Soulmate Sketch",
     description: "Get a detailed sketch of your soulmate's face",
-    price: 389,
+    price: 289,
     originalPrice: 1999,
     features: [
       "Detailed facial features",

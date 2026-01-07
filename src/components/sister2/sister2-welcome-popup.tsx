@@ -67,7 +67,7 @@ export default function Sister2WelcomePopup({ isOpen, onClose }: Sister2WelcomeP
           {/* Offer */}
           <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl p-4 text-white mb-4">
             <p className="text-lg font-bold mb-1">60% OFF Today Only!</p>
-            <p className="text-sm opacity-90">From ₹998 to just ₹389</p>
+            <p className="text-sm opacity-90">From ₹998 to just ₹289</p>
           </div>
 
           {/* CTA Button */}
