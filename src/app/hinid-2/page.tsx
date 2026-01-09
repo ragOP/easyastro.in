@@ -10,6 +10,7 @@ export default function Page() {
           border: "none",
         }}
         allow="camera; microphone; fullscreen"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
       />
     </div>
   );
