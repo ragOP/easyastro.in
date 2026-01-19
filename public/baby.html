@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureBaby AI - See Your Future Baby Before Birth</title>
+    <meta name="description" content="AI-powered baby face prediction. Upload parent photos and see what your future baby will look like. Secure, private, and ultra-realistic results.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== CSS Reset & Base ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gradient-primary: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a18cd1 100%);
+            --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ee9ca7 100%);
+            --gradient-cta: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+            
+            --color-text: #1a1a2e;
+            --color-text-light: #4a4a6a;
+            --color-text-muted: #7a7a9a;
+            --color-white: #ffffff;
+            --color-accent: #f5576c;
+            --color-accent-light: #ff8a9b;
+            --color-pink: #ff6b9d;
+            --color-purple: #a18cd1;
+            --color-blue: #667eea;
+            
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 40px rgba(0, 0, 0, 0.12);
+            --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.15);
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-full: 9999px;
+            
+            --transition-fast: 0.2s ease;
+            --transition-medium: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--color-text);
+            line-height: 1.6;
+            background: linear-gradient(180deg, #ffeef8 0%, #f0f4ff 50%, #fff5f8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== Typography ===== */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+
+        p { font-size: clamp(1rem, 1.5vw, 1.125rem); }
+
+        /* ===== Container ===== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== Buttons ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px 40px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-cta);
+            color: var(--color-white);
+            box-shadow: 0 10px 40px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(245, 87, 108, 0.5);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        /* ===== Glass Card ===== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* ===== Section Base ===== */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            margin-bottom: 16px;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            color: var(--color-text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== Navigation ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all var(--transition-medium);
+        }
+
+        nav.scrolled {
+            padding: 12px 0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            background: var(--gradient-cta);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            font-size: 0.9rem;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(161, 140, 209, 0.3) 0%, transparent 70%);
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.2) 0%, transparent 70%);
+            animation: float 12s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, -30px) rotate(5deg); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 24px;
+            color: var(--color-text);
+        }
+
+        .hero-text h1 span {
+            background: var(--gradient-cta);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            color: var(--color-text-light);
+            margin-bottom: 40px;
+            font-size: 1.25rem;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--color-white);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--color-text);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .badge-icon {
+            font-size: 1.1rem;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-strong);
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .baby-preview {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--color-white);
+            box-shadow: var(--shadow-medium);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .baby-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== How It Works ===== */
+        .how-it-works {
+            background: var(--color-white);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--gradient-primary);
+            z-index: 0;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            position: relative;
+            z-index: 1;
+            transition: all var(--transition-medium);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 24px;
+            background: var(--gradient-cta);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-white);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .step-card h3 {
+            margin-bottom: 12px;
+            color: var(--color-text);
+        }
+
+        .step-card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        /* ===== Examples Section ===== */
+        .examples {
+            background: linear-gradient(180deg, #fff5f8 0%, #f0f4ff 100%);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            align-items: center;
+        }
+
+        .example-card {
+            text-align: center;
+        }
+
+        .example-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--color-white);
+            box-shadow: var(--shadow-medium);
+            transition: all var(--transition-medium);
+        }
+
+        .example-image:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .example-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .example-label {
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 1.1rem;
+        }
+
+        .example-card.result .example-image {
+            width: 240px;
+            height: 240px;
+            border: 6px solid var(--color-pink);
+            box-shadow: 0 15px 50px rgba(255, 107, 157, 0.3);
+        }
+
+        .plus-sign, .equals-sign {
+            font-size: 3rem;
+            color: var(--color-purple);
+            font-weight: 700;
+            text-align: center;
+            display: none;
+        }
+
+        .examples-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .arrow-right {
+            font-size: 2rem;
+            color: var(--color-accent);
+        }
+
+        /* ===== Features Section ===== */
+        .features {
+            background: var(--color-white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #fff 0%, #fef5f8 100%);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(245, 87, 108, 0.1);
+            transition: all var(--transition-medium);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-medium);
+            border-color: rgba(245, 87, 108, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        /* ===== Technology Section ===== */
+        .technology {
+            background: linear-gradient(180deg, #f0f4ff 0%, #fff5f8 100%);
+        }
+
+        .tech-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .tech-text h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--color-text);
+        }
+
+        .tech-text p {
+            color: var(--color-text-light);
+            margin-bottom: 24px;
+        }
+
+        .tech-list {
+            list-style: none;
+        }
+
+        .tech-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tech-list li::before {
+            content: '✓';
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .flow-diagram {
+            padding: 40px;
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .flow-box {
+            padding: 16px 24px;
+            background: var(--gradient-primary);
+            color: var(--color-text);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            font-size: 0.9rem;
+            flex: 1;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            color: var(--color-accent);
+            font-size: 1.5rem;
+            transform: rotate(90deg);
+        }
+
+        /* ===== Testimonials Section ===== */
+        .testimonials {
+            background: var(--gradient-hero);
+            overflow: hidden;
+        }
+
+        .testimonials-slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonials-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-card {
+            min-width: 100%;
+            padding: 50px;
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+        }
+
+        .testimonial-avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--color-pink);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.2);
+        }
+
+        .testimonial-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .testimonial-stars {
+            color: #ffc107;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--color-text);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .testimonial-location {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .slider-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: var(--color-white);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-soft);
+            transition: all var(--transition-fast);
+        }
+
+        .slider-btn:hover {
+            background: var(--gradient-cta);
+            color: var(--color-white);
+            transform: scale(1.1);
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(245, 87, 108, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .slider-dot.active {
+            background: var(--color-accent);
+            transform: scale(1.2);
+        }
+
+        /* ===== CTA Section ===== */
+        .cta {
+            background: var(--gradient-secondary);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            color: var(--color-white);
+            margin-bottom: 16px;
+            -webkit-text-fill-color: unset;
+        }
+
+        .cta p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+        }
+
+        .cta .btn-primary {
+            background: var(--color-white);
+            color: var(--color-accent);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .cta-note {
+            margin-top: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* ===== FAQ Section ===== */
+        .faq {
+            background: var(--color-white);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 16px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: linear-gradient(135deg, #fff 0%, #fef5f8 100%);
+            border: 1px solid rgba(245, 87, 108, 0.1);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 24px 30px;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-fast);
+        }
+
+        .faq-question:hover {
+            background: rgba(245, 87, 108, 0.05);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            transition: transform var(--transition-fast);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-medium);
+        }
+
+        .faq-answer-content {
+            padding: 0 30px 24px;
+            color: var(--color-text-light);
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--color-text);
+            color: var(--color-white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-white);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text {
+                order: 1;
+            }
+
+            .hero-visual {
+                order: 2;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .hero-badges {
+                justify-content: center;
+            }
+
+            .steps-grid,
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tech-content {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-diagram {
+                order: 2;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .example-card.result {
+                order: 3;
+            }
+        }
+
+        @media (max-width: 640px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .steps-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                padding: 16px 32px;
+                font-size: 1rem;
+                width: 100%;
+            }
+
+            .testimonial-card {
+                padding: 30px 20px;
+            }
+
+            .testimonial-text {
+                font-size: 1.1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .baby-preview {
+                width: 100px;
+                height: 100px;
+                bottom: -10px;
+                right: -10px;
+            }
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <!-- <nav id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">FutureBaby AI</a>
+            <a href="#hero" class="btn btn-primary nav-btn">Get Started</a>
+        </div>
+    </nav> -->
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>See Your <span>Future Baby</span> Before Birth</h1>
+                    <p>Our advanced AI analyzes parents' photos to predict what your future baby will look like. Secure, private, and incredibly accurate genetic predictions.</p>
+                    <a href="#cta" class="btn btn-primary">
+                        <span>✨</span> Generate My Baby Face
+                    </a>
+                    <div class="hero-badges">
+                        <div class="badge">
+                            <span class="badge-icon">🤖</span>
+                            AI Powered
+                        </div>
+                        <div class="badge">
+                            <span class="badge-icon">🔒</span>
+                            Secure & Private
+                        </div>
+                        <div class="badge">
+                            <span class="badge-icon">👨‍👩‍👧</span>
+                            100,000+ Couples
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-image-wrapper">
+                        <img src="images/couple-hero.jpg" alt="Happy couple dreaming about their future baby">
+                        <div class="baby-preview">
+                            <img src="images/baby-result.jpg" alt="AI predicted baby face">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Three simple steps to see your future baby</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">📸</div>
+                    <h3>Upload Parents Photos</h3>
+                    <p>Simply upload clear photos of both parents. Our AI works best with front-facing portraits.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🧬</div>
+                    <h3>AI Predicts Genetics</h3>
+                    <p>Our advanced neural network analyzes facial features and predicts genetic combinations.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">👶</div>
+                    <h3>See Your Future Baby</h3>
+                    <p>Receive a realistic prediction of your future baby's face in seconds!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section class="examples" id="examples">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real Results</h2>
+                <p>See how our AI combines parent features to predict baby faces</p>
+            </div>
+            <div class="examples-flow">
+                <div class="example-card">
+                    <div class="example-image">
+                        <img src="images/mom-example.jpg" alt="Mother's photo">
+                    </div>
+                    <div class="example-label">Mom</div>
+                </div>
+                <span class="arrow-right">➕</span>
+                <div class="example-card">
+                    <div class="example-image">
+                        <img src="images/dad-example.jpg" alt="Father's photo">
+                    </div>
+                    <div class="example-label">Dad</div>
+                </div>
+                <span class="arrow-right">➡️</span>
+                <div class="example-card result">
+                    <div class="example-image">
+                        <img src="images/baby-example.jpg" alt="AI predicted baby result">
+                    </div>
+                    <div class="example-label">AI Baby Result</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose FutureBaby AI</h2>
+                <p>State-of-the-art technology for the most accurate predictions</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🧠</span>
+                    <h3>Advanced Genetic AI</h3>
+                    <p>Neural networks trained on millions of genetic patterns for accurate predictions.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">✨</span>
+                    <h3>Ultra-Realistic Results</h3>
+                    <p>Photorealistic baby faces that look like real photographs.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Fast Processing</h3>
+                    <p>Get your results in under 60 seconds. No waiting required.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔐</span>
+                    <h3>Secure Upload</h3>
+                    <p>Bank-level encryption protects your photos during upload.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🗑️</span>
+                    <h3>No Data Stored</h3>
+                    <p>Your photos are deleted immediately after processing.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📸</span>
+                    <h3>High Resolution</h3>
+                    <p>Download your baby prediction in stunning HD quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology" id="technology">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Technology</h2>
+                <p>Powered by cutting-edge artificial intelligence</p>
+            </div>
+            <div class="tech-content">
+                <div class="tech-text">
+                    <h3>How AI Analyzes Facial Structure</h3>
+                    <p>Our deep learning algorithms identify over 150 facial landmarks and genetic markers to predict inherited traits.</p>
+                    
+                    <h3>Genetic Blending Technology</h3>
+                    <p>We simulate actual genetic inheritance patterns, considering dominant and recessive traits for realistic results.</p>
+                    
+                    <h3>Privacy & Security Guarantee</h3>
+                    <ul class="tech-list">
+                        <li>End-to-end encryption</li>
+                        <li>Photos deleted within 1 hour</li>
+                        <li>No data sold to third parties</li>
+                        <li>GDPR & CCPA compliant</li>
+                    </ul>
+                </div>
+                <div class="flow-diagram">
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="flow-box">📸 Parent Photos Uploaded</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="flow-box">🔍 Facial Feature Analysis</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="flow-box">🧬 Genetic Trait Prediction</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="flow-box">🎨 Face Generation</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="flow-box">👶 Baby Image Delivered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Parents Say</h2>
+                <p>Real stories from happy couples around the world</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonials-track" id="testimonials-track">
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="images/testimonial-1.jpg" alt="Sarah Chen">
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"This looks exactly how we imagined our baby would look! When our daughter was born, the resemblance was uncanny. We're still amazed."</p>
+                        <div class="testimonial-author">Sarah Chen</div>
+                        <div class="testimonial-location">California, USA</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="images/testimonial-2.jpg" alt="Marcus Thompson">
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"We were shocked by the accuracy! The AI predicted our son's eyes and smile perfectly. Best gift we gave ourselves during pregnancy."</p>
+                        <div class="testimonial-author">Marcus Thompson</div>
+                        <div class="testimonial-location">London, UK</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="images/testimonial-3.jpg" alt="Emma Johansson">
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"I cried when I saw the result. It made our pregnancy journey so much more special. Highly recommend to all expecting parents!"</p>
+                        <div class="testimonial-author">Emma Johansson</div>
+                        <div class="testimonial-location">Stockholm, Sweden</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="images/testimonial-4.jpg" alt="Diego Martinez">
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"Incredible technology! The prediction captured both of our features beautifully. Our baby looks just like the AI predicted."</p>
+                        <div class="testimonial-author">Diego Martinez</div>
+                        <div class="testimonial-location">Madrid, Spain</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="images/testimonial-5.jpg" alt="Priya Sharma">
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">"We used this as a fun surprise for our families. Everyone was so emotional seeing what our baby might look like!"</p>
+                        <div class="testimonial-author">Priya Sharma</div>
+                        <div class="testimonial-location">Mumbai, India</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn" id="prev-btn">←</button>
+                <button class="slider-btn" id="next-btn">→</button>
+            </div>
+            <div class="slider-dots" id="slider-dots"></div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready To Meet Your Future Baby?</h2>
+                <p>Join over 100,000 happy couples who've already discovered their future</p>
+                <a href="#" class="btn btn-primary">
+                    <span>📸</span> Upload Photos & Generate Now
+                </a>
+                <p class="cta-note">Results delivered instantly • 100% private • No photos stored</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about FutureBaby AI</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is this accurate?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our AI has been trained on millions of genetic patterns and family photos. While no prediction can be 100% accurate, our users report a high level of resemblance between predictions and actual babies. The AI considers genetic inheritance patterns for features like eyes, nose, facial structure, and skin tone.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Are photos stored?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            No, we take your privacy extremely seriously. All uploaded photos are processed in memory and automatically deleted within 1 hour. We never store, sell, or share your photos with any third parties. Your data is encrypted during upload and processing.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>How long does it take?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our advanced AI generates your baby prediction in under 60 seconds. Simply upload your photos, and you'll receive your result almost instantly. The entire process from upload to download takes less than 2 minutes.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Can I download results?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! You'll receive a high-resolution image that you can download and keep forever. The image is yours to share with family, use in pregnancy announcements, or keep as a special memento. We provide downloads in multiple formats and resolutions.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Is this safe for privacy?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely. We use bank-level 256-bit SSL encryption for all data transfers. Your photos are processed on secure servers and deleted immediately after. We are fully GDPR and CCPA compliant, and we never use your photos for training or any other purpose.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">FutureBaby AI</div>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2024 FutureBaby AI. All rights reserved. Made with ❤️ for expecting parents worldwide.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Testimonials Slider
+        const track = document.getElementById('testimonials-track');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const dotsContainer = document.getElementById('slider-dots');
+        
+        let currentSlide = 0;
+        const totalSlides = 5;
+
+        // Create dots
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.classList.add('slider-dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+
+        const dots = document.querySelectorAll('.slider-dot');
+
+        function updateSlider() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Auto-play slider
+        setInterval(nextSlide, 5000);
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.step-card, .feature-card, .faq-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
