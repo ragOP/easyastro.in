@@ -56,7 +56,7 @@ export default function HeroSection() {
             </h1>
 
             <p className="mt-4 max-w-2xl text-base text-foreground/75 md:text-lg md:leading-relaxed lg:mx-0 mx-auto">
-              Curated by gifted psychics & astrology experts. A private, personalized sketch delivered
+              Curated by gifted psychic & astrology experts. A private, personalized sketch delivered
               securely within 24 hours—crafted just for you.
             </p>
 
