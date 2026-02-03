@@ -251,7 +251,7 @@ export default function RecordPage() {
                               <div className="flex flex-wrap gap-1">
                                 {order.additionalProducts.map((product, i) => (
                                   <span key={i} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                                    {product} - {product === "Energised Money and Love Attractor Bracelet"? "₹799": "₹199"}
+                                    {product} - {product === "Energised Money and Love Attractor Bracelet"? "₹489": "₹199"}
                                   </span>
                                 ))}
                               </div>

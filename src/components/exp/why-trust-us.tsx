@@ -34,10 +34,10 @@ export default function WhyTrustUsSection() {
           </div>
           <div className="flex flex-col items-center justify-center mb-2">
             <span className="text-xl text-gray-500 line-through">Bundle Value ₹2,499</span>
-            <span className="text-3xl font-bold text-pink-600  px-4 rounded-lg animate-glow">Today Only ₹799</span>
+            <span className="text-3xl font-bold text-pink-600  px-4 rounded-lg animate-glow">Today Only ₹489</span>
           </div>
           <div className="mt-6 w-full flex justify-center">
-            <CtaButton title="Get My Bundle Now (₹799)" />
+            <CtaButton title="Get My Bundle Now (₹489)" />
           </div>
         </div>
       </div>

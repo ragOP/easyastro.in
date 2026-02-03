@@ -23,7 +23,7 @@ const testimonials = [
     name: "Rajesh",
     age: 28,
     quote:
-      "Money started flowing in small ways I never imagined. Salary hike + soulmate clarity. Best ₹799 spent.",
+      "Money started flowing in small ways I never imagined. Salary hike + soulmate clarity. Best ₹489 spent.",
   },
   {
     name: "Simran",

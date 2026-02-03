@@ -41,7 +41,7 @@ export default function CtaButton({
             size="lg"
             className={`font-bold text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 animate-shine bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400 text-white border-2 border-yellow-300 animate-glow ${className}`}
           >
-            {title || "Get My Bundle Now – Only ₹799"}
+            {title || "Get My Bundle Now – Only ₹489"}
           </Button>
         </a>
       )}
