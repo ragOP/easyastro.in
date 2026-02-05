@@ -91,7 +91,7 @@ export default function StickyCtaBar() {
             {/* Price - compact */}
             <div className="flex items-baseline gap-2">
               <span className="text-base text-gray-500 font-poppins-regular line-through">₹2499</span>
-              <span className="text-2xl font-bold text-purple-600 font-poppins-semibold">₹489</span>
+              <span className="text-2xl font-bold text-purple-600 font-poppins-semibold">₹199</span>
             </div>
           </div>
 

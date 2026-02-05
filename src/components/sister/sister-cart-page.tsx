@@ -37,7 +37,7 @@ export default function SisterCartPage() {
       id: 'soulmate-sketch',
       name: 'Soulmate Sketch',
       description: 'Discover your soulmate\'s face through advanced AI-powered astrology and psychic art',
-      price: 489,
+      price: 199,
       originalPrice: 1999,
       features: [
         'AI-generated soulmate visualization',

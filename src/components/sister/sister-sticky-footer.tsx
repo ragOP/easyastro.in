@@ -15,7 +15,7 @@ export default function SisterStickyFooter() {
                 {/* Left Side - Simple Pricing */}
                 <div className="flex items-center gap-3 text-white">
                     <span className="text-sm line-through opacity-80">₹998</span>
-                    <span className="text-xl font-black">₹489</span>
+                    <span className="text-xl font-black">₹199</span>
                     <span className="text-xs bg-white/20 px-2 py-1 rounded-full font-semibold whitespace-nowrap">60% OFF</span>
                 </div>
 

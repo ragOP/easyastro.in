@@ -39,7 +39,7 @@ export default function Sister2CartPage() {
       id: 'soulmate-sketch',
       name: 'Soulmate Sketch',
       description: "Get a detailed sketch of your soulmate's face",
-      price: 489,
+      price: 199,
       originalPrice: 1999,
       features: [
         "Detailed facial features",

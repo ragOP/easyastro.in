@@ -181,7 +181,7 @@ export default function WhatYouReceiveSection() {
                 <div className="mt-8 text-center">
                     <CtaButton
                         isCartPage={false}
-                        title="Yes! I Want My Sketch + Bracelet (₹489)"
+                        title="Yes! I Want My Sketch + Bracelet (₹199)"
                         className="px-6"
                     />
                     <p className="mt-4 text-sm text-gray-600">

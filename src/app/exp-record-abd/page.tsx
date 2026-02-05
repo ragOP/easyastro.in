@@ -299,7 +299,7 @@ export default function RecordPage() {
                                     key={i}
                                     className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full"
                                   >
-                                    {product} - {product === "Energised Money and Love Attractor Bracelet"? "₹489": "₹199"}
+                                    {product} - {product === "Energised Money and Love Attractor Bracelet"? "₹199": "₹199"}
                                   </span>
                                 ))}
                               </div>

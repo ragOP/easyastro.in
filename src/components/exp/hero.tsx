@@ -49,7 +49,7 @@ export default function HeroSection() {
 
             <h1 className="font-playfair-bold font-headline font-purple-700 text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl leading-tight tracking-wide text-purple-700">
               💜 See Your Soulmate's Face + Wear the Energy That Attracts Love
-              & Money – For Just ₹489
+              & Money – For Just ₹199
             </h1>
 
             {/* Split Visual - Moved outside content div for better responsive layout */}
@@ -105,7 +105,7 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center lg:justify-start">
               <CtaButton
                 isCartPage={false}
-                title="Get My Bundle Now – Only ₹489"
+                title="Get My Bundle Now – Only ₹199"
               />
             </div>
 
