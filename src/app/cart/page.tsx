@@ -190,6 +190,7 @@ export default function CartPage() {
   const handleCheckout = async () => {
     try {
       setIsCheckingOut(true);
+      // 1) Create ABD (abandoned) order first
       const abdOrderResponse = await fetch(
         `${BACKEND_URL}/api/lander3/create-order-abd`,
         {
@@ -215,12 +216,36 @@ export default function CartPage() {
         }
       );
       const abdOrderResult = await abdOrderResponse.json();
-      const abdOrderId = abdOrderResult.data._id;
-      if (!abdOrderResult.success) {
-        throw new Error("Failed to create payment order");
-      } else {
-        console.log("Abandoned Order Created with Id", abdOrderId);
+      const abdOrderId = abdOrderResult?.data?._id;
+      if (!abdOrderResult?.success) {
+        throw new Error("Failed to create ABD order");
       }
+      console.log("Abandoned Order Created with Id", abdOrderId);
+
+      // 2) Redirect to PayU with all user-provided details
+      const additionalProductsTitles = selectedProducts
+        .map((id) => {
+          const product = mockAdditionalProducts.find((p) => p.id === id);
+          return product?.title || "";
+        })
+        .filter(Boolean);
+
+      const params = new URLSearchParams({
+        amount: String(1 || 0),
+        productinfo: "Soulmate Sketch Order",
+        name: consultationFormData?.name || "Customer",
+        email: consultationFormData?.email || "customer@example.com",
+        phone: consultationFormData?.phoneNumber || "9876543210",
+        dateOfBirth: consultationFormData?.dateOfBirth || "",
+        placeOfBirth: consultationFormData?.placeOfBirth || "",
+        gender: consultationFormData?.gender || "",
+        additionalProducts: additionalProductsTitles.join(","),
+      });
+
+      const payuUrl = `${BACKEND_URL}/api/payu/pay?${params.toString()}`;
+      router.push(payuUrl);
+
+      /* RAZORPAY CODE - COMMENTED OUT
       // Create Razorpay order
       const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
         method: "POST",
@@ -349,6 +374,7 @@ export default function CartPage() {
       };
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
+      END RAZORPAY CODE */
     } catch (error) {
       console.error("Checkout error:", error);
       alert("Payment failed. Please try again.");
