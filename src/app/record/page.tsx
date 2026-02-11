@@ -26,6 +26,8 @@ interface Order {
 
 type FilterType = "all" | "today" | "yesterday" | "last7days" | "custom";
 
+const PAGE_LIMIT = 50;
+
 export default function RecordPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
@@ -34,22 +36,29 @@ export default function RecordPage() {
   const [filter, setFilter] = useState<FilterType>("all");
   const [customStart, setCustomStart] = useState<Date | null>(null);
   const [customEnd, setCustomEnd] = useState<Date | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
-    fetchOrders();
-  }, []);
+    fetchOrders(currentPage);
+  }, [currentPage]);
 
   useEffect(() => {
     applyFilters();
   }, [orders, filter, customStart, customEnd]);
 
-  const fetchOrders = async () => {
+  const fetchOrders = async (page: number) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/lander3/get-orders`);
-      const result = await response.json();
-      if (result.success) {
-        const sorted = result.data.sort((a: Order, b: Order) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime());
-        setOrders(sorted);
+      setLoading(true);
+      const response = await fetch(`${BACKEND_URL}/api/lander3/get-orders?page=${page}&limit=${PAGE_LIMIT}`);
+      const json = await response.json();
+      if (json.success && json.data) {
+        const { orders: ordersList, currentPage: pageNum, totalPages: totalP, totalCount: totalC } = json.data;
+        setOrders(Array.isArray(ordersList) ? ordersList : []);
+        setCurrentPage(pageNum ?? page);
+        setTotalPages(totalP ?? 1);
+        setTotalCount(totalC ?? 0);
       } else {
         setError('Failed to fetch orders');
       }
@@ -143,7 +152,12 @@ export default function RecordPage() {
               </span>
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Total Orders: <span className="font-semibold">{filteredOrders.length}</span>
+              Total Orders: <span className="font-semibold">{totalCount}</span>
+              {totalPages > 1 && (
+                <span className="ml-2 text-muted-foreground/80">
+                  (Page {currentPage} of {totalPages})
+                </span>
+              )}
             </p>
           </div>
 
@@ -274,6 +288,30 @@ export default function RecordPage() {
 
                     {filteredOrders.length === 0 && (
                       <div className="p-8 text-center text-muted-foreground">No orders found</div>
+                    )}
+
+                    {totalPages > 1 && (
+                      <div className="flex items-center justify-between gap-4 px-4 py-3 border-t border-border bg-muted/30">
+                        <span className="text-sm text-muted-foreground">
+                          Showing page {currentPage} of {totalPages}
+                        </span>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                            disabled={currentPage <= 1 || loading}
+                            className="px-3 py-1.5 rounded border border-border text-sm font-medium disabled:opacity-50 hover:bg-muted transition"
+                          >
+                            Previous
+                          </button>
+                          <button
+                            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                            disabled={currentPage >= totalPages || loading}
+                            className="px-3 py-1.5 rounded border border-border text-sm font-medium disabled:opacity-50 hover:bg-muted transition"
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </CardContent>
