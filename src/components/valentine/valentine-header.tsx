@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Heart, Sparkles } from "lucide-react";
 
 const MARQUEE_ITEMS = [
@@ -45,15 +44,7 @@ export default function ValentineHeader() {
 
       <div className="relative z-10 mx-auto max-w-[740px] px-4 py-3 sm:py-4">
         <div className="flex flex-col items-center gap-3">
-          <Image
-            src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020%202025.png"
-            alt="EASY ASTRO"
-            width={240}
-            height={60}
-            priority
-            className="w-44 sm:w-56 h-auto opacity-95"
-          />
-          {/* Urgency section — compact, after logo */}
+          {/* Urgency section */}
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-3 py-2 rounded-xl bg-gradient-to-r from-rose-500/20 via-pink-500/15 to-rose-500/20 border border-rose-400/30 backdrop-blur-sm">
             <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-rose-100">
               <span className="relative flex h-2 w-2">
