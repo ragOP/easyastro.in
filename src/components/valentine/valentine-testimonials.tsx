@@ -24,7 +24,7 @@ const testimonials = [
   {
     name: "Aisha K.",
     quote:
-      "I was speechless when I opened it. The sketch looked SO much like the guy I've had a crush on for years. Same eyes, same smile. And the free Love Report? Spooky accurate!",
+      "I was speechless when I opened it. The sketch looked SO much like the guy I've had a crush on for years. Same eyes, same smile. And the free readings? Spooky accurate!",
   },
   {
     name: "Simran K.",
@@ -44,17 +44,17 @@ const testimonials = [
   {
     name: "Vikram R.",
     quote:
-      "The sketch is now my phone wallpaper—a daily reminder of who to look for. The Love Report gave me so much clarity. Worth every rupee.",
+      "The sketch is now my phone wallpaper—a daily reminder of who to look for. The three free readings gave me so much clarity. Worth every rupee.",
   },
   {
     name: "Sunita M.",
     quote:
-      "Received my sketch within 24 hours. The details were incredible—from his eyes to the small mole. The free Love Report was the cherry on top!",
+      "Received my sketch within 24 hours. The details were incredible—from his eyes to the small mole. The three free readings were the cherry on top!",
   },
   {
     name: "Karan V.",
     quote:
-      "The likeness to someone I met a month later is uncanny. I'm a believer now. This Valentine offer with the free Love Report is insane value.",
+      "The likeness to someone I met a month later is uncanny. I'm a believer now. This Valentine offer with the 3 free readings is insane value.",
   },
   {
     name: "Meera J.",
@@ -69,12 +69,12 @@ const testimonials = [
   {
     name: "Pooja G.",
     quote:
-      "I can't stop looking at my sketch. It feels so real and has given me so much hope. The free Love Report made everything click. Thank you for this gift!",
+      "I can't stop looking at my sketch. It feels so real and has given me so much hope. The free readings made everything click. Thank you for this gift!",
   },
   {
     name: "Alok N.",
     quote:
-      "Turnaround was so fast, quality top-notch. The Valentine bundle with Soulmate + Love Report is a no-brainer. Recommend to anyone curious about love.",
+      "Turnaround was so fast, quality top-notch. The Valentine bundle with Soulmate + 3 FREE readings is a no-brainer. Recommend to anyone curious about love.",
   },
 ];
 
@@ -143,7 +143,7 @@ export default function ValentineTestimonials() {
             What Our Clients Say This Valentine Week
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-rose-200/80">
-            Thousands have discovered their soulmate sketch and free Love Report. Here’s what they’re saying.
+            Thousands have discovered their soulmate sketch and 3 free readings. Here’s what they’re saying.
           </p>
         </motion.div>
 
@@ -181,7 +181,7 @@ export default function ValentineTestimonials() {
             onClick={() => router.push("/valentine-cart")}
             className="rounded-2xl bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 px-8 py-6 text-base font-bold text-white shadow-lg shadow-rose-900/50 transition-all hover:from-rose-400 hover:to-pink-500 hover:shadow-rose-500/30"
           >
-            Get My Soulmate + Free Love Report — ₹199
+            Get My Soulmate + 3 FREE Readings — ₹498
           </Button>
           <p className="mt-3 text-center text-sm font-medium text-rose-300">
             Only a few spots left this Valentine week!

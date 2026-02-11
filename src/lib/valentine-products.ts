@@ -1,16 +1,19 @@
 /**
- * Valentine Week — Soulmate + Free Love Report path
- * Main product includes FREE Love Report; add-ons are optional paid readings.
+ * Valentine Week — Soulmate + 3 FREE readings path
+ * Main product includes FREE Psychic Reading, How to Impress Your Crush & Love Report; add-ons are optional paid readings.
  */
 
 export const VALENTINE_MAIN_PRODUCT = {
   id: "soulmate-sketch",
-  title: "Soulmate Sketch + FREE Love Report",
+  title: "Soulmate Sketch + FREE Psychic Reading + How to Impress Your Crush + Love Report",
+  shortTitle: "Soulmate Sketch + 3 FREE Readings",
   img: "https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png",
-  price: 199,
-  compareAt: 998,
+  price: 498,
+  compareAt: 1998,
   includes: [
     "Personalized hand-drawn soulmate sketch",
+    "FREE Psychic Reading — hidden emotions, signs & connections in your love life right now",
+    "FREE How to Impress Your Crush — how your energy comes across & how to show up confidently",
     "FREE Love Report — romantic patterns, emotional needs & the partner you're meant for",
     "Private delivery within 24–48 hours",
   ],

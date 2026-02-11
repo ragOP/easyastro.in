@@ -1,5 +1,8 @@
+"use client";
+
 import React from 'react';
 import { User, Mail, Phone, Calendar, MapPin, Venus } from 'lucide-react';
+import { useCartTheme } from '@/contexts/cart-theme-context';
 
 interface FormData {
   name: string;
@@ -16,7 +19,14 @@ interface ConsultationFormProps {
   onSubmit: (data: FormData) => void;
 }
 
+const inputBase = "w-full px-4 py-3 rounded-xl";
+const inputDefault = "border border-border focus:ring-2 focus:ring-primary focus:border-transparent";
+const inputValentine = "border border-rose-500/40 bg-rose-950/30 text-rose-100 placeholder:text-rose-400/50 focus:ring-2 focus:ring-rose-500/50 focus:border-rose-400/50";
+
 export default function ConsultationForm({ formData, setFormData, onSubmit }: ConsultationFormProps) {
+  const theme = useCartTheme();
+  const isValentine = theme === 'valentine';
+
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData({
       ...formData,
@@ -25,12 +35,12 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
   };
 
   return (
-    <div className="bg-card rounded-2xl shadow-lg border border-border p-6">
+    <div className={isValentine ? "rounded-2xl shadow-lg border-2 border-rose-500/30 bg-gradient-to-br from-rose-950/80 to-rose-950/50 p-6" : "bg-card rounded-2xl shadow-lg border border-border p-6"}>
       <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-foreground mb-2">
+        <h3 className={isValentine ? "text-2xl font-bold text-white mb-2" : "text-2xl font-bold text-foreground mb-2"}>
           💫 Your Love Details
         </h3>
-        <p className="text-muted-foreground">
+        <p className={isValentine ? "text-rose-200/80" : "text-muted-foreground"}>
           Help us create your personalized love report
         </p>
       </div>
@@ -40,95 +50,84 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
         onSubmit(formData);
       }} className="space-y-4">
         <div className="grid md:grid-cols-2 gap-4">
-          {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              <User className="w-4 h-4 inline mr-2 text-primary" />
+            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <User className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Full Name *
             </label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent"
+              className={`${inputBase} ${isValentine ? inputValentine : inputDefault}`}
               placeholder="Enter your full name"
               required
             />
           </div>
-
-          {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              <Mail className="w-4 h-4 inline mr-2 text-primary" />
+            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <Mail className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Email Address *
             </label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent"
+              className={`${inputBase} ${isValentine ? inputValentine : inputDefault}`}
               placeholder="Enter your email"
               required
             />
           </div>
-
-          {/* Phone */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              <Phone className="w-4 h-4 inline mr-2 text-primary" />
+            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <Phone className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Phone Number *
             </label>
             <input
               type="tel"
               value={formData.phoneNumber}
               onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent"
+              className={`${inputBase} ${isValentine ? inputValentine : inputDefault}`}
               placeholder="Enter your phone number"
               required
             />
           </div>
-
-          {/* Date of Birth */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              <Calendar className="w-4 h-4 inline mr-2 text-primary" />
+            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <Calendar className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Date of Birth *
             </label>
             <input
               type="date"
               value={formData.dateOfBirth}
               onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent"
+              className={`${inputBase} ${isValentine ? inputValentine : inputDefault}`}
               required
             />
           </div>
-
-          {/* Place of Birth */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              <MapPin className="w-4 h-4 inline mr-2 text-primary" />
+            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <MapPin className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Place of Birth *
             </label>
             <input
               type="text"
               value={formData.placeOfBirth}
               onChange={(e) => handleInputChange('placeOfBirth', e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent"
+              className={`${inputBase} ${isValentine ? inputValentine : inputDefault}`}
               placeholder="Enter your birth place"
               required
             />
           </div>
-
-          {/* Gender */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              <Venus className="w-4 h-4 inline mr-2 text-primary" />
+            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <Venus className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Gender *
             </label>
             <select
               value={formData.gender}
               onChange={(e) => handleInputChange('gender', e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent cursor-pointer"
+              className={`${inputBase} ${isValentine ? inputValentine : inputDefault} cursor-pointer`}
               required
             >
               <option value="" disabled>Select gender</option>
@@ -138,10 +137,8 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
             </select>
           </div>
         </div>
-
-        {/* Note */}
         <div className="text-center pt-4">
-          <p className="text-sm text-muted-foreground">
+          <p className={isValentine ? "text-sm text-rose-200/70" : "text-sm text-muted-foreground"}>
             💝 Your information is secure and will only be used for your personalized love report
           </p>
         </div>

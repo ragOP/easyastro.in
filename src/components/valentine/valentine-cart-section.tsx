@@ -42,10 +42,10 @@ export default function ValentineCartSection() {
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-white text-base sm:text-xl leading-tight">
-                  {VALENTINE_MAIN_PRODUCT.title}
+                  {VALENTINE_MAIN_PRODUCT.shortTitle ?? VALENTINE_MAIN_PRODUCT.title}
                 </h3>
                 <p className="mt-1.5 text-sm text-rose-200/80">
-                  Personalised sketch + FREE Love Report • 24–48h delivery
+                  Personalised sketch + FREE Psychic, Impress Your Crush & Love Report • 24–48h delivery
                 </p>
                 <div className="mt-3 flex items-center justify-between gap-2">
                   <span className="text-xl sm:text-2xl font-bold text-rose-300">

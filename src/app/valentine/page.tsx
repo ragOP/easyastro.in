@@ -16,12 +16,14 @@ import ValentineCartSection from "@/components/valentine/valentine-cart-section"
 import ValentineFreeReadings from "@/components/valentine/valentine-free-readings";
 import ValentineTestimonials from "@/components/valentine/valentine-testimonials";
 import ValentineFaq from "@/components/valentine/valentine-faq";
+import PastelHearts from "@/components/valentine/pastel-hearts";
 
 export default function ValentinePage() {
   const goToCart = () => window.location.assign("/valentine-cart");
 
   return (
-    <div className="flex min-h-dvh flex-col bg-[#0f0508] text-foreground">
+    <div className="relative flex min-h-dvh flex-col bg-[#0f0508] text-foreground overflow-hidden">
+      <PastelHearts />
       <ValentineHeader />
 
       <main className="flex-1">
@@ -91,7 +93,7 @@ export default function ValentinePage() {
               className="mt-8 flex flex-wrap items-center justify-center gap-2 text-sm text-rose-200/80"
             >
               <CheckCircle2 className="h-4 w-4 text-rose-400" />
-              Add any of these at checkout — Soulmate + Love Report first, then choose add-ons.
+              Add any of these at checkout — Soulmate + 3 FREE readings first, then choose add-ons.
             </motion.div>
           </div>
         </section>
@@ -111,17 +113,17 @@ export default function ValentinePage() {
             className="relative mx-auto max-w-2xl text-center"
           >
             <h2 className="font-headline text-2xl font-bold text-white sm:text-3xl">
-              Start with your Soulmate Sketch + FREE Love Report
+              Start with your Soulmate Sketch + 3 FREE Readings
             </h2>
             <p className="mt-3 text-rose-200/80">
-              One order. Personalised sketch. Free Love Report. Optional add-ons at checkout.
+              One order. Personalised sketch. FREE Psychic, How to Impress Your Crush & Love Report. Optional add-ons at checkout.
             </p>
             <Button
               size="lg"
               onClick={goToCart}
               className="mt-6 w-full rounded-2xl bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 py-6 text-base font-bold text-white shadow-lg shadow-rose-900/50 sm:w-auto sm:px-10 hover:from-rose-400 hover:via-rose-500 hover:to-pink-500"
             >
-              Claim Soulmate + Free Love Report — ₹{VALENTINE_MAIN_PRODUCT.price}
+              Claim Soulmate + 3 FREE Readings — ₹{VALENTINE_MAIN_PRODUCT.price}
             </Button>
           </motion.div>
         </section>

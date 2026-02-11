@@ -13,29 +13,29 @@ import { Sparkles, ShieldCheck, HelpCircle, Clock, Mail } from "lucide-react";
 
 const FAQS = [
   {
-    question: "What do I get with the Soulmate + Free Love Report offer?",
+    question: "What do I get with the Soulmate + 3 FREE Readings offer?",
     answer:
-      "You get a personalised hand-drawn soulmate sketch plus a FREE Love Report that reveals your romantic patterns, emotional needs, and the kind of partner you're truly meant for. Delivery is private via email/WhatsApp within 24–48 hours.",
+      "You get a personalised hand-drawn soulmate sketch plus three FREE readings: a Psychic Reading (hidden emotions & connections in your love life), How to Impress Your Crush (how your energy comes across & how to show up confidently), and a Love Report (romantic patterns, emotional needs & the partner you're meant for). Delivery is private via email/WhatsApp within 24–48 hours.",
   },
   {
     question: "How accurate is the soulmate sketch?",
     answer:
-      "Our sketches blend psychic intuition with astrological insights for a unique, personalised result. Many clients are amazed by the accuracy and personal resonance—especially when they receive the free Love Report alongside the sketch.",
+      "Our sketches blend psychic intuition with astrological insights for a unique, personalised result. Many clients are amazed by the accuracy and personal resonance—especially when they receive the three free readings (Psychic, Impress Your Crush & Love Report) alongside the sketch.",
   },
   {
-    question: "Is the Love Report really free?",
+    question: "Are the Psychic Reading, How to Impress Your Crush and Love Report really free?",
     answer:
-      "Yes! This Valentine week, the Love Report is included at no extra cost when you order the Soulmate Sketch. It highlights your romantic patterns, emotional needs, and the partner you're meant for—a perfect starting point for singles.",
+      "Yes! This Valentine week, all three are included at no extra cost when you order the Soulmate Sketch (₹498). You get the Psychic Reading, How to Impress Your Crush, and the Love Report—a perfect bundle for singles.",
   },
   {
     question: "Will my details stay private?",
     answer:
-      "Absolutely. All information you provide is strictly confidential and protected. We never share your data with third parties. Your sketch and reading are delivered privately to you only.",
+      "Absolutely. All information you provide is strictly confidential and protected. We never share your data with third parties. Your sketch and readings are delivered privately to you only.",
   },
   {
-    question: "How will I receive my sketch and Love Report?",
+    question: "How will I receive my sketch and readings?",
     answer:
-      "You'll receive your high-quality digital sketch and your free Love Report via the email or WhatsApp number you provide at checkout, typically within 24–48 hours.",
+      "You'll receive your high-quality digital sketch and all three free readings (Psychic, How to Impress Your Crush, Love Report) via the email or WhatsApp number you provide at checkout, typically within 24–48 hours.",
   },
   {
     question: "What if I'm not satisfied?",
@@ -76,7 +76,7 @@ export default function ValentineFaq() {
             Frequently Asked Questions
           </h2>
           <p className="mt-2 text-rose-200/70">
-            Everything you need to know before ordering your Soulmate Sketch + Free Love Report.
+            Everything you need to know before ordering your Soulmate Sketch + 3 FREE Readings.
           </p>
         </motion.div>
 

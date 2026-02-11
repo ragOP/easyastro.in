@@ -41,7 +41,7 @@ export default function ValentineHero({ onCtaClick }: { onCtaClick: () => void }
             Soulmate Sketch
           </span>
           <br />
-          <span className="text-white/95">+ FREE Love Report</span>
+          <span className="text-white/95">+ 3 FREE Readings</span>
         </motion.h1>
 
         <motion.p
@@ -50,7 +50,7 @@ export default function ValentineHero({ onCtaClick }: { onCtaClick: () => void }
           transition={{ duration: 0.45, delay: 0.12 }}
           className="mt-4 text-base text-rose-200/85 sm:text-lg sm:mt-5 max-w-xl"
         >
-          Your love story is written in your energy. Get a personalised soulmate sketch and a free love report — this Valentine week only.
+          Your love story is written in your energy. Get a personalised soulmate sketch plus FREE Psychic Reading, How to Impress Your Crush & Love Report — this Valentine week only.
         </motion.p>
 
         {/* Hero visual — slideshow, not product card */}
@@ -76,12 +76,12 @@ export default function ValentineHero({ onCtaClick }: { onCtaClick: () => void }
             className="w-full min-h-[52px] sm:w-auto sm:min-h-0 sm:px-10 sm:py-6 rounded-2xl bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 text-base font-bold text-white shadow-lg shadow-rose-900/50 hover:shadow-rose-500/25 hover:from-rose-400 hover:via-rose-500 hover:to-pink-500 active:scale-[0.98] touch-manipulation transition-shadow"
           >
             <span className="inline-flex items-center gap-2">
-              Get Soulmate + Free Love Report
+              Get Soulmate + 3 FREE Readings
               <Sparkles className="h-5 w-5" aria-hidden />
             </span>
           </Button>
           <p className="mt-3 text-sm text-rose-300/90">
-            Only ₹{VALENTINE_MAIN_PRODUCT.price} — Love Report included
+            Only ₹{VALENTINE_MAIN_PRODUCT.price} — Psychic, Impress Your Crush & Love Report included
           </p>
           <div className="flex items-center justify-center gap-2 mt-4 px-4 py-2.5 rounded-xl border border-rose-500/25 bg-rose-950/40 text-xs sm:text-sm text-rose-200">
             <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 text-rose-400 shrink-0" aria-hidden />
@@ -124,6 +124,14 @@ export default function ValentineHero({ onCtaClick }: { onCtaClick: () => void }
                     </li>
                     <li className="flex items-start gap-2.5 text-sm text-rose-200/90">
                       <Check className="h-4 w-4 text-rose-400 mt-0.5 shrink-0" aria-hidden />
+                      <span><strong className="text-white">FREE Psychic Reading</strong> — Hidden emotions, signs & connections in your love life</span>
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-rose-200/90">
+                      <Check className="h-4 w-4 text-rose-400 mt-0.5 shrink-0" aria-hidden />
+                      <span><strong className="text-white">FREE How to Impress Your Crush</strong> — How your energy comes across & how to show up confidently</span>
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-rose-200/90">
+                      <Check className="h-4 w-4 text-rose-400 mt-0.5 shrink-0" aria-hidden />
                       <span><strong className="text-white">FREE Love Report</strong> — Romantic patterns, emotional needs & the partner you&apos;re meant for</span>
                     </li>
                     <li className="flex items-start gap-2.5 text-sm text-rose-200/90">
@@ -139,6 +147,14 @@ export default function ValentineHero({ onCtaClick }: { onCtaClick: () => void }
             <li className="flex items-start gap-2">
               <Check className="h-4 w-4 text-rose-400 mt-0.5 shrink-0" aria-hidden />
               <span><strong className="text-white">Soulmate Sketch</strong> — Hand-drawn, personalised portrait of the person you&apos;re meant for</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="h-4 w-4 text-rose-400 mt-0.5 shrink-0" aria-hidden />
+              <span><strong className="text-white">FREE Psychic Reading</strong> — Hidden emotions, signs & connections in your love life</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <Check className="h-4 w-4 text-rose-400 mt-0.5 shrink-0" aria-hidden />
+              <span><strong className="text-white">FREE How to Impress Your Crush</strong> — How your energy comes across & how to show up confidently</span>
             </li>
             <li className="flex items-start gap-2">
               <Check className="h-4 w-4 text-rose-400 mt-0.5 shrink-0" aria-hidden />

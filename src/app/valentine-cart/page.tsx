@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Header from "@/components/layout/header";
+import ValentineHeader from "@/components/valentine/valentine-header";
 import Footer from "@/components/layout/footer";
 import CartHeader from "@/components/cart/cart-header";
 import CartContent from "@/components/cart/cart-content";
 import TestimonialsSection from "@/components/sections/testimonials";
 import GallerySection from "@/components/sections/gallery";
+import { CartThemeProvider } from "@/contexts/cart-theme-context";
 import { BACKEND_URL } from "@/lib/backendUrl";
 import { VALENTINE_MAIN_PRODUCT, VALENTINE_ADDONS } from "@/lib/valentine-products";
 
@@ -16,7 +17,7 @@ const mockCartItems = [
     id: VALENTINE_MAIN_PRODUCT.id,
     name: VALENTINE_MAIN_PRODUCT.title,
     description:
-      "Personalised soulmate sketch plus a FREE Love Report — romantic patterns, emotional needs & the partner you're meant for. Delivered in 24–48 hours.",
+      "Personalised soulmate sketch plus FREE Psychic Reading, How to Impress Your Crush & Love Report. Delivered in 24–48 hours.",
     price: VALENTINE_MAIN_PRODUCT.price,
     originalPrice: VALENTINE_MAIN_PRODUCT.compareAt ?? 998,
     features: VALENTINE_MAIN_PRODUCT.includes,
@@ -181,7 +182,7 @@ export default function ValentineCartPage() {
         amount: finalAmount,
         currency: "INR",
         name: "EasyAstro",
-        description: "Soulmate Sketch + Love Report Order Payment",
+        description: "Soulmate Sketch + 3 FREE Readings Order Payment",
         order_id: data.orderId,
         handler: async function (response: {
           razorpay_order_id: string;
@@ -280,11 +281,18 @@ export default function ValentineCartPage() {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background text-foreground">
-      <Header />
-      <main className="flex-1">
-        <CartHeader animateElements={animateElements} />
-        <CartContent
+    <CartThemeProvider theme="valentine">
+      <div className="relative flex min-h-dvh flex-col bg-[#0f0508] text-rose-100 overflow-hidden">
+        <PastelHearts />
+        <ValentineHeader />
+        <main className="relative flex-1 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-rose-950/50 via-[#0f0508] to-[#0f0508]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(190,24,93,0.12),transparent_50%)]" />
+          <div className="absolute left-0 top-1/4 h-64 w-64 rounded-full bg-rose-600/10 blur-[80px]" />
+          <div className="absolute right-0 bottom-1/4 h-56 w-56 rounded-full bg-pink-500/10 blur-[60px]" />
+          <div className="relative">
+            <CartHeader animateElements={animateElements} />
+            <CartContent
           cartItems={cartItems}
           additionalProducts={mockAdditionalProducts}
           selectedProducts={selectedProducts}
@@ -304,11 +312,13 @@ export default function ValentineCartPage() {
           setConsultationFormData={setConsultationFormData}
           finalAmount={finalAmount}
           setFinalAmount={setFinalAmount}
-        />
-        <TestimonialsSection isCartPage={true} />
-        <GallerySection isCartPage={true} />
-      </main>
-      <Footer />
-    </div>
+            />
+            <TestimonialsSection isCartPage={true} />
+            <GallerySection isCartPage={true} />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    </CartThemeProvider>
   );
 }

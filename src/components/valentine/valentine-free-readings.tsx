@@ -97,7 +97,7 @@ export default function ValentineFreeReadings({ onCtaClick }: { onCtaClick: () =
             variant="outline"
             className="min-h-[48px] rounded-2xl border-rose-400/50 bg-rose-950/50 px-6 text-rose-200 hover:bg-rose-900/50 hover:text-white hover:border-rose-300/50"
           >
-            Get access with Soulmate + Love Report
+            Get access with Soulmate + 3 FREE Readings
           </Button>
         </motion.div>
       </div>
