@@ -18,6 +18,26 @@ export default function ValentineHero({ onCtaClick }: { onCtaClick: () => void }
       <div className="absolute left-0 top-1/4 h-64 w-64 rounded-full bg-rose-600/12 blur-[80px] sm:h-96 sm:w-96" />
       <div className="absolute right-0 bottom-1/4 h-56 w-56 rounded-full bg-pink-500/10 blur-[60px] sm:h-80 sm:w-80" />
 
+      {/* Hero hearts — larger, more visible */}
+      <div className="absolute left-[8%] top-[12%] w-14 h-14 text-rose-400/70 animate-float-heart" style={{ animationDelay: "0.2s" }} aria-hidden>
+        <Heart className="w-full h-full fill-current" />
+      </div>
+      <div className="absolute right-[12%] top-[18%] w-10 h-10 text-pink-400/80 animate-float-heart" style={{ animationDelay: "0.8s" }} aria-hidden>
+        <Heart className="w-full h-full fill-current" />
+      </div>
+      <div className="absolute left-[15%] top-[45%] w-12 h-12 text-rose-300/60 animate-float-heart" style={{ animationDelay: "1.4s" }} aria-hidden>
+        <Heart className="w-full h-full fill-current" />
+      </div>
+      <div className="absolute right-[8%] top-[35%] w-16 h-16 text-pink-300/70 animate-float-heart" style={{ animationDelay: "0.5s" }} aria-hidden>
+        <Heart className="w-full h-full fill-current" />
+      </div>
+      <div className="absolute left-[10%] top-[70%] w-9 h-9 text-rose-400/65 animate-float-heart" style={{ animationDelay: "1.1s" }} aria-hidden>
+        <Heart className="w-full h-full fill-current" />
+      </div>
+      <div className="absolute right-[18%] top-[60%] w-11 h-11 text-pink-400/75 animate-float-heart" style={{ animationDelay: "1.7s" }} aria-hidden>
+        <Heart className="w-full h-full fill-current" />
+      </div>
+
       <div className="relative flex-1 flex flex-col mx-auto w-full max-w-4xl px-4 pt-6 pb-8 sm:px-6 sm:pt-10 sm:pb-12">
         {/* Badge */}
         <motion.span

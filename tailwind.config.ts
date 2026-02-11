@@ -137,6 +137,10 @@ export default {
             opacity: '0.9',
           },
         },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -145,6 +149,7 @@ export default {
         'float-heart': 'float-heart 5s ease-in-out infinite',
         'heart-pop': 'heart-pop 2.5s ease-out infinite',
         'heart-burst': 'heart-burst 2s ease-in-out infinite',
+        marquee: 'marquee 25s linear infinite',
       },
     },
   },
