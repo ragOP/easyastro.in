@@ -8,6 +8,7 @@ import CartContent from "@/components/cart/cart-content";
 import TestimonialsSection from "@/components/sections/testimonials";
 import GallerySection from "@/components/sections/gallery";
 import { CartThemeProvider } from "@/contexts/cart-theme-context";
+import PastelHearts from "@/components/valentine/pastel-hearts";
 import { BACKEND_URL } from "@/lib/backendUrl";
 import { VALENTINE_MAIN_PRODUCT, VALENTINE_ADDONS } from "@/lib/valentine-products";
 
@@ -313,8 +314,7 @@ export default function ValentineCartPage() {
           finalAmount={finalAmount}
           setFinalAmount={setFinalAmount}
             />
-            <TestimonialsSection isCartPage={true} />
-            <GallerySection isCartPage={true} />
+           
           </div>
         </main>
         <Footer />
