@@ -94,20 +94,20 @@ function TestimonialCard({
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
     >
-      <Card className="h-full border-pink-200/60 bg-white/95 shadow-lg backdrop-blur transition-transform hover:scale-[1.02] hover:shadow-xl">
+      <Card className="h-full border-rose-500/25 bg-gradient-to-b from-rose-950/80 to-rose-950/40 shadow-xl shadow-black/20 backdrop-blur-sm transition-transform hover:scale-[1.02] hover:border-rose-400/40 hover:shadow-rose-500/10">
         <CardContent className="flex h-full flex-col justify-between p-6">
           <div>
-            <Quote className="mb-3 h-8 w-8 text-pink-300" />
-            <div className="mb-4 flex text-pink-500">
+            <Quote className="mb-3 h-8 w-8 text-rose-400/80" />
+            <div className="mb-4 flex text-rose-400">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="h-5 w-5 fill-current" />
               ))}
             </div>
-            <blockquote className="border-l-2 border-pink-300 pl-4 text-zinc-700 italic">
+            <blockquote className="border-l-2 border-rose-400/50 pl-4 text-rose-100 italic">
               &ldquo;{quote}&rdquo;
             </blockquote>
           </div>
-          <p className="mt-4 font-bold text-pink-700">— {name}</p>
+          <p className="mt-4 font-bold text-rose-300">— {name}</p>
         </CardContent>
       </Card>
     </motion.div>
@@ -123,10 +123,10 @@ export default function ValentineTestimonials() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden border-t border-pink-200/60 bg-gradient-to-b from-pink-50/50 to-rose-50/50 px-4 py-14 sm:px-6 sm:py-20"
+      className="relative overflow-hidden border-t border-rose-500/20 bg-gradient-to-b from-rose-950/50 via-[#1a0a0f] to-[#0f0508] px-4 py-14 sm:px-6 sm:py-20"
     >
-      <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-pink-300/20 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-rose-300/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-rose-600/15 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-pink-600/15 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
         <motion.div
@@ -135,14 +135,14 @@ export default function ValentineTestimonials() {
           transition={{ duration: 0.5 }}
           className="mb-10 text-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-pink-300/60 bg-pink-100/80 px-4 py-1.5 text-sm font-semibold text-pink-800">
-            <Heart className="h-4 w-4" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-rose-400/40 bg-rose-500/20 px-4 py-1.5 text-sm font-semibold text-rose-200">
+            <Heart className="h-4 w-4 fill-rose-400" />
             Real stories
           </span>
-          <h2 className="mt-4 font-headline text-3xl font-bold text-zinc-900 sm:text-4xl">
+          <h2 className="mt-4 font-headline text-3xl font-bold text-white sm:text-4xl">
             What Our Clients Say This Valentine Week
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-zinc-600">
+          <p className="mx-auto mt-3 max-w-2xl text-rose-200/80">
             Thousands have discovered their soulmate sketch and free Love Report. Here’s what they’re saying.
           </p>
         </motion.div>
@@ -166,8 +166,8 @@ export default function ValentineTestimonials() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex border-pink-300 bg-white/90 text-pink-700 hover:bg-pink-50" />
-          <CarouselNext className="hidden sm:flex border-pink-300 bg-white/90 text-pink-700 hover:bg-pink-50" />
+          <CarouselPrevious className="hidden sm:flex border-rose-500/40 bg-rose-950/80 text-rose-200 hover:bg-rose-900/80" />
+          <CarouselNext className="hidden sm:flex border-rose-500/40 bg-rose-950/80 text-rose-200 hover:bg-rose-900/80" />
         </Carousel>
 
         <motion.div
@@ -179,11 +179,11 @@ export default function ValentineTestimonials() {
           <Button
             size="lg"
             onClick={() => router.push("/valentine-cart")}
-            className="rounded-2xl bg-gradient-to-r from-pink-600 to-rose-600 px-8 py-6 text-base font-bold text-white shadow-lg transition-all hover:from-pink-500 hover:to-rose-500 hover:shadow-xl"
+            className="rounded-2xl bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 px-8 py-6 text-base font-bold text-white shadow-lg shadow-rose-900/50 transition-all hover:from-rose-400 hover:to-pink-500 hover:shadow-rose-500/30"
           >
             Get My Soulmate + Free Love Report — ₹199
           </Button>
-          <p className="mt-3 text-center text-sm font-medium text-pink-700">
+          <p className="mt-3 text-center text-sm font-medium text-rose-300">
             Only a few spots left this Valentine week!
           </p>
         </motion.div>
