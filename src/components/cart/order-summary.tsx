@@ -85,34 +85,34 @@ export default function OrderSummary({
     <div className="sticky top-8">
       <div className="relative group">
         <div className={`absolute -inset-1 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500 ${isValentine ? "bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-rose-500/20" : "bg-gradient-to-r from-primary/20 via-primary/20 to-primary/20"}`}></div>
-        <div className={`relative backdrop-blur-xl rounded-3xl p-6 border ${isValentine ? "bg-gradient-to-br from-rose-950/90 to-rose-950/60 border-rose-500/30" : "bg-gradient-to-br from-white/90 to-white/80 border-primary/20"}`}>
-          <h3 className={isValentine ? "text-xl font-bold text-white mb-6" : "text-xl font-bold text-foreground mb-6"}>
+        <div className={`relative backdrop-blur-xl rounded-3xl p-6 border ${isValentine ? "bg-white/90 border-rose-200" : "bg-gradient-to-br from-white/90 to-white/80 border-primary/20"}`}>
+          <h3 className={isValentine ? "text-xl font-bold text-rose-900 mb-6" : "text-xl font-bold text-foreground mb-6"}>
             Order Summary
           </h3>
           <div className="space-y-4 mb-6">
             <div className="flex justify-between items-center">
-              <span className={isValentine ? "text-rose-200/80" : "text-muted-foreground"}>Subtotal</span>
-              <span className={isValentine ? "text-rose-100 font-semibold" : "text-foreground font-semibold"}>
+              <span className={isValentine ? "text-rose-700" : "text-muted-foreground"}>Subtotal</span>
+              <span className={isValentine ? "text-rose-900 font-semibold" : "text-foreground font-semibold"}>
                 ₹{totalWithMRP.toLocaleString()}
               </span>
             </div>
             {discountWithMRP > 0 && (
               <div className="flex justify-between items-center">
-                <span className={isValentine ? "text-rose-300" : "text-green-600"}>Discount</span>
-                <span className={isValentine ? "text-rose-300 font-semibold" : "text-green-600 font-semibold"}>
+                <span className={isValentine ? "text-rose-600" : "text-green-600"}>Discount</span>
+                <span className={isValentine ? "text-rose-600 font-semibold" : "text-green-600 font-semibold"}>
                   -₹{discountWithMRP.toLocaleString()}
                 </span>
               </div>
             )}
-            <div className={isValentine ? "border-t border-rose-500/30 pt-4" : "border-t border-border pt-4"}>
+            <div className={isValentine ? "border-t border-rose-200 pt-4" : "border-t border-border pt-4"}>
               {superDiscount > 0 && (
-                <div className={`relative flex justify-between items-center py-3 px-3 my-3 rounded-lg shadow-md ${isValentine ? "bg-gradient-to-r from-rose-500/20 to-pink-500/20 border border-rose-500/30" : "bg-gradient-to-r from-green-100 to-emerald-50 border border-green-300"}`}>
+                <div className={`relative flex justify-between items-center py-3 px-3 my-3 rounded-lg shadow-md ${isValentine ? "bg-gradient-to-r from-pink-100 to-rose-100 border border-rose-200" : "bg-gradient-to-r from-green-100 to-emerald-50 border border-green-300"}`}>
                   <div className={isValentine ? "absolute -top-2 -left-2 bg-rose-500 text-white text-xs px-2 py-1 rounded-full shadow-md" : "absolute -top-2 -left-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full shadow-md"}>SPECIAL</div>
                   <div className="flex items-center gap-2 ml-6">
-                    <Sparkles className={`w-5 h-5 animate-pulse ${isValentine ? "text-rose-400" : "text-green-600"}`} />
-                    <span className={isValentine ? "text-rose-200 font-bold text-lg" : "text-green-800 font-bold text-lg"}>Yay! {appliedCoupon}% off applied on this order 🎉</span>
+                    <Sparkles className={`w-5 h-5 animate-pulse ${isValentine ? "text-rose-500" : "text-green-600"}`} />
+                    <span className={isValentine ? "text-rose-800 font-bold text-lg" : "text-green-800 font-bold text-lg"}>Yay! {appliedCoupon}% off applied on this order 🎉</span>
                   </div>
-                  <span className={isValentine ? "text-rose-200 text-xl font-bold bg-rose-950/50 px-3 py-1 rounded-md shadow border border-rose-500/30 animate-pulse" : "text-green-700 text-xl font-bold bg-white px-3 py-1 rounded-md shadow border border-green-200 animate-pulse"}>
+                  <span className={isValentine ? "text-rose-700 text-xl font-bold bg-white px-3 py-1 rounded-md shadow border border-rose-200 animate-pulse" : "text-green-700 text-xl font-bold bg-white px-3 py-1 rounded-md shadow border border-green-200 animate-pulse"}>
                     -₹{superDiscount.toLocaleString()}
                   </span>
                 </div>
@@ -150,7 +150,7 @@ export default function OrderSummary({
             )}
           </button>
           <div className="mt-6 text-center">
-            <div className={`flex items-center justify-center space-x-2 text-sm ${isValentine ? "text-rose-200/70" : "text-muted-foreground"}`}>
+            <div className={`flex items-center justify-center space-x-2 text-sm ${isValentine ? "text-rose-600" : "text-muted-foreground"}`}>
               <Shield className="w-4 h-4" />
               <span>Secure Payment</span>
             </div>

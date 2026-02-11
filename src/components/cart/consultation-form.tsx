@@ -21,7 +21,7 @@ interface ConsultationFormProps {
 
 const inputBase = "w-full px-4 py-3 rounded-xl";
 const inputDefault = "border border-border focus:ring-2 focus:ring-primary focus:border-transparent";
-const inputValentine = "border border-rose-500/40 bg-rose-950/30 text-rose-100 placeholder:text-rose-400/50 focus:ring-2 focus:ring-rose-500/50 focus:border-rose-400/50";
+const inputValentine = "border border-rose-200 bg-white/80 text-rose-900 placeholder:text-rose-400 focus:ring-2 focus:ring-rose-300 focus:border-rose-300";
 
 export default function ConsultationForm({ formData, setFormData, onSubmit }: ConsultationFormProps) {
   const theme = useCartTheme();
@@ -35,12 +35,12 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
   };
 
   return (
-    <div className={isValentine ? "rounded-2xl shadow-lg border-2 border-rose-500/30 bg-gradient-to-br from-rose-950/80 to-rose-950/50 p-6" : "bg-card rounded-2xl shadow-lg border border-border p-6"}>
+    <div className={isValentine ? "rounded-2xl shadow-lg border-2 border-rose-200 bg-white/90 p-6" : "bg-card rounded-2xl shadow-lg border border-border p-6"}>
       <div className="text-center mb-6">
-        <h3 className={isValentine ? "text-2xl font-bold text-white mb-2" : "text-2xl font-bold text-foreground mb-2"}>
+        <h3 className={isValentine ? "text-2xl font-bold text-rose-900 mb-2" : "text-2xl font-bold text-foreground mb-2"}>
           💫 Your Love Details
         </h3>
-        <p className={isValentine ? "text-rose-200/80" : "text-muted-foreground"}>
+        <p className={isValentine ? "text-rose-700" : "text-muted-foreground"}>
           Help us create your personalized love report
         </p>
       </div>
@@ -51,8 +51,8 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
       }} className="space-y-4">
         <div className="grid md:grid-cols-2 gap-4">
           <div>
-            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
-              <User className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
+            <label className={isValentine ? "block text-sm font-medium text-rose-800 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <User className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-500" : "text-primary"}`} />
               Full Name *
             </label>
             <input
@@ -65,7 +65,7 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
             />
           </div>
           <div>
-            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+            <label className={isValentine ? "block text-sm font-medium text-rose-800 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
               <Mail className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Email Address *
             </label>
@@ -79,8 +79,8 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
             />
           </div>
           <div>
-            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
-              <Phone className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
+            <label className={isValentine ? "block text-sm font-medium text-rose-800 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <Phone className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-500" : "text-primary"}`} />
               Phone Number *
             </label>
             <input
@@ -93,7 +93,7 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
             />
           </div>
           <div>
-            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+            <label className={isValentine ? "block text-sm font-medium text-rose-800 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
               <Calendar className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
               Date of Birth *
             </label>
@@ -106,8 +106,8 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
             />
           </div>
           <div>
-            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
-              <MapPin className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
+            <label className={isValentine ? "block text-sm font-medium text-rose-800 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <MapPin className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-500" : "text-primary"}`} />
               Place of Birth *
             </label>
             <input
@@ -120,8 +120,8 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
             />
           </div>
           <div>
-            <label className={isValentine ? "block text-sm font-medium text-rose-200 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
-              <Venus className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-400" : "text-primary"}`} />
+            <label className={isValentine ? "block text-sm font-medium text-rose-800 mb-2" : "block text-sm font-medium text-foreground mb-2"}>
+              <Venus className={`w-4 h-4 inline mr-2 ${isValentine ? "text-rose-500" : "text-primary"}`} />
               Gender *
             </label>
             <select
@@ -138,7 +138,7 @@ export default function ConsultationForm({ formData, setFormData, onSubmit }: Co
           </div>
         </div>
         <div className="text-center pt-4">
-          <p className={isValentine ? "text-sm text-rose-200/70" : "text-sm text-muted-foreground"}>
+          <p className={isValentine ? "text-sm text-rose-600" : "text-sm text-muted-foreground"}>
             💝 Your information is secure and will only be used for your personalized love report
           </p>
         </div>

@@ -16,11 +16,11 @@ export default function ValentineCartSection() {
       viewport={{ once: true, margin: "-40px" }}
       className="relative overflow-hidden px-4 py-12 sm:px-6 sm:py-16"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0f0508] via-rose-950/20 to-[#0f0508]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_50%_50%,rgba(190,24,93,0.12),transparent)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-pink-50/40 via-rose-50/50 to-pink-50/40" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_40%_at_50%_50%,rgba(251,207,232,0.4),transparent)]" />
 
       <div className="relative mx-auto max-w-2xl">
-        <h2 className="text-center font-headline text-2xl font-bold text-white sm:text-3xl mb-8">
+        <h2 className="text-center font-headline text-2xl font-bold text-rose-900 sm:text-3xl mb-8">
           Your order
         </h2>
 
@@ -29,9 +29,9 @@ export default function ValentineCartSection() {
           className="block group min-h-[44px] py-2 -my-2 touch-manipulation"
           aria-label="Go to cart"
         >
-          <div className="rounded-2xl border-2 border-rose-500/30 bg-gradient-to-br from-rose-950/80 to-rose-950/50 p-4 shadow-xl shadow-black/30 transition-all hover:border-rose-400/50 hover:shadow-rose-500/20 sm:p-6">
+          <div className="rounded-2xl border-2 border-rose-200 bg-white/90 p-4 shadow-lg transition-all hover:border-rose-300 hover:shadow-rose-200/50 sm:p-6">
             <div className="flex gap-4 sm:gap-6 items-center">
-              <div className="relative h-24 w-24 sm:h-28 sm:w-28 flex-shrink-0 overflow-hidden rounded-xl border border-rose-500/30">
+              <div className="relative h-24 w-24 sm:h-28 sm:w-28 flex-shrink-0 overflow-hidden rounded-xl border border-rose-200">
                 <Image
                   src={VALENTINE_MAIN_PRODUCT.img}
                   alt={VALENTINE_MAIN_PRODUCT.title}
@@ -41,10 +41,10 @@ export default function ValentineCartSection() {
                 />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-white text-base sm:text-xl leading-tight">
+                <h3 className="font-semibold text-rose-900 text-base sm:text-xl leading-tight">
                   {VALENTINE_MAIN_PRODUCT.shortTitle ?? VALENTINE_MAIN_PRODUCT.title}
                 </h3>
-                <p className="mt-1.5 text-sm text-rose-200/80">
+                <p className="mt-1.5 text-sm text-rose-700">
                   Personalised sketch + FREE Psychic, Impress Your Crush & Love Report • 24–48h delivery
                 </p>
                 <div className="mt-3 flex items-center justify-between gap-2">
@@ -58,7 +58,7 @@ export default function ValentineCartSection() {
                 </div>
               </div>
               <div className="flex-shrink-0">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-rose-500/30 text-rose-200 group-hover:bg-rose-500/50 transition-colors">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-rose-200 text-rose-600 group-hover:bg-rose-300 transition-colors">
                   <ShoppingBag className="h-6 w-6" aria-hidden />
                 </div>
               </div>

@@ -94,20 +94,20 @@ function TestimonialCard({
       viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
     >
-      <Card className="h-full border-rose-500/25 bg-gradient-to-b from-rose-950/80 to-rose-950/40 shadow-xl shadow-black/20 backdrop-blur-sm transition-transform hover:scale-[1.02] hover:border-rose-400/40 hover:shadow-rose-500/10">
+      <Card className="h-full border-rose-200 bg-white/90 shadow-lg backdrop-blur-sm transition-transform hover:scale-[1.02] hover:border-rose-300 hover:shadow-xl">
         <CardContent className="flex h-full flex-col justify-between p-6">
           <div>
-            <Quote className="mb-3 h-8 w-8 text-rose-400/80" />
+            <Quote className="mb-3 h-8 w-8 text-rose-500" />
             <div className="mb-4 flex text-rose-400">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="h-5 w-5 fill-current" />
               ))}
             </div>
-            <blockquote className="border-l-2 border-rose-400/50 pl-4 text-rose-100 italic">
+            <blockquote className="border-l-2 border-rose-300 pl-4 text-rose-800 italic">
               &ldquo;{quote}&rdquo;
             </blockquote>
           </div>
-          <p className="mt-4 font-bold text-rose-300">— {name}</p>
+          <p className="mt-4 font-bold text-rose-600">— {name}</p>
         </CardContent>
       </Card>
     </motion.div>
@@ -123,10 +123,10 @@ export default function ValentineTestimonials() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden border-t border-rose-500/20 bg-gradient-to-b from-rose-950/50 via-[#1a0a0f] to-[#0f0508] px-4 py-14 sm:px-6 sm:py-20"
+      className="relative overflow-hidden border-t border-rose-200 bg-gradient-to-b from-pink-50/60 via-rose-50/70 to-pink-50/60 px-4 py-14 sm:px-6 sm:py-20"
     >
-      <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-rose-600/15 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-pink-600/15 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-pink-300/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-rose-300/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-6xl">
         <motion.div
@@ -183,7 +183,7 @@ export default function ValentineTestimonials() {
           >
             Get My Soulmate + 3 FREE Readings — ₹498
           </Button>
-          <p className="mt-3 text-center text-sm font-medium text-rose-300">
+          <p className="mt-3 text-center text-sm font-medium text-rose-600">
             Only a few spots left this Valentine week!
           </p>
         </motion.div>

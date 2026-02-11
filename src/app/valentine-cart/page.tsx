@@ -283,14 +283,14 @@ export default function ValentineCartPage() {
 
   return (
     <CartThemeProvider theme="valentine">
-      <div className="relative flex min-h-dvh flex-col bg-[#0f0508] text-rose-100 overflow-hidden">
+      <div className="relative flex min-h-dvh flex-col bg-gradient-to-b from-rose-50 via-pink-50/80 to-rose-50 text-rose-900 overflow-hidden">
         <PastelHearts />
         <ValentineHeader />
         <main className="relative flex-1 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-rose-950/50 via-[#0f0508] to-[#0f0508]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(190,24,93,0.12),transparent_50%)]" />
-          <div className="absolute left-0 top-1/4 h-64 w-64 rounded-full bg-rose-600/10 blur-[80px]" />
-          <div className="absolute right-0 bottom-1/4 h-56 w-56 rounded-full bg-pink-500/10 blur-[60px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-rose-50/80 via-pink-50/70 to-rose-50/80" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(251,207,232,0.3),transparent_50%)]" />
+          <div className="absolute left-0 top-1/4 h-64 w-64 rounded-full bg-pink-300/15 blur-[80px]" />
+          <div className="absolute right-0 bottom-1/4 h-56 w-56 rounded-full bg-rose-300/15 blur-[60px]" />
           <div className="relative">
             <CartHeader animateElements={animateElements} />
             <CartContent

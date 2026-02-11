@@ -22,16 +22,16 @@ function HeartShape({ className }: { className?: string }) {
 export default function ValentineFreeReadings({ onCtaClick }: { onCtaClick: () => void }) {
   return (
     <section className="relative overflow-hidden px-4 py-14 sm:px-6 sm:py-20">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0f0508] via-rose-950/30 to-[#0f0508]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,rgba(136,19,55,0.2),transparent)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-pink-50/50 via-rose-50/60 to-pink-50/50" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,rgba(251,207,232,0.3),transparent)]" />
       {/* Decorative hearts — subtle */}
-      <div className="absolute left-4 top-1/4 opacity-[0.12] pointer-events-none">
+      <div className="absolute left-4 top-1/4 opacity-30 pointer-events-none">
         <HeartShape className="h-12 w-12 text-rose-400" />
       </div>
-      <div className="absolute right-6 top-1/3 opacity-[0.1] pointer-events-none">
+      <div className="absolute right-6 top-1/3 opacity-25 pointer-events-none">
         <HeartShape className="h-10 w-10 text-pink-400" />
       </div>
-      <div className="absolute left-1/2 bottom-1/4 -translate-x-1/2 opacity-[0.08] pointer-events-none">
+      <div className="absolute left-1/2 bottom-1/4 -translate-x-1/2 opacity-20 pointer-events-none">
         <HeartShape className="h-16 w-16 text-rose-500" />
       </div>
 
@@ -40,10 +40,10 @@ export default function ValentineFreeReadings({ onCtaClick }: { onCtaClick: () =
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap items-center justify-center gap-2 text-center font-headline text-2xl font-bold text-white sm:text-3xl"
+          className="flex flex-wrap items-center justify-center gap-2 text-center font-headline text-2xl font-bold text-rose-900 sm:text-3xl"
         >
-          <Heart className="h-7 w-7 sm:h-8 sm:w-8 fill-rose-400 text-rose-400" aria-hidden />
-          <span className="bg-gradient-to-r from-rose-300 to-pink-300 bg-clip-text text-transparent">
+          <Heart className="h-7 w-7 sm:h-8 sm:w-8 fill-rose-500 text-rose-500" aria-hidden />
+          <span className="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">
             FREE readings when you get started
           </span>
           <Heart className="h-7 w-7 sm:h-8 sm:w-8 fill-rose-400 text-rose-400" aria-hidden />
@@ -65,20 +65,20 @@ export default function ValentineFreeReadings({ onCtaClick }: { onCtaClick: () =
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-20px" }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="relative w-full max-w-sm flex flex-col rounded-[2rem] border-2 border-rose-500/30 bg-gradient-to-b from-rose-950/90 to-rose-950/50 p-6 shadow-xl shadow-black/20 backdrop-blur-sm transition-all hover:border-rose-400/50 hover:shadow-rose-500/15 sm:p-7"
+              className="relative w-full max-w-sm flex flex-col rounded-[2rem] border-2 border-rose-200 bg-white/90 p-6 shadow-lg backdrop-blur-sm transition-all hover:border-rose-300 hover:shadow-xl sm:p-7"
             >
               {/* Heart accent top-right */}
-              <div className="absolute right-4 top-4 opacity-40">
-                <Heart className="h-6 w-6 text-rose-400 fill-rose-400/30" />
+              <div className="absolute right-4 top-4 opacity-50">
+                <Heart className="h-6 w-6 text-rose-400 fill-rose-300" />
               </div>
               {/* Soft heart curve decoration at top */}
-              <div className="absolute left-1/2 -translate-x-1/2 -top-px w-24 h-8 rounded-b-full bg-rose-500/20 blur-sm" />
+              <div className="absolute left-1/2 -translate-x-1/2 -top-px w-24 h-8 rounded-b-full bg-rose-200/60 blur-sm" />
 
               <div className="relative flex flex-col flex-1">
                 <span className="text-3xl" aria-hidden>{r.icon}</span>
-                <h3 className="mt-3 font-semibold text-white text-lg">{r.title}</h3>
-                <p className="mt-2 text-sm text-rose-200/85 leading-relaxed flex-1">{r.description}</p>
-                <p className="mt-3 text-xs font-medium text-rose-300/90 border-t border-rose-500/20 pt-3">
+                <h3 className="mt-3 font-semibold text-rose-900 text-lg">{r.title}</h3>
+                <p className="mt-2 text-sm text-rose-700 leading-relaxed flex-1">{r.description}</p>
+                <p className="mt-3 text-xs font-medium text-rose-600 border-t border-rose-200 pt-3">
                   {r.tagline}
                 </p>
               </div>
@@ -95,7 +95,7 @@ export default function ValentineFreeReadings({ onCtaClick }: { onCtaClick: () =
           <Button
             onClick={onCtaClick}
             variant="outline"
-            className="min-h-[48px] rounded-2xl border-rose-400/50 bg-rose-950/50 px-6 text-rose-200 hover:bg-rose-900/50 hover:text-white hover:border-rose-300/50"
+            className="min-h-[48px] rounded-2xl border-rose-300 bg-white px-6 text-rose-700 hover:bg-rose-50 hover:border-rose-400"
           >
             Get access with Soulmate + 3 FREE Readings
           </Button>

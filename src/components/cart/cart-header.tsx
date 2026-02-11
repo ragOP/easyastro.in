@@ -24,7 +24,7 @@ export default function CartHeader({
         <span
           className={
             isValentine
-              ? "bg-gradient-to-r from-rose-300 via-pink-300 to-rose-200 bg-clip-text text-transparent"
+              ? "bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 bg-clip-text text-transparent"
               : "bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent animate-pulse"
           }
         >
@@ -34,7 +34,7 @@ export default function CartHeader({
       <p
         className={
           isValentine
-            ? "text-base sm:text-lg lg:text-xl text-rose-200/80 max-w-2xl mx-auto px-2"
+            ? "text-base sm:text-lg lg:text-xl text-rose-700 max-w-2xl mx-auto px-2"
             : "text-base sm:text-lg lg:text-xl text-foreground/80 max-w-2xl mx-auto px-2"
         }
       >

@@ -41,7 +41,7 @@ export default function ValentineHeroSlideshow() {
         <CarouselContent>
           {IMAGES.map((src, i) => (
             <CarouselItem key={i}>
-              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-rose-500/30 shadow-2xl shadow-black/40">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-rose-200 shadow-xl">
                 <Image
                   src={src}
                   alt="Soulmate sketch"
@@ -53,10 +53,10 @@ export default function ValentineHeroSlideshow() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex -left-2 border-rose-500/40 bg-rose-950/90 text-rose-200 hover:bg-rose-900/90" />
-        <CarouselNext className="hidden sm:flex -right-2 border-rose-500/40 bg-rose-950/90 text-rose-200 hover:bg-rose-900/90" />
+        <CarouselPrevious className="hidden sm:flex -left-2 border-rose-200 bg-white/90 text-rose-700 hover:bg-rose-50" />
+        <CarouselNext className="hidden sm:flex -right-2 border-rose-200 bg-white/90 text-rose-700 hover:bg-rose-50" />
       </Carousel>
-      <p className="mt-2 text-center text-xs text-rose-300/80">Swipe or use arrows — yours is personalised</p>
+      <p className="mt-2 text-center text-xs text-rose-600">Swipe or use arrows — yours is personalised</p>
     </motion.div>
   );
 }

@@ -30,16 +30,16 @@ export default function AdditionalProducts({ products, selectedProducts, onProdu
   return (
     <div className="relative group">
       <div className={`absolute -inset-1 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500 ${isValentine ? "bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-rose-500/20" : "bg-gradient-to-r from-primary/20 via-primary/20 to-primary/20"}`}></div>
-      <div className={`relative backdrop-blur-xl rounded-3xl p-4 border ${isValentine ? "bg-gradient-to-br from-rose-950/90 to-rose-950/60 border-rose-500/30" : "bg-gradient-to-br from-white/90 to-white/80 border-primary/20"}`}>
+      <div className={`relative backdrop-blur-xl rounded-3xl p-4 border ${isValentine ? "bg-white/90 border-rose-200" : "bg-gradient-to-br from-white/90 to-white/80 border-primary/20"}`}>
         <div>
           <div className="text-left mb-4">
             <div className="flex items-center space-x-2">
               <div className={`w-2 h-2 rounded-full animate-pulse ${isValentine ? "bg-gradient-to-r from-rose-400 to-pink-400" : "bg-gradient-to-r from-primary to-primary/80"}`}></div>
-              <span className={isValentine ? "text-lg font-bold bg-gradient-to-r from-rose-300 via-pink-300 to-rose-200 bg-clip-text text-transparent" : "text-lg font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent"}>
+              <span className={isValentine ? "text-lg font-bold bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700 bg-clip-text text-transparent" : "text-lg font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent"}>
                 Enhance Your Love Journey
               </span>
             </div>
-            <p className={`text-sm ml-4 ${isValentine ? "text-rose-200/70" : "text-muted-foreground"}`}>Discover deeper cosmic guidance for your love life</p>
+            <p className={`text-sm ml-4 ${isValentine ? "text-rose-700" : "text-muted-foreground"}`}>Discover deeper cosmic guidance for your love life</p>
           </div>
 
           <div className="space-y-2">
@@ -62,7 +62,7 @@ export default function AdditionalProducts({ products, selectedProducts, onProdu
                             ? 'bg-gradient-to-r from-rose-500 to-pink-500 border-rose-400 shadow-xl shadow-rose-500/30'
                             : 'bg-gradient-to-r from-primary to-primary/80 border-primary shadow-xl shadow-primary/40'
                           : isValentine
-                            ? 'bg-rose-950/50 border-rose-500/40 hover:border-rose-400 hover:bg-rose-500/20'
+                            ? 'bg-white border-rose-200 hover:border-rose-300 hover:bg-rose-50'
                             : 'bg-white border-primary/30 hover:border-primary hover:bg-primary/5'
                       }`}
                     >
@@ -92,10 +92,10 @@ export default function AdditionalProducts({ products, selectedProducts, onProdu
                             <p className={isValentine ? "text-rose-200/80 text-sm" : "text-muted-foreground text-sm"}>{product.description}</p>
                           ) : (
                             <>
-                              <p className={isValentine ? "text-rose-200/80 text-sm line-clamp-2" : "text-muted-foreground text-sm line-clamp-2"}>{product.description}</p>
+                              <p className={isValentine ? "text-rose-700 text-sm line-clamp-2" : "text-muted-foreground text-sm line-clamp-2"}>{product.description}</p>
                               <button
                                 onClick={() => toggleExpanded(product.id)}
-                                className={isValentine ? "text-rose-400 text-xs hover:text-rose-300 transition-colors underline mt-1" : "text-primary text-xs hover:text-primary/80 transition-colors underline mt-1"}
+                                className={isValentine ? "text-rose-600 text-xs hover:text-rose-700 transition-colors underline mt-1" : "text-primary text-xs hover:text-primary/80 transition-colors underline mt-1"}
                               >
                                 Show More
                               </button>
@@ -104,8 +104,8 @@ export default function AdditionalProducts({ products, selectedProducts, onProdu
                         </div>
                       </div>
                       <div className="text-right ml-2">
-                        <div className={isValentine ? "text-rose-300 font-bold text-base" : "text-foreground font-bold text-base"}>₹{product.price.toLocaleString()}</div>
-                        <div className={isValentine ? "text-rose-400/70 text-sm line-through" : "text-muted-foreground text-sm line-through"}>₹{product.originalPrice.toLocaleString()}</div>
+                        <div className={isValentine ? "text-rose-600 font-bold text-base" : "text-foreground font-bold text-base"}>₹{product.price.toLocaleString()}</div>
+                        <div className={isValentine ? "text-rose-400 text-sm line-through" : "text-muted-foreground text-sm line-through"}>₹{product.originalPrice.toLocaleString()}</div>
                       </div>
                     </div>
                   </div>
@@ -113,7 +113,7 @@ export default function AdditionalProducts({ products, selectedProducts, onProdu
 
                 {expandedProduct === product.id && (
                   <>
-                    <div className={`pl-4 mt-2 p-3 rounded-lg border ${isValentine ? "bg-rose-500/10 border-rose-500/30" : "bg-primary/5 border-primary/20"}`}>
+                    <div className={`pl-4 mt-2 p-3 rounded-lg border ${isValentine ? "bg-rose-50 border-rose-200" : "bg-primary/5 border-primary/20"}`}>
                       <div className="space-y-1">
                         {product.features.map((feature, index) => (
                           <div key={index} className="flex items-center space-x-2">
@@ -128,7 +128,7 @@ export default function AdditionalProducts({ products, selectedProducts, onProdu
                     <div className="pl-2">
                       <button
                         onClick={() => toggleExpanded(product.id)}
-                        className={isValentine ? "text-rose-400 text-xs hover:text-rose-300 transition-colors underline" : "text-primary text-xs hover:text-primary/80 transition-colors underline"}
+                        className={isValentine ? "text-rose-600 text-xs hover:text-rose-700 transition-colors underline" : "text-primary text-xs hover:text-primary/80 transition-colors underline"}
                       >
                         Show Less
                       </button>

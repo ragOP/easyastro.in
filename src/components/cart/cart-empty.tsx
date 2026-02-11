@@ -22,7 +22,7 @@ export default function CartEmpty({ animateElements = true }: CartEmptyProps) {
     >
       <div className="relative group">
         <div className={`absolute -inset-1 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500 ${isValentine ? "bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-rose-500/20" : "bg-gradient-to-r from-primary/20 via-primary/20 to-primary/20"}`}></div>
-        <div className={`relative backdrop-blur-xl rounded-3xl p-6 sm:p-8 border ${isValentine ? "bg-gradient-to-br from-rose-950/90 to-rose-950/60 border-rose-500/30" : "bg-gradient-to-br from-white/90 to-white/80 border-primary/20"}`}>
+        <div className={`relative backdrop-blur-xl rounded-3xl p-6 sm:p-8 border ${isValentine ? "bg-white/90 border-rose-200" : "bg-gradient-to-br from-white/90 to-white/80 border-primary/20"}`}>
           <div className="text-center space-y-4 sm:space-y-6">
             <div className="text-4xl sm:text-6xl mb-3 sm:mb-4 animate-bounce">
               💖
@@ -30,7 +30,7 @@ export default function CartEmpty({ animateElements = true }: CartEmptyProps) {
             <h3 className={isValentine ? "text-xl sm:text-2xl font-bold text-white" : "text-xl sm:text-2xl font-bold text-foreground"}>
               Your Love Cart is Empty
             </h3>
-            <p className={isValentine ? "text-sm sm:text-base text-rose-200/80 px-2" : "text-sm sm:text-base text-muted-foreground px-2"}>
+            <p className={isValentine ? "text-sm sm:text-base text-rose-700 px-2" : "text-sm sm:text-base text-muted-foreground px-2"}>
               Ready to discover your love destiny? Browse our romantic services!
             </p>
             <Link

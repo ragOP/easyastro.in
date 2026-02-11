@@ -56,10 +56,10 @@ export default function ValentineFaq() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden border-t border-rose-500/20 bg-gradient-to-b from-[#0f0508] via-rose-950/30 to-[#0f0508] px-4 py-14 sm:px-6 sm:py-20"
+      className="relative overflow-hidden border-t border-rose-200 bg-gradient-to-b from-pink-50/50 via-rose-50/60 to-pink-50/50 px-4 py-14 sm:px-6 sm:py-20"
     >
-      <div className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-rose-600/15 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-pink-600/15 blur-3xl" />
+      <div className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-pink-300/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-rose-300/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-3xl">
         <motion.div
@@ -90,15 +90,15 @@ export default function ValentineFaq() {
             <AccordionItem
               key={i}
               value={`item-${i}`}
-              className="rounded-2xl border border-rose-500/25 bg-rose-950/60 px-4 shadow-lg backdrop-blur-sm transition-all hover:border-rose-400/40 data-[state=open]:border-rose-400/40 data-[state=open]:bg-rose-950/80"
+              className="rounded-2xl border border-rose-200 bg-white/80 px-4 shadow-lg backdrop-blur-sm transition-all hover:border-rose-300 data-[state=open]:border-rose-300 data-[state=open]:bg-white"
             >
-              <AccordionTrigger className="text-left text-base font-semibold text-white hover:no-underline sm:text-lg">
+              <AccordionTrigger className="text-left text-base font-semibold text-rose-900 hover:no-underline sm:text-lg">
                 <span className="inline-flex items-center gap-2">
-                  <HelpCircle className="h-5 w-5 shrink-0 text-rose-400" />
+                  <HelpCircle className="h-5 w-5 shrink-0 text-rose-500" />
                   {faq.question}
                 </span>
               </AccordionTrigger>
-              <AccordionContent className="pb-4 pl-7 pr-1 text-sm leading-relaxed text-rose-200/80 sm:text-base">
+              <AccordionContent className="pb-4 pl-7 pr-1 text-sm leading-relaxed text-rose-700 sm:text-base">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -110,22 +110,22 @@ export default function ValentineFaq() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8 flex flex-col items-center justify-between gap-4 text-sm text-rose-200/70 sm:flex-row"
+          className="mt-8 flex flex-col items-center justify-between gap-4 text-sm text-rose-700 sm:flex-row"
         >
           <Link
             href="/legal"
-            className="inline-flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-950/60 px-4 py-2.5 font-medium text-rose-200 backdrop-blur-sm hover:bg-rose-900/60"
+            className="inline-flex items-center gap-2 rounded-xl border border-rose-200 bg-white/80 px-4 py-2.5 font-medium text-rose-700 backdrop-blur-sm hover:bg-rose-50"
           >
-            <ShieldCheck className="h-5 w-5 text-rose-400" />
+            <ShieldCheck className="h-5 w-5 text-rose-500" />
             Policy &amp; Support
           </Link>
           <div className="inline-flex flex-wrap items-center justify-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-950/60 px-3 py-2 backdrop-blur-sm text-rose-200">
-              <Clock className="h-5 w-5 text-rose-400" />
+            <span className="inline-flex items-center gap-2 rounded-xl border border-rose-200 bg-white/80 px-3 py-2 backdrop-blur-sm text-rose-700">
+              <Clock className="h-5 w-5 text-rose-500" />
               Replies within 24 hours
             </span>
-            <span className="inline-flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-950/60 px-3 py-2 backdrop-blur-sm text-rose-200">
-              <Mail className="h-5 w-5 text-rose-400" />
+            <span className="inline-flex items-center gap-2 rounded-xl border border-rose-200 bg-white/80 px-3 py-2 backdrop-blur-sm text-rose-700">
+              <Mail className="h-5 w-5 text-rose-500" />
               no-reply@easyastro.in
             </span>
           </div>

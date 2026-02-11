@@ -34,8 +34,8 @@ export default function ValentineGallery() {
 
   return (
     <section ref={ref} className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a0a0f] via-[#2d1519] to-[#1a0a0f]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(190,24,93,0.25),transparent_50%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-rose-50/60 via-pink-50/70 to-rose-50/60" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_0%,rgba(251,207,232,0.4),transparent_50%)]" />
 
       <div className="relative mx-auto max-w-4xl">
         <motion.div
@@ -43,13 +43,13 @@ export default function ValentineGallery() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="mb-10 text-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500/20 to-pink-500/20 border border-rose-400/30 px-4 py-1.5 text-sm font-semibold text-rose-200">
+          <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-200 to-rose-200 border border-rose-200 px-4 py-1.5 text-sm font-semibold text-rose-800">
             ✨ Gallery
           </span>
-          <h2 className="mt-4 font-headline text-3xl font-bold text-white sm:text-4xl">
+          <h2 className="mt-4 font-headline text-3xl font-bold text-rose-900 sm:text-4xl">
             Real Sketches, Real Love Stories
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-rose-200/80">
+          <p className="mx-auto mt-3 max-w-xl text-rose-700">
             Every sketch is hand-drawn and unique. Swipe through our work.
           </p>
         </motion.div>
@@ -85,8 +85,8 @@ export default function ValentineGallery() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex border-rose-500/40 bg-rose-950/90 text-rose-200 hover:bg-rose-900/90" />
-            <CarouselNext className="hidden sm:flex border-rose-500/40 bg-rose-950/90 text-rose-200 hover:bg-rose-900/90" />
+            <CarouselPrevious className="hidden sm:flex border-rose-200 bg-white/90 text-rose-700 hover:bg-rose-50" />
+            <CarouselNext className="hidden sm:flex border-rose-200 bg-white/90 text-rose-700 hover:bg-rose-50" />
           </Carousel>
         </motion.div>
       </div>

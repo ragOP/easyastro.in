@@ -22,7 +22,7 @@ export default function ValentinePage() {
   const goToCart = () => window.location.assign("/valentine-cart");
 
   return (
-    <div className="relative flex min-h-dvh flex-col bg-[#0f0508] text-foreground overflow-hidden">
+    <div className="relative flex min-h-dvh flex-col bg-gradient-to-b from-rose-50 via-pink-50/80 to-rose-50 text-foreground overflow-hidden">
       <PastelHearts />
       <ValentineHeader />
 
@@ -39,17 +39,17 @@ export default function ValentinePage() {
 
         {/* Add-ons — gradient cards */}
         <section className="relative overflow-hidden px-4 py-14 sm:px-6 sm:py-20">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0f0508] via-[#1a0a0f] to-[#0f0508]" />
-          <div className="absolute left-1/4 top-0 h-64 w-64 rounded-full bg-pink-600/10 blur-[80px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-pink-50/50 via-rose-50/60 to-pink-50/50" />
+          <div className="absolute left-1/4 top-0 h-64 w-64 rounded-full bg-pink-300/20 blur-[80px]" />
 
           <div className="relative mx-auto max-w-5xl">
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center font-headline text-2xl font-bold text-white sm:text-3xl"
+              className="text-center font-headline text-2xl font-bold text-rose-900 sm:text-3xl"
             >
-              <span className="bg-gradient-to-r from-pink-300 to-rose-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
                 💗 Add-on readings (optional)
               </span>
             </motion.h2>
@@ -57,7 +57,7 @@ export default function ValentinePage() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mx-auto mt-2 max-w-xl text-center text-rose-200/70"
+              className="mx-auto mt-2 max-w-xl text-center text-rose-700"
             >
               Deepen your love journey with these personalised add-ons at checkout.
             </motion.p>
@@ -70,16 +70,16 @@ export default function ValentinePage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-30px" }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
-                  className="flex flex-col gap-3 rounded-2xl border border-rose-500/25 bg-gradient-to-r from-rose-950/60 to-rose-950/30 p-5 transition-all hover:border-rose-400/35 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-3 rounded-2xl border border-rose-200 bg-white/80 p-5 transition-all hover:border-rose-300 hover:shadow-lg sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
-                    <h3 className="font-semibold text-white">{a.title}</h3>
-                    <p className="mt-1 text-sm text-rose-200/80">{a.blurb}</p>
+                    <h3 className="font-semibold text-rose-900">{a.title}</h3>
+                    <p className="mt-1 text-sm text-rose-700">{a.blurb}</p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <span className="font-bold text-rose-300">₹{a.price}</span>
+                    <span className="font-bold text-rose-600">₹{a.price}</span>
                     {a.compareAt && (
-                      <span className="ml-2 text-sm text-rose-400/60 line-through">₹{a.compareAt}</span>
+                      <span className="ml-2 text-sm text-rose-400 line-through">₹{a.compareAt}</span>
                     )}
                   </div>
                 </motion.div>
@@ -90,9 +90,9 @@ export default function ValentinePage() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="mt-8 flex flex-wrap items-center justify-center gap-2 text-sm text-rose-200/80"
+              className="mt-8 flex flex-wrap items-center justify-center gap-2 text-sm text-rose-700"
             >
-              <CheckCircle2 className="h-4 w-4 text-rose-400" />
+              <CheckCircle2 className="h-4 w-4 text-rose-500" />
               Add any of these at checkout — Soulmate + 3 FREE readings first, then choose add-ons.
             </motion.div>
           </div>
@@ -103,8 +103,8 @@ export default function ValentinePage() {
 
         {/* Final CTA — gradient block */}
         <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20">
-          <div className="absolute inset-0 bg-gradient-to-t from-rose-950/80 via-rose-900/40 to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_100%,rgba(190,24,93,0.3),transparent_50%)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-pink-100/80 via-rose-100/60 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_100%,rgba(251,207,232,0.4),transparent_50%)]" />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -112,10 +112,10 @@ export default function ValentinePage() {
             viewport={{ once: true }}
             className="relative mx-auto max-w-2xl text-center"
           >
-            <h2 className="font-headline text-2xl font-bold text-white sm:text-3xl">
+            <h2 className="font-headline text-2xl font-bold text-rose-900 sm:text-3xl">
               Start with your Soulmate Sketch + 3 FREE Readings
             </h2>
-            <p className="mt-3 text-rose-200/80">
+            <p className="mt-3 text-rose-700">
               One order. Personalised sketch. FREE Psychic, How to Impress Your Crush & Love Report. Optional add-ons at checkout.
             </p>
             <Button
