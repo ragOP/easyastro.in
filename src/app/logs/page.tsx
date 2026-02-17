@@ -6,7 +6,7 @@ import { BACKEND_URL } from "@/lib/backendUrl";
 interface LogEntry {
   _id: string;
   path: string;
-  createdAt: string;
+  timestamp: string;
 }
 
 interface LogStats {
@@ -296,7 +296,7 @@ const LogsPage = () => {
                             {log.path}
                           </td>
                           <td className="px-4 py-3 text-gray-300 text-sm">
-                            {formatDate(log.createdAt)}
+                            {log.timestamp || '-'}
                           </td>
                         </tr>
                       ))
