@@ -123,6 +123,31 @@ export default function CartPage() {
     }, 100);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const logPath = async () => {
+      try {
+        const indianTime = new Date().toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+        });
+        await fetch(`${BACKEND_URL}/api/log/log-path`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            path: "cart",
+            timestamp: indianTime,
+          }),
+        });
+      } catch (error) {
+        console.error("Error logging path:", error);
+      }
+    };
+
+    logPath();
+  }, []);
+
   const removeItem = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
