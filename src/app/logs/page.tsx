@@ -229,7 +229,7 @@ const LogsPage = () => {
           <div className="mt-4">
             <p className="text-gray-400 text-sm mb-2">Quick search:</p>
             <div className="flex flex-wrap gap-2">
-              {["/landing", "/cart", "/order"].map(
+              {["soulmate", "cart", "order"].map(
                 (path) => (
                   <button
                     key={path}
