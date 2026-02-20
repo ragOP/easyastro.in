@@ -156,6 +156,9 @@ export default function LegalPage() {
               <li>
                 For order questions, email <a className="underline" href="mailto:no-reply@easyastro.in">no-reply@easyastro.in</a>.
               </li>
+                 <li>
+               Contact Number :9198050091
+              </li>
               <li>Support available Monday–Saturday, 10 AM–6 PM IST.</li>
               <li>Average response time: 24–48 hours.</li>
               /
