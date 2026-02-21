@@ -10,6 +10,7 @@ import SisterStickyFooter from '@/components/sister/sister-sticky-footer';
 import SisterWelcomePopup from '@/components/sister/sister-welcome-popup';
 import SisterHeroSection2 from '@/components/sister/sister-hero-section-2';
 import SisterHeroSection3 from '@/components/sister/sister-hero-section-3';
+import { BACKEND_URL } from '@/lib/backendUrl';
 
 export default function SisterPage() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -18,7 +19,7 @@ export default function SisterPage() {
   useEffect(() => {
     // Check if popup has been shown before
     const hasSeenPopup = localStorage.getItem('sister-popup-shown');
-    
+
     if (!hasSeenPopup) {
       // Show popup after 3 seconds for first-time visitors
       const timer = setTimeout(() => {
@@ -29,6 +30,30 @@ export default function SisterPage() {
 
       return () => clearTimeout(timer);
     }
+  }, []);
+
+  useEffect(() => {
+    const logPath = async () => {
+      try {
+        const indianTime = new Date().toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+        });
+        await fetch(`${BACKEND_URL}/api/log3/log-path`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            path: "landing",
+            timestamp: indianTime,
+          }),
+        });
+      } catch (error) {
+        console.error("Error logging path:", error);
+      }
+    };
+
+    logPath();
   }, []);
 
   const handleClosePopup = () => {
@@ -46,7 +71,7 @@ export default function SisterPage() {
       <SisterWhyYouNeedThis />
       <SisterClosingSection />
       <SisterStickyFooter />
-      
+
       {/* Welcome Popup */}
       <SisterWelcomePopup isOpen={isPopupOpen} onClose={handleClosePopup} />
     </main>
