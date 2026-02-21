@@ -67,7 +67,7 @@ const LogsPage = () => {
             setError(null);
 
             const response = await fetch(
-                `${BACKEND_URL}/api/log/get-log-by-path?path=${encodeURIComponent(pathInput)}`
+                `${BACKEND_URL}/api/log3/get-log-by-path?path=${encodeURIComponent(pathInput)}`
             );
             const data = await response.json();
 
@@ -106,7 +106,7 @@ const LogsPage = () => {
             setLoading((prev) => ({ ...prev, allData: true }));
             setError(null);
 
-            const response = await fetch(`${BACKEND_URL}/api/log/get-all-data`);
+            const response = await fetch(`${BACKEND_URL}/api/log3/get-all-data`);
             const data = await response.json();
 
             if (data.success) {
