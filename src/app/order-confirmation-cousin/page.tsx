@@ -1,16 +1,26 @@
 "use client";
 
 import React, { useEffect, useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, ArrowLeft } from "lucide-react";
-import { BACKEND_URL } from "@/lib/backendUrl";
 
-function OrderConfirmationContent() {
-  const router = useRouter();
+import { BACKEND_URL } from "@/lib/backendUrl";
+import dynamic from 'next/dynamic';
+
+
+// This component is separated to ensure useSearchParams is only called in a Suspense boundary
+function OrderConfirmationContentWithParams() {
+  // eslint-disable-next-line @next/next/no-use-search-params
+  const { useSearchParams } = require('next/navigation');
   const searchParams = useSearchParams();
+  return <OrderConfirmationContent searchParams={searchParams} />;
+}
+
+function OrderConfirmationContent({ searchParams }: { searchParams: URLSearchParams }) {
+  const router = useRouter();
   const [orderDetails, setOrderDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -246,7 +256,7 @@ export default function OrderConfirmationPage() {
           </main>
         }
       >
-        <OrderConfirmationContent />
+        <OrderConfirmationContentWithParams />
       </Suspense>
       <Footer />
     </div>
