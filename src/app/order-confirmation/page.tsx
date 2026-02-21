@@ -19,6 +19,56 @@ function OrderConfirmationContent() {
   const [orderDetails, setOrderDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
+  
+  const createOrder = async () => {
+    try {
+        // Create order in database
+        const orderResponse = await fetch(
+          `${BACKEND_URL}/api/lander3/create-order`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              amount: 199,
+              cashfreeOrderId: Math.random().toString(36).substring(2, 15),
+              cashfreePaymentId: Math.random().toString(36).substring(2, 15),
+              name: searchParams.get("fullName"),
+              email: searchParams.get("email"),
+              phone: searchParams.get("phoneNumber"),
+              dateOfBirth: searchParams.get("dateOfBirth"),
+              placeOfBirth: searchParams.get("placeOfBirth"),
+              gender: searchParams.get("gender"),
+              orderId: Math.random().toString(36).substring(2, 15),
+              additionalProducts: searchParams.get("additionalProducts")
+                ? searchParams
+                    .get("additionalProducts")!
+                    .split(",").map((item) => item.trim())
+                : [],
+            }),
+          },
+        );
+        const orderResult = await orderResponse.json();
+
+        if (orderResult.success) {
+          const deleteAbdOrder = await fetch(
+            `${BACKEND_URL}/api/lander3/delete-order-abd`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email: searchParams.get("email") }),
+            },
+          );
+          const deleteAbdOrderResult = await deleteAbdOrder.json();
+        } 
+      } catch (error) {
+        console.error("Error creating order:", error);
+      }
+  };
+
   useEffect(() => {
     // Get order details from URL parameters
     const orderId = searchParams.get("orderId");
@@ -45,11 +95,12 @@ function OrderConfirmationContent() {
           Date.now() + 48 * 60 * 60 * 1000,
         ).toLocaleDateString(),
       });
+      createOrder();
     } else {
       // Fallback to sessionStorage if no URL parameters (legacy support)
       const sessionOrderId = sessionStorage.getItem("orderId");
       const sessionAmount = sessionStorage.getItem("orderAmount");
-      
+
       if (sessionOrderId && sessionAmount) {
         setOrderDetails({
           orderId: sessionOrderId,
@@ -147,9 +198,8 @@ function OrderConfirmationContent() {
           </h1>
 
           <p className="text-lg sm:text-xl text-foreground/80 leading-relaxed max-w-2xl mx-auto">
-            Your soulmate sketch order has been successfully placed. Our
-            gifted artists will create your personalized sketch within 48
-            hours.
+            Your soulmate sketch order has been successfully placed. Our gifted
+            artists will create your personalized sketch within 48 hours.
           </p>
         </div>
 
@@ -211,9 +261,7 @@ function OrderConfirmationContent() {
                 {orderDetails?.profession && (
                   <div className="space-y-2">
                     <p className="text-foreground/60 text-sm">Profession</p>
-                    <p className="text-foreground">
-                      {orderDetails.profession}
-                    </p>
+                    <p className="text-foreground">{orderDetails.profession}</p>
                   </div>
                 )}
                 <div className="space-y-2">
@@ -284,12 +332,10 @@ function OrderConfirmationContent() {
                 <div className="w-12 h-12 bg-gradient-to-br from-primary/60 to-primary rounded-full flex items-center justify-center mx-auto mb-4">
                   <Star className="w-6 h-6 text-white" />
                 </div>
-                <h4 className="text-foreground font-semibold mb-2">
-                  Delivery
-                </h4>
+                <h4 className="text-foreground font-semibold mb-2">Delivery</h4>
                 <p className="text-foreground/70 text-sm">
-                  Your soulmate sketch delivered to WhatsApp and email within
-                  48 hours
+                  Your soulmate sketch delivered to WhatsApp and email within 48
+                  hours
                 </p>
               </div>
             </div>
@@ -323,8 +369,7 @@ function OrderConfirmationContent() {
             </span>
           </p>
           <p className="text-foreground/40 text-xs">
-            You will receive a confirmation email shortly with all the
-            details.
+            You will receive a confirmation email shortly with all the details.
           </p>
         </div>
       </div>
@@ -342,7 +387,9 @@ export default function OrderConfirmationPage() {
             <div className="min-h-[60vh] flex items-center justify-center">
               <div className="text-center">
                 <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                <p className="text-muted-foreground">Loading order details...</p>
+                <p className="text-muted-foreground">
+                  Loading order details...
+                </p>
               </div>
             </div>
           }
