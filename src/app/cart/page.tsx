@@ -302,10 +302,10 @@ export default function CartPage() {
       const cashfreeResult = await cashfreeResponse.json();
 
       console.log("Cashfree session creation response:", cashfreeResult);
-      console.log("Cashfree session creation response success flag:", cashfreeResult?.success);
+      console.log("Cashfree session creation response success flag:", cashfreeResult?.data);
 
       console.log("Cashfree session creation response data:", cashfreeResult?.data?.payment_session_id);
-      if (!cashfreeResult?.success || !cashfreeResult?.data?.payment_session_id) {
+      if (!cashfreeResult?.data || !cashfreeResult?.data?.payment_session_id) {
         throw new Error("Failed to create Cashfree payment session");
       }
       
