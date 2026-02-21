@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { CheckCircle, Heart, Sparkles, Clock, Shield } from 'lucide-react';
 import Link from 'next/link';
