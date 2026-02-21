@@ -300,6 +300,11 @@ export default function CartPage() {
         }
       );
       const cashfreeResult = await cashfreeResponse.json();
+
+      console.log("Cashfree session creation response:", cashfreeResult);
+      console.log("Cashfree session creation response success flag:", cashfreeResult?.success);
+
+      console.log("Cashfree session creation response data:", cashfreeResult?.data?.payment_session_id);
       if (!cashfreeResult?.success || !cashfreeResult?.data?.payment_session_id) {
         throw new Error("Failed to create Cashfree payment session");
       }
@@ -307,31 +312,6 @@ export default function CartPage() {
       // Redirect to Cashfree checkout
       const paymentSessionId = cashfreeResult.data.payment_session_id;
       const orderId = cashfreeResult.data.order_id;
-
-
-      if(!paymentSessionId || !orderId) {
-        throw new Error("Invalid payment session data");
-      }
-
-      // Initialize Cashfree SDK if not already initialized
-      if (!cashfree) {
-        const cashfreeInstance = await load({
-          mode: "production",
-        });
-        setCashfree(cashfreeInstance);
-        
-        const checkoutOptions = {
-          paymentSessionId,
-          redirectTarget: "_self",
-        };
-        cashfreeInstance.checkout(checkoutOptions);
-      } else {
-        const checkoutOptions = {
-          paymentSessionId,
-          redirectTarget: "_self",
-        };
-        cashfree.checkout(checkoutOptions);
-      }
 
       sessionStorage.setItem("cashfree_order_id", orderId);
       sessionStorage.setItem("orderAmount", finalAmount.toString());
