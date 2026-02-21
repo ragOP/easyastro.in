@@ -8,6 +8,8 @@ import TestimonialsSection from "@/components/sections/testimonials";
 import GallerySection from "@/components/sections/gallery";
 import { BACKEND_URL } from "@/lib/backendUrl";
 import { useRouter } from 'next/navigation';
+// @ts-ignore
+import { load } from "@cashfreepayments/cashfree-js";
 // Mock data for demonstration
 const mockCartItems = [
   {
@@ -76,6 +78,8 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState(mockCartItems);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [sdkInitialized, setSdkInitialized] = useState(false);
+  const [cashfree, setCashfree] = useState<any>(null);
   const [consultationFormData, setConsultationFormData] = useState({
     name: "",
     email: "",
@@ -167,6 +171,10 @@ export default function CartPage() {
       document.body.appendChild(script);
     });
   };
+    useEffect(() => {
+    initializeSDK();
+  }, []);
+
   useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
       (result) => {
@@ -176,6 +184,23 @@ export default function CartPage() {
       }
     );
   }, []);
+
+   // Initialize Cashfree SDK
+  const initializeSDK = async () => {
+    try {
+      const cashfreeInstance = await load({
+        // mode: "sandbox", // Change to "production" for live environment
+        mode: "production",
+      });
+      setCashfree(cashfreeInstance);
+      setSdkInitialized(true);
+      console.log("Cashfree SDK initialized successfully");
+    } catch (error) {
+      console.error("Failed to initialize Cashfree SDK:", error);
+      alert("Failed to initialize payment system");
+      setSdkInitialized(false);
+    }
+  };
   const handleConsultationFormSubmit = (data: any) => {
     console.log("Consultation form submitted:", data);
     // Handle form submission
@@ -247,7 +272,7 @@ export default function CartPage() {
       }
       console.log("Abandoned Order Created with Id", abdOrderId);
 
-      // 2) Redirect to PayU with all user-provided details
+      // 2) Create Cashfree payment session
       const additionalProductsTitles = selectedProducts
         .map((id) => {
           const product = mockAdditionalProducts.find((p) => p.id === id);
@@ -255,6 +280,63 @@ export default function CartPage() {
         })
         .filter(Boolean);
 
+      const cashfreeResponse = await fetch(
+        `${BACKEND_URL}/api/payment/create-session`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: 1,
+            name: consultationFormData?.name || "Customer",
+            email: consultationFormData?.email || "customer@example.com",
+            phone: consultationFormData?.phoneNumber || "9876543210",
+            dateOfBirth: consultationFormData?.dateOfBirth || "",
+            placeOfBirth: consultationFormData?.placeOfBirth || "",
+            gender: consultationFormData?.gender || "",
+            additionalProducts: additionalProductsTitles,
+          }),
+        }
+      );
+      const cashfreeResult = await cashfreeResponse.json();
+      if (!cashfreeResult?.success || !cashfreeResult?.data?.payment_session_id) {
+        throw new Error("Failed to create Cashfree payment session");
+      }
+      
+      // Redirect to Cashfree checkout
+      const paymentSessionId = cashfreeResult.data.payment_session_id;
+      const orderId = cashfreeResult.data.order_id;
+
+
+      if(!paymentSessionId || !orderId) {
+        throw new Error("Invalid payment session data");
+      }
+
+      // Initialize Cashfree SDK if not already initialized
+      if (!cashfree) {
+        const cashfreeInstance = await load({
+          mode: "production",
+        });
+        setCashfree(cashfreeInstance);
+        
+        const checkoutOptions = {
+          paymentSessionId,
+          redirectTarget: "_self",
+        };
+        cashfreeInstance.checkout(checkoutOptions);
+      } else {
+        const checkoutOptions = {
+          paymentSessionId,
+          redirectTarget: "_self",
+        };
+        cashfree.checkout(checkoutOptions);
+      }
+
+      sessionStorage.setItem("cashfree_order_id", orderId);
+      sessionStorage.setItem("orderAmount", finalAmount.toString());
+
+      /* PAYU CODE - COMMENTED OUT
       const params = new URLSearchParams({
         amount: String(finalAmount || 0),
         productinfo: "Soulmate Sketch Order",
@@ -269,6 +351,7 @@ export default function CartPage() {
 
       const payuUrl = `${BACKEND_URL}/api/payu/pay?${params.toString()}`;
       router.push(payuUrl);
+      END PAYU CODE */
 
       /* RAZORPAY CODE - COMMENTED OUT
       // Create Razorpay order
@@ -407,6 +490,7 @@ export default function CartPage() {
       setIsCheckingOut(false);
     }
   };
+  /* PAYU PAYMENT FUNCTION - COMMENTED OUT
   const handlePayuPayment = async () => {
     try {
       setIsCheckingOut(true);
@@ -471,6 +555,7 @@ export default function CartPage() {
       setIsCheckingOut(false);
     }
   }
+  END PAYU PAYMENT FUNCTION */
   return (
     <div className="flex flex-col min-h-dvh bg-background text-foreground">
       <Header />
