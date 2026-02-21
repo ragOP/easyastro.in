@@ -316,6 +316,18 @@ export default function CartPage() {
       sessionStorage.setItem("cashfree_order_id", orderId);
       sessionStorage.setItem("orderAmount", finalAmount.toString());
 
+      // Open Cashfree checkout
+      if (!cashfree) {
+        throw new Error("Cashfree SDK not initialized");
+      }
+      
+      const checkoutOptions = {
+        paymentSessionId,
+        redirectTarget: "_self",
+      };
+      
+      cashfree.checkout(checkoutOptions);
+
       /* PAYU CODE - COMMENTED OUT
       const params = new URLSearchParams({
         amount: String(finalAmount || 0),
