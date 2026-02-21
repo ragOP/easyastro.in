@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import {
@@ -16,35 +16,69 @@ import { time } from "console";
 
 export default function OrderConfirmationPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [orderDetails, setOrderDetails] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get order details from sessionStorage (passed from cart page)
-    const orderId = sessionStorage.getItem("orderId");
-    const amount = sessionStorage.getItem("orderAmount");
+    // Get order details from URL parameters
+    const orderId = searchParams.get("orderId");
+    const orderType = searchParams.get("orderType");
+    const fullName = searchParams.get("fullName");
+    const email = searchParams.get("email");
+    const phoneNumber = searchParams.get("phoneNumber");
+    const amount = searchParams.get("amount");
+    const profession = searchParams.get("profession");
+    const remarks = searchParams.get("remarks");
 
     if (orderId && amount) {
       setOrderDetails({
         orderId,
+        orderType: orderType || "Soulmate Sketch",
+        fullName: fullName || "Customer",
+        email: email || "",
+        phoneNumber: phoneNumber || "",
         amount: parseInt(amount),
+        profession: profession || "",
+        remarks: remarks || "",
         orderDate: new Date().toLocaleDateString(),
         estimatedDelivery: new Date(
           Date.now() + 48 * 60 * 60 * 1000,
         ).toLocaleDateString(),
       });
-      // Clear the session storage after getting the data
-      sessionStorage.removeItem("orderId");
-      sessionStorage.removeItem("orderAmount");
     } else {
-      // If no order details found, redirect to home
-      router.push("/");
-      return;
+      // Fallback to sessionStorage if no URL parameters (legacy support)
+      const sessionOrderId = sessionStorage.getItem("orderId");
+      const sessionAmount = sessionStorage.getItem("orderAmount");
+      
+      if (sessionOrderId && sessionAmount) {
+        setOrderDetails({
+          orderId: sessionOrderId,
+          orderType: "Soulmate Sketch",
+          fullName: "Customer",
+          email: "",
+          phoneNumber: "",
+          amount: parseInt(sessionAmount),
+          profession: "",
+          remarks: "",
+          orderDate: new Date().toLocaleDateString(),
+          estimatedDelivery: new Date(
+            Date.now() + 48 * 60 * 60 * 1000,
+          ).toLocaleDateString(),
+        });
+        // Clear the session storage after getting the data
+        sessionStorage.removeItem("orderId");
+        sessionStorage.removeItem("orderAmount");
+      } else {
+        // If no order details found, redirect to home
+        router.push("/");
+        return;
+      }
     }
 
     setLoading(false);
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, [router]);
+  }, [router, searchParams]);
 
   useEffect(() => {
     const logPath = async () => {
@@ -152,7 +186,27 @@ export default function OrderConfirmationPage() {
                   </div>
                   <div className="space-y-2">
                     <p className="text-foreground/60 text-sm">Service</p>
-                    <p className="text-foreground">Soulmate Sketch</p>
+                    <p className="text-foreground">
+                      {orderDetails?.orderType || "Soulmate Sketch"}
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-foreground/60 text-sm">Customer Name</p>
+                    <p className="text-foreground">
+                      {orderDetails?.fullName || "N/A"}
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-foreground/60 text-sm">Email</p>
+                    <p className="text-foreground">
+                      {orderDetails?.email || "N/A"}
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-foreground/60 text-sm">Phone Number</p>
+                    <p className="text-foreground">
+                      {orderDetails?.phoneNumber || "N/A"}
+                    </p>
                   </div>
                   <div className="space-y-2">
                     <p className="text-foreground/60 text-sm">Amount Paid</p>
@@ -160,6 +214,14 @@ export default function OrderConfirmationPage() {
                       ₹{orderDetails?.amount?.toLocaleString() || "N/A"}
                     </p>
                   </div>
+                  {orderDetails?.profession && (
+                    <div className="space-y-2">
+                      <p className="text-foreground/60 text-sm">Profession</p>
+                      <p className="text-foreground">
+                        {orderDetails.profession}
+                      </p>
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <p className="text-foreground/60 text-sm">Status</p>
                     <div className="flex items-center space-x-2">
@@ -170,6 +232,15 @@ export default function OrderConfirmationPage() {
                     </div>
                   </div>
                 </div>
+
+                {orderDetails?.remarks && (
+                  <div className="space-y-2 pt-4 border-t border-primary/10">
+                    <p className="text-foreground/60 text-sm">Special Remarks</p>
+                    <p className="text-foreground bg-white/5 p-3 rounded-lg">
+                      {orderDetails.remarks}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

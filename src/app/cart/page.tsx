@@ -324,6 +324,116 @@ export default function CartPage() {
       const checkoutOptions = {
         paymentSessionId,
         redirectTarget: "_self",
+        onSuccess: async function (data: any) {
+          console.log("Cashfree payment successful:", data);
+          
+          try {
+            // Create order in database
+            const orderResponse = await fetch(
+              `${BACKEND_URL}/api/lander3/create-order`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  amount: finalAmount,
+                  cashfreeOrderId: data.order?.orderId || orderId,
+                  cashfreePaymentId: data.paymentDetails?.paymentId || "",
+                  name: consultationFormData?.name,
+                  email: consultationFormData?.email,
+                  phone: consultationFormData?.phoneNumber,
+                  dateOfBirth: consultationFormData?.dateOfBirth,
+                  placeOfBirth: consultationFormData?.placeOfBirth,
+                  gender: consultationFormData?.gender,
+                  orderId: orderId,
+                  additionalProducts: selectedProducts
+                    .map((id) => {
+                      const product = mockAdditionalProducts.find(
+                        (p) => p.id === id
+                      );
+                      return product?.title || "";
+                    })
+                    .filter(Boolean),
+                }),
+              }
+            );
+            const orderResult = await orderResponse.json();
+            
+            if (orderResult.success) {
+              // Prepare order confirmation URL with parameters
+              const confirmationParams = new URLSearchParams({
+                orderId: orderId,
+                orderType: "Soulmate Sketch", 
+                fullName: consultationFormData?.name || "Customer",
+                email: consultationFormData?.email || "",
+                phoneNumber: consultationFormData?.phoneNumber || "",
+                amount: finalAmount.toString(),
+                profession: "",
+                remarks: "",
+              });
+              
+              // Store in sessionStorage as fallback
+              sessionStorage.setItem("orderId", orderId);
+              sessionStorage.setItem("orderAmount", finalAmount.toString());
+              
+              // Send webhook notification
+              try {
+                await fetch('https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    amount: finalAmount,
+                    name: consultationFormData?.name || "",
+                    email: consultationFormData?.email || "",
+                    phone: consultationFormData?.phoneNumber || "",
+                    dateOfBirth: consultationFormData?.dateOfBirth || "",
+                    placeOfBirth: consultationFormData?.placeOfBirth || "",
+                    gender: consultationFormData?.gender || "",
+                    additionalProducts: selectedProducts
+                      .map((id) => {
+                        const product = mockAdditionalProducts.find((p) => p.id === id);
+                        return product?.title || "";
+                      })
+                      .filter(Boolean),
+                    isChatsonorderSuccessfull: "Order Successfull"
+                  })
+                });
+                console.log("Webhook notification sent successfully");
+              } catch (error) {
+                console.error("Failed to send webhook notification:", error);
+              }
+              
+              // Delete abandoned order
+              const deleteAbdOrder = await fetch(
+                `${BACKEND_URL}/api/lander3/delete-order-abd`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ email: consultationFormData?.email }),
+                }
+              );
+              const deleteAbdOrderResult = await deleteAbdOrder.json();
+              console.log("Abandoned Order Deleted", deleteAbdOrderResult);
+              
+              // Redirect to success page with order details
+              window.location.href = `/order-confirmation?${confirmationParams.toString()}`;
+            } else {
+              alert("Payment successful but order creation failed. Please contact support.");
+            }
+          } catch (error) {
+            console.error("Error creating order:", error);
+            alert("Payment successful but order creation failed. Please contact support.");
+          }
+        },
+        onFailure: function (data: any) {
+          console.log("Cashfree payment failed:", data);
+          alert("Payment failed. Please try again.");
+        }
       };
       
       cashfree.checkout(checkoutOptions);
