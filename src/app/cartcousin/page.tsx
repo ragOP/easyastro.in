@@ -135,23 +135,31 @@ export default function CartPage() {
     setFinalAmount(total);
   }, [total]);
 
-  // Load Razorpay script
-  const loadScript = (src: string) => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
-    });
+  // @ts-ignore
+  import { load } from "@cashfreepayments/cashfree-js";
+
+  // ... inside CartPage component ...
+
+  const [cashfree, setCashfree] = useState<any>(null);
+  const [sdkInitialized, setSdkInitialized] = useState(false);
+
+  // Initialize Cashfree SDK
+  const initializeSDK = async () => {
+    try {
+      const cashfreeInstance = await load({
+        mode: "production",
+      });
+      setCashfree(cashfreeInstance);
+      setSdkInitialized(true);
+      console.log("Cashfree SDK initialized successfully");
+    } catch (error) {
+      console.error("Failed to initialize Cashfree SDK:", error);
+      setSdkInitialized(false);
+    }
   };
 
   useEffect(() => {
-    loadScript("https://checkout.razorpay.com/v1/checkout.js").then((result) => {
-      if (result) {
-        console.log("Razorpay script loaded successfully");
-      }
-    });
+    initializeSDK();
   }, []);
 
   // Listen for "reveal-form" (from sticky bar)
@@ -166,211 +174,209 @@ export default function CartPage() {
   }, []);
 
   // Handle checkout with all APIs
- const handleCheckout = async () => {
-  try {
-    setIsCheckingOut(true);
+  const handleCheckout = async () => {
+    try {
+      setIsCheckingOut(true);
 
-    // Get selected bumps as additional products
-    const additionalProducts = BUMPS.filter((b) => selectedBumps[b.id]).map(
-      (b) => b.title
-    );
+      // Get selected bumps as additional products
+      const additionalProducts = BUMPS.filter((b) => selectedBumps[b.id]).map(
+        (b) => b.title
+      );
 
-    // 1) Create abandoned order first
-    const abdOrderResponse = await fetch(
-      `${BACKEND_URL}/api/lander11/create-order-abd`,
-      {
+      // 1) Create abandoned order first
+      const abdOrderResponse = await fetch(
+        `${BACKEND_URL}/api/lander11/create-order-abd`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: finalAmount,
+            name: form.fullName,
+            email: form.email,
+            phone: form.whatsapp,
+            dateOfBirth: form.dateOfBirth,
+            placeOfBirth: form.placeOfBirth,
+            gender: form.gender,
+            additionalProducts: additionalProducts,
+          }),
+        }
+      );
+
+      const abdOrderResult = await abdOrderResponse.json();
+      if (!abdOrderResult.success) {
+        throw new Error("Failed to create abandoned order");
+      }
+
+      const abdOrderId = abdOrderResult.data?._id;
+      if (abdOrderId) {
+        console.log("Abandoned Order Created with Id", abdOrderId);
+      }
+
+      // 2) Create Cashfree payment session
+      const cashfreeResponse = await fetch(`${BACKEND_URL}/api/payment/create-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: finalAmount,
-          name: form.fullName,
-          email: form.email,
-          phone: form.whatsapp,
-          dateOfBirth: form.dateOfBirth,
-          placeOfBirth: form.placeOfBirth,
-          gender: form.gender,
+          // amount: finalAmount,
+          amount: 1,
+          name: form.fullName || "Customer",
+          email: form.email || "customer@example.com",
+          phone: form.whatsapp || "9876543210",
+          dateOfBirth: form.dateOfBirth || "",
+          placeOfBirth: form.placeOfBirth || "",
+          gender: form.gender || "",
           additionalProducts: additionalProducts,
+          url: 'https://www.easyastro.in/order-confirmation-cousin'
         }),
+      });
+
+      const cashfreeResult = await cashfreeResponse.json();
+      if (!cashfreeResult?.data?.payment_session_id) {
+        throw new Error("Failed to create Cashfree payment session");
       }
-    );
 
-    const abdOrderResult = await abdOrderResponse.json();
-    if (!abdOrderResult.success) {
-      throw new Error("Failed to create payment order");
-    }
+      const paymentSessionId = cashfreeResult.data.payment_session_id;
+      const orderId = cashfreeResult.data.order_id;
 
-    const abdOrderId = abdOrderResult.data?._id;
-    if (abdOrderId) {
-      console.log("Abandoned Order Created with Id", abdOrderId);
-    }
+      if (!cashfree) {
+        throw new Error("Cashfree SDK not initialized");
+      }
 
-    // 2) Create Razorpay order
-    const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: finalAmount,
-      }),
-    });
+      const checkoutOptions = {
+        paymentSessionId,
+        redirectTarget: "_self",
+        onSuccess: async function (data: any) {
+          console.log("Cashfree payment successful:", data);
 
-    const result = await response.json();
-    if (!result.success) {
-      throw new Error("Failed to create payment order");
-    }
-
-    const data = result.data;
-
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-      amount: finalAmount,
-      currency: "INR",
-      name: "EasyAstro",
-      description: "Soulmate Sketch Order Payment",
-      order_id: data.orderId,
-
-      handler: async function (response: any) {
-        try {
-          // Create order in database
-          const orderResponse = await fetch(
-            `${BACKEND_URL}/api/lander11/create-order`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                amount: finalAmount,
-                razorpayOrderId: response.razorpay_order_id,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpaySignature: response.razorpay_signature,
-                name: form.fullName,
-                email: form.email,
-                phone: form.whatsapp,
-                dateOfBirth: form.dateOfBirth,
-                placeOfBirth: form.placeOfBirth,
-                gender: form.gender,
-                orderId: data.orderId,
-                additionalProducts: additionalProducts,
-              }),
-            }
-          );
-
-          const orderResult = await orderResponse.json();
-
-          if (orderResult.success) {
-            sessionStorage.setItem("orderId", data.orderId);
-            sessionStorage.setItem("orderAmount", finalAmount.toString());
-
-            // ✅ SAME: Send automations.chatsonway.com webhook on SUCCESS
-            try {
-              await fetch(
-                "https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    amount: finalAmount,
-                    name: form.fullName || "",
-                    email: form.email || "",
-                    phone: form.whatsapp || "",
-                    dateOfBirth: form.dateOfBirth || "",
-                    placeOfBirth: form.placeOfBirth || "",
-                    gender: form.gender || "",
-                    additionalProducts: additionalProducts || [],
-                    isChatsonorderSuccessfull: "Order Successfull",
-                  }),
-                }
-              );
-              console.log("Webhook notification sent successfully");
-            } catch (error) {
-              console.error("Failed to send webhook notification:", error);
-            }
-
-            // Send campaign notification if phone number is present
-            if (form.whatsapp) {
-              try {
-                await fetch("https://backend.aisensy.com/campaign/t1/api/v2", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    apiKey:
-                      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGY5YTMyZDQ3MzczMGU3MzNhZTZiMCIsIm5hbWUiOiJTcGVrbGlvIE1lZGlhIDIxMzQiLCJhcHBOYW1lIjoiQWlTZW5zeSIsImNsaWVudElkIjoiNjhkZjlhMzJkNDczNzMwZTczM2FlNmFiIiwiYWN0aXZlUGxhbiI6IkZSRUVfRk9SRVZFUiIsImlhdCI6MTc1OTQ4NDQ2Nn0.D5rCrsjtikR4N68HNS7ZOpNfzTSTuN9otxZ9-UBvi1g",
-                    campaignName: "28oct",
-                    destination: form.whatsapp,
-                    userName: "Speklio Media 2134",
-                    templateParams: [],
-                    source: "new-landing-page form",
-                    media: {},
-                    buttons: [],
-                    carouselCards: [],
-                    location: {},
-                    attributes: {},
-                    paramsFallbackValue: {},
-                  }),
-                });
-                console.log("Campaign notification sent successfully");
-              } catch (error) {
-                console.error("Failed to send campaign notification:", error);
-              }
-            }
-
-            // Delete abandoned order if order is created successfully
-            const deleteAbdOrder = await fetch(
-              `${BACKEND_URL}/api/lander11/delete-order-abd`,
+          try {
+            // Create order in database
+            const orderResponse = await fetch(
+              `${BACKEND_URL}/api/lander11/create-order`,
               {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  amount: finalAmount,
+                  cashfreeOrderId: data.order?.orderId || orderId,
+                  cashfreePaymentId: data.paymentDetails?.paymentId || "",
+                  name: form.fullName,
+                  email: form.email,
+                  phone: form.whatsapp,
+                  dateOfBirth: form.dateOfBirth,
+                  placeOfBirth: form.placeOfBirth,
+                  gender: form.gender,
+                  orderId: orderId,
+                  additionalProducts: additionalProducts,
+                }),
+              }
+            );
+
+            const orderResult = await orderResponse.json();
+
+            if (orderResult.success) {
+              sessionStorage.setItem("orderId", orderId);
+              sessionStorage.setItem("orderAmount", finalAmount.toString());
+
+              // Webhook notification
+              try {
+                await fetch(
+                  "https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      amount: finalAmount,
+                      name: form.fullName || "",
+                      email: form.email || "",
+                      phone: form.whatsapp || "",
+                      dateOfBirth: form.dateOfBirth || "",
+                      placeOfBirth: form.placeOfBirth || "",
+                      gender: form.gender || "",
+                      additionalProducts: additionalProducts || [],
+                      isChatsonorderSuccessfull: "Order Successfull",
+                    }),
+                  }
+                );
+              } catch (error) {
+                console.error("Failed to send webhook notification:", error);
+              }
+
+              // Aisensy notification
+              if (form.whatsapp) {
+                try {
+                  await fetch("https://backend.aisensy.com/campaign/t1/api/v2", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGY5YTMyZDQ3MzczMGU3MzNhZTZiMCIsIm5hbWUiOiJTcGVrbGlvIE1lZGlhIDIxMzQiLCJhcHBOYW1lIjoiQWlTZW5zeSIsImNsaWVudElkIjoiNjhkZjlhMzJkNDczNzMwZTczM2FlNmFiIiwiYWN0aXZlUGxhbiI6IkZSRUVfRk9SRVZFUiIsImlhdCI6MTc1OTQ4NDQ2Nn0.D5rCrsjtikR4N68HNS7ZOpNfzTSTuN9otxZ9-UBvi1g",
+                      campaignName: "28oct",
+                      destination: form.whatsapp,
+                      userName: "Speklio Media 2134",
+                      templateParams: [],
+                      source: "new-landing-page form",
+                    }),
+                  });
+                } catch (error) {
+                  console.error("Failed to send campaign notification:", error);
+                }
+              }
+
+              // Delete abandoned order
+              await fetch(`${BACKEND_URL}/api/lander11/delete-order-abd`, {
                 method: "DELETE",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email: form.email }),
-              }
-            );
+              });
 
-            const deleteAbdOrderResult = await deleteAbdOrder.json();
-            console.log("Abandoned Order Deleted", deleteAbdOrderResult);
+              const confirmationParams = new URLSearchParams({
+                orderId: orderId,
+                orderType: "Soulmate Sketch + Love Report",
+                fullName: form.fullName || "Customer",
+                email: form.email || "",
+                phoneNumber: form.whatsapp || "",
+                amount: finalAmount.toString(),
+                dateOfBirth: form.dateOfBirth,
+                placeOfBirth: form.placeOfBirth,
+                gender: form.gender,
+                additionalProducts: additionalProducts.join(","),
+              });
 
-            window.location.href = "/order-confirmation";
-          } else {
-            alert(
-              "Payment successful but order creation failed. Please contact support."
-            );
+              window.location.href = `/order-confirmation-cousin?${confirmationParams.toString()}`;
+            } else {
+              alert("Payment successful but order creation failed. Please contact support.");
+            }
+          } catch (error) {
+            console.error("Error creating order:", error);
+            alert("Payment successful but order creation failed. Please contact support.");
           }
-        } catch (error) {
-          console.error("Error creating order:", error);
-          alert(
-            "Payment successful but order creation failed. Please contact support."
-          );
-        }
-      },
+        },
+        onFailure: function (data: any) {
+          console.log("Cashfree payment failed:", data);
+          alert("Payment failed. Please try again.");
+        },
+      };
 
-      prefill: {
-        name: form.fullName,
-        email: form.email,
-        contact: form.whatsapp,
-      },
+      cashfree.checkout(checkoutOptions);
 
-      theme: {
-        color: "#ec4899",
-      },
-    };
-
-    const rzp = new (window as any).Razorpay(options);
-    rzp.open();
-  } catch (error) {
-    console.error("Checkout error:", error);
-    alert("Payment failed. Please try again.");
-  } finally {
-    setIsCheckingOut(false);
-  }
-};
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Payment failed. Please try again.");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
 
   return (
@@ -617,72 +623,72 @@ export default function CartPage() {
                     />
                   </div>
 
-                 <div className="grid grid-cols-2 gap-3">
-  <div className="grid gap-1.5">
-    <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-      Date of Birth
-    </label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="grid gap-1.5">
+                      <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
+                        Date of Birth
+                      </label>
 
-    <div className="relative">
-      {/* iOS placeholder hack */}
-      {!form.dateOfBirth && (
-        <span
-          style={{
-            position: "absolute",
-            left: "14px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            fontSize: "14px",
-            color: "#9ca3af",
-            pointerEvents: "none",
-          }}
-        >
-          YYYY-MM-DD
-        </span>
-      )}
+                      <div className="relative">
+                        {/* iOS placeholder hack */}
+                        {!form.dateOfBirth && (
+                          <span
+                            style={{
+                              position: "absolute",
+                              left: "14px",
+                              top: "50%",
+                              transform: "translateY(-50%)",
+                              fontSize: "14px",
+                              color: "#9ca3af",
+                              pointerEvents: "none",
+                            }}
+                          >
+                            YYYY-MM-DD
+                          </span>
+                        )}
 
-      <input
-        value={form.dateOfBirth}
-        onChange={on("dateOfBirth")}
-        type="date"
-        required
-        style={{
-          width: "100%",
-          borderRadius: "8px",
-          border: "1px solid #e5e7eb",
-          background: "rgba(255,255,255,0.9)",
-          padding: "12px",
-          fontSize: "15px",
-          outline: "none",
-          minHeight: "46px", // fixes iPhone squish
-          WebkitAppearance: "none", // removes default iOS look
-        }}
-        className="focus:border-pink-300"
-      />
-    </div>
-  </div>
+                        <input
+                          value={form.dateOfBirth}
+                          onChange={on("dateOfBirth")}
+                          type="date"
+                          required
+                          style={{
+                            width: "100%",
+                            borderRadius: "8px",
+                            border: "1px solid #e5e7eb",
+                            background: "rgba(255,255,255,0.9)",
+                            padding: "12px",
+                            fontSize: "15px",
+                            outline: "none",
+                            minHeight: "46px", // fixes iPhone squish
+                            WebkitAppearance: "none", // removes default iOS look
+                          }}
+                          className="focus:border-pink-300"
+                        />
+                      </div>
+                    </div>
 
-  <div className="grid gap-1.5">
-    <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
-      Place of Birth
-    </label>
-    <input
-      value={form.placeOfBirth}
-      onChange={on("placeOfBirth")}
-      placeholder="City, State"
-      style={{
-        width: "100%",
-        borderRadius: "8px",
-        border: "1px solid #e5e7eb",
-        background: "rgba(255,255,255,0.9)",
-        padding: "12px",
-        fontSize: "15px",
-        outline: "none",
-      }}
-      className="focus:border-pink-300"
-    />
-  </div>
-</div>
+                    <div className="grid gap-1.5">
+                      <label className="text-[14px] sm:text-[15px] font-semibold text-zinc-900">
+                        Place of Birth
+                      </label>
+                      <input
+                        value={form.placeOfBirth}
+                        onChange={on("placeOfBirth")}
+                        placeholder="City, State"
+                        style={{
+                          width: "100%",
+                          borderRadius: "8px",
+                          border: "1px solid #e5e7eb",
+                          background: "rgba(255,255,255,0.9)",
+                          padding: "12px",
+                          fontSize: "15px",
+                          outline: "none",
+                        }}
+                        className="focus:border-pink-300"
+                      />
+                    </div>
+                  </div>
 
                 </div>
 
@@ -721,7 +727,7 @@ export default function CartPage() {
         <div className="mt-10">
           <GallerySection isCartPage />
         </div>
-          <div className="mt-10">
+        <div className="mt-10">
           <TestimonialsSection isCartPage={true} />
         </div>
       </div>

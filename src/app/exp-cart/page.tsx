@@ -1,5 +1,6 @@
 "use client";
-
+// @ts-ignore
+import { load } from "@cashfreepayments/cashfree-js";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useState, useEffect } from "react";
@@ -9,6 +10,7 @@ import GallerySection from "@/components/exp/gallery";
 import CartContent from "@/components/exp/cart-content";
 import "../exp/exp.css";
 import CartHeader from "@/components/exp/cart-header";
+import { useRouter } from "next/navigation";
 
 // Mock data for demonstration
 const mockCartItems = [
@@ -154,24 +156,26 @@ export default function CartPage() {
     );
   };
 
-  const loadScript = (src: string) => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
-    });
+  const [cashfree, setCashfree] = useState<any>(null);
+  const [sdkInitialized, setSdkInitialized] = useState(false);
+
+  // Initialize Cashfree SDK
+  const initializeSDK = async () => {
+    try {
+      const cashfreeInstance = await load({
+        mode: "production",
+      });
+      setCashfree(cashfreeInstance);
+      setSdkInitialized(true);
+      console.log("Cashfree SDK initialized successfully");
+    } catch (error) {
+      console.error("Failed to initialize Cashfree SDK:", error);
+      setSdkInitialized(false);
+    }
   };
 
   useEffect(() => {
-    loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
-      (result) => {
-        if (result) {
-          console.log("Razorpay script loaded successfully");
-        }
-      }
-    );
+    initializeSDK();
   }, []);
 
   const handleConsultationFormSubmit = (data: any) => {
@@ -183,6 +187,14 @@ export default function CartPage() {
     try {
       setIsCheckingOut(true);
 
+      const additionalProductsTitles = selectedProducts
+        .map((id) => {
+          const product = mockAdditionalProducts.find((p) => p.id === id);
+          return product?.title || "";
+        })
+        .filter(Boolean);
+
+      // 1) Create abandoned order first
       const abdOrderResponse = await fetch(
         `${BACKEND_URL}/api/lander7/create-order-abd`,
         {
@@ -198,130 +210,126 @@ export default function CartPage() {
             dateOfBirth: consultationFormData?.dateOfBirth,
             placeOfBirth: consultationFormData?.placeOfBirth,
             gender: consultationFormData?.gender,
-            additionalProducts: selectedProducts
-              .map((id) => {
-                const product = mockAdditionalProducts.find((p) => p.id === id);
-                return product?.title || "";
-              })
-              .filter(Boolean),
+            additionalProducts: additionalProductsTitles,
           }),
         }
       );
 
       const abdOrderResult = await abdOrderResponse.json();
-      const abdOrderId = abdOrderResult.data._id;
-
       if (!abdOrderResult.success) {
-        throw new Error("Failed to create payment order");
-      } else {
+        throw new Error("Failed to create abandoned order");
+      }
+
+      const abdOrderId = abdOrderResult.data?._id;
+      if (abdOrderId) {
         console.log("Abandoned Order Created with Id", abdOrderId);
       }
 
-      // Create Razorpay order
-      const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
+      // 2) Create Cashfree payment session
+      const cashfreeResponse = await fetch(`${BACKEND_URL}/api/payment/create-session`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: finalAmount,
+          // amount: finalAmount,
+          amount: 1,
+          name: consultationFormData?.name || "Customer",
+          email: consultationFormData?.email || "customer@example.com",
+          phone: consultationFormData?.phoneNumber || "9876543210",
+          dateOfBirth: consultationFormData?.dateOfBirth || "",
+          placeOfBirth: consultationFormData?.placeOfBirth || "",
+          gender: consultationFormData?.gender || "",
+          additionalProducts: additionalProductsTitles,
+          url: 'https://www.easyastro.in/exp-order-confirmation'
         }),
       });
 
-      const result = await response.json();
-
-      if (!result.success) {
-        throw new Error("Failed to create payment order");
+      const cashfreeResult = await cashfreeResponse.json();
+      if (!cashfreeResult?.data?.payment_session_id) {
+        throw new Error("Failed to create Cashfree payment session");
       }
 
-      const data = result.data;
+      const paymentSessionId = cashfreeResult.data.payment_session_id;
+      const orderId = cashfreeResult.data.order_id;
 
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-        amount: finalAmount,
-        currency: "INR",
-        name: "EasyAstro",
-        description: "Soulmate Sketch Order Payment",
-        order_id: data.orderId,
-        handler: async function (response: any) {
+      if (!cashfree) {
+        throw new Error("Cashfree SDK not initialized");
+      }
+
+      const checkoutOptions = {
+        paymentSessionId,
+        redirectTarget: "_self",
+        onSuccess: async function (data: any) {
+          console.log("Cashfree payment successful:", data);
+
           try {
             // Create order in database
-            const orderResponse = await fetch(
-              `${BACKEND_URL}/api/lander7/create-order`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  amount: finalAmount,
-                  razorpayOrderId: response.razorpay_order_id,
-                  razorpayPaymentId: response.razorpay_payment_id,
-                  razorpaySignature: response.razorpay_signature,
-                  name: consultationFormData?.name,
-                  email: consultationFormData?.email,
-                  phone: consultationFormData?.phoneNumber,
-                  dateOfBirth: consultationFormData?.dateOfBirth,
-                  placeOfBirth: consultationFormData?.placeOfBirth,
-                  gender: consultationFormData?.gender,
-                  orderId: data.orderId,
-                  additionalProducts: selectedProducts
-                    .map((id) => {
-                      const product = mockAdditionalProducts.find(
-                        (p) => p.id === id
-                      );
-                      return product?.title || "";
-                    })
-                    .filter(Boolean),
-                }),
-              }
-            );
+            const orderResponse = await fetch(`${BACKEND_URL}/api/lander7/create-order`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                amount: finalAmount,
+                cashfreeOrderId: data.order?.orderId || orderId,
+                cashfreePaymentId: data.paymentDetails?.paymentId || "",
+                name: consultationFormData?.name,
+                email: consultationFormData?.email,
+                phone: consultationFormData?.phoneNumber,
+                dateOfBirth: consultationFormData?.dateOfBirth,
+                placeOfBirth: consultationFormData?.placeOfBirth,
+                gender: consultationFormData?.gender,
+                orderId: orderId,
+                additionalProducts: additionalProductsTitles,
+              }),
+            });
 
             const orderResult = await orderResponse.json();
 
             if (orderResult.success) {
-              sessionStorage.setItem("orderId", data.orderId);
+              sessionStorage.setItem("orderId", orderId);
               sessionStorage.setItem("orderAmount", finalAmount.toString());
 
-              // Deleting item from Abandoned Order if Order is created successfulyyyy
-              const deleteAbdOrder = await fetch(
-                `${BACKEND_URL}/api/lander7/delete-order-abd`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ email: consultationFormData?.email }), // send the email here
-                }
-              );
-              const deleteAbdOrderResult = await deleteAbdOrder.json();
-              console.log("Abandoned Order Deleted", deleteAbdOrderResult);
+              // Delete abandoned order
+              await fetch(`${BACKEND_URL}/api/lander7/delete-order-abd`, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: consultationFormData?.email }),
+              });
 
-              window.location.href = "/exp-order-confirmation";
+              const confirmationParams = new URLSearchParams({
+                orderId: orderId,
+                orderType: "Soulmate Sketch + Bracelet",
+                fullName: consultationFormData?.name || "Customer",
+                email: consultationFormData?.email || "",
+                phoneNumber: consultationFormData?.phoneNumber || "",
+                amount: finalAmount.toString(),
+                dateOfBirth: consultationFormData?.dateOfBirth,
+                placeOfBirth: consultationFormData?.placeOfBirth,
+                gender: consultationFormData?.gender,
+                additionalProducts: additionalProductsTitles.join(","),
+              });
+
+              window.location.href = `/exp-order-confirmation?${confirmationParams.toString()}`;
             } else {
-              alert(
-                "Payment successful but order creation failed. Please contact support."
-              );
+              alert("Payment successful but order creation failed. Please contact support.");
             }
           } catch (error) {
             console.error("Error creating order:", error);
-            alert(
-              "Payment successful but order creation failed. Please contact support."
-            );
+            alert("Payment successful but order creation failed. Please contact support.");
           }
         },
-        prefill: {
-          name: consultationFormData?.name,
-          email: consultationFormData?.email,
-          contact: consultationFormData?.phoneNumber,
-        },
-        theme: {
-          color: "#ec4899",
+        onFailure: function (data: any) {
+          console.log("Cashfree payment failed:", data);
+          alert("Payment failed. Please try again.");
         },
       };
 
-      const rzp = new (window as any).Razorpay(options);
-      rzp.open();
+      cashfree.checkout(checkoutOptions);
+
     } catch (error) {
       console.error("Checkout error:", error);
       alert("Payment failed. Please try again.");
