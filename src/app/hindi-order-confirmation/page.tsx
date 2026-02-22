@@ -33,10 +33,10 @@ function HindiOrderConfirmationContent() {
                         amount: params.amount,
                         cashfreeOrderId: params.orderId,
                         cashfreePaymentId: "CF_" + Math.random().toString(36).substring(2, 10), // Placeholder if not from query
-                        fullName: params.fullName,
+                        name: params.fullName,
                         email: params.email,
-                        phoneNumber: params.phoneNumber,
-                        dob: params.dateOfBirth,
+                        phone: params.phoneNumber,
+                        dateOfBirth: params.dateOfBirth,
                         placeOfBirth: params.placeOfBirth,
                         gender: params.gender,
                         orderId: params.orderId,

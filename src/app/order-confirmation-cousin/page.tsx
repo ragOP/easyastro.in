@@ -16,6 +16,7 @@ function OrderConfirmationContent() {
   const createOrderOnLanding = async (params: any) => {
     try {
       // Create order in database for lander11 if not already there
+      console.log("Creating order on landing with params:", params);
       const orderResponse = await fetch(
         `${BACKEND_URL}/api/lander11/create-order`,
         {
@@ -27,10 +28,10 @@ function OrderConfirmationContent() {
             amount: params.amount,
             cashfreeOrderId: params.orderId,
             cashfreePaymentId: "CF_" + Math.random().toString(36).substring(2, 10),
-            fullName: params.fullName,
+            name: params.fullName,
             email: params.email,
-            phoneNumber: params.phoneNumber,
-            dob: params.dateOfBirth,
+            phone: params.phoneNumber,
+            dateOfBirth: params.dateOfBirth,
             placeOfBirth: params.placeOfBirth,
             gender: params.gender,
             orderId: params.orderId,
@@ -111,6 +112,8 @@ function OrderConfirmationContent() {
         orderDate: new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' }),
         estimatedDelivery: new Date(Date.now() + 48 * 60 * 60 * 1000).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' }),
       };
+
+      console.log("Order details from query:", details);
       setOrderDetails(details);
       createOrderOnLanding(details);
       setLoading(false);
