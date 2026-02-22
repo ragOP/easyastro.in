@@ -1,5 +1,7 @@
 // app/cart/page.tsx
 "use client";
+// @ts-ignore
+import { load } from "@cashfreepayments/cashfree-js";
 
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
@@ -134,11 +136,6 @@ export default function CartPage() {
   useEffect(() => {
     setFinalAmount(total);
   }, [total]);
-
-  // @ts-ignore
-  import { load } from "@cashfreepayments/cashfree-js";
-
-  // ... inside CartPage component ...
 
   const [cashfree, setCashfree] = useState<any>(null);
   const [sdkInitialized, setSdkInitialized] = useState(false);
