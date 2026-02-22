@@ -232,8 +232,7 @@ export default function CartPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // amount: finalAmount,
-          amount: 1,
+          amount: finalAmount,
           name: consultationFormData?.name || "Customer",
           email: consultationFormData?.email || "customer@example.com",
           phone: consultationFormData?.phoneNumber || "9876543210",

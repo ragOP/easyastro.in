@@ -224,8 +224,7 @@ export default function Sister2CartPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // amount: total,
-          amount: 1,
+          amount: total,
           name: consultationFormData?.name || "Customer",
           email: consultationFormData?.email || "customer@example.com",
           phone: consultationFormData?.phoneNumber || "9876543210",
