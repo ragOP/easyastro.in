@@ -26,10 +26,10 @@ function Sister2OrderConfirmationContent() {
             amount: params.amount,
             cashfreeOrderId: params.orderId,
             cashfreePaymentId: "CF_" + Math.random().toString(36).substring(2, 10), // Placeholder if not from query
-            name: params.fullName,
+            fullName: params.fullName,
             email: params.email,
-            phone: params.phoneNumber,
-            dateOfBirth: params.dateOfBirth,
+            phoneNumber: params.phoneNumber,
+            dob: params.dateOfBirth,
             placeOfBirth: params.placeOfBirth,
             gender: params.gender,
             orderId: params.orderId,

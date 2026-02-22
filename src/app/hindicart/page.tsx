@@ -210,9 +210,9 @@ export default function CartPage() {
         },
         body: JSON.stringify({
           amount: finalAmount,
-          name: form.fullName,
+          fullName: form.fullName,
           email: form.email,
-          phone: form.whatsapp,
+          phoneNumber: form.whatsapp,
           dateOfBirth: form.dateOfBirth,
           placeOfBirth: form.placeOfBirth,
           gender: form.gender,

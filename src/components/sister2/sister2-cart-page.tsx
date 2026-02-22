@@ -225,9 +225,9 @@ export default function Sister2CartPage() {
         },
         body: JSON.stringify({
           amount: total,
-          name: consultationFormData?.name || "Customer",
+          fullName: consultationFormData?.name || "Customer",
           email: consultationFormData?.email || "customer@example.com",
-          phone: consultationFormData?.phoneNumber || "9876543210",
+          phoneNumber: consultationFormData?.phoneNumber || "9876543210",
           dateOfBirth: consultationFormData?.dateOfBirth || "",
           placeOfBirth: consultationFormData?.placeOfBirth || "",
           gender: consultationFormData?.gender || "",
