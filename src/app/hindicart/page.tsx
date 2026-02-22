@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import StickyBuyBar from "./sticky";
 import { BACKEND_URL } from "@/lib/backendUrl";
+// @ts-ignore
+import { load } from "@cashfreepayments/cashfree-js";
 
 // ⬇️ ADD: import your Gallery section
 import GalleryHindi from "../../components/sections/GalleryHindi";
@@ -138,29 +140,31 @@ export default function CartPage() {
   // Checkout state
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [finalAmount, setFinalAmount] = useState(total);
+  const [cashfree, setCashfree] = useState<any>(null);
+  const [sdkInitialized, setSdkInitialized] = useState(false);
 
   // Update finalAmount when total changes
   useEffect(() => {
     setFinalAmount(total);
   }, [total]);
 
-  // Load Razorpay script
-  const loadScript = (src: string) => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
-    });
+  // Initialize Cashfree SDK
+  const initializeSDK = async () => {
+    try {
+      const cashfreeInstance = await load({
+        mode: "production",
+      });
+      setCashfree(cashfreeInstance);
+      setSdkInitialized(true);
+      console.log("Cashfree SDK initialized successfully");
+    } catch (error) {
+      console.error("Failed to initialize Cashfree SDK:", error);
+      setSdkInitialized(false);
+    }
   };
 
   useEffect(() => {
-    loadScript("https://checkout.razorpay.com/v1/checkout.js").then((result) => {
-      if (result) {
-        console.log("Razorpay script loaded successfully");
-      }
-    });
+    initializeSDK();
   }, []);
 
   // Listen for "reveal-form" (from sticky bar)
@@ -175,217 +179,216 @@ export default function CartPage() {
   }, []);
 
   // Handle checkout with all APIs
-// Add this helper somewhere in the same component file (top-level inside component is fine)
-const sendChatsonwayWebhook = async (payload: any) => {
-  try {
-    await fetch("https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-    console.log("Chatsonway webhook notification sent successfully");
-  } catch (error) {
-    console.error("Failed to send Chatsonway webhook notification:", error);
-  }
-};
-
-const handleCheckout = async () => {
-  try {
-    setIsCheckingOut(true);
-
-    // Get selected bumps as additional products
-    const additionalProducts = BUMPS.filter((b) => selectedBumps[b.id]).map((b) => b.title);
-
-    // 1) Create abandoned order first
-    const abdOrderResponse = await fetch(`${BACKEND_URL}/api/lander12/create-order-abd`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: finalAmount,
-        name: form.fullName,
-        email: form.email,
-        phone: form.whatsapp,
-        dateOfBirth: form.dateOfBirth,
-        placeOfBirth: form.placeOfBirth,
-        gender: form.gender,
-        additionalProducts: additionalProducts,
-      }),
-    });
-
-    const abdOrderResult = await abdOrderResponse.json();
-    if (!abdOrderResult.success) {
-      throw new Error("Failed to create payment order");
+  // Add this helper somewhere in the same component file (top-level inside component is fine)
+  const sendChatsonwayWebhook = async (payload: any) => {
+    try {
+      await fetch("https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      console.log("Chatsonway webhook notification sent successfully");
+    } catch (error) {
+      console.error("Failed to send Chatsonway webhook notification:", error);
     }
+  };
 
-    const abdOrderId = abdOrderResult.data?._id;
-    if (abdOrderId) {
-      console.log("Abandoned Order Created with Id", abdOrderId);
-    }
+  const handleCheckout = async () => {
+    try {
+      setIsCheckingOut(true);
 
-    // 2) Create Razorpay order
-    const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        amount: finalAmount,
-      }),
-    });
+      // Get selected bumps as additional products
+      const additionalProducts = BUMPS.filter((b) => selectedBumps[b.id]).map((b) => b.title);
 
-    const result = await response.json();
-    if (!result.success) {
-      throw new Error("Failed to create payment order");
-    }
+      // 1) Create abandoned order first
+      const abdOrderResponse = await fetch(`${BACKEND_URL}/api/lander12/create-order-abd`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: finalAmount,
+          name: form.fullName,
+          email: form.email,
+          phone: form.whatsapp,
+          dateOfBirth: form.dateOfBirth,
+          placeOfBirth: form.placeOfBirth,
+          gender: form.gender,
+          additionalProducts: additionalProducts,
+        }),
+      });
 
-    const data = result.data;
+      const abdOrderResult = await abdOrderResponse.json();
+      if (!abdOrderResult.success) {
+        throw new Error("Failed to create abandoned order");
+      }
 
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-      amount: finalAmount,
-      currency: "INR",
-      name: "EasyAstro",
-      description: "सोलमेट स्केच ऑर्डर पेमेंट",
-      order_id: data.orderId,
+      const abdOrderId = abdOrderResult.data?._id;
+      if (abdOrderId) {
+        console.log("Abandoned Order Created with Id", abdOrderId);
+      }
 
-      handler: async function (response: any) {
-        try {
-          // Create order in database
-          const orderResponse = await fetch(`${BACKEND_URL}/api/lander12/create-order`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              amount: finalAmount,
-              razorpayOrderId: response.razorpay_order_id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySignature: response.razorpay_signature,
-              name: form.fullName,
-              email: form.email,
-              phone: form.whatsapp,
-              dateOfBirth: form.dateOfBirth,
-              placeOfBirth: form.placeOfBirth,
-              gender: form.gender,
-              orderId: data.orderId,
-              additionalProducts: additionalProducts,
-            }),
-          });
+      // 2) Create Cashfree payment session
+      const cashfreeResponse = await fetch(`${BACKEND_URL}/api/payment/create-session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: 1,
+          name: form.fullName || "Customer",
+          email: form.email || "customer@example.com",
+          phone: form.whatsapp || "9876543210",
+          dateOfBirth: form.dateOfBirth || "",
+          placeOfBirth: form.placeOfBirth || "",
+          gender: form.gender || "",
+          additionalProducts: additionalProducts,
+          url: 'https://www.easyastro.in/hindi-order-confirmation'
+        }),
+      });
 
-          const orderResult = await orderResponse.json();
+      const cashfreeResult = await cashfreeResponse.json();
+      if (!cashfreeResult?.data?.payment_session_id) {
+        throw new Error("Failed to create Cashfree payment session");
+      }
 
-          if (orderResult.success) {
-            sessionStorage.setItem("orderId", data.orderId);
-            sessionStorage.setItem("orderAmount", finalAmount.toString());
+      const paymentSessionId = cashfreeResult.data.payment_session_id;
+      const orderId = cashfreeResult.data.order_id;
 
-            // ✅ Chatsonway webhook (SUCCESS)
-            await sendChatsonwayWebhook({
-              amount: finalAmount,
-              name: form.fullName || "",
-              email: form.email || "",
-              phone: form.whatsapp || "",
-              dateOfBirth: form.dateOfBirth || "",
-              placeOfBirth: form.placeOfBirth || "",
-              gender: form.gender || "",
-              additionalProducts: additionalProducts,
-              isChatsonorderSuccessfull: "Order Successfull",
-            });
+      if (!cashfree) {
+        throw new Error("Cashfree SDK not initialized");
+      }
 
-            // Send campaign notification if phone number is present
-            if (form.whatsapp) {
-              try {
-                await fetch("https://backend.aisensy.com/campaign/t1/api/v2", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    apiKey:
-                      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGY5YTMyZDQ3MzczMGU3MzNhZTZiMCIsIm5hbWUiOiJTcGVrbGlvIE1lZGlhIDIxMzQiLCJhcHBOYW1lIjoiQWlTZW5zeSIsImNsaWVudElkIjoiNjhkZjlhMzJkNDczNzMwZTczM2FlNmFiIiwiYWN0aXZlUGxhbiI6IkZSRUVfRk9SRVZFUiIsImlhdCI6MTc1OTQ4NDQ2Nn0.D5rCrsjtikR4N68HNS7ZOpNfzTSTuN9otxZ9-UBvi1g",
-                    campaignName: "28oct",
-                    destination: form.whatsapp,
-                    userName: "Speklio Media 2134",
-                    templateParams: [],
-                    source: "new-landing-page form",
-                    media: {},
-                    buttons: [],
-                    carouselCards: [],
-                    location: {},
-                    attributes: {},
-                    paramsFallbackValue: {},
-                  }),
-                });
-                console.log("Campaign notification sent successfully");
-              } catch (error) {
-                console.error("Failed to send campaign notification:", error);
-              }
-            }
+      const checkoutOptions = {
+        paymentSessionId,
+        redirectTarget: "_self",
+        onSuccess: async function (data: any) {
+          console.log("Cashfree payment successful:", data);
 
-            // Delete abandoned order if order is created successfully
-            const deleteAbdOrder = await fetch(`${BACKEND_URL}/api/lander12/delete-order-abd`, {
-              method: "DELETE",
+          try {
+            // Create order in database
+            const orderResponse = await fetch(`${BACKEND_URL}/api/lander12/create-order`, {
+              method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ email: form.email }),
+              body: JSON.stringify({
+                amount: finalAmount,
+                cashfreeOrderId: data.order?.orderId || orderId,
+                cashfreePaymentId: data.paymentDetails?.paymentId || "",
+                name: form.fullName,
+                email: form.email,
+                phone: form.whatsapp,
+                dateOfBirth: form.dateOfBirth,
+                placeOfBirth: form.placeOfBirth,
+                gender: form.gender,
+                orderId: orderId,
+                additionalProducts: additionalProducts,
+              }),
             });
 
-            const deleteAbdOrderResult = await deleteAbdOrder.json();
-            console.log("Abandoned Order Deleted", deleteAbdOrderResult);
+            const orderResult = await orderResponse.json();
 
-            window.location.href = "/order-confirmation";
-          } else {
+            if (orderResult.success) {
+              sessionStorage.setItem("orderId", orderId);
+              sessionStorage.setItem("orderAmount", finalAmount.toString());
+
+              // ✅ Chatsonway webhook (SUCCESS)
+              await sendChatsonwayWebhook({
+                amount: finalAmount,
+                name: form.fullName || "",
+                email: form.email || "",
+                phone: form.whatsapp || "",
+                dateOfBirth: form.dateOfBirth || "",
+                placeOfBirth: form.placeOfBirth || "",
+                gender: form.gender || "",
+                additionalProducts: additionalProducts,
+                isChatsonorderSuccessfull: "Order Successfull",
+              });
+
+              // Send campaign notification if phone number is present
+              if (form.whatsapp) {
+                try {
+                  await fetch("https://backend.aisensy.com/campaign/t1/api/v2", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      apiKey:
+                        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGY5YTMyZDQ3MzczMGU3MzNhZTZiMCIsIm5hbWUiOiJTcGVrbGlvIE1lZGlhIDIxMzQiLCJhcHBOYW1lIjoiQWlTZW5zeSIsImNsaWVudElkIjoiNjhkZjlhMzJkNDczNzMwZTczM2FlNmFiIiwiYWN0aXZlUGxhbiI6IkZSRUVfRk9SRVZFUiIsImlhdCI6MTc1OTQ4NDQ2Nn0.D5rCrsjtikR4N68HNS7ZOpNfzTSTuN9otxZ9-UBvi1g",
+                      campaignName: "28oct",
+                      destination: form.whatsapp,
+                      userName: "Speklio Media 2134",
+                      templateParams: [],
+                      source: "new-landing-page form",
+                      media: {},
+                      buttons: [],
+                      carouselCards: [],
+                      location: {},
+                      attributes: {},
+                      paramsFallbackValue: {},
+                    }),
+                  });
+                  console.log("Campaign notification sent successfully");
+                } catch (error) {
+                  console.error("Failed to send campaign notification:", error);
+                }
+              }
+
+              // Delete abandoned order
+              await fetch(`${BACKEND_URL}/api/lander12/delete-order-abd`, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: form.email }),
+              });
+
+              const confirmationParams = new URLSearchParams({
+                orderId: orderId,
+                orderType: "सोलमेट स्केच",
+                fullName: form.fullName || "Customer",
+                email: form.email || "",
+                phoneNumber: form.whatsapp || "",
+                amount: finalAmount.toString(),
+                dateOfBirth: form.dateOfBirth,
+                placeOfBirth: form.placeOfBirth,
+                gender: form.gender,
+                additionalProducts: additionalProducts.join(","),
+              });
+
+              window.location.href = `/hindi-order-confirmation?${confirmationParams.toString()}`;
+            } else {
+              alert("पेमेंट सफल हुआ, लेकिन ऑर्डर क्रिएट नहीं हो पाया। कृपया सपोर्ट से संपर्क करें।");
+            }
+          } catch (error) {
+            console.error("Error creating order:", error);
             alert("पेमेंट सफल हुआ, लेकिन ऑर्डर क्रिएट नहीं हो पाया। कृपया सपोर्ट से संपर्क करें।");
           }
-        } catch (error) {
-          console.error("Error creating order:", error);
-          alert("पेमेंट सफल हुआ, लेकिन ऑर्डर क्रिएट नहीं हो पाया। कृपया सपोर्ट से संपर्क करें।");
-        }
-      },
-
-      prefill: {
-        name: form.fullName,
-        email: form.email,
-        contact: form.whatsapp,
-      },
-
-      theme: {
-        color: "#ec1999",
-      },
-
-      // ✅ Chatsonway webhook (ABANDONED) when Razorpay popup closed
-      modal: {
-        ondismiss: async () => {
-          console.log("Razorpay modal closed without payment");
-
-          await sendChatsonwayWebhook({
-            amount: finalAmount,
-            name: form.fullName || "",
-            email: form.email || "",
-            phone: form.whatsapp || "",
-            dateOfBirth: form.dateOfBirth || "",
-            placeOfBirth: form.placeOfBirth || "",
-            gender: form.gender || "",
-            additionalProducts: additionalProducts,
-            isChatsonorderSuccessfull: "Order Abandoned",
-          });
         },
-      },
-    };
+        onFailure: function (data: any) {
+          console.log("Cashfree payment failed:", data);
+          alert("पेमेंट फ़ेल हो गया, कृपया दोबारा कोशिश करें।");
+        },
+      };
 
-    const rzp = new (window as any).Razorpay(options);
-    rzp.open();
-  } catch (error) {
-    console.error("Checkout error:", error);
-    alert("पेमेंट फ़ेल हो गया, कृपया दोबारा कोशिश करें।");
-  } finally {
-    setIsCheckingOut(false);
-  }
-};
+      cashfree.checkout(checkoutOptions);
+
+      // ✅ Chatsonway webhook (ABANDONED) listener is not directly available in Cashfree SDK checkout() 
+      // but we can track modal close if using a different method or just rely on the fact that 
+      // onSuccess/onFailure are the main callbacks. For parity with Razorpay's ondismiss, 
+      // Cashfree doesn't have a direct equivalent in the standard 'checkout' call.
+
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("पेमेंट फ़ेल हो गया, कृपया दोबारा कोशिश करें।");
+    } finally {
+      setIsCheckingOut(false);
+    }
+  };
 
 
   return (
