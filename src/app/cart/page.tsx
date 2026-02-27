@@ -8,8 +8,8 @@ import TestimonialsSection from "@/components/sections/testimonials";
 import GallerySection from "@/components/sections/gallery";
 import { BACKEND_URL } from "@/lib/backendUrl";
 import { useRouter } from 'next/navigation';
-// @ts-ignore
-import { load } from "@cashfreepayments/cashfree-js";
+// // @ts-ignore
+// import { load } from "@cashfreepayments/cashfree-js";
 // Mock data for demonstration
 const mockCartItems = [
   {
@@ -78,8 +78,8 @@ export default function CartPage() {
   const [cartItems, setCartItems] = useState(mockCartItems);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [sdkInitialized, setSdkInitialized] = useState(false);
-  const [cashfree, setCashfree] = useState<any>(null);
+  // const [sdkInitialized, setSdkInitialized] = useState(false);
+  // const [cashfree, setCashfree] = useState<any>(null);
   const [consultationFormData, setConsultationFormData] = useState({
     name: "",
     email: "",
@@ -171,9 +171,9 @@ export default function CartPage() {
       document.body.appendChild(script);
     });
   };
-    useEffect(() => {
-    initializeSDK();
-  }, []);
+    // useEffect(() => {
+    // initializeSDK();
+  // }, []);
 
   useEffect(() => {
     loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
@@ -185,22 +185,22 @@ export default function CartPage() {
     );
   }, []);
 
-   // Initialize Cashfree SDK
-  const initializeSDK = async () => {
-    try {
-      const cashfreeInstance = await load({
-        // mode: "sandbox", // Change to "production" for live environment
-        mode: "production",
-      });
-      setCashfree(cashfreeInstance);
-      setSdkInitialized(true);
-      console.log("Cashfree SDK initialized successfully");
-    } catch (error) {
-      console.error("Failed to initialize Cashfree SDK:", error);
-      alert("Failed to initialize payment system");
-      setSdkInitialized(false);
-    }
-  };
+   // // Initialize Cashfree SDK
+  // const initializeSDK = async () => {
+  //   try {
+  //     const cashfreeInstance = await load({
+  //       // mode: "sandbox", // Change to "production" for live environment
+  //       mode: "production",
+  //     });
+  //     setCashfree(cashfreeInstance);
+  //     setSdkInitialized(true);
+  //     console.log("Cashfree SDK initialized successfully");
+  //   } catch (error) {
+  //     console.error("Failed to initialize Cashfree SDK:", error);
+  //     alert("Failed to initialize payment system");
+  //     setSdkInitialized(false);
+  //   }
+  // };
   const handleConsultationFormSubmit = (data: any) => {
     console.log("Consultation form submitted:", data);
     // Handle form submission
@@ -272,171 +272,171 @@ export default function CartPage() {
       }
       console.log("Abandoned Order Created with Id", abdOrderId);
 
-      // 2) Create Cashfree payment session
-      const additionalProductsTitles = selectedProducts
-        .map((id) => {
-          const product = mockAdditionalProducts.find((p) => p.id === id);
-          return product?.title || "";
-        })
-        .filter(Boolean);
+      // // 2) Create Cashfree payment session
+      // const additionalProductsTitles = selectedProducts
+      //   .map((id) => {
+      //     const product = mockAdditionalProducts.find((p) => p.id === id);
+      //     return product?.title || "";
+      //   })
+      //   .filter(Boolean);
 
-      const cashfreeResponse = await fetch(
-        `${BACKEND_URL}/api/payment/create-session`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: finalAmount,
-            fullName: consultationFormData?.name || "Customer",
-            email: consultationFormData?.email || "customer@example.com",
-            phoneNumber: consultationFormData?.phoneNumber || "9876543210",
-            dateOfBirth: consultationFormData?.dateOfBirth || "",
-            placeOfBirth: consultationFormData?.placeOfBirth || "",
-            gender: consultationFormData?.gender || "",
-            additionalProducts: additionalProductsTitles,
-          }),
-        }
-      );
-      const cashfreeResult = await cashfreeResponse.json();
+      // const cashfreeResponse = await fetch(
+      //   `${BACKEND_URL}/api/payment/create-session`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       amount: finalAmount,
+      //       fullName: consultationFormData?.name || "Customer",
+      //       email: consultationFormData?.email || "customer@example.com",
+      //       phoneNumber: consultationFormData?.phoneNumber || "9876543210",
+      //       dateOfBirth: consultationFormData?.dateOfBirth || "",
+      //       placeOfBirth: consultationFormData?.placeOfBirth || "",
+      //       gender: consultationFormData?.gender || "",
+      //       additionalProducts: additionalProductsTitles,
+      //     }),
+      //   }
+      // );
+      // const cashfreeResult = await cashfreeResponse.json();
 
-      console.log("Cashfree session creation response:", cashfreeResult);
-      console.log("Cashfree session creation response success flag:", cashfreeResult?.data);
+      // console.log("Cashfree session creation response:", cashfreeResult);
+      // console.log("Cashfree session creation response success flag:", cashfreeResult?.data);
 
-      console.log("Cashfree session creation response data:", cashfreeResult?.data?.payment_session_id);
-      if (!cashfreeResult?.data || !cashfreeResult?.data?.payment_session_id) {
-        throw new Error("Failed to create Cashfree payment session");
-      }
+      // console.log("Cashfree session creation response data:", cashfreeResult?.data?.payment_session_id);
+      // if (!cashfreeResult?.data || !cashfreeResult?.data?.payment_session_id) {
+      //   throw new Error("Failed to create Cashfree payment session");
+      // }
       
-      // Redirect to Cashfree checkout
-      const paymentSessionId = cashfreeResult.data.payment_session_id;
-      const orderId = cashfreeResult.data.order_id;
+      // // Redirect to Cashfree checkout
+      // const paymentSessionId = cashfreeResult.data.payment_session_id;
+      // const orderId = cashfreeResult.data.order_id;
 
-      sessionStorage.setItem("cashfree_order_id", orderId);
-      sessionStorage.setItem("orderAmount", finalAmount.toString());
+      // sessionStorage.setItem("cashfree_order_id", orderId);
+      // sessionStorage.setItem("orderAmount", finalAmount.toString());
 
-      // Open Cashfree checkout
-      if (!cashfree) {
-        throw new Error("Cashfree SDK not initialized");
-      }
+      // // Open Cashfree checkout
+      // if (!cashfree) {
+      //   throw new Error("Cashfree SDK not initialized");
+      // }
       
-      const checkoutOptions = {
-        paymentSessionId,
-        redirectTarget: "_self",
-        onSuccess: async function (data: any) {
-          console.log("Cashfree payment successful:", data);
+      // const checkoutOptions = {
+      //   paymentSessionId,
+      //   redirectTarget: "_self",
+      //   onSuccess: async function (data: any) {
+      //     console.log("Cashfree payment successful:", data);
           
-          try {
-            // Create order in database
-            const orderResponse = await fetch(
-              `${BACKEND_URL}/api/lander3/create-order`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  amount: finalAmount,
-                  cashfreeOrderId: data.order?.orderId || orderId,
-                  cashfreePaymentId: data.paymentDetails?.paymentId || "",
-                  name: consultationFormData?.name,
-                  email: consultationFormData?.email,
-                  phone: consultationFormData?.phoneNumber,
-                  dateOfBirth: consultationFormData?.dateOfBirth,
-                  placeOfBirth: consultationFormData?.placeOfBirth,
-                  gender: consultationFormData?.gender,
-                  orderId: orderId,
-                  additionalProducts: selectedProducts
-                    .map((id) => {
-                      const product = mockAdditionalProducts.find(
-                        (p) => p.id === id
-                      );
-                      return product?.title || "";
-                    })
-                    .filter(Boolean),
-                }),
-              }
-            );
-            const orderResult = await orderResponse.json();
+      //     try {
+      //       // Create order in database
+      //       const orderResponse = await fetch(
+      //         `${BACKEND_URL}/api/lander3/create-order`,
+      //         {
+      //           method: "POST",
+      //           headers: {
+      //             "Content-Type": "application/json",
+      //           },
+      //           body: JSON.stringify({
+      //             amount: finalAmount,
+      //             cashfreeOrderId: data.order?.orderId || orderId,
+      //             cashfreePaymentId: data.paymentDetails?.paymentId || "",
+      //             name: consultationFormData?.name,
+      //             email: consultationFormData?.email,
+      //             phone: consultationFormData?.phoneNumber,
+      //             dateOfBirth: consultationFormData?.dateOfBirth,
+      //             placeOfBirth: consultationFormData?.placeOfBirth,
+      //             gender: consultationFormData?.gender,
+      //             orderId: orderId,
+      //             additionalProducts: selectedProducts
+      //               .map((id) => {
+      //                 const product = mockAdditionalProducts.find(
+      //                   (p) => p.id === id
+      //                 );
+      //                 return product?.title || "";
+      //               })
+      //               .filter(Boolean),
+      //           }),
+      //         }
+      //       );
+      //       const orderResult = await orderResponse.json();
             
-            if (orderResult.success) {
-              // Prepare order confirmation URL with parameters
-              const confirmationParams = new URLSearchParams({
-                orderId: orderId,
-                orderType: "Soulmate Sketch", 
-                fullName: consultationFormData?.name || "Customer",
-                email: consultationFormData?.email || "",
-                phoneNumber: consultationFormData?.phoneNumber || "",
-                amount: finalAmount.toString(),
-                profession: "",
-                remarks: "",
-              });
+      //       if (orderResult.success) {
+      //         // Prepare order confirmation URL with parameters
+      //         const confirmationParams = new URLSearchParams({
+      //           orderId: orderId,
+      //           orderType: "Soulmate Sketch", 
+      //           fullName: consultationFormData?.name || "Customer",
+      //           email: consultationFormData?.email || "",
+      //           phoneNumber: consultationFormData?.phoneNumber || "",
+      //           amount: finalAmount.toString(),
+      //           profession: "",
+      //           remarks: "",
+      //         });
               
-              // Store in sessionStorage as fallback
-              sessionStorage.setItem("orderId", orderId);
-              sessionStorage.setItem("orderAmount", finalAmount.toString());
+      //         // Store in sessionStorage as fallback
+      //         sessionStorage.setItem("orderId", orderId);
+      //         sessionStorage.setItem("orderAmount", finalAmount.toString());
               
-              // Send webhook notification
-              try {
-                await fetch('https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    amount: finalAmount,
-                    name: consultationFormData?.name || "",
-                    email: consultationFormData?.email || "",
-                    phone: consultationFormData?.phoneNumber || "",
-                    dateOfBirth: consultationFormData?.dateOfBirth || "",
-                    placeOfBirth: consultationFormData?.placeOfBirth || "",
-                    gender: consultationFormData?.gender || "",
-                    additionalProducts: selectedProducts
-                      .map((id) => {
-                        const product = mockAdditionalProducts.find((p) => p.id === id);
-                        return product?.title || "";
-                      })
-                      .filter(Boolean),
-                    isChatsonorderSuccessfull: "Order Successfull"
-                  })
-                });
-                console.log("Webhook notification sent successfully");
-              } catch (error) {
-                console.error("Failed to send webhook notification:", error);
-              }
+      //         // Send webhook notification
+      //         try {
+      //           await fetch('https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b', {
+      //             method: 'POST',
+      //             headers: {
+      //               'Content-Type': 'application/json',
+      //             },
+      //             body: JSON.stringify({
+      //               amount: finalAmount,
+      //               name: consultationFormData?.name || "",
+      //               email: consultationFormData?.email || "",
+      //               phone: consultationFormData?.phoneNumber || "",
+      //               dateOfBirth: consultationFormData?.dateOfBirth || "",
+      //               placeOfBirth: consultationFormData?.placeOfBirth || "",
+      //               gender: consultationFormData?.gender || "",
+      //               additionalProducts: selectedProducts
+      //                 .map((id) => {
+      //                   const product = mockAdditionalProducts.find((p) => p.id === id);
+      //                   return product?.title || "";
+      //                 })
+      //                 .filter(Boolean),
+      //               isChatsonorderSuccessfull: "Order Successfull"
+      //             })
+      //           });
+      //           console.log("Webhook notification sent successfully");
+      //         } catch (error) {
+      //           console.error("Failed to send webhook notification:", error);
+      //         }
               
-              // Delete abandoned order
-              const deleteAbdOrder = await fetch(
-                `${BACKEND_URL}/api/lander3/delete-order-abd`,
-                {
-                  method: "DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ email: consultationFormData?.email }),
-                }
-              );
-              const deleteAbdOrderResult = await deleteAbdOrder.json();
-              console.log("Abandoned Order Deleted", deleteAbdOrderResult);
+      //         // Delete abandoned order
+      //         const deleteAbdOrder = await fetch(
+      //           `${BACKEND_URL}/api/lander3/delete-order-abd`,
+      //           {
+      //             method: "DELETE",
+      //             headers: {
+      //               "Content-Type": "application/json",
+      //             },
+      //             body: JSON.stringify({ email: consultationFormData?.email }),
+      //           }
+      //         );
+      //         const deleteAbdOrderResult = await deleteAbdOrder.json();
+      //         console.log("Abandoned Order Deleted", deleteAbdOrderResult);
               
-              // Redirect to success page with order details
-              window.location.href = `/order-confirmation?${confirmationParams.toString()}`;
-            } else {
-              alert("Payment successful but order creation failed. Please contact support.");
-            }
-          } catch (error) {
-            console.error("Error creating order:", error);
-            alert("Payment successful but order creation failed. Please contact support.");
-          }
-        },
-        onFailure: function (data: any) {
-          console.log("Cashfree payment failed:", data);
-          alert("Payment failed. Please try again.");
-        }
-      };
+      //         // Redirect to success page with order details
+      //         window.location.href = `/order-confirmation?${confirmationParams.toString()}`;
+      //       } else {
+      //         alert("Payment successful but order creation failed. Please contact support.");
+      //       }
+      //     } catch (error) {
+      //       console.error("Error creating order:", error);
+      //       alert("Payment successful but order creation failed. Please contact support.");
+      //     }
+      //   },
+      //   onFailure: function (data: any) {
+      //     console.log("Cashfree payment failed:", data);
+      //     alert("Payment failed. Please try again.");
+      //   }
+      // };
       
-      cashfree.checkout(checkoutOptions);
+      // cashfree.checkout(checkoutOptions);
 
       /* PAYU CODE - COMMENTED OUT
       const params = new URLSearchParams({
@@ -455,7 +455,6 @@ export default function CartPage() {
       router.push(payuUrl);
       END PAYU CODE */
 
-      /* RAZORPAY CODE - COMMENTED OUT
       // Create Razorpay order
       const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
         method: "POST",
@@ -584,7 +583,6 @@ export default function CartPage() {
       };
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
-      END RAZORPAY CODE */
     } catch (error) {
       console.error("Checkout error:", error);
       alert("Payment failed. Please try again.");

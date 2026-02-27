@@ -1,6 +1,6 @@
 "use client";
-// @ts-ignore
-import { load } from "@cashfreepayments/cashfree-js";
+// // @ts-ignore
+// import { load } from "@cashfreepayments/cashfree-js";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { useState, useEffect } from "react";
@@ -159,24 +159,76 @@ export default function CartPage() {
   const [cashfree, setCashfree] = useState<any>(null);
   const [sdkInitialized, setSdkInitialized] = useState(false);
 
-  // Initialize Cashfree SDK
-  const initializeSDK = async () => {
-    try {
-      const cashfreeInstance = await load({
-        mode: "production",
-      });
-      setCashfree(cashfreeInstance);
-      setSdkInitialized(true);
-      console.log("Cashfree SDK initialized successfully");
-    } catch (error) {
-      console.error("Failed to initialize Cashfree SDK:", error);
-      setSdkInitialized(false);
-    }
-  };
+  // // Initialize Cashfree SDK
+  // const initializeSDK = async () => {
+  //   try {
+  //     const cashfreeInstance = await load({
+  //       mode: "production",
+  //     });
+  //     setCashfree(cashfreeInstance);
+  //     setSdkInitialized(true);
+  //     console.log("Cashfree SDK initialized successfully");
+  //   } catch (error) {
+  //     console.error("Failed to initialize Cashfree SDK:", error);
+  //     setSdkInitialized(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   initializeSDK();
+  // }, []);
 
   useEffect(() => {
-    initializeSDK();
+    const loadScript = (src: string) => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+    };
+
+    loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
+      (result) => {
+        if (result) {
+          console.log("Razorpay script loaded successfully");
+        }
+      }
+    );
   }, []);
+
+  const sendAbandonedUserToAutomation = async () => {
+    try {
+      const [firstName, ...restName] = (consultationFormData?.name || "")
+        .trim()
+        .split(" ");
+      const lastName = restName.join(" ");
+
+      await fetch(
+        "https://automations.chatsonway.com/webhook/6927f8681b9845c02d57070d",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: firstName || "",
+            lastName: lastName || "",
+            dob: consultationFormData?.dateOfBirth || "",
+            placeOfBirth: consultationFormData?.placeOfBirth || "",
+            phoneNumber: consultationFormData?.phoneNumber || "",
+            email: consultationFormData?.email || "",
+            is: "abandoned", 
+          }),
+        }
+      );
+
+      console.log("Abandoned user sent to automation");
+    } catch (error) {
+      console.error("Failed to send abandoned user to automation:", error);
+    }
+  };
 
   const handleConsultationFormSubmit = (data: any) => {
     console.log("Consultation form submitted:", data);
@@ -225,43 +277,29 @@ export default function CartPage() {
         console.log("Abandoned Order Created with Id", abdOrderId);
       }
 
-      // 2) Create Cashfree payment session
-      const cashfreeResponse = await fetch(`${BACKEND_URL}/api/payment/create-session`, {
+      // 2) Create Razorpay order
+      const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: finalAmount,
-          fullName: consultationFormData?.name || "Customer",
-          email: consultationFormData?.email || "customer@example.com",
-          phoneNumber: consultationFormData?.phoneNumber || "9876543210",
-          dateOfBirth: consultationFormData?.dateOfBirth || "",
-          placeOfBirth: consultationFormData?.placeOfBirth || "",
-          gender: consultationFormData?.gender || "",
-          additionalProducts: additionalProductsTitles,
-          url: 'https://www.easyastro.in/exp-order-confirmation'
         }),
       });
-
-      const cashfreeResult = await cashfreeResponse.json();
-      if (!cashfreeResult?.data?.payment_session_id) {
-        throw new Error("Failed to create Cashfree payment session");
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error("Failed to create payment order");
       }
-
-      const paymentSessionId = cashfreeResult.data.payment_session_id;
-      const orderId = cashfreeResult.data.order_id;
-
-      if (!cashfree) {
-        throw new Error("Cashfree SDK not initialized");
-      }
-
-      const checkoutOptions = {
-        paymentSessionId,
-        redirectTarget: "_self",
-        onSuccess: async function (data: any) {
-          console.log("Cashfree payment successful:", data);
-
+      const data = result.data;
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+        amount: finalAmount,
+        currency: "INR",
+        name: "EasyAstro",
+        description: "Soulmate Sketch + Bracelet Order Payment",
+        order_id: data.orderId,
+        handler: async function (response: any) {
           try {
             // Create order in database
             const orderResponse = await fetch(`${BACKEND_URL}/api/lander7/create-order`, {
@@ -271,24 +309,46 @@ export default function CartPage() {
               },
               body: JSON.stringify({
                 amount: finalAmount,
-                cashfreeOrderId: data.order?.orderId || orderId,
-                cashfreePaymentId: data.paymentDetails?.paymentId || "",
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
                 name: consultationFormData?.name,
                 email: consultationFormData?.email,
                 phone: consultationFormData?.phoneNumber,
                 dateOfBirth: consultationFormData?.dateOfBirth,
                 placeOfBirth: consultationFormData?.placeOfBirth,
                 gender: consultationFormData?.gender,
-                orderId: orderId,
+                orderId: data.orderId,
                 additionalProducts: additionalProductsTitles,
               }),
             });
-
             const orderResult = await orderResponse.json();
-
             if (orderResult.success) {
-              sessionStorage.setItem("orderId", orderId);
+              sessionStorage.setItem("orderId", data.orderId);
               sessionStorage.setItem("orderAmount", finalAmount.toString());
+              
+              try {
+                await fetch('https://automations.chatsonway.com/webhook/692049bf1b9845c02d52d83b', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    amount: finalAmount,
+                    name: consultationFormData?.name || "",
+                    email: consultationFormData?.email || "",
+                    phone: consultationFormData?.phoneNumber || "",
+                    dateOfBirth: consultationFormData?.dateOfBirth || "",
+                    placeOfBirth: consultationFormData?.placeOfBirth || "",
+                    gender: consultationFormData?.gender || "",
+                    additionalProducts: additionalProductsTitles,
+                    isChatsonorderSuccessfull: "Order Successfull"
+                  })
+                });
+                console.log("Webhook notification sent successfully");
+              } catch (error) {
+                console.error("Failed to send webhook notification:", error);
+              }
 
               // Delete abandoned order
               await fetch(`${BACKEND_URL}/api/lander7/delete-order-abd`, {
@@ -300,7 +360,7 @@ export default function CartPage() {
               });
 
               const confirmationParams = new URLSearchParams({
-                orderId: orderId,
+                orderId: data.orderId,
                 orderType: "Soulmate Sketch + Bracelet",
                 fullName: consultationFormData?.name || "Customer",
                 email: consultationFormData?.email || "",
@@ -321,13 +381,23 @@ export default function CartPage() {
             alert("Payment successful but order creation failed. Please contact support.");
           }
         },
-        onFailure: function (data: any) {
-          console.log("Cashfree payment failed:", data);
-          alert("Payment failed. Please try again.");
+        prefill: {
+          name: consultationFormData?.name,
+          email: consultationFormData?.email,
+          contact: consultationFormData?.phoneNumber,
+        },
+        theme: {
+          color: "#ec4899",
+        },
+        modal: {
+          ondismiss: async () => {
+            console.log("Razorpay modal closed without payment");
+            await sendAbandonedUserToAutomation();
+          },
         },
       };
-
-      cashfree.checkout(checkoutOptions);
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
 
     } catch (error) {
       console.error("Checkout error:", error);

@@ -1,7 +1,7 @@
 // app/cart/page.tsx
 "use client";
-// @ts-ignore
-import { load } from "@cashfreepayments/cashfree-js";
+// // @ts-ignore
+// import { load } from "@cashfreepayments/cashfree-js";
 
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
@@ -140,24 +140,76 @@ export default function CartPage() {
   const [cashfree, setCashfree] = useState<any>(null);
   const [sdkInitialized, setSdkInitialized] = useState(false);
 
-  // Initialize Cashfree SDK
-  const initializeSDK = async () => {
-    try {
-      const cashfreeInstance = await load({
-        mode: "production",
-      });
-      setCashfree(cashfreeInstance);
-      setSdkInitialized(true);
-      console.log("Cashfree SDK initialized successfully");
-    } catch (error) {
-      console.error("Failed to initialize Cashfree SDK:", error);
-      setSdkInitialized(false);
-    }
-  };
+  // // Initialize Cashfree SDK
+  // const initializeSDK = async () => {
+  //   try {
+  //     const cashfreeInstance = await load({
+  //       mode: "production",
+  //     });
+  //     setCashfree(cashfreeInstance);
+  //     setSdkInitialized(true);
+  //     console.log("Cashfree SDK initialized successfully");
+  //   } catch (error) {
+  //     console.error("Failed to initialize Cashfree SDK:", error);
+  //     setSdkInitialized(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   initializeSDK();
+  // }, []);
 
   useEffect(() => {
-    initializeSDK();
+    const loadScript = (src: string) => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+      });
+    };
+
+    loadScript("https://checkout.razorpay.com/v1/checkout.js").then(
+      (result) => {
+        if (result) {
+          console.log("Razorpay script loaded successfully");
+        }
+      }
+    );
   }, []);
+
+  const sendAbandonedUserToAutomation = async () => {
+    try {
+      const [firstName, ...restName] = (form?.fullName || "")
+        .trim()
+        .split(" ");
+      const lastName = restName.join(" ");
+
+      await fetch(
+        "https://automations.chatsonway.com/webhook/6927f8681b9845c02d57070d",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: firstName || "",
+            lastName: lastName || "",
+            dob: form?.dateOfBirth || "",
+            placeOfBirth: form?.placeOfBirth || "",
+            phoneNumber: form?.whatsapp || "",
+            email: form?.email || "",
+            is: "abandoned", 
+          }),
+        }
+      );
+
+      console.log("Abandoned user sent to automation");
+    } catch (error) {
+      console.error("Failed to send abandoned user to automation:", error);
+    }
+  };
 
   // Listen for "reveal-form" (from sticky bar)
   const [formGlow, setFormGlow] = useState(false);
@@ -211,43 +263,29 @@ export default function CartPage() {
         console.log("Abandoned Order Created with Id", abdOrderId);
       }
 
-      // 2) Create Cashfree payment session
-      const cashfreeResponse = await fetch(`${BACKEND_URL}/api/payment/create-session`, {
+      // 2) Create Razorpay order
+      const response = await fetch(`${BACKEND_URL}/api/payment/razorpay`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           amount: finalAmount,
-          fullName: form.fullName || "Customer",
-          email: form.email || "customer@example.com",
-          phoneNumber: form.whatsapp || "9876543210",
-          dateOfBirth: form.dateOfBirth || "",
-          placeOfBirth: form.placeOfBirth || "",
-          gender: form.gender || "",
-          additionalProducts: additionalProducts,
-          url: 'https://www.easyastro.in/order-confirmation-cousin'
         }),
       });
-
-      const cashfreeResult = await cashfreeResponse.json();
-      if (!cashfreeResult?.data?.payment_session_id) {
-        throw new Error("Failed to create Cashfree payment session");
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error("Failed to create payment order");
       }
-
-      const paymentSessionId = cashfreeResult.data.payment_session_id;
-      const orderId = cashfreeResult.data.order_id;
-
-      if (!cashfree) {
-        throw new Error("Cashfree SDK not initialized");
-      }
-
-      const checkoutOptions = {
-        paymentSessionId,
-        redirectTarget: "_self",
-        onSuccess: async function (data: any) {
-          console.log("Cashfree payment successful:", data);
-
+      const data = result.data;
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+        amount: finalAmount,
+        currency: "INR",
+        name: "EasyAstro",
+        description: "Soulmate Sketch + Love Report Order Payment",
+        order_id: data.orderId,
+        handler: async function (response: any) {
           try {
             // Create order in database
             const orderResponse = await fetch(
@@ -259,26 +297,25 @@ export default function CartPage() {
                 },
                 body: JSON.stringify({
                   amount: finalAmount,
-                  cashfreeOrderId: data.order?.orderId || orderId,
-                  cashfreePaymentId: data.paymentDetails?.paymentId || "",
+                  razorpayOrderId: response.razorpay_order_id,
+                  razorpayPaymentId: response.razorpay_payment_id,
+                  razorpaySignature: response.razorpay_signature,
                   name: form.fullName,
                   email: form.email,
                   phone: form.whatsapp,
                   dateOfBirth: form.dateOfBirth,
                   placeOfBirth: form.placeOfBirth,
                   gender: form.gender,
-                  orderId: orderId,
+                  orderId: data.orderId,
                   additionalProducts: additionalProducts,
                 }),
               }
             );
-
             const orderResult = await orderResponse.json();
-
             if (orderResult.success) {
-              sessionStorage.setItem("orderId", orderId);
+              sessionStorage.setItem("orderId", data.orderId);
               sessionStorage.setItem("orderAmount", finalAmount.toString());
-
+              
               // Webhook notification
               try {
                 await fetch(
@@ -301,6 +338,7 @@ export default function CartPage() {
                     }),
                   }
                 );
+                console.log("Webhook notification sent successfully");
               } catch (error) {
                 console.error("Failed to send webhook notification:", error);
               }
@@ -322,8 +360,9 @@ export default function CartPage() {
                       source: "new-landing-page form",
                     }),
                   });
+                  console.log("Aisensy notification sent successfully");
                 } catch (error) {
-                  console.error("Failed to send campaign notification:", error);
+                  console.error("Failed to send Aisensy notification:", error);
                 }
               }
 
@@ -337,7 +376,7 @@ export default function CartPage() {
               });
 
               const confirmationParams = new URLSearchParams({
-                orderId: orderId,
+                orderId: data.orderId,
                 orderType: "Soulmate Sketch + Love Report",
                 fullName: form.fullName || "Customer",
                 email: form.email || "",
@@ -358,13 +397,23 @@ export default function CartPage() {
             alert("Payment successful but order creation failed. Please contact support.");
           }
         },
-        onFailure: function (data: any) {
-          console.log("Cashfree payment failed:", data);
-          alert("Payment failed. Please try again.");
+        prefill: {
+          name: form.fullName,
+          email: form.email,
+          contact: form.whatsapp,
+        },
+        theme: {
+          color: "#ec4899",
+        },
+        modal: {
+          ondismiss: async () => {
+            console.log("Razorpay modal closed without payment");
+            await sendAbandonedUserToAutomation();
+          },
         },
       };
-
-      cashfree.checkout(checkoutOptions);
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
 
     } catch (error) {
       console.error("Checkout error:", error);
