@@ -12,7 +12,7 @@ import PastelHearts from "@/components/valentine/pastel-hearts";
 import { BACKEND_URL } from "@/lib/backendUrl";
 import { VALENTINE_MAIN_PRODUCT, VALENTINE_ADDONS } from "@/lib/valentine-products";
 
-
+// wow
 const mockCartItems = [
   {
     id: VALENTINE_MAIN_PRODUCT.id,
