@@ -123,8 +123,9 @@ export default function AdditionalTemp({
                     </div>
                   </div>
                 </div>
+                
 
-                {/* Expanded Content - Features in Grid */}
+            
                 {expandedProduct === product.id && (
                   <>
                     <div className="pl-4 mt-1 p-1.5 bg-primary/5 rounded-lg border border-primary/20">
