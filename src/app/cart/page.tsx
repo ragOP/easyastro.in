@@ -462,7 +462,7 @@ export default function CartPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: 1,
+          amount: finalAmount,
         }),
       });
       const result = await response.json();
