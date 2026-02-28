@@ -41,7 +41,7 @@ const PRODUCT = {
   id: "soulmate-sketch",
   title: "Soulmate Sketch + Free Love Report",
   img: "https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png",
-  price: 199,
+  price: 249,
   compareAt: 998,
   includes: [
     "Personalized hand-drawn sketch",

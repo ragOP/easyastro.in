@@ -56,7 +56,7 @@ export default function StickyCtaBar() {
             </div>
             <div className="hidden sm:flex items-baseline gap-3">
               <span className="text-2xl text-muted-foreground line-through">₹998</span>
-              <span className="text-4xl font-bold text-primary">₹199</span>
+              <span className="text-4xl font-bold text-primary">₹249</span>
             </div>
           </div>
           
