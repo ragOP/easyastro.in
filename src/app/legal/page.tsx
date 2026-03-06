@@ -90,6 +90,21 @@ export default function LegalPage() {
         )
       },
       {
+       id: "data-retention",
+        title: "Data Retention",
+      content: (
+    <div className="space-y-4">
+      <ul className="list-disc pl-6 space-y-2">
+        <li>We retain customer personal information only for as long as necessary to provide our services and fulfill orders.</li>
+        <li>Order and transaction data may be stored for up to 7 years to comply with tax, legal, and accounting requirements.</li>
+        <li>Customer communication records may be retained for support, dispute resolution, and fraud prevention purposes.</li>
+        <li>Once the retention period expires or the information is no longer required, we securely delete or anonymize the personal data.</li>
+        <li>If you wish to request deletion of your personal information, you may contact our support team.</li>
+      </ul>
+    </div>
+  )
+},
+      {
         id: "refund-policy",
         title: "Refund Policy",
         content: (
