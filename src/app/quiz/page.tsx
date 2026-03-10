@@ -2,7 +2,7 @@ export default function Page() {
   return (
     <div style={{ width: "100vw", height: "100vh", margin: 0, padding: 0 }}>
       <iframe
-        src="https://quiz.easyastra.in"
+        src="www.google.com"
         title="EasyAstra Quiz"
         style={{
           width: "100%",

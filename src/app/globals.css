@@ -1,4 +1,4 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -150,4 +150,205 @@ body {
 .animate-lightning-shake {
   animation: lightning-shake 0.9s ease-in-out infinite;
   display: inline-block;
+} */
+
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Soulmate Sketch - Calm, Premium, Pink Aesthetic */
+    --background: 350 100% 98%;
+    --foreground: 348 30% 20%;
+    
+    --card: 350 60% 97%;
+    --card-foreground: 348 30% 20%;
+
+    --popover: 350 60% 97%;
+    --popover-foreground: 348 30% 20%;
+
+    --primary: 350 80% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 284 10% 88%;
+    --secondary-foreground: 284 20% 30%;
+
+    --muted: 284 10% 92%;
+    --muted-foreground: 284 10% 45%;
+
+    --accent: 284 10% 61%;
+    --accent-foreground: 345 43% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 348 20% 88%;
+    --input: 348 20% 90%;
+    --ring: 348 62% 54%;
+    --radius: 1rem;
+
+    /* Soulmate Custom Colors */
+    --blush: 350 100% 96%;
+    --rose: 350 60% 70%;
+    --coral: 15 85% 65%;
+    --coral-light: 15 90% 75%;
+    --deep-rose: 350 50% 35%;
+    --soft-charcoal: 350 15% 25%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(350 100% 96%) 0%, hsl(350 80% 92%) 50%, hsl(15 70% 92%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(350 80% 60%) 0%, hsl(15 85% 65%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(350 100% 98%) 0%, hsl(350 60% 95%) 100%);
+    --gradient-coral: linear-gradient(135deg, hsl(15 85% 65%) 0%, hsl(350 80% 60%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(350 80% 60% / 0.15);
+    --shadow-card: 0 8px 30px -8px hsl(350 50% 50% / 0.12);
+    --shadow-glow: 0 0 40px hsl(350 80% 60% / 0.25);
+    --shadow-button: 0 8px 25px -5px hsl(350 80% 50% / 0.35);
+  }
+
+  .dark {
+    --background: 348 8% 10%;
+    --foreground: 345 43% 95%;
+    --card: 348 8% 12%;
+    --card-foreground: 345 43% 95%;
+    --popover: 348 8% 10%;
+    --popover-foreground: 345 43% 95%;
+    --primary: 348 62% 60%;
+    --primary-foreground: 348 8% 10%;
+    --secondary: 284 10% 20%;
+    --secondary-foreground: 345 43% 95%;
+    --muted: 284 10% 25%;
+    --muted-foreground: 284 10% 65%;
+    --accent: 284 10% 70%;
+    --accent-foreground: 348 8% 10%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 348 8% 20%;
+    --input: 348 8% 20%;
+    --ring: 348 62% 60%;
+    /* Dark mode specific brand colors omitted for brevity, keep or adjust as needed */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'DM Sans', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+  html {
+    scroll-behavior: smooth;
+    font-size: 105%;
+  }
+}
+
+@layer components {
+  .gradient-hero { background: var(--gradient-hero); }
+  .gradient-primary { background: var(--gradient-primary); }
+  .gradient-soft { background: var(--gradient-soft); }
+  .gradient-coral { background: var(--gradient-coral); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .shadow-button { box-shadow: var(--shadow-button); }
+  
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@layer utilities {
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-float-delayed { animation: float 6s ease-in-out infinite; animation-delay: 2s; }
+  .animate-pulse-soft { animation: pulse-soft 4s ease-in-out infinite; }
+  .animate-shimmer { animation: shimmer 3s ease-in-out infinite; }
+  .animate-glow { animation: glow 2s ease-in-out infinite alternate; }
+  .animate-shake { animation: shake 3s ease-in-out infinite; }
+  .animate-lightning-shake { animation: lightning-shake 0.9s ease-in-out infinite; display: inline-block; }
+
+  .animate-shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .animate-shine::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 200%;
+    height: 200%;
+    opacity: 0.2;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: shine 4s infinite linear;
+    animation-delay: 2s;
+  }
+}
+
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+@keyframes pulse-soft { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes glow { 0% { box-shadow: 0 0 20px hsl(350 80% 60% / 0.2); } 100% { box-shadow: 0 0 40px hsl(350 80% 60% / 0.4); } }
+@keyframes shine { from { transform: translateX(-100%) rotate(25deg); } to { transform: translateX(100%) rotate(25deg); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); } 20%, 40%, 60%, 80% { transform: translateX(2px); } }
+@keyframes lightning-shake { 0% { transform: translateX(0) rotate(0deg); } 25% { transform: translateX(-10px) rotate(-10deg); } 50% { transform: translateX(10px) rotate(10deg); } 75% { transform: translateX(-5px) rotate(-5deg); } 100% { transform: translateX(0) rotate(0deg); } }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: hsl(var(--muted)); }
+::-webkit-scrollbar-thumb { background: hsl(var(--rose)); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
+/* Merged Styles from App.css */
+
+.main-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
