@@ -39,7 +39,7 @@ const FinalCTASection = () => {
           </p>
 
              <Link href="/myquiz/quiz-page">
-            <Button variant="coral" size="xl" className="group">
+            <Button variant="coral" size="xl"  className="group bg-gradient-to-r from-orange-400 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
            
               Reveal My Soulmate Now
 

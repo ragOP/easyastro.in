@@ -298,7 +298,7 @@ const Quiz = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button variant="hero" size="xl" onClick={handleStart} className="w-full max-w-xs">
+                <Button variant="hero" size="xl" onClick={handleStart}  className="group bg-gradient-to-r from-orange-400 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
                   <motion.span
                     className="flex items-center gap-2"
                     initial={{ opacity: 1 }}

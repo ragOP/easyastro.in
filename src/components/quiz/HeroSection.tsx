@@ -67,7 +67,7 @@ const HeroSection = () => {
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <Button variant="hero" size="xl" className="group">
+                <Button variant="hero" size="xl"   className="group bg-gradient-to-r from-orange-400 to-pink-500 text-white px-8 py-4 rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
                   <motion.span
                     className="flex items-center"
                     animate={{ opacity: [1, 0.9, 1] }}
