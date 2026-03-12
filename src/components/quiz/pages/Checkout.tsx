@@ -670,7 +670,7 @@ const Checkout = () => {
       onSuccess: (paymentId) => {
         toast.success("Payment successful! Check your email for your reading.");
         localStorage.removeItem("quizAnswers");
-        router.push("/thank-you");
+        router.push("/quiz-thankyou");
       },
       onFailure: (error) => {
         toast.error(error || "Payment failed. Please try again.");
