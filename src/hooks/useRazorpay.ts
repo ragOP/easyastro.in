@@ -85,7 +85,7 @@ export function useRazorpay() {
     quizResponses = {},
     onSuccess,
     onFailure,
-    amount = 2,
+    amount = 449,
     currency = "INR",
     description = "Soulmate Sketch Reading",
     companyName = "Soulmate Sketch",
