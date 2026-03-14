@@ -1,6 +1,6 @@
 'use client'; 
-import Record from "@/components/quiz/pages/AdminDashboard";
+import AdminDashboard from "@/components/quiz/pages/AdminDashboard";
 
-export default function CheckoutPage() {
-  return <Record />;
+export default function QuizRecordPage() {
+  return <AdminDashboard />;
 }
