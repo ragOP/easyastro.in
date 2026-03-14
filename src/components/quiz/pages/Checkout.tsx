@@ -545,6 +545,7 @@
 // };
 
 // export default Checkout;
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -557,7 +558,7 @@ import {
   Sparkles, Eye, FileCheck, Send, Users, Palette, Brain, Compass, ChevronUp
 } from "lucide-react";
 import FloatingElements from "@/components/quiz/FloatingElements";
-import { useRazorpay } from "@/hooks/useRazorpay"; // ← uncommented
+import { useRazorpay } from "@/hooks/useRazorpay";
 import { toast } from "sonner";
 
 const detailedFeatures = [
@@ -640,7 +641,9 @@ const Checkout = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const { initiatePayment, isLoading: isProcessing } = useRazorpay(); // ← wired up
+  // ── NEW: track the saved lead's DB row ID ──────────────────────────
+  const [customerId, setCustomerId] = useState<string | null>(null);
+  const { initiatePayment, isLoading: isProcessing } = useRazorpay();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -650,7 +653,8 @@ const Checkout = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handlePayment = () => {
+  // ── UPDATED handlePayment ──────────────────────────────────────────
+  const handlePayment = async () => {
     if (!name.trim()) {
       toast.error("Please enter your name");
       return;
@@ -659,14 +663,44 @@ const Checkout = () => {
       toast.error("Please enter a valid email address");
       return;
     }
- console.log("BUTTON CLICKED");
+
     const quizResponses = JSON.parse(localStorage.getItem("quizAnswers") || "{}");
 
+    // Generate unique session ID for this visit
+    const sessionId = crypto.randomUUID();
+
+    // ── Step 1: Save lead to Supabase BEFORE opening Razorpay ────────
+    // Captures abandoned users even if they cancel payment
+    let savedCustomerId: string | null = null;
+    try {
+      const res = await fetch("/api/save-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          name,
+          phone,
+          amount: 449,
+          quizResponses,
+          sessionId,
+        }),
+      });
+      const data = await res.json();
+      savedCustomerId = data.customerId || null;
+      setCustomerId(savedCustomerId);
+      console.log("[Checkout] ✅ Lead saved, customerId:", savedCustomerId);
+    } catch (err) {
+      // Don't block payment if lead save fails
+      console.warn("[Checkout] ⚠️ Lead save failed — continuing anyway:", err);
+    }
+
+    // ── Step 2: Open Razorpay with customerId ─────────────────────────
     initiatePayment({
       email,
       name,
-      phone: phone || undefined,
+      phone:        phone || undefined,
       quizResponses,
+      customerId:   savedCustomerId,   // ← links payment to this exact row
       onSuccess: (paymentId) => {
         toast.success("Payment successful! Check your email for your reading.");
         localStorage.removeItem("quizAnswers");
@@ -702,7 +736,6 @@ const Checkout = () => {
               <span className="w-2 h-2 rounded-full bg-coral animate-pulse" />
               <span className="text-sm font-medium">Your sketch is ready</span>
             </div>
-
             <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium mb-3">
               Your Soulmate Sketch Is Ready
             </h1>
@@ -795,10 +828,10 @@ const Checkout = () => {
                   />
                 </div>
 
-                {/* Phone input (optional) */}
+                {/* Phone input */}
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    PhoneNo <span className="text-muted-foreground font-normal">(optional)</span>
+                    Phone <span className="text-muted-foreground font-normal">(optional)</span>
                   </label>
                   <input
                     type="tel"
@@ -899,7 +932,7 @@ const Checkout = () => {
                   >
                     <Card variant="soft" className="h-full hover:shadow-lg transition-shadow">
                       <CardContent className="p-5">
-                        <motion.div 
+                        <motion.div
                           className="w-10 h-10 rounded-xl gradient-coral flex items-center justify-center mb-3"
                           whileHover={{ rotate: [0, -5, 5, 0] }}
                           transition={{ duration: 0.4 }}
@@ -952,7 +985,7 @@ const Checkout = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="md:hidden space-y-4">
                 {paymentSteps.map((step, index) => (
                   <motion.div
@@ -1083,7 +1116,7 @@ const Checkout = () => {
               onClick={scrollToForm}
             >
               <ChevronUp className="w-4 h-4 mr-2" />
-              Complete Order — ₹499
+              Complete Order — ₹449
             </Button>
           </motion.div>
         )}

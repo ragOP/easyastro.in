@@ -21,15 +21,29 @@ interface RazorpayErrorResponse {
   };
 }
 
+// interface InitiatePaymentOptions {
+//   email: string;
+//   name: string;
+//   phone?: string;
+//   quizResponses?: Record<string, unknown>;
+//   onSuccess: (paymentId: string, response: RazorpayResponse) => void;
+//   onFailure: (errorMessage: string) => void;
+//   amount?: number;
+//   currency?: string;
+//   description?: string;
+//   companyName?: string;
+//   themeColor?: string;
+// }
 interface InitiatePaymentOptions {
   email: string;
   name: string;
   phone?: string;
   quizResponses?: Record<string, unknown>;
+  customerId?: string | null;   // ← add this
   onSuccess: (paymentId: string, response: RazorpayResponse) => void;
   onFailure: (errorMessage: string) => void;
   amount?: number;
-  currency?: string;
+currency?: string;
   description?: string;
   companyName?: string;
   themeColor?: string;
@@ -82,10 +96,12 @@ export function useRazorpay() {
     email,
     name,
     phone,
+    
     quizResponses = {},
+    customerId,
     onSuccess,
     onFailure,
-    amount = 449,
+    amount = 2,
     currency = "INR",
     description = "Soulmate Sketch Reading",
     companyName = "Soulmate Sketch",
@@ -182,10 +198,16 @@ export function useRazorpay() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            }),
+  razorpay_order_id:   response.razorpay_order_id,
+  razorpay_payment_id: response.razorpay_payment_id,
+  razorpay_signature:  response.razorpay_signature,
+  email,        // ← user's email from Checkout.tsx
+  name,         // ← user's name from Checkout.tsx
+  phone,        // ← user's phone from Checkout.tsx
+  amount,       // ← 449
+  quizResponses, // ← all 6 quiz answers
+  customerId,
+}),
           });
 
           const verifyData = await verifyRes.json();

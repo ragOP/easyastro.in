@@ -1,5 +1,6 @@
+"use client";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,7 @@ import {
   Clock,
   XCircle,
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/components/quiz/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface Customer {
@@ -58,7 +59,7 @@ interface QuizResponse {
 }
 
 const AdminDashboard = () => {
-  const navigate = useNavigate();
+const router = useRouter();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,7 +87,7 @@ const AdminDashboard = () => {
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) {
-      navigate("/admin");
+      router.push("/myquiz/quiz-admin");
       return;
     }
 
@@ -99,7 +100,7 @@ const AdminDashboard = () => {
 
     if (!roleData) {
       await supabase.auth.signOut();
-      navigate("/admin");
+     router.push("/myquiz/quiz-admin");
     }
   };
 
@@ -157,7 +158,7 @@ const AdminDashboard = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/admin");
+    router.push("/myquiz/quiz-admin");
   };
 
   const exportToCSV = () => {
