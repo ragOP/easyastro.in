@@ -680,7 +680,7 @@ const Checkout = () => {
           email,
           name,
           phone,
-          amount: 449,
+          amount: 2,
           quizResponses,
           sessionId,
         }),
